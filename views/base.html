@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>
+      {% block title%}{{title}}{% endblock %}
+    </title>
+    <meta name="author" content="Datopian">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  </head>
+  <body class="{% block bodyclass %}{{bodyclass}}{% endblock %}">
+    <!-- Page header -->
+    <!-- End of page header -->
+
+    {% block content %}{{content}}{% endblock %}
+
+
+    <!-- Footer -->
+    <!-- end of footer -->
+
+    {% block scripts %}{% endblock %}
+
+  </body>
+</html>
