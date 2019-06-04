@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}
+Welcome - Search
+{% endblock %}
+
+{% block bodyclass %}search{% endblock %}
+
+{% block content %}
+<div>
+  {{ title }}
+</div>
+<div>
+  {{ result.count }}
+</div>
+{% endblock %}
