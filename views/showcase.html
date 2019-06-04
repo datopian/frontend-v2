@@ -8,10 +8,12 @@ Showcase
 
 {% block content %}
 <div>
-  {{ title }}
+  Title: {{ title }}
 </div>
 <div>
   Owner: {{ owner }}
-  Dataset: {{ dataset.name }}
+</div>
+<div>
+  {{dataset | dump}}
 </div>
 {% endblock %}

@@ -8,9 +8,12 @@ Welcome - Search
 
 {% block content %}
 <div>
-  {{ title }}
+  Title: {{ title }}
 </div>
 <div>
-  {{ result.count }}
+  Result: {{ result | dump }}
+</div>
+<div>
+  Packages: {{ packages | dump }}
 </div>
 {% endblock %}
