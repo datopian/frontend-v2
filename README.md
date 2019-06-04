@@ -4,11 +4,10 @@ CKAN frontend in node.js.
 
 ## Quick Start
 
-Clone the repo, install dependencies using yarn (or npm), set environment variables and run the server:
+Clone the repo, install dependencies using yarn (or npm) and run the server:
 
 ```bash
 yarn
-cp env.template .env # add your env vars
 yarn start
 ```
 
@@ -18,6 +17,8 @@ To run in watch mode:
 # note the -e which means we watch for changes in templates too
 nodemon -e "js html" index.js
 ```
+
+By default, the app runs against mocked API. You can change it by setting up your own CKAN API endpoint - rename `env.template` as `.env` and set the values.
 
 Run tests (note that tests are running against mocked API_URL set to http://127.0.0.1:5000/api/3/action/):
 
