@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}
+Showcase
+{% endblock %}
+
+{% block bodyclass %}showcase{% endblock %}
+
+{% block content %}
+<div>
+  {{ title }}
+</div>
+<div>
+  Owner: {{ owner }}
+  Dataset: {{ dataset.name }}
+</div>
+{% endblock %}

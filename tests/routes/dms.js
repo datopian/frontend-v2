@@ -26,3 +26,14 @@ test('Search page works', async t => {
   t.is(res.statusCode, 200)
   t.true(res.text.includes('Search'))
 })
+
+
+test('Showcase page works', async t => {
+  t.plan(2)
+
+  const res = await request(app)
+    .get('/dataset/co2emis')
+
+  t.is(res.statusCode, 200)
+  t.true(res.text.includes('dataset | co2emis'))
+})
