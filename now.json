@@ -9,5 +9,11 @@
   "env": {
     "env": "staging",
     "API_URL": "https://demo.ckan.org/api/3/action/"
-  }
+  },
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/index.js"
+    }
+  ]
 }
