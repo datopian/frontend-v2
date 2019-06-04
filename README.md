@@ -4,10 +4,11 @@ CKAN frontend in node.js.
 
 ## Quick Start
 
-Clone the repo, install dependencies using yarn (or npm), and run the server:
+Clone the repo, install dependencies using yarn (or npm), set environment variables and run the server:
 
 ```bash
 yarn
+cp env.template .env # add your env vars
 yarn start
 ```
 
@@ -18,7 +19,7 @@ To run in watch mode:
 nodemon -e "js html" index.js
 ```
 
-Run tests:
+Run tests (note that tests are running against mocked API_URL set to http://127.0.0.1:5000/api/3/action/):
 
 ```bash
 yarn test

@@ -6,7 +6,7 @@ require('dotenv').config()
 nconf.argv()
   .env()
 
-const api_url = process.env.API_URL || 'http://0.0.0.0:4000'
+const api_url = process.env.API_URL || 'http://127.0.0.1:5000/api/3/action/'
 
 // This is the object that you want to override in your own local config
 nconf.defaults({
