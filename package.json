@@ -38,8 +38,10 @@
     "express": "^4.17.1",
     "express-session": "^1.16.1",
     "i18n": "^0.8.3",
+    "moment": "^2.24.0",
     "nconf": "^0.10.0",
     "node-fetch": "^2.6.0",
-    "nunjucks": "^3.2.0"
+    "nunjucks": "^3.2.0",
+    "wpcom": "^5.4.2"
   }
 }

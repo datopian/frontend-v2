@@ -55,8 +55,8 @@ module.exports.makeApp = function () {
 
   // Controllers
   app.use([
-    dmsRoutes(),
-    cmsRoutes()
+    cmsRoutes(),
+    dmsRoutes()
   ])
 
   app.use((err, req, res, next) => {
