@@ -5,11 +5,18 @@ const mocks = require('../../fixtures')
 mocks.initMocks()
 
 const app = require('../../index').makeApp()
+let agent = null
+
+
+test.beforeEach(async t => {
+  agent = request(app)
+})
+
 
 test('Home page works', async t => {
   t.plan(2)
 
-  const res = await request(app)
+  const res = await agent
     .get('/')
 
   t.is(res.statusCode, 200)
@@ -20,7 +27,7 @@ test('Home page works', async t => {
 test('Search page works', async t => {
   t.plan(2)
 
-  const res = await request(app)
+  const res = await agent
     .get('/search?q=co2')
 
   t.is(res.statusCode, 200)
@@ -31,7 +38,7 @@ test('Search page works', async t => {
 test('Showcase page works', async t => {
   t.plan(2)
 
-  const res = await request(app)
+  const res = await agent
     .get('/dataset/co2emis')
 
   t.is(res.statusCode, 200)

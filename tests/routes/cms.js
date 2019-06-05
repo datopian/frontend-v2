@@ -1,6 +1,9 @@
 const test = require('ava')
 const request = require('supertest')
 
+const mocks = require('../../fixtures')
+mocks.initMocks()
+
 const app = require('../../index').makeApp()
 
 
