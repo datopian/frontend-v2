@@ -71,5 +71,5 @@ test('Showcase page works', async t => {
     .get('/dataset/co2emis')
 
   t.is(res.statusCode, 200)
-  t.true(res.text.includes('dataset | co2emis'))
+  t.true(res.text.includes('<!-- showcase page test placeholder -->'))
 })
