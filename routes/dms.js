@@ -24,7 +24,8 @@ module.exports = function () {
     res.render('search.html', {
       title: 'Search',
       result,
-      packages
+      packages,
+      query: req.query ? req.query.q : ''
     })
   })
 
