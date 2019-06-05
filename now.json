@@ -8,7 +8,8 @@
   ],
   "env": {
     "env": "staging",
-    "API_URL": "https://demo.ckan.org/api/3/action/"
+    "API_URL": "https://demo.ckan.org/api/3/action/",
+    "WP_URL": "https://edscms.home.blog/"
   },
   "routes": [
     {
