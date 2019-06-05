@@ -5,6 +5,8 @@ CKAN frontend in node.js.
 
 ## Quick Start
 
+Tested on NodeJS v8.10.0.
+
 Clone the repo, install dependencies using yarn (or npm) and run the server:
 
 ```bash
