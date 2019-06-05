@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block title%}{{title}} - Blog{% endblock %}
+
+{% block bodyclass %}blog{% endblock %}
+
+{% block content %}
+<!-- blog home page test placeholder -->
+<section class="blog-page">
+  <div class="container">
+
+    <div class="inner_container">
+      {% for post in posts %}
+      <div class="post">
+        <a href="/news/{{post.slug}}">
+          <h2>{{post.title}}</h2>
+        </a>
+        <p class="meta">
+          <i class="fa fa-calendar-o" aria-hidden="true"></i> {{post.modified}}
+        </p>
+        {{post.content | safe | truncate(100)}}
+        <p><a href="/news/{{post.slug}}">Read more</a></p>
+      </div>
+
+      {% endfor %}
+    </div>
+
+  </div>
+  <!-- Subscribe Form -->
+  <div class="subscribe-form text-center"  id="form-for-blog">
+  <div class="row">
+  <div class="col-sm-4 col-sm-offset-4">
+  <form action="" method="POST">
+      <input type="hidden" name="u" value="d7c1b37384908cd31dbe44d77">
+      <input type="hidden" name="id" value="97878f666d">
+      <div id="mergeTable" class="mergeTable">
+          <div class="mergeRow dojoDndItem mergeRow-email" id="mergeRow-0">
+              <h3>Subscribe</h3>
+              <div class="field-group form-group">
+                  <input type="email" class="form-control  custom-input" name="MERGE0" id="MERGE0" size="25" value="" placeholder="Enter Your Email" required  >
+
+
+              </div>
+          </div>
+      </div>
+
+      <div class="submit_container clear">
+          <input type="submit" class="formEmailButton btn btn-lg btn-primary" name="submit" value="Subscribe">
+      </div>
+      <input type="hidden" name="ht" value="7e3c30f92918a0476227f6e94f3fe76633002feb:MTUyNTg0Nzk0My44ODk=">
+      <input type="hidden" name="mc_signupsource" value="hosted">
+  </form>
+  </div>
+  </div>
+  </div>
+</section>
+{% endblock %}
