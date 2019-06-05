@@ -119,11 +119,11 @@
           </section>
 
           <!-- Pagination -->
-          {% if result.count > 20 %}
+          {% if result.count > 10 %}
             <nav aria-label="Datasets" class="text-center">
               <ul class="pagination">
                 <li class="page-item">
-                  <a class="page-link" href="/search?q={{ query }}&from=0" aria-label="Previous">
+                  <a class="page-link" href="/search?q={{ query }}&page=1" aria-label="Previous">
                     <span aria-hidden="true">&laquo;</span>
                     <span class="sr-only">Previous</span>
                   </a>
@@ -132,12 +132,11 @@
                   {% if page == '...' %}
                   <li class="page-item disabled"><span class="page-link">{{page}}</span></li>
                   {% else %}
-                  <li class="page-item {{ 'current-page' if currentPage == page }}"><a class="page-link" href="/search?q={{ query }}&from={{ (page - 1) * 20 }}">{{page}}</a></li>
+                  <li class="page-item {{ 'current-page' if currentPage == page }}"><a class="page-link" href="/search?q={{ query }}&page={{ page }}">{{page}}</a></li>
                   {% endif %}
-
                 {% endfor %}
                 <li class="page-item">
-                  <a class="page-link" href="/search?q={{ query }}&from={{ packages.summary.total - (packages.summary.total % 20) | int }}" aria-label="Next">
+                  <a class="page-link" href="/search?q={{ query }}&page={{ totalPages }}" aria-label="Next">
                     <span aria-hidden="true">&raquo;</span>
                     <span class="sr-only">Next</span>
                   </a>

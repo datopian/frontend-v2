@@ -4,6 +4,7 @@ const express = require('express')
 
 const config = require('../config')
 const dms = require('../lib/dms')
+const utils = require('../utils')
 
 
 module.exports = function () {
@@ -21,11 +22,16 @@ module.exports = function () {
     const result = await Model.search(query)
     const packages = JSON.parse(JSON.stringify(result.results))
     delete result.results
+    const currentPage = req.query.page || 1
+    const totalPages = Math.ceil(result.count / 10)
+    const pages = utils.pagination(currentPage, totalPages)
     res.render('search.html', {
       title: 'Search',
       result,
       packages,
-      query: req.query ? req.query.q : ''
+      query: req.query ? req.query.q : '',
+      totalPages,
+      pages
     })
   })
 
