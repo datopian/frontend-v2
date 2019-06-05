@@ -1,0 +1,3 @@
+[submodule "public/frontend-showcase-js"]
+	path = public/frontend-showcase-js
+	url = https://github.com/datopian/frontend-showcase-js
