@@ -18,11 +18,14 @@ module.exports = function () {
   })
 
   router.get('/search', async (req, res) => {
+    // For pagination we need to convert 'page' into 'start' param:
+    const currentPage = req.query.page || 1
+    req.query.start = (currentPage - 1) * 10
+    delete req.query.page
     const query = Object.entries(req.query).map(e => e.join('=')).join('&')
     const result = await Model.search(query)
     const packages = JSON.parse(JSON.stringify(result.results))
     delete result.results
-    const currentPage = req.query.page || 1
     const totalPages = Math.ceil(result.count / 10)
     const pages = utils.pagination(currentPage, totalPages)
     res.render('search.html', {
