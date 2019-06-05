@@ -76,20 +76,28 @@ module.exports.ckanToDataPackage = function (descriptor) {
     delete datapackage.tags
   }
 
-  // Prase extras
+  // Parse extras
   // TODO
 
   // Resources
-  datapackage.resources.map(resource => {
+  datapackage.resources = datapackage.resources.map(resource => {
     if (resource.name) {
       resource.title = resource.title || resource.name
-      resource.name = resource.name.toLowerCase()
+      resource.name = resource.name.toLowerCase().replace(/ /g, '_')
     } else {
       resource.name = resource.id
     }
-    if (!resource.title) {
-      resource.title
+
+    if (resource.url) {
+      resource.path = resource.url
+      delete resource.url
     }
+
+    if (!resource.schema) {
+      // TODO: add schema
+    }
+
+    return resource
   })
 
   return datapackage
