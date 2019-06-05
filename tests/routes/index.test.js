@@ -7,6 +7,7 @@ mocks.initMocks()
 const app = require('../../index').makeApp()
 
 
+// CMS
 test('About page works', async t => {
   t.plan(2)
 
@@ -37,4 +38,38 @@ test('Single post page works', async t => {
 
   t.is(res.statusCode, 200)
   t.true(res.text.includes('Welcome to test news page'))
+})
+
+
+// DMS
+test('Home page works', async t => {
+  t.plan(2)
+
+  const res = await request(app)
+    .get('/')
+
+  t.is(res.statusCode, 200)
+  t.true(res.text.includes('Home'))
+})
+
+
+test('Search page works', async t => {
+  t.plan(2)
+
+  const res = await request(app)
+    .get('/search?q=co2')
+
+  t.is(res.statusCode, 200)
+  t.true(res.text.includes('Search'))
+})
+
+
+test('Showcase page works', async t => {
+  t.plan(2)
+
+  const res = await request(app)
+    .get('/dataset/co2emis')
+
+  t.is(res.statusCode, 200)
+  t.true(res.text.includes('dataset | co2emis'))
 })
