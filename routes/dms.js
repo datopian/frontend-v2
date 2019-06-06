@@ -11,6 +11,18 @@ module.exports = function () {
   const router = express.Router()
   const Model = new dms.DmsModel(config)
 
+  // ----------------------------
+  // Redirects
+
+  // organization pages:
+  router.get('/organization/:name', (req, res) => {
+    const destination = '/' + req.params.name
+    res.redirect(301, destination)
+  })
+
+  // End of Redirects
+  // -----------------------------
+
   router.get('/', async (req, res) => {
     res.render('home.html', {
       title: 'Home'
@@ -70,6 +82,11 @@ module.exports = function () {
       owner: req.params.owner,
       dpId: JSON.stringify(datapackage).replace(/\\/g, '\\\\').replace(/\'/g, "\\'")
     })
+  })
+
+  // MUST come last in order to catch all the publisher pages
+  router.get('/:owner', async (req, res) => {
+    res.send(req.params.owner)
   })
 
   return router
