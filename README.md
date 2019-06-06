@@ -43,6 +43,68 @@ Use `WP_URL` environment variable to point to your WordPress instance. For examp
 export WP_URL=https://edscms.home.blog/
 ```
 
+## API
+
+*All of the controller and views use the API module - they don’t see backend.*
+
+We have separated API module into `DmsModel` and `CmsModel`. The former part talks to CKAN (or can be any DMS), while the latter fetches content for static pages, for example, it can be WordPress. Below is the flow of how it works together:
+
+```mermaid
+sequenceDiagram
+    Browser->>Controller: /
+    Controller->>Browser: home.html
+
+    alt Exists in CMS
+      Browser->>Controller: /about
+      Controller-->>CMS: slug=about
+      CMS-->>Controller: found: page content
+      Controller->>Browser: static.html
+
+      Browser->>Controller: /news
+      Controller-->>CMS: slug=news
+      CMS-->>Controller: found: list of posts
+      Controller->>Browser: blog.html
+
+      Browser->>Controller: /news/my-blog-post
+      Controller-->>CMS: slug=my-blog-post
+      CMS-->>Controller: found: post content
+      Controller->>Browser: static.html
+    end
+    alt Not Found in CMS
+      Browser->>Controller: /search
+      Controller-->>CMS: slug=search
+      CMS-->>Controller: not found: 404
+      Controller-->>DMS: search api
+      DMS-->>Controller: result: list of data packages + summary
+      Controller->>Browser: search.html
+
+      Browser->>Controller: /org/gdp
+      Controller-->>CMS: slug=org/gdp
+      CMS-->>Controller: not found: 404
+      Controller-->>DMS: getPackage api
+      DMS-->>Controller: result: data package
+      Controller->>Browser: showcase.html
+    end
+```
+
+If above doesn't render, here is the screenshot:
+
+![](https://i.imgur.com/TYdJaOS.png)
+
+## Routes
+
+Here is the summary of existing routes at the moment:
+
+* Home: `/`
+* Search: `/search`
+  * with query: `/search?q=gdp`
+* Showcase: `/organization/dataset`
+* CMS:
+  * About: `/about`
+  * Blog: `/news`
+  * Post: `/news/my-post`
+  * Anything else: `/foo/bar`
+
 ## Tests
 
 Run tests (note that tests are running against mocked API_URL set to http://127.0.0.1:5000/api/3/action/):
