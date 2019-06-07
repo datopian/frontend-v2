@@ -55,3 +55,12 @@ test('getProfile api works', async t => {
 
   t.is(result.created, '2019-03-27T21:26:27.501417')
 })
+
+
+test('getListOfCollections api works', async t => {
+  t.plan(1)
+
+  const result = await DmsModel.getListOfCollections()
+
+  t.is(result.length, 1)
+})

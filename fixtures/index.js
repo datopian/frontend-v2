@@ -66,6 +66,18 @@ module.exports.initMocks = function() {
     'Content-Length',
     '13914' ])
 
+  nock('http://127.0.0.1:5000', {"encodedQueryParams":true})
+    .get('/api/3/action/group_list')
+    .query({"all_fields":"true"})
+    .reply(200, {"help":"http://127.0.0.1:5000/api/3/action/help_show?name=group_list","success":true,"result":[{"approval_status":"approved","image_display_url":"","package_count":0,"title":"Test group","name":"test-group","is_organization":false,"image_url":"","type":"group","num_followers":0,"id":"29a82d2f-11c5-48e2-884b-0f34d936bedd","description":"New description"}]}, [ 'Server',
+    'PasteWSGIServer/0.5 Python/2.7.12',
+    'Date',
+    'Fri, 07 Jun 2019 06:52:03 GMT',
+    'Content-Type',
+    'application/json;charset=utf-8',
+    'Content-Length',
+    '384' ])
+
 
   // WP API mocks:
   nock('https://public-api.wordpress.com:443', {"encodedQueryParams":true})
@@ -165,5 +177,9 @@ module.exports.initMocks = function() {
 
   nock('https://public-api.wordpress.com:443', {"encodedQueryParams":true})
     .get('/rest/v1.1/sites/https%3A%2F%2Fedscms.home.blog%2F/posts/slug:test_org_00')
+    .reply(404)
+
+  nock('https://public-api.wordpress.com:443', {"encodedQueryParams":true})
+    .get('/rest/v1.1/sites/https%3A%2F%2Fedscms.home.blog%2F/posts/slug:collections')
     .reply(404)
 }

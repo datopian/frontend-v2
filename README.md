@@ -101,6 +101,8 @@ Here is the summary of existing routes at the moment:
 * Showcase: `/organization/dataset`
 * Organization: `/my_org`
   * It gets redirected from CKAN like path: `/organization/my_org`
+* Collections: `/collections`
+  * It gets redirected from CKAN groups page: `/group`
 * CMS:
   * About: `/about`
   * Blog: `/news`

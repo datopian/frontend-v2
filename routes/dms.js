@@ -19,6 +19,15 @@ module.exports = function () {
     res.redirect(301, destination)
   })
 
+  router.get('/group', (req, res) => {
+    res.redirect(301, '/collections')
+  })
+
+  router.get('/group/:collection', (req, res) => {
+    const destination = '/collections/' + req.params.collection
+    res.redirect(301, destination)
+  })
+
   // End of redirects
   // -----------------------------------------------
 
@@ -47,6 +56,19 @@ module.exports = function () {
       totalPages,
       pages
     })
+  })
+
+  router.get('/collections', async (req, res) => {
+    const collections = await Model.getListOfCollections()
+    res.render('collections-home.html', {
+      title: 'Dataset Collections',
+      description: 'Catalogue of datasets for a particular project or team, or on a particular theme, or as a very simple way to help people find and search your own published datasets.',
+      collections
+    })
+  })
+
+  router.get('/collections/:collectionName', (req, res) => {
+    // Similar to owner page
   })
 
   router.get('/:owner/:name', async (req, res, next) => {
