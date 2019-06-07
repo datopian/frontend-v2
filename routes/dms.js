@@ -59,7 +59,7 @@ module.exports = function () {
   })
 
   router.get('/collections', async (req, res) => {
-    const collections = await Model.getListOfCollections()
+    const collections = await Model.getCollections()
     res.render('collections-home.html', {
       title: 'Dataset Collections',
       description: 'Catalogue of datasets for a particular project or team, or on a particular theme, or as a very simple way to help people find and search your own published datasets.',

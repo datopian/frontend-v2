@@ -104,6 +104,23 @@ module.exports.ckanToDataPackage = function (descriptor) {
 }
 
 
+module.exports.convertToStandardCollection = (descriptor) => {
+  const standard = {
+    name: '',
+    title: '',
+    summary: '',
+    image: ''
+  }
+
+  standard.name = descriptor.name
+  standard.title = descriptor.title || descriptor.display_name
+  standard.summary = descriptor.description
+  standard.image = descriptor.image_display_url || descriptor.image_url
+
+  return standard
+}
+
+
 module.exports.pagination = (c, m) => {
   let current = c,
       last = m,

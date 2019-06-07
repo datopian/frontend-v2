@@ -57,10 +57,10 @@ test('getProfile api works', async t => {
 })
 
 
-test('getListOfCollections api works', async t => {
+test('getCollections api works', async t => {
   t.plan(1)
 
-  const result = await DmsModel.getListOfCollections()
+  const result = await DmsModel.getCollections()
 
   t.is(result.length, 1)
 })

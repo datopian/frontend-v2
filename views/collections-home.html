@@ -33,11 +33,11 @@
       <div class="col-sm-4">
         <div class="card-custom">
           <div class="col-xs-2 pad-left-0 pad-right-0">
-            <img src="{{ collection.image_display_url or collection.image_url }}">
+            <img src="{{ collection.image }}">
           </div>
           <div class="col-xs-10">
-            <a href="/collections/{{ collection.name }}" class="title">{{ collection.display_name or collection.title }}</a>
-            <p>{{ collection.description }}</p>
+            <a href="/collections/{{ collection.name }}" class="title">{{ collection.title }}</a>
+            <p>{{ collection.summary }}</p>
             <a href="/collections/{{ collection.name }}" class="view">View Collection</a>
           </div>
         </div>
