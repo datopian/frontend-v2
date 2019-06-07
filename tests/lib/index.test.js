@@ -46,3 +46,12 @@ test('getPackage api works', async t => {
 
   t.is(result.name, 'co2emis')
 })
+
+
+test('getProfile api works', async t => {
+  t.plan(1)
+
+  const result = await DmsModel.getProfile('test_org_00')
+
+  t.is(result.created, '2019-03-27T21:26:27.501417')
+})

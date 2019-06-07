@@ -73,3 +73,25 @@ test('Showcase page works', async t => {
   t.is(res.statusCode, 200)
   t.true(res.text.includes('<!-- showcase page test placeholder -->'))
 })
+
+
+test('Redirect for org page works', async t => {
+  t.plan(2)
+
+  const res = await request(app)
+    .get('/organization/test_org_00')
+
+  t.is(res.statusCode, 301)
+  t.is(res.header['location'], '/test_org_00')
+})
+
+
+test('Organization page works', async t => {
+  t.plan(2)
+
+  const res = await request(app)
+    .get('/test_org_00')
+
+  t.is(res.statusCode, 200)
+  t.true(res.text.includes('<img src="http://placekitten.com/g/200/100" class="img-responsive">'))
+})

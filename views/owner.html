@@ -47,11 +47,12 @@
 
           {% if packages|length > 0 %}
             {{ snippets.package_list_show(packages) }}
+            <!-- Pagination -->
             {% if result.count > 10 %}
               <nav aria-label="Datasets">
                 <ul class="pagination">
                   <li class="page-item">
-                    <a class="page-link" href="/{{ owner }}?start=0{{ query }}" aria-label="Previous">
+                    <a class="page-link" href="/{{ owner }}?{{ query }}&page=1" aria-label="Previous">
                       <span aria-hidden="true">&laquo;</span>
                       <span class="sr-only">Previous</span>
                     </a>
@@ -60,12 +61,11 @@
                     {% if page == '...' %}
                     <li class="page-item disabled"><span class="page-link">{{page}}</span></li>
                     {% else %}
-                    <li class="page-item {{ 'current-page' if currentPage == page }}"><a class="page-link" href="/{{ owner }}?start={{ (page - 1) * 10 }}{{ query }}">{{page}}</a></li>
+                    <li class="page-item {{ 'current-page' if currentPage == page }}"><a class="page-link" href="/search?q={{ query }}&page={{ page }}">{{page}}</a></li>
                     {% endif %}
-
                   {% endfor %}
                   <li class="page-item">
-                    <a class="page-link" href="/{{ owner }}?start={{ result.count - (result.count % 20) | int }}{{ query }}" aria-label="Next">
+                    <a class="page-link" href="/{{ owner }}?{{ query }}&page={{ totalPages }}" aria-label="Next">
                       <span aria-hidden="true">&raquo;</span>
                       <span class="sr-only">Next</span>
                     </a>
@@ -73,6 +73,7 @@
                 </ul>
               </nav>
             {% endif %}
+            <!-- end of pagination -->
           {% endif %}
         </div>
       </div>

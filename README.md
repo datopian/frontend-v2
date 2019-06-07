@@ -99,6 +99,8 @@ Here is the summary of existing routes at the moment:
 * Search: `/search`
   * with query: `/search?q=gdp`
 * Showcase: `/organization/dataset`
+* Organization: `/my_org`
+  * It gets redirected from CKAN like path: `/organization/my_org`
 * CMS:
   * About: `/about`
   * Blog: `/news`
