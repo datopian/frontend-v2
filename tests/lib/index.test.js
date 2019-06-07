@@ -57,10 +57,26 @@ test('getProfile api works', async t => {
 })
 
 
-test('getCollections api works', async t => {
+test('getCollections (list of collections) api works', async t => {
   t.plan(1)
 
   const result = await DmsModel.getCollections()
 
   t.is(result.length, 1)
+})
+
+test('getCollection api works', async t => {
+  t.plan(1)
+
+  const name = 'test-group'
+  const result = await DmsModel.getCollection(name)
+
+  const expected = {
+    name: name,
+    title: 'Test group',
+    summary: 'New description',
+    image: ''
+  }
+
+  t.deepEqual(result, expected)
 })

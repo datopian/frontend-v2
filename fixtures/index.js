@@ -78,6 +78,30 @@ module.exports.initMocks = function() {
     'Content-Length',
     '384' ])
 
+  nock('http://127.0.0.1:5000', {"encodedQueryParams":true})
+    .get('/api/3/action/group_show')
+    .query({"id":"test-group"})
+    .reply(200, {"help":"http://127.0.0.1:5000/api/3/action/help_show?name=group_show","success":true,"result":{"approval_status":"approved","image_display_url":"","package_count":0,"title":"Test group","title_en":"","name":"test-group","is_organization":false,"image_url":"","groups":[],"type":"group","users":[{"capacity":"admin","name":"test_sysadmin_00"}],"title_da_DK":"","num_followers":0,"id":"29a82d2f-11c5-48e2-884b-0f34d936bedd","tags":[],"description":"New description"}}, [ 'Server',
+    'PasteWSGIServer/0.5 Python/2.7.12',
+    'Date',
+    'Fri, 07 Jun 2019 13:43:08 GMT',
+    'Content-Type',
+    'application/json;charset=utf-8',
+    'Content-Length',
+    '505' ])
+
+  nock('http://127.0.0.1:5000', {"encodedQueryParams":true})
+    .get('/api/3/action/package_search')
+    .query({"fq":"groups%3Atest-group"})
+    .reply(200, {"help":"http://127.0.0.1:5000/api/3/action/help_show?name=package_search","success":true,"result":{"count":0,"sort":"title_string asc","facets":{},"results":[],"search_facets":{}}}, [ 'Server',
+    'PasteWSGIServer/0.5 Python/2.7.12',
+    'Date',
+    'Fri, 07 Jun 2019 13:43:08 GMT',
+    'Content-Type',
+    'application/json;charset=utf-8',
+    'Content-Length',
+    '195' ])
+
 
   // WP API mocks:
   nock('https://public-api.wordpress.com:443', {"encodedQueryParams":true})
@@ -181,5 +205,9 @@ module.exports.initMocks = function() {
 
   nock('https://public-api.wordpress.com:443', {"encodedQueryParams":true})
     .get('/rest/v1.1/sites/https%3A%2F%2Fedscms.home.blog%2F/posts/slug:collections')
+    .reply(404)
+
+  nock('https://public-api.wordpress.com:443', {"encodedQueryParams":true})
+    .get('/rest/v1.1/sites/https%3A%2F%2Fedscms.home.blog%2F/posts/slug:collections/test-group')
     .reply(404)
 }

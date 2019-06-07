@@ -69,28 +69,23 @@ module.exports = function () {
 
   router.get('/collections/:collectionName', async (req, res) => {
     // Get collection details
-    const collection = req.params.collectionName
-    const details = await Model.getCollectionDetails(collection)
-    const created = new Date(details.created)
-    const joinYear = created.getUTCFullYear()
-    const joinMonth = created.toLocaleString('en-us', { month: "long" })
+    const name = req.params.collectionName
+    const collection = await Model.getCollection(name)
+
     // Get datasets for this collection
     const currentPage = req.query.page || 1
     req.query.start = (currentPage - 1) * 10
     delete req.query.page
-    const query = `fq=group:${collection}`
+    const query = `fq=groups:${name}`
     const searchResponse = await Model.search(query)
     const packages = JSON.parse(JSON.stringify(searchResponse.results))
     delete searchResponse.results
     const totalPages = Math.ceil(searchResponse.count / 10)
     const pages = utils.pagination(currentPage, totalPages)
 
-    res.render('owner.html', {
-      title: details.title || details.name,
-      owner: collection,
-      description: details.description,
-      avatar: details.image_display_url || details.image_url,
-      joinDate: joinMonth + ' ' + joinYear,
+    res.render('collection.html', {
+      title: collection.title, // needed because this is used in base.html
+      item: collection,
       result: searchResponse,
       packages,
       query: req.query ? req.query.q : '',

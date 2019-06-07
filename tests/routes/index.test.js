@@ -95,3 +95,28 @@ test('Organization page works', async t => {
   t.is(res.statusCode, 200)
   t.true(res.text.includes('<img src="http://placekitten.com/g/200/100" class="img-responsive">'))
 })
+
+
+test('Redirect for collections page works', async t => {
+  const res = await request(app)
+    .get('/group/test-group')
+
+  t.is(res.statusCode, 301)
+  t.is(res.header['location'], '/collections/test-group')
+})
+
+
+test('Collections list page works', async t => {
+  const res = await request(app)
+    .get('/collections')
+
+  t.true(res.text.includes('<!-- collections list page test placeholder -->'))
+})
+
+
+test('Collection page works', async t => {
+  const res = await request(app)
+    .get('/collections/test-group')
+
+  t.true(res.text.includes('<!-- collection page test placeholder -->'))
+})
