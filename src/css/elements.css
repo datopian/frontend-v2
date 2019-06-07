@@ -1,0 +1,15 @@
+body {
+  @apply text-gray-900 font-sans;
+}
+
+p {
+  @nest .site-footer &:not(:last-child) {
+    @apply mb-4;
+  }
+}
+
+svg {
+  @nest .site-footer & {
+    @apply fill-current;
+  }
+}

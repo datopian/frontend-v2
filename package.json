@@ -14,7 +14,9 @@
     "test:report": "nyc ava && nyc report --reporter=text-lcov | coveralls"
   },
   "ava": {
-    "files": ["tests/**/*"]
+    "files": [
+      "tests/**/*"
+    ]
   },
   "repository": {
     "type": "git",
@@ -28,10 +30,20 @@
   "homepage": "https://github.com/datopian/frontend-v2#readme",
   "devDependencies": {
     "ava": "^2.0.0",
+    "browser-sync": "^2.26.5",
     "coveralls": "^3.0.3",
+    "cssnano": "^4.1.10",
+    "gulp": "^4.0.2",
+    "gulp-concat": "^2.6.1",
+    "gulp-nodemon": "^2.4.2",
+    "gulp-postcss": "^8.0.0",
+    "gulp-svg-sprite": "^1.5.0",
     "nock": "^10.0.6",
     "nyc": "^14.1.1",
-    "supertest": "^4.0.2"
+    "postcss-import": "^12.0.1",
+    "postcss-preset-env": "^6.6.0",
+    "supertest": "^4.0.2",
+    "tailwindcss": "^1.0.3"
   },
   "dependencies": {
     "connect-flash": "^0.1.1",
