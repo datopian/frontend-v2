@@ -1,0 +1,19 @@
+.breadcrumb {
+  @apply text-xl;
+}
+
+.breadcrumb_item {
+  @apply inline-block;
+
+  &:not(:last-child) {
+    &::after {
+      content: "/";
+    }
+  }
+}
+
+.breadcrumb_link {
+  &[aria-current] {
+    @apply text-primary font-semibold;
+  }
+}

@@ -1,0 +1,25 @@
+.main-nav_link {
+  @apply block py-2 px-gutter font-semibold text-primary border-white;
+
+  &[aria-current] {
+    @apply border-primary;
+  }
+}
+
+@screen lg {
+  .main-nav_link {
+    @apply border-b-4 py-1 px-0;
+  }
+}
+
+@media (max-width: 1023px) {
+  .main-nav {
+    &[data-expanded] {
+      position: absolute;
+      @apply shadow;
+    }
+    &[data-expanded="false"] {
+      display: none;
+    }
+  }
+}

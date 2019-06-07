@@ -1,0 +1,16 @@
+@import "fonts";
+
+@import "tailwindcss/base";
+
+/* more base styles */
+@import "elements";
+
+@import "tailwindcss/components";
+
+/* extracted components */
+@import "components/main-nav";
+@import "components/breadcrumb";
+@import "components/filter";
+@import "components/site-footer";
+
+@import "tailwindcss/utilities";
