@@ -5,7 +5,7 @@
 {{title}}
 {% endblock %}
 
-{% block bodyclass %}owner{% endblock %}
+{% block bodyclass %}search{% endblock %}
 
 {% block content %}
 <div class="container">
@@ -31,7 +31,7 @@
         </div>
       </div>
 
-      <div class="col-sm-offset-2 col-sm-7">
+      <div class="col-sm-offset-1 col-sm-8">
         <div class="row">
           <div class="col-sm-6 col-xs-12">
             <h2 class="owner-page-title">Datasets <span class="badge" title="{{result.count}} published datasets">{{result.count}}</span></h2>
@@ -46,7 +46,11 @@
         <div id="publisher-package-list">
 
           {% if packages|length > 0 %}
-            {{ snippets.package_list_show(packages) }}
+            <section class="search-page">
+              <section class="results">
+                {{ snippets.package_list_show(packages) }}
+              </section>
+            </section>
             <!-- Pagination -->
             {% if result.count > 10 %}
               <nav aria-label="Datasets">
