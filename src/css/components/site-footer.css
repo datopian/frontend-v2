@@ -1,0 +1,11 @@
+.site-footer_link {
+  @apply underline;
+
+  &:hover {
+    @apply text-white;
+  }
+}
+
+.site-footer_heading {
+  @apply font-medium;
+}

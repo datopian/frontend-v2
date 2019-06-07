@@ -14,11 +14,17 @@ yarn
 yarn start
 ```
 
-To run in watch mode:
+To run and watch HTML:
 
 ```bash
 # note the -e which means we watch for changes in templates too
 nodemon -e "js html" index.js
+```
+
+To run and watch everything:
+
+```bash
+npx gulp
 ```
 
 ## Set up your own backend
