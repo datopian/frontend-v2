@@ -54,11 +54,38 @@ test('Search api works - full case', async t => {
   )
 
   const expected = {
-    results: [],
     count: 0,
+    facets: {
+      groups: {},
+      license_id: {},
+      organization: {},
+      res_format: {},
+      tags: {},
+    },
+    results: [],
+    search_facets: {
+      groups: {
+        items: [],
+        title: 'groups',
+      },
+      license_id: {
+        items: [],
+        title: 'license_id',
+      },
+      organization: {
+        items: [],
+        title: 'organization',
+      },
+      res_format: {
+        items: [],
+        title: 'res_format',
+      },
+      tags: {
+        items: [],
+        title: 'tags',
+      },
+    },
     sort: 'name asc',
-    facets: {},
-    search_facets: {}
   }
 
   t.deepEqual(result, expected)

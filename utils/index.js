@@ -124,22 +124,14 @@ module.exports.convertToStandardCollection = (descriptor) => {
 module.exports.convertToCkanSearchQuery = (query) => {
   const ckanQuery = {
     q: '',
-    fq: '',
     rows: '',
     start: '',
-    sort: ''
+    sort: '',
+    'facet.field': ['organization', 'groups', 'tags', 'res_format', 'license_id'],
+    'facet.limit': 5
   }
 
-  // Our standard 'q' query => ckan like query with query and filter query:
-  // Eg, q='gdp tags:economy' => q=gdp&fq=tags:economy
-  const listOfQueries = query.q.split(' ')
-  listOfQueries.forEach(query => {
-    if (query.includes(':')) {
-      ckanQuery.fq += query
-    } else {
-      ckanQuery.q += query
-    }
-  })
+  ckanQuery.q = query.q
 
   // standard 'size' => ckan 'rows'
   ckanQuery.rows = query.size || ''
@@ -148,13 +140,24 @@ module.exports.convertToCkanSearchQuery = (query) => {
   ckanQuery.start = query.from || ''
 
   // standard 'sort' => ckan 'sort'
+  const sortQueries = []
   if (query.sort && query.sort.constructor == Object) {
-    const sortQueries = []
     for (let [key, value] of Object.entries(query.sort)) {
       sortQueries.push(`${key} ${value}`)
     }
     ckanQuery.sort = sortQueries.join(',')
+  } else if (query.sort && query.sort.constructor == String) {
+    ckanQuery.sort = query.sort.replace(':', ' ')
+  } else if (query.sort && query.sort.constructor == Array) {
+    query.sort.forEach(sort => {
+      sortQueries.push(sort.replace(':', ' '))
+    })
+    ckanQuery.sort = sortQueries.join(',')
   }
+
+  // Facets
+  ckanQuery['facet.field'] = query['facet.field'] || ckanQuery['facet.field']
+  ckanQuery['facet.limit'] = query['facet.limit'] || ckanQuery['facet.limit']
 
   // Remove attributes with empty string, null or undefined values
   Object.keys(ckanQuery).forEach((key) => (!ckanQuery[key]) && delete ckanQuery[key])

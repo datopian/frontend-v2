@@ -37,25 +37,27 @@ module.exports = function () {
     })
   })
 
-  router.get('/search', async (req, res) => {
-    // For pagination we need to convert 'page' into 'start' param:
-    const currentPage = req.query.page || 1
-    req.query.start = (currentPage - 1) * 10
-    delete req.query.page
-    const query = Object.entries(req.query).map(e => e.join('=')).join('&')
-    const result = await Model.search(query)
-    const packages = JSON.parse(JSON.stringify(result.results))
-    delete result.results
-    const totalPages = Math.ceil(result.count / 10)
-    const pages = utils.pagination(currentPage, totalPages)
-    res.render('search.html', {
-      title: 'Search',
-      result,
-      packages,
-      query: req.query ? req.query.q : '',
-      totalPages,
-      pages
-    })
+  router.get('/search', async (req, res, next) => {
+    try {
+      const result = await Model.search(req.query)
+      // Pagination
+      const from = req.query.from || 0
+      const size = req.query.size || 10
+      const total = result.count
+      const totalPages = Math.ceil(total / size)
+      const currentPage = parseInt(from, 10) / size + 1
+      const pages = utils.pagination(currentPage, totalPages)
+
+      res.render('search.html', {
+        title: 'Search',
+        result,
+        query: req.query ? req.query.q : '',
+        totalPages,
+        pages
+      })
+    } catch (e) {
+      next(e)
+    }
   })
 
   router.get('/collections', async (req, res) => {
