@@ -73,23 +73,25 @@ module.exports = function () {
     // Get collection details
     const name = req.params.collectionName
     const collection = await Model.getCollection(name)
-
     // Get datasets for this collection
-    const currentPage = req.query.page || 1
-    req.query.start = (currentPage - 1) * 10
-    delete req.query.page
-    const query = `fq=groups:${name}`
-    const searchResponse = await Model.search(query)
-    const packages = JSON.parse(JSON.stringify(searchResponse.results))
-    delete searchResponse.results
-    const totalPages = Math.ceil(searchResponse.count / 10)
+    if (req.query.q) {
+      req.query.q += ` groups:${name}`
+    } else {
+      req.query.q = `groups:${name}`
+    }
+    const result = await Model.search(req.query)
+    // Pagination
+    const from = req.query.from || 0
+    const size = req.query.size || 10
+    const total = result.count
+    const totalPages = Math.ceil(total / size)
+    const currentPage = parseInt(from, 10) / size + 1
     const pages = utils.pagination(currentPage, totalPages)
 
     res.render('collection.html', {
       title: collection.title, // needed because this is used in base.html
       item: collection,
-      result: searchResponse,
-      packages,
+      result,
       query: req.query ? req.query.q : '',
       totalPages,
       pages
@@ -138,15 +140,19 @@ module.exports = function () {
     const created = new Date(profile.created)
     const joinYear = created.getUTCFullYear()
     const joinMonth = created.toLocaleString('en-us', { month: "long" })
-    // Get owner's list of datasets
-    const currentPage = req.query.page || 1
-    req.query.start = (currentPage - 1) * 10
-    delete req.query.page
-    const query = `fq=organization:${owner}`
-    const searchResponse = await Model.search(query)
-    const packages = JSON.parse(JSON.stringify(searchResponse.results))
-    delete searchResponse.results
-    const totalPages = Math.ceil(searchResponse.count / 10)
+    // Get datasets for this owner
+    if (req.query.q) {
+      req.query.q += ` organization:${owner}`
+    } else {
+      req.query.q = `organization:${owner}`
+    }
+    const result = await Model.search(req.query)
+    // Pagination
+    const from = req.query.from || 0
+    const size = req.query.size || 10
+    const total = result.count
+    const totalPages = Math.ceil(total / size)
+    const currentPage = parseInt(from, 10) / size + 1
     const pages = utils.pagination(currentPage, totalPages)
 
     res.render('owner.html', {
@@ -155,8 +161,7 @@ module.exports = function () {
       description: profile.description,
       avatar: profile.image_display_url || profile.image_url,
       joinDate: joinMonth + ' ' + joinYear,
-      result: searchResponse,
-      packages,
+      result,
       query: req.query ? req.query.q : '',
       totalPages,
       pages
