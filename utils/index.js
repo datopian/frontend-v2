@@ -121,6 +121,48 @@ module.exports.convertToStandardCollection = (descriptor) => {
 }
 
 
+module.exports.convertToCkanSearchQuery = (query) => {
+  const ckanQuery = {
+    q: '',
+    fq: '',
+    rows: '',
+    start: '',
+    sort: ''
+  }
+
+  // Our standard 'q' query => ckan like query with query and filter query:
+  // Eg, q='gdp tags:economy' => q=gdp&fq=tags:economy
+  const listOfQueries = query.q.split(' ')
+  listOfQueries.forEach(query => {
+    if (query.includes(':')) {
+      ckanQuery.fq += query
+    } else {
+      ckanQuery.q += query
+    }
+  })
+
+  // standard 'size' => ckan 'rows'
+  ckanQuery.rows = query.size || ''
+
+  // standard 'from' => ckan 'start'
+  ckanQuery.start = query.from || ''
+
+  // standard 'sort' => ckan 'sort'
+  if (query.sort && query.sort.constructor == Object) {
+    const sortQueries = []
+    for (let [key, value] of Object.entries(query.sort)) {
+      sortQueries.push(`${key} ${value}`)
+    }
+    ckanQuery.sort = sortQueries.join(',')
+  }
+
+  // Remove attributes with empty string, null or undefined values
+  Object.keys(ckanQuery).forEach((key) => (!ckanQuery[key]) && delete ckanQuery[key])
+
+  return ckanQuery
+}
+
+
 module.exports.pagination = (c, m) => {
   let current = c,
       last = m,

@@ -30,12 +30,38 @@ test('getListOfPosts api works', async t => {
 })
 
 
-test('Search api works', async t => {
+test('Search api works - simple case', async t => {
   t.plan(1)
 
-  const result = await DmsModel.search('q=co2')
+  const result = await DmsModel.search({q: 'co2'})
 
   t.is(result.count, 1)
+})
+
+
+test('Search api works - full case', async t => {
+  t.plan(1)
+
+  const result = await DmsModel.search(
+    {
+      q: 'co2 res_format:CSV',
+      size: 10,
+      from: 10,
+      sort: {
+        name: 'asc'
+      }
+    }
+  )
+
+  const expected = {
+    results: [],
+    count: 0,
+    sort: 'name asc',
+    facets: {},
+    search_facets: {}
+  }
+
+  t.deepEqual(result, expected)
 })
 
 

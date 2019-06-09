@@ -16,6 +16,18 @@ module.exports.initMocks = function() {
 
 
   nock('http://127.0.0.1:5000', {"encodedQueryParams":true})
+    .get('/api/3/action/package_search')
+    .query({"q":"co2","fq":"res_format%3ACSV","rows":"10","start":"10","sort":"name%20asc"})
+    .reply(200, {"help":"http://127.0.0.1:5000/api/3/action/help_show?name=package_search","success":true,"result":{"count":0,"sort":"name asc","facets":{},"results":[],"search_facets":{}}}, [ 'Server',
+    'PasteWSGIServer/0.5 Python/2.7.12',
+    'Date',
+    'Sun, 09 Jun 2019 10:31:41 GMT',
+    'Content-Type',
+    'application/json;charset=utf-8',
+    'Content-Length',
+    '187' ]);
+
+  nock('http://127.0.0.1:5000', {"encodedQueryParams":true})
     .persist()
     .get('/api/3/action/package_search')
     .query({"q":"co2", "start": 0})
