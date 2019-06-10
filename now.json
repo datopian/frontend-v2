@@ -6,6 +6,9 @@
       "use": "@now/node-server"
     }
   ],
+  "env": {
+    "NODE_ENV": "development"
+  },
   "routes": [
     {
       "src": "/(.*)",
