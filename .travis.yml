@@ -14,6 +14,6 @@ before_deploy:
 
 deploy:
   provider: script
-  script: now -t $NOW_TOKEN -A now.demo.json
+  script: now switch datopian1 -t $NOW_TOKEN && now -t $NOW_TOKEN -A now.demo.json
   on:
     branch: master
