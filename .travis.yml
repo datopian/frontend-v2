@@ -11,9 +11,10 @@ script:
 
 before_deploy:
   - npm i -g now
+  - now switch datopian1
 
 deploy:
   provider: script
-  script: now switch datopian1 -t $NOW_TOKEN && now -t $NOW_TOKEN -A now.demo.json
+  script: now -t $NOW_TOKEN -A now.demo.json && now -t $NOW_TOKEN -A now.eds.json
   on:
     branch: master
