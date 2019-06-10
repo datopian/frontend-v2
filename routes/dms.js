@@ -51,7 +51,7 @@ module.exports = function () {
       res.render('search.html', {
         title: 'Search',
         result,
-        query: req.query ? req.query.q : '',
+        query: req.query,
         totalPages,
         pages
       })

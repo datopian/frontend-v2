@@ -4,7 +4,7 @@
   <ul>
     {% for name, value in values %}
     <li class="border-t border-gray-100">
-      <a href="/search?q={{ facet }}:{{ name }} {{ query }}" class="filter-button" aria-label="{{ name }} ({{ value }} results)">
+      <a href="/search?q={{ facet }}:{{ name }} {{ query.q }}" class="filter-button" aria-label="{{ name }} ({{ value }} results)">
         {{ name }}
         <span class="filter-button_count">{{ value }}</span>
       </a>
