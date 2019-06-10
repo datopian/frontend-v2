@@ -24,7 +24,7 @@ module.exports.makeApp = function () {
   const app = express()
   app.set('config', config)
   app.set('port', config.get('app:port'))
-  if (config.get('state') === 'development') {
+  if (config.get('env') === 'development') {
     const mocks = require('./fixtures')
     mocks.initMocks()
   }
