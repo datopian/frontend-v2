@@ -9,6 +9,11 @@ install:
 script:
   - yarn test:report
 
-deploy:
+before_deploy:
   - npm i -g now
-  - now -t $NOW_TOKEN -A now.demo.json
+
+deploy:
+  provider: script
+  script: now -t $NOW_TOKEN -A now.demo.json
+  on:
+    branch: master
