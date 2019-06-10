@@ -126,9 +126,9 @@ test('getCollection api works', async t => {
 
   const expected = {
     name: name,
-    title: 'Test group',
-    summary: 'New description',
-    image: ''
+    title: 'Economic Data',
+    summary: 'A collection of economic indicators available on DataHub.',
+    image: 'https://datahub.io/static/img/awesome-data/economic-data.png'
   }
 
   t.deepEqual(result, expected)
