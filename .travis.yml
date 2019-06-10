@@ -8,3 +8,7 @@ install:
 
 script:
   - yarn test:report
+
+deploy:
+  - npm i -g now
+  - now -t $NOW_TOKEN -A now.demo.json
