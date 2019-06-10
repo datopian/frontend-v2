@@ -5,7 +5,7 @@
       "src": "index.js",
       "use": "@now/node-server",
       "env": {
-        "env": "staging",
+        "state": "staging",
         "API_URL": "https://demo.ckan.org/api/3/action/",
         "WP_URL": "https://edscms.home.blog/"
       }
@@ -14,7 +14,7 @@
       "src": "index.js",
       "use": "@now/node-server",
       "env": {
-        "env": "development",
+        "state": "development",
         "API_URL": "http://127.0.0.1:5000/api/3/action/",
         "WP_URL": "http://127.0.0.1:6000"
       }
@@ -23,7 +23,7 @@
       "src": "index.js",
       "use": "@now/node-server",
       "env": {
-        "env": "staging",
+        "state": "staging",
         "API_URL": "https://energidataservice.dk/api/3/action/",
         "WP_URL": "https://edscms.home.blog/"
       }
