@@ -3,13 +3,15 @@
   "builds": [
     {
       "src": "index.js",
-      "use": "@now/node-server"
+      "use": "@now/node-server",
+      "config": { "maxLambdaSize": "50mb" }
     }
   ],
   "env": {
     "NODE_ENV": "staging",
     "API_URL": "https://energidataservice.dk/api/3/action/",
-    "WP_URL": "https://edscms.home.blog/"
+    "WP_URL": "https://edscms.home.blog/",
+    "THEME": "eds"
   },
   "routes": [
     {
