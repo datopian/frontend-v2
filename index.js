@@ -28,12 +28,17 @@ module.exports.makeApp = function () {
     const mocks = require('./fixtures')
     mocks.initMocks()
   }
-  const viewsDir = config.get('VIEWS') || '/views'
-  app.set('views', path.join(__dirname, viewsDir))
 
   // Middlewares
-  const assetsDir = config.get('ASSETS') || '/public'
-  app.use('/static', express.static(path.join(__dirname, assetsDir)))
+  // Theme comes first so it overrides
+  const themeDir = config.get('THEME_DIR')
+  const themeName = config.get('THEME')
+  if (themeName) {
+    app.use('/static', express.static(path.join(__dirname, `${themeDir}/${themeName}/public`)))
+  }
+  // Default assets
+  app.use('/static', express.static(path.join(__dirname, '/public')))
+
   app.use(
     bodyParser.urlencoded({
       extended: true
@@ -74,7 +79,11 @@ module.exports.makeApp = function () {
     }
   })
 
-  const env = nunjucks.configure(app.get('views'), {
+  let views = app.get('views')
+  if (themeName) {
+    views = [views, `${themeDir}/${themeName}/views`]
+  }
+  const env = nunjucks.configure(views, {
     autoescape: true,
     express: app
   })
