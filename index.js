@@ -34,7 +34,7 @@ module.exports.makeApp = function () {
   const themeDir = config.get('THEME_DIR')
   const themeName = config.get('THEME')
   if (themeName) {
-    app.use('/static', express.static(path.join(__dirname, `${themeDir}/${themeName}/public`)))
+    app.use('/static', express.static(path.join(__dirname, `/${themeDir}/${themeName}/public`)))
   }
   // Default assets
   app.use('/static', express.static(path.join(__dirname, '/public')))
@@ -81,7 +81,8 @@ module.exports.makeApp = function () {
 
   let views = app.get('views')
   if (themeName) {
-    views = [views, `${themeDir}/${themeName}/views`]
+    const themeViews = path.join(__dirname, `/${themeDir}/${themeName}/views`)
+    views = [themeViews, views]
   }
   const env = nunjucks.configure(views, {
     autoescape: true,
