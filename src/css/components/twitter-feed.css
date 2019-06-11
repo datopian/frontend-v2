@@ -1,0 +1,30 @@
+.twitter-feed {
+  & li {
+    display: inline-flex;
+    flex-direction: column;
+    @apply bg-gray-100 p-10 my-6;
+  }
+
+  & a {
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    word-break: break-word;
+    @apply text-secondary;
+  }
+
+  & .interact {
+    @apply mt-4;
+    order: 99;
+    position: relative;
+    top: 0.4em;
+
+    & a {
+      @apply text-gray-500;
+      margin-right: 1em;
+    }
+  }
+
+  & .media {
+    @apply mt-4;
+  }
+}

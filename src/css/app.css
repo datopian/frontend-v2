@@ -12,5 +12,9 @@
 @import "components/breadcrumb";
 @import "components/filter";
 @import "components/site-footer";
+@import "components/featured-groups";
+@import "components/article-preview";
+@import "components/twitter-feed";
+@import "components/home";
 
 @import "tailwindcss/utilities";

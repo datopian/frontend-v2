@@ -2,7 +2,6 @@ const gulp = require('gulp');
 const postcss = require('gulp-postcss');
 const postcssPresetEnv = require('postcss-preset-env');
 const svgSprite = require('gulp-svg-sprite');
-const concat = require('gulp-concat');
 const nodemon = require('gulp-nodemon');
 
 // CSS
@@ -37,14 +36,6 @@ gulp.task('icons', function(done) {
 });
 
 
-// js
-gulp.task('js', function() {
-  return gulp.src('./src/js/*.js')
-    .pipe(concat('scripts.js'))
-    .pipe(gulp.dest('./public/js'));
-});
-
-
 // server
 gulp.task("server", cb => {
   let started = false;
@@ -74,12 +65,8 @@ gulp.task('watch:icons', function() {
   gulp.series('icons'));
 });
 
-gulp.task('watch:js', function() {
-  return gulp.watch(['./src/js/**/*.js'],
-  gulp.series('js'));
-});
 
-gulp.task('watch', gulp.parallel('watch:css', 'watch:icons', 'watch:js'));
+gulp.task('watch', gulp.parallel('watch:css', 'watch:icons'));
 
 // deafult task (this task is not completing..)
 gulp.task('default', gulp.parallel('watch', 'server'));
