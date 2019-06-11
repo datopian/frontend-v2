@@ -18,7 +18,7 @@ gulp.task('css', function () {
         require('tailwindcss'),
         require('cssnano')
       ]))
-    .pipe(gulp.dest('./public/stylesheets'));
+    .pipe(gulp.dest('./opendk/public/stylesheets'));
 });
 
 
@@ -32,7 +32,7 @@ gulp.task('icons', function(done) {
         }
       }
     ))
-    .pipe(gulp.dest('./views/partials'));
+    .pipe(gulp.dest('./opendk/views/partials'));
     done();
 });
 
@@ -41,7 +41,7 @@ gulp.task('icons', function(done) {
 gulp.task('js', function() {
   return gulp.src('./src/js/*.js')
     .pipe(concat('scripts.js'))
-    .pipe(gulp.dest('./public/js'));
+    .pipe(gulp.dest('./opendk/public/js'));
 });
 
 
