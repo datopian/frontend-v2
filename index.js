@@ -28,10 +28,12 @@ module.exports.makeApp = function () {
     const mocks = require('./fixtures')
     mocks.initMocks()
   }
-  app.set('views', path.join(__dirname, '/views'))
+  const viewsDir = config.get('VIEWS') || '/views'
+  app.set('views', path.join(__dirname, viewsDir))
 
   // Middlewares
-  app.use('/static', express.static(path.join(__dirname, '/public')))
+  const assetsDir = config.get('ASSETS') || '/public'
+  app.use('/static', express.static(path.join(__dirname, assetsDir)))
   app.use(
     bodyParser.urlencoded({
       extended: true
