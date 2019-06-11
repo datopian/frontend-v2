@@ -1,0 +1,127 @@
+{% macro r(dataset) -%}
+<p>If you are using R here's how to get the data you want quickly loaded:</p>
+<pre class="hljs"><code>install.packages(<span class="hljs-string">"jsonlite", repos="https://cran.rstudio.com/"</span>)
+<span class="hljs-keyword">library</span>(<span class="hljs-string">"jsonlite"</span>)
+
+json_file &lt;- <span class="hljs-string">'https://datahub.io/{{dataset.datahub.owner}}/{{dataset.name}}/datapackage.json'</span>
+json_data &lt;- fromJSON(paste(readLines(json_file), collapse=<span class="hljs-string">""</span>))
+
+<span class="hljs-comment"># get list of all resources:</span>
+print(json_data$resources$name)
+
+<span class="hljs-comment"># print all tabular data(if exists any)</span>
+<span class="hljs-keyword">for</span>(i <span class="hljs-keyword">in</span> <span class="hljs-number">1</span>:length(json_data$resources$datahub$type)){
+  <span class="hljs-keyword">if</span>(json_data$resources$datahub$type[i]==<span class="hljs-string">'derived/csv'</span>){
+    path_to_file = json_data$resources$path[i]
+    data &lt;- read.csv(url(path_to_file))
+    print(data)
+  }
+}
+</code></pre>
+<p><i><strong>Note:</strong> You might need to run the script with root permissions if you are running on Linux machine</i></p>
+{%- endmacro %}
+
+{% macro pandas(dataset) -%}
+<p>Install the Frictionless Data data package library and the pandas itself:</p>
+<pre class="hljs"><code>pip install datapackage
+pip install pandas
+</code></pre>
+
+<p>Now you can use the datapackage in the Pandas:</p>
+
+<pre class="hljs"><code><span class="hljs-keyword">import</span> datapackage
+<span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd
+
+data_url = <span class="hljs-string">'https://datahub.io/{{dataset.datahub.owner}}/{{dataset.name}}/datapackage.json'</span>
+
+<span class="hljs-comment"># to load Data Package into storage</span>
+package = datapackage.Package(data_url)
+
+<span class="hljs-comment"># to load only tabular data</span>
+resources = package.resources
+<span class="hljs-keyword">for</span> resource <span class="hljs-keyword">in</span> resources:
+    <span class="hljs-keyword">if</span> resource.tabular:
+        data = pd.read_csv(resource.descriptor[<span class="hljs-string">'path'</span>])
+        <span class="hljs-keyword">print</span> (data)
+</code></pre>
+{%- endmacro %}
+
+{% macro python(dataset) -%}
+<p>For Python, first install the `datapackage` library (all the datasets on DataHub are Data Packages):</p>
+
+<pre class="hljs"><code>pip install datapackage
+</code></pre>
+
+<p>To get Data Package into your Python environment, run following code:</p>
+
+<pre class="hljs"><code><span class="hljs-keyword">from</span> datapackage <span class="hljs-keyword">import</span> Package
+
+package = Package(<span class="hljs-string">'https://datahub.io/{{dataset.datahub.owner}}/{{dataset.name}}/datapackage.json'</span>)
+
+<span class="hljs-comment"># print list of all resources:</span>
+<span class="hljs-keyword">print</span>(package.resource_names)
+
+<span class="hljs-comment"># print processed tabular data (if exists any)</span>
+<span class="hljs-keyword">for</span> resource <span class="hljs-keyword">in</span> package.resources:
+    <span class="hljs-keyword">if</span> resource.descriptor['datahub']['type'] == 'derived/csv':
+        <span class="hljs-keyword">print</span>(resource.read())
+</code></pre>
+{%- endmacro %}
+
+{% macro javascript(dataset) -%}
+<p>If you are using JavaScript, please, follow instructions below:</p>
+<p>Install <code>data.js</code> module using <code>npm</code>:</p>
+<p>
+  <pre class="hljs">
+  <code>$ npm install data.js
+</code></pre>
+</p>
+<p>Once the package is installed, use the following code snippet:</p>
+<pre class="hljs"><code><span class="hljs-keyword">const</span> {Dataset} = <span class="hljs-built_in">require</span>(<span class="hljs-string">'data.js'</span>)
+
+<span class="hljs-keyword">const</span> path = <span class="hljs-string">'https://datahub.io/{{dataset.datahub.owner}}/{{dataset.name}}/datapackage.json'</span>
+
+<span class="hljs-comment">// We're using self-invoking function here as we want to use async-await syntax:</span>
+;<span class="hljs-function">(<span class="hljs-params"><span class="hljs-keyword">async</span> (</span>) =&gt;</span> {
+  <span class="hljs-keyword">const</span> dataset = <span class="hljs-keyword">await</span> Dataset.load(path)
+  <span class="hljs-comment">// get list of all resources:</span>
+  <span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> id <span class="hljs-keyword">in</span> dataset.resources) {
+    <span class="hljs-built_in">console</span>.log(dataset.resources[id]._descriptor.name)
+  }
+  <span class="hljs-comment">// get all tabular data(if exists any)</span>
+  <span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> id <span class="hljs-keyword">in</span> dataset.resources) {
+    <span class="hljs-keyword">if</span> (dataset.resources[id]._descriptor.format === <span class="hljs-string">"csv"</span>) {
+      <span class="hljs-keyword">const</span> file = dataset.resources[id]
+      <span class="hljs-comment">// Get a raw stream</span>
+      <span class="hljs-keyword">const</span> stream = <span class="hljs-keyword">await</span> file.stream()
+      <span class="hljs-comment">// entire file as a buffer (be careful with large files!)</span>
+      <span class="hljs-keyword">const</span> buffer = <span class="hljs-keyword">await</span> file.buffer
+      <span class="hljs-comment">// print data</span>
+      stream.pipe(process.stdout)
+    }
+  }
+})()
+</code></pre>
+{%- endmacro %}
+
+{% macro data_cli(dataset) -%}
+<p>
+  Use our <a href="/download">data-cli</a> tool designed for data wranglers:
+</p>
+
+<pre class="hljs"><code><span class="hljs-keyword">data get </span><span class="hljs-string">https://datahub.io/{{dataset.datahub.owner}}/{{dataset.name}}</span>
+<span class="hljs-keyword">data info </span><span class="hljs-string">{{dataset.datahub.owner}}/{{dataset.name}}</span>
+<span class="hljs-keyword">tree </span><span class="hljs-string">{{dataset.datahub.owner}}/{{dataset.name}}</span>
+</code></pre>
+{%- endmacro %}
+
+{% macro curl(dataset) -%}
+<pre class="hljs"><code><span class="hljs-comment"># Get a list of dataset's resources</span>
+<span class="hljs-keyword">curl</span> -L -s <span class="hljs-string">https://datahub.io/{{dataset.datahub.owner}}/{{dataset.name}}/datapackage.json</span> | <span class="hljs-keyword">grep</span> path
+
+<span class="hljs-comment"># Get resources</span>
+{% for resource in dataset.resources %}
+<span class="hljs-keyword">curl </span><span class="hljs-string">-L https://datahub.io/{{dataset.datahub.owner}}/{{dataset.name}}/r/{{loop.index0}}.{{resource.format}}</span>
+{% endfor %}
+</code></pre>
+{%- endmacro %}

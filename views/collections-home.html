@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block title%}{{title}}{% endblock %}
+
+{% block bodyclass %}awesome{% endblock %}
+
+{% block content %}
+<!-- collections list page test placeholder -->
+<section class="awesome-dashboard-heading">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12">
+        <h1 class="text-center">{{ title }}</h1>
+        <div class="col-sm-8 col-sm-offset-2">
+            <p class="text-center">{{ description }} <br/>
+              <span class="highlight-text"></span></p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!---------------------- Awesome Data cards ---------------------->
+
+
+<section class="data-cards">
+  <div class="container">
+
+    <div class="row">
+      {% for collection in collections %}
+      <div class="col-sm-4">
+        <div class="card-custom">
+          <div class="col-xs-2 pad-left-0 pad-right-0">
+            <img src="{{ collection.image }}">
+          </div>
+          <div class="col-xs-10">
+            <a href="/collections/{{ collection.name }}" class="title">{{ collection.title }}</a>
+            <p>{{ collection.summary }}</p>
+            <a href="/collections/{{ collection.name }}" class="view">View Collection</a>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% endblock %}

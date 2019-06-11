@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>
+      {% block title%}{{title}}{% endblock %}
+    </title>
+    <meta name="author" content="Datopian">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+    <link rel="stylesheet" media="screen" href="/static/stylesheets/app.css">
+    {% if dataset %}
+      <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.3/leaflet.css">
+    {% endif %}
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  </head>
+  <body class="{% block bodyclass %}{{bodyclass}}{% endblock %}">
+    <!-- Page header -->
+    <div class="navbar navbar-default">
+      <div class="container">
+        <div class="inner_container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="main-logo pull-left" href="/">
+              <img class="img-responsive" src="/static/img/datahub-cube-edited.svg">
+            </a>
+          </div>
+          <!--
+          <div class="nav navbar-nav searchbox">
+            <form class="form-inline" action="/search" method="GET">
+              <div class="form-group">
+                <input type="text" class="form-control" placeholder="Find data" name="q">
+              </div>
+            </form>
+          </div>
+          -->
+          <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav navbar-right">
+              <li>
+                <a href="/about">About</a>
+              </li>
+              <li>
+                <a href="/news">News</a>
+              </li>
+              <li>
+                <a href="/search" class="find-data join-link">Find data</a>
+              </li>
+              <li>
+                <a href="/collections">Collections</a>
+              </li>
+              <li>
+                <a href="/requests">Requests</a>
+              </li>
+              <li>
+                <a href="/docs">Docs</a>
+              </li>
+              <li>
+                <a href="/pricing">Pricing</a>
+              </li>
+              <li>
+                <a href="/download">Tools</a>
+              </li>
+              <li>
+                <a href="https://gitter.im/datahubio/chat" class="chat" target="_blank">Chat</a>
+              </li>
+  						<!--
+              <li>
+                <a href="/">DISCOVER</a>
+              </li>
+  						-->
+              {% if login %}
+                <li>
+                  <a class="nav-link nav-avatar" href="#" tabindex="0" data-toggle="popover" title=""
+                    data-content="<p><a href='/dashboard' class='a-popover'>Dashboard</a></p><p><a href='/logout' class='a-popover'>Logout</a></p>">
+                    <img src="" id="avatar" class="img-responsive img-circle nav-avatar" />
+                  </a>
+                </li>
+              {% else %}
+                <li>
+                  <a href="/login">Login</a>
+                </li>
+                <li>
+                  <a href="/login" class="join-link">Join free</a>
+                </li>
+              {% endif %}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- End of page header -->
+
+    <!-- Alert messages -->
+    {% if message.length > 0 %}
+    <div class="container">
+      <div class="inner_container">
+        <div class="alert alert-danger" role="alert">{{ message | safe }}</div>
+      </div>
+    </div>
+    {% endif %}
+    <!-- End of Alert messages -->
+
+    {% block content %}{{content}}{% endblock %}
+
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 col-sm-3">
+                    <img class="img-responsive" src="/static/img/datahub-cube-edited.svg" width=60>
+                    <br/>
+                    <p>At Datahub, we provide various solutions to Publish and Deploy your Data with power and simplicity. Datahub is the fastest way for individuals, teams and organizations to publish, deploy and share their data.</p>
+                </div>
+
+                <div class="col-sm-3 col-md-2 col-md-offset-1">
+                    <label>Links</label>
+                    <ul>
+                        <li>
+                            <a href="/">Home</a>
+                        </li>
+                        <li>
+                            <a href="/docs/terms-of-service">Terms of Service</a>
+                          </li>
+                        <li>
+                            <a href="/docs/privacy">Privacy Policy</a>
+                        </li>
+                        <li>
+                            <a href="http://docs.datahub.io/developers/api/">API</a>
+                        </li>
+                        <li>
+                            <a href="/news">News</a>
+                        </li>
+                        <li>
+                            <a href="https://old.datahub.io" target="_blank">Old DataHub</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="col-sm-2">
+                    <label>Support</label>
+                    <ul>
+                        <li>
+                            <a href="/requests">Request Data</a>
+                        </li>
+                        <li>
+                            <a href="https://gitter.im/datahubio/chat">Chat</a>
+                        </li>
+                        <li>
+                            <a href="/docs/faq">FAQ</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-sm-3 col-md-2 col-md-offset-1">
+                    <label>Contact</label>
+                    <ul>
+                        <li>
+                            <a href="mailto:support@datahub.io">support@datahub.io</a>
+                        </li>
+                        <!-- <li>
+                            <a href="#">+44 xxx xxxx</a>
+                        </li> -->
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- end of footer -->
+
+    {% block scripts %}{% endblock %}
+
+  </body>
+</html>

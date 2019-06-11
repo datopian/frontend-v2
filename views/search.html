@@ -1,0 +1,154 @@
+{% extends "base.html" %}
+{% import '_snippets.html' as snippets %}
+
+{% block title %}
+{{ title }}
+{% endblock %}
+
+{% block bodyclass %}search{% endblock %}
+
+{% block content %}
+<section class="search-page">
+  <div class="container">
+    <div class="inner-container">
+      <section class="heading">
+          <div class="row">
+            <div class="col-sm-1">
+              <img src="/static/img/find-data.png" class="section-logo">
+            </div>
+            <div class="col-sm-9">
+              <h1>Search for datasets</h1>
+              <p>There are thousands of datasets from financial market data and population growth to cryptocurrency prices. If you don’t find what you are looking for <a href="/requests">ask the Data Concierge</a> for a free quote for us to find you the data. </p>
+            </div>
+          </div>
+      </section>
+
+      <div class="col-sm-8 pad-left-zero pad-right-zero">
+          <!-- Form -->
+          <section class="search-section">
+              <div class="row">
+                <form class="search-form form form-inline" class="input-group col-xs-12" action="/search" method="GET">
+                  <div class="col-sm-9">
+                    <input type="text" class="form-control input-lg" placeholder="Search ..." name="q" value="{{ query.q }}" autofocus/>
+                  </div>
+                  <div class="col-sm-3">
+                    <button class="btn btn-primary" type="submit">Search</button>
+                  </div>
+
+                </form>
+              </div>
+
+              <div class="row">
+                <div class="col-sm-12">
+                  <h4 class="search-summary">
+                    {{ result.count }} datasets found
+                  </h4>
+                </div>
+              </div>
+          </section>
+          <!-- End of Form -->
+
+          <!-- Results -->
+          <section class="results">
+            <div class="package-summary-list">
+              {% for package in result.results  %}
+                <div class="row">
+                    <div class="col-sm-12 pad-xs-left-zero pad-xs-right-zero ">
+                        <div class="square">
+                          <div class="content">
+                            <div class="row">
+                              <div class="col-sm-8 pad-xs-left-zero pad-xs-right-zero">
+                                <a href="/{{ package.organization.name or 'dataset' }}/{{ package.name }}"><h3>{{ package.title or package.name }}</h3></a>
+                              </div>
+                              <div class="col-sm-4 pad-xs-left-zero pad-xs-right-zero">
+                                <span class="pull-right">
+                                  updated {{ package.metadata_modified.slice(0, 10) }}
+                                </span>
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col-sm-4 pad-xs-left-zero pad-xs-right-zero">
+                                <span>{{ package.name }}</span>
+                              </div>
+                              <div class="col-sm-8 pad-xs-left-zero pad-xs-right-zero">
+                                <ul class="pull-right">
+                                  <li>
+                                      <img src="/static/img/logo-cube03.png" class="img-responsive img-circle avatar" />
+                                      <a href="/{{ package.organization.name or 'dataset' }}"><span>{{ package.organization.name or 'dataset' }}</span></a>
+                                  </li>
+                                  <li><img src="/static/img/folder.png" class="img-icons"/><span>Files {{ package.resources|length }}</span></li>
+                                  <li><img src="/static/img/hard-disk.png" class="img-icons"/><span>N/A</span></li>
+                                </ul>
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col-sm-12 pad-xs-left-zero pad-xs-right-zero">
+                                  {% if package.readmeSnippet %}
+                                  <p class="readme">
+                                    {{ package.readmeSnippet }}
+                                    <a href="/{{ package.organization.name or 'dataset' }}/{{ package.name }}">
+                                      Explore Dataset <span>&rsaquo;</span>
+                                    </a>
+                                  </p>
+                                  {% elif package.readmeHtml %}
+                                  <p class="readme">
+                                    {{ package.readmeHtml|safe }}
+                                    <a href="/{{ package.organization.name or 'dataset' }}/{{ package.name }}">
+                                      Explore Dataset <span>&rsaquo;</span>
+                                    </a>
+                                  </p>
+                                  {% elif package.description %}
+                                  <p class="readme">
+                                    {% if package.description|length > 200 %}
+                                      {{ package.description|truncate(200) }}
+                                    {% else %}
+                                      {{ package.description }}
+                                    {% endif %}
+                                    <a href="/{{ package.organization.name or 'dataset' }}/{{ package.name }}">
+                                      Explore Dataset <span>&rsaquo;</span>
+                                    </a>
+                                  </p>
+                                  {% endif %}
+                              </div>
+                            </div>
+                          </div>
+                      </div>
+                    </div>
+                </div>
+              {% endfor %}
+              </div>
+          </section>
+
+          <!-- Pagination -->
+          {% if result.count > 10 %}
+            <nav aria-label="Datasets" class="text-center">
+              <ul class="pagination">
+                <li class="page-item">
+                  <a class="page-link" href="/search?q={{ query.q }}&from=0" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                    <span class="sr-only">Previous</span>
+                  </a>
+                </li>
+                {% for page in pages %}
+                  {% if page == '...' %}
+                  <li class="page-item disabled"><span class="page-link">{{page}}</span></li>
+                  {% else %}
+                  <li class="page-item {{ 'current-page' if currentPage == page }}"><a class="page-link" href="/search?q={{ query.q }}&from={{ (page - 1) * 10 }}">{{page}}</a></li>
+                  {% endif %}
+                {% endfor %}
+                <li class="page-item">
+                  <a class="page-link" href="/search?q={{ query.q }}&from={{ result.count - (result.count % 10) | int }}" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                    <span class="sr-only">Next</span>
+                  </a>
+                </li>
+              </ul>
+            </nav>
+          {% endif %}
+          <!-- end of pagination -->
+      </div>
+
+    </div>
+  </div>
+</section>
+{% endblock %}
