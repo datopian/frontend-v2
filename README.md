@@ -37,7 +37,7 @@ Note: Unless you are making significant changes to the design, you probably won'
 
 *By default, the app runs against mocked API so you don't need to setup your own backend.*
 
-To change environment variables, you can rename `env.template` as `.env` and set the values.
+To change environment variables, you can rename `env.template` as `.env` and set the values. To unmock backends, you need to set `NODE_ENV` environment variable, e.g., `NODE_ENV=staging`.
 
 ### DMS
 
