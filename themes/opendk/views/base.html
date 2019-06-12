@@ -11,6 +11,7 @@
     {% if dataset %}
       <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.3/leaflet.css">
     {% endif %}
+    {% block styles %}{% endblock %}
   </head>
   <body class="{% block bodyclass %}{{bodyclass}}{% endblock %}">
     <div id="page" class="flex flex-col justify-between min-h-screen">
@@ -18,8 +19,8 @@
         <!-- Page header -->
         <header>
           <div class="container mx-auto lg:flex justify-between p-gutter items-center relative">
-            <a href="/">
-              <img src="static/img/logo.svg" alt="Open Data DK" class="h-6" />
+            <a href="/" class="flex content-center h-8 mr-16">
+              <img src="/static/img/logo.svg" alt="Open Data DK" class="lg:h-6 max-w-full" />
             </a>
 
             <button id="nav-toggle" class="absolute top-0 right-0 p-gutter outline-none focus:outline-none focus:text-secondary lg:hidden invisible">
@@ -127,7 +128,39 @@
       {% include "./partials/symbol/svg/sprite.symbol.svg" %}
     </div>
 
-    <script src="static/js/scripts.js"></script>
+    <script>
+      // nav
+      var navToggle = document.getElementById("nav-toggle");
+      var navTarget = navToggle.nextElementSibling;
+
+      // show toggle
+      navToggle.classList.remove("invisible");
+
+      // hide nav
+      navTarget.setAttribute("data-expanded", "false");
+
+      // toggle nav
+      navToggle.onclick = function() {
+        let expanded = navToggle.getAttribute('aria-expanded') === 'true' || false;
+        navToggle.setAttribute('aria-expanded', !expanded);
+        navTarget.setAttribute("data-expanded", !expanded);
+      }
+
+
+      // search
+      // replace link with a button
+      var searchLink = document.getElementById("search-link");
+      var searchButton = document.createElement("button");
+      searchButton.setAttribute("id", "show-search");
+
+      while (searchLink.childNodes.length > 0) {
+        searchButton.appendChild(searchLink.childNodes[0]);
+      }
+
+      searchLink.replaceWith(searchButton);
+
+      // TODO: implement a modal
+    </script>
     {% block scripts %}{% endblock %}
   </body>
 </html>

@@ -1,5 +1,4 @@
 {% extends "base.html" %}
-{% import '_snippets.html' as snippets %}
 
 {% block title %}
 {{ title }}
@@ -15,7 +14,7 @@
         <a class="breadcrumb_link" href="/">Home</a>
       </li>
       <li class="breadcrumb_item">
-        <a class="breadcrumb_link" href="/search" aria-current="page">Search</a>
+        <a class="breadcrumb_link" href="/dataset" aria-current="page">Datasets</a>
       </li>
     </ol>
   </nav>
@@ -28,6 +27,7 @@
 
   <div class="search-filters md:w-1/3 md:mr-gutter">
     {% include "./partials/search-filter.njk" %}
+    {% include "./partials/search-filter.njk" %}
   </div>
 
   <main class="md:w-2/3">
@@ -35,7 +35,7 @@
     <!-- Form -->
     <form action="/search" method="GET">
       <div class="relative mb-10">
-        <input type="text" class="border-2 border-solid border-gray-100 py-4 pl-4 pr-20 text-xl outline-none focus:border-secondary w-full" placeholder="Search datasets" name="q" value="{{ query.q }}" autofocus>
+        <input type="text" class="border-2 border-solid border-gray-100 py-4 pl-4 pr-20 text-xl outline-none focus:border-secondary w-full" placeholder="Search datasets">
 
         <button class="absolute inset-y-0 right-0 w-16 px-4 text-secondary fill-current" type="submit" aria-label="Submit">
           <svg class="w-full h-full"><use xlink:href="#search" /></svg>
@@ -48,11 +48,11 @@
         <div>
           <label for="field-order-by">Order by:</label>
           <select class="bg-white" id="field-order-by" name="sort">
-            <option value="score:desc" {% if query.sort == "score:desc" %}selected="selected"{% endif %}>Relevance</option>
-            <option value="title_string:asc" {% if query.sort == "title_string:asc" %}selected="selected"{% endif %}>Name Ascending</option>
-            <option value="title_string:desc" {% if query.sort == "title_string:desc" %}selected="selected"{% endif %}>Name Descending</option>
-            <option value="metadata_modified:desc" {% if query.sort == "metadata_modified:desc" %}selected="selected"{% endif %}>Last Modified</option>
-            <option value="views_recent:desc" {% if query.sort == "views_recent:desc" %}selected="selected"{% endif %}>Popular</option>
+            <option value="score desc, metadata_modified desc" selected="selected">Relevance</option>
+            <option value="title_string asc">Name Ascending</option>
+            <option value="title_string desc">Name Descending</option>
+            <option value="metadata_modified desc">Last Modified</option>
+            <option value="views_recent desc">Popular</option>
           </select>
         </div>
       </div>
@@ -71,7 +71,7 @@
     <!-- End of Form -->
 
     <ul>
-      {% for package in result.results  %}
+      {% for package in packages  %}
       <li class="mt-10">
         <div>
           <h3 class="text-2xl font-semibold text-primary">
@@ -102,13 +102,12 @@
         </div>
 
         <ul class="mt-2">
-          {% for resource in package.resources %}
-          {% if resource.format %}
           <li class="inline">
-            <a href="/{{ package.organization.name or 'dataset' }}/{{ package.name }}" data-format="{{ resource.format }}" class="bg-gray-100 text-sm text-gray-500 px-2 py-1">{{ resource.format }}</a>
+            <a href="#" data-format="geojson" class="bg-gray-100 text-sm text-gray-500 px-2 py-1">GeoJSON</a>
           </li>
-          {% endif %}
-          {% endfor %}
+          <li class="inline">
+            <a href="#" data-format="csv" class="bg-gray-100 text-sm text-gray-500 px-2 py-1">CSV</a>
+          </li>
         </ul>
       </li>
       {% endfor %}
@@ -119,7 +118,7 @@
       <nav aria-label="Datasets" class="mt-gutter pt-gutter text-sm">
         <ul class="inline-flex border border-gray-100">
           <li class="border border-gray-100">
-            <a class="block px-3 py-2" href="/search?q={{ query.q }}&from=0" aria-label="Previous">
+            <a class="block px-3 py-2" href="/search?q={{ query }}&page=1" aria-label="Previous">
               <span class="">Previous</span>
             </a>
           </li>
@@ -130,12 +129,12 @@
             </li>
             {% else %}
             <li class="border border-gray-100">
-              <a class="block px-3 py-2 {{ 'bg-secondary' if currentPage == page }}" href="/search?q={{ query.q }}&from={{ (page - 1) * 10 }}">{{page}}</a>
+              <a class="block px-3 py-2 {{ 'bg-secondary' if currentPage == page }}" href="/search?q={{ query }}&page={{ page }}">{{page}}</a>
             </li>
             {% endif %}
           {% endfor %}
           <li class="border border-gray-100">
-            <a class="block px-3 py-2" href="/search?q={{ query.q }}&from={{ result.count - (result.count % 10) | int }}" aria-label="Next">
+            <a class="block px-3 py-2" href="/search?q={{ query }}&page={{ totalPages }}" aria-label="Next">
               <span class="">Next</span>
             </a>
           </li>
@@ -146,4 +145,24 @@
 
   </main>
 </div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  var filterToggle = document.getElementById("filter-toggle");
+  var filterTarget = filterToggle.nextElementSibling;
+
+  // hide filters
+  filterTarget.setAttribute("data-expanded", "false");
+
+  // show toggle
+  filterToggle.classList.remove("invisible");
+
+  // toggle filters with button
+  filterToggle.onclick = function() {
+    let expanded = filterToggle.getAttribute('aria-expanded') === 'true' || false;
+    filterToggle.setAttribute('aria-expanded', !expanded);
+    filterTarget.setAttribute("data-expanded", !expanded);
+  }
+</script>
 {% endblock %}
