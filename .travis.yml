@@ -14,6 +14,6 @@ before_deploy:
 
 deploy:
   provider: script
-  script: now -t $NOW_TOKEN -A now.demo.json -S datopian1 && now -t $NOW_TOKEN -A now.eds.json -S datopian1
+  script: now alias frontend-v2-anuveyatsu.datopian1.now.sh frontend-v2-demo.now.sh -t $NOW_TOKEN -A now.demo.json -S datopian1 && now alias frontend-v2-anuveyatsu.datopian1.now.sh frontend-v2-eds.now.sh -t $NOW_TOKEN -A now.eds.json -S datopian1
   on:
     branch: master

@@ -18,6 +18,5 @@
       "src": "/(.*)",
       "dest": "/index.js"
     }
-  ],
-  "alias": "frontend-v2-eds.now.sh"
+  ]
 }
