@@ -1,0 +1,49 @@
+/*
+*
+* Energy DataStore - Energinet.dk
+* version: 1.0
+* ==============================================================================
+* Banner
+*
+*/
+
+@banner-wrapper-height: 200px;
+@banner-wrapper-bg: #097E82;
+@font-size-banner-title: 48px;
+.banner-wrapper {
+    .text-center;
+    font-weight: 300;
+    color: @body-bg;
+    background: @banner-wrapper-bg url("@{image-path}/eds-banner.png") center no-repeat;
+    background-size: cover;
+}
+
+.banner-flex-center {
+    /* Required for IE 10/11 - start */
+    display: -ms-flexbox;
+    -ms-flex-direction: column;
+    -ms-flex-align: center;
+    -ms-flex-pack: center;
+    /* Required for IE 10/11 - end */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    @media (min-width: @screen-md-min) {
+        height: @banner-wrapper-height; /* Required for IE 10/11 - end */
+        min-height: @banner-wrapper-height;
+    }
+}
+
+.banner-title {
+    max-width: 100%; /* Required for IE 10/11 - end */
+    .text-uppercase;
+    font-weight: inherit;
+    flex-shrink: 1;
+    font-size: @font-size-banner-title;
+}
+
+.banner-lead {
+    font-size: @font-size-large;
+    font-weight: 400;
+}

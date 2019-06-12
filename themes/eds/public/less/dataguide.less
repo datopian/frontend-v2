@@ -1,0 +1,82 @@
+/*
+*
+* Energy DataStore - Energinet.dk
+* version: 1.0
+* ==============================================================================
+* Data Guide
+*
+*/
+
+@dataguide-icon-filter: grayscale(100%) brightness(1000%);
+
+.convert-to-white{
+    -moz-filter: @dataguide-icon-filter;
+    -webkit-filter: @dataguide-icon-filter;
+    filter: @dataguide-icon-filter;
+};
+
+.dataguide-wrapper {
+    .text-center;
+    font-weight: 300;
+    color: @body-bg;
+
+    background: @color-primary-04; // padding: @grid-gutter-width 0;
+    padding-top: @grid-gutter-width;
+    padding-bottom: @grid-gutter-width;
+    .media-grid {
+        margin: 0;
+        -ms-flex-pack: center;
+        justify-content: center;
+    }
+    .media-item {
+        padding: 0;
+        background: transparent;
+        margin: @grid-gutter-width/3 @grid-gutter-width/2;
+        flex: 0 0 auto;
+        @media (min-width: @screen-sm-min) {
+            width: calc(100%/4);
+        }
+        @media (min-width: @screen-md-min) {
+            width: calc(100%/8); // Consider the left & right margins!
+        }
+    }
+    .module-heading {
+        padding: @grid-gutter-width/3 0;
+
+        a{
+            font-weight: 400;
+            color: @color-white;
+        }
+    }
+    .media-heading {
+        .h5;
+        word-break: normal;
+        word-wrap: break-word;
+        -moz-hyphens: none;
+        -webkit-hyphens: none;
+        -ms-hyphens: none;
+        hyphens: none;
+    }
+
+    .module-image{
+        img{
+            .convert-to-white;
+        }
+    }
+}
+
+.dataguide-item {
+    .text-uppercase;
+    display: block;
+    text-align: center;
+    padding: @grid-gutter-width/2 @grid-gutter-width/2 0;
+}
+
+.dataguide-icon {
+    max-width: 60%;
+}
+
+.dataguide-lead {
+    font-size: @font-size-large;
+    .text-uppercase;
+}

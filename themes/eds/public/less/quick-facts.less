@@ -1,0 +1,92 @@
+/*
+*
+* Energy DataStore - Energinet.dk
+* version: 1.0
+* ==============================================================================
+* Quick Facts
+*
+*/
+
+@quick-fact-wrapper-background: #F0EFEF;
+.quick-facts-form {
+    .col-md-6:nth-child(2n+1) {
+        clear: both;
+    }
+}
+
+.c3chart {
+    background: @quick-fact-wrapper-background;
+}
+
+.c3-axis {
+    fill: @color-primary-04;
+    path,
+    line {
+        stroke: @color-primary-04;
+    }
+}
+
+.c3-grid {
+    stroke: @color-primary-04;
+}
+
+.quick-facts-wrapper {
+    color: @color-primary-04;
+    padding-top: @grid-gutter-width;
+    padding-bottom: @grid-gutter-width;
+    background-color: @quick-fact-wrapper-background;
+    .section-title {
+        margin-bottom: @grid-gutter-width;
+        .text-uppercase;
+        font-weight: 300;
+        font-size: @font-size-h3;
+    }
+}
+
+.quick-fact-graph {
+    .text-center;
+    width: 100%;
+    min-height: @grid-gutter-width * 4;
+    svg {
+        font-family: @font-family-base;
+    }
+}
+
+.quick-fact-title {
+    display: block;
+    margin-top: @grid-gutter-width/2;
+    color: @color-primary-04;
+    .text-uppercase;
+    font-weight: 300;
+    font-size: @font-size-h4;
+    margin: @grid-gutter-width/2 0 0;
+}
+
+.panel-quick-fact-preview {
+    min-height: @grid-gutter-width*5;
+    overflow: hidden;
+    position: relative;
+    border-color: @color-secondary-03;
+    .panel-heading {
+        background: @color-secondary-03;
+    }
+    &:before {
+        font-size: 200%;
+        color: @color-primary-02;
+        text-align: center;
+        display: block;
+        position: absolute;
+        top: 50%;
+        right: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        content: @fa-var-pie-chart;
+        font-family: 'FontAwesome';
+    }
+}
+.quick-fact-lead {
+    font-size: @font-size-large;
+    text-align: center;
+    .text-uppercase;
+}

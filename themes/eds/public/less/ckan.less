@@ -1,0 +1,161 @@
+@import "variables.less";
+@import "custom.less";
+@import "mixins.less";
+@import "module.less";
+@import "media.less";
+@import "nav.less";
+@import "navbar.less";
+@import "forms.less";
+@import "dataset.less";
+@import "search.less";
+@import "group.less";
+@import "toolbar.less";
+@import "prose.less";
+@import "icons.less";
+@import "layout.less";
+@import "homepage.less";
+@import "masthead.less";
+@import "footer.less";
+@import "tables.less";
+@import "profile.less";
+@import "activity.less";
+@import "dropdown.less";
+@import "dashboard.less";
+@import "resource-view.less";
+@import "banner.less";
+@import "datapusher.less";
+@import "dataguide.less";
+@import "dataexplorer.less";
+@import "quick-facts.less";
+@import "info.less";
+
+body {
+  background: @color-primary-02;
+}
+
+[hidden] {
+  display: none;
+}
+
+/*table {
+  table-layout: fixed;
+}*/
+
+thead th {
+  vertical-align: middle;
+}
+
+.table > tbody > tr > td{
+  vertical-align: middle;
+}
+
+td{
+  label{
+    margin-bottom: 0;
+    font-weight: 400;
+  }
+
+  .list-inline{
+    margin-bottom: 0;
+  }
+}
+
+td, th {
+  word-wrap: break-word;
+}
+
+table .metric {
+  width: 140px;
+}
+
+code {
+  color: @code-color;
+  border: none;
+  background: none;
+  white-space: normal;
+}
+
+pre {
+  border: none;
+  background: none;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+mark {
+  background: @highlight-bg;
+}
+
+blockquote p {
+  font-size: 1em;
+}
+
+iframe {
+  border: none;
+}
+
+.embedded-content h1 {
+  font-size: 1.4em;
+}
+
+.embedded-content h2 {
+  font-size: 1.4em;
+}
+
+.embedded-content h3 {
+  font-size: 1.2em;
+}
+
+.popular {
+  text-indent: -999em;
+}
+
+.empty {
+  color: @gray-light;
+  font-style: italic;
+}
+
+.page-heading {
+  // margin-top: 0;
+  margin-bottom: @grid-gutter-width/2;
+}
+
+.m-top {
+  margin-top: @grid-gutter-width/2;
+}
+.m-left {
+  margin-left: @grid-gutter-width/2;
+}
+.m-right {
+  margin-right: @grid-gutter-width/2;
+}
+.m-bottom {
+  margin-bottom: @grid-gutter-width/2;
+}
+.no-margin {
+  margin: 0;
+}
+.reduced-margin {
+  margin: 3px 5px;
+}
+
+.p-top {
+  padding-top: @grid-gutter-width/2;
+}
+.p-left {
+  padding-left: @grid-gutter-width/2;
+}
+.p-right {
+  padding-right: @grid-gutter-width/2;
+}
+.p-bottom {
+  padding-bottom: @grid-gutter-width/2;
+}
+.no-padding {
+  padding: 0;
+}
+.reduced-padding {
+  padding: 3px 5px;
+}
+
+// @import "iehacks.less";

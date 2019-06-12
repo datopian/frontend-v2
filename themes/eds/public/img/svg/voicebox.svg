@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   id="Layer_1"
+   data-name="Layer 1"
+   viewBox="0 0 129.35001 129.35"
+   version="1.1"
+   sodipodi:docname="voicebox.svg"
+   width="129.35001"
+   height="129.35001"
+   inkscape:version="0.92.0 r15299">
+  <metadata
+     id="metadata3752">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title>Ikoner</dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1244"
+     inkscape:window-height="710"
+     id="namedview3750"
+     showgrid="false"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:zoom="1.6968651"
+     inkscape:cx="115.65644"
+     inkscape:cy="48.987141"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="Layer_1" />
+  <defs
+     id="defs3743">
+    <style
+       id="style3741">.cls-1{fill:none;stroke:#018c8c;stroke-miterlimit:10;stroke-width:5px;}</style>
+  </defs>
+  <title
+     id="title3745">Ikoner</title>
+  <path
+     class="cls-1"
+     d="M 118.75,19.836433 H 10.6 a 8.1,8.1 0 0 0 -8.1000001,8.1 v 55.549999 a 8.1,8.1 0 0 0 8.1000001,8.1 h 66.83 l 20.6,16.159998 4.58,-16.159998 h 16.14 a 8.09,8.09 0 0 0 8.1,-8.1 V 27.936433 a 8.1,8.1 0 0 0 -8.1,-8.1 z"
+     id="path3747"
+     inkscape:connector-curvature="0"
+     style="fill:none;stroke:#018c8c;stroke-width:5px;stroke-miterlimit:10" />
+</svg>

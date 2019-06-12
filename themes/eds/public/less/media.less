@@ -1,0 +1,185 @@
+// Banner
+.banner {
+    .transform(rotate(45deg));
+    .transform-origin(center, center);
+    position: absolute;
+    top: 15px;
+    right: -35px;
+    width: 80px;
+    color: @body-bg;
+    background-color: @masthead-bg;
+    padding: 1px 20px;
+    font-size: 11px;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.media-grid {
+    &.masonry {
+        width: 100%;
+        .clearfix;
+        .masonry-brick {
+            position: relative !important;
+            height: auto !important;
+            left: auto !important;
+            top: auto !important;
+            bottom: auto !important;
+            right: auto !important;
+            float: left; // width: 15%;
+        }
+    }
+    &:last-child {
+        margin-top: @grid-gutter-width/3;
+    }
+    display: -ms-flexbox; // Required for < Internet Explorer 11
+    display: flex;
+    -ms-flex-align: start; // Required for < Internet Explorer 11
+    align-items: flex-start;
+    -ms-flex-pack: flex-start; // Required for < Internet Explorer 11
+    justify-content: flex-start;
+    -ms-flex-direction: row; // Required for < Internet Explorer 11
+    flex-direction: row;
+    -ms-flex-wrap: wrap; // Required for < Internet Explorer 11
+    flex-wrap: wrap;
+    .list-unstyled; 
+}
+
+.media-item {
+    text-align: center;
+    position: relative;
+    flex: 0 0 auto;
+    width: calc(60% - @grid-gutter-width/2);
+    @media (min-width: @screen-sm-min) {
+        width: 195px;
+    }
+    @media (min-width: @screen-md-min) {
+        width: calc(100%/4);
+    }
+    @media (min-width: @screen-lg-min) {
+        width: calc(100%/5.5);
+    }
+    padding: @grid-gutter-width/2;
+    margin: @grid-gutter-width/2 @grid-gutter-width/2 0 0;
+    background-color: white;
+    .border-radius(3px);
+    p {
+        .text-muted;
+    }
+    span.count {
+        color: #999;
+    }
+    .media-image {
+        margin-top: @grid-gutter-width/2;
+        margin-bottom: @grid-gutter-width/6;
+    }
+    .media-edit {
+        opacity: 0;
+        position: absolute;
+        right: 15px;
+        bottom: 15px;
+        .transition(opacity 0.2s ease-in);
+    }
+    &:hover {
+        z-index: 1;
+        .media-edit {
+            opacity: 1;
+        }
+    }
+}
+
+.media-view {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border: 5px solid @panel-default-border;
+    overflow: hidden;
+    .transition(all 0.2s ease-in);
+    .border-radius(3px);
+    &:hover,
+    &.hovered {
+        cursor: pointer;
+        border-color: fade(@color-primary-02, 80%); //.box-shadow(0 0 0 4px rgba(0, 0, 0, 0.1));
+        .banner {
+            background-color: @masthead-bg;
+        }
+    }
+    span {
+        display: none;
+    }
+    .banner {
+        display: block;
+        background-color: darken(@panel-default-border, 15%);
+        .transition(background-color 0.2s ease-in);
+    }
+}
+
+.media-image {
+    .border-radius(4px);
+    max-height: @grid-gutter-width*3;
+    &,
+    img {
+        //min-width: 100%;
+        max-width: 100%;
+    }
+    img {
+        height: auto;
+    }
+}
+
+.media-heading {
+    .h4;
+    margin: @grid-gutter-width/2 0;
+    font-weight: 700;
+    .break-word();
+}
+
+// Overlay
+.media-overlay {
+    position: relative;
+    min-height: 35px; // Min height for the heading.
+}
+
+.media-overlay .media-heading {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 12px 10px;
+    margin: 0;
+    background-color: #000;
+    background-color: rgba(0, 0, 0, 0.8);
+    font-size: 13px;
+    color: @body-bg;
+    z-index: 1;
+    .border-radius(0 0 3px 3px);
+}
+
+.media-overlay .media-image {
+    float: none;
+    display: block;
+    margin-right: 0;
+}
+
+.media-item.is-expander {
+    .truncator-link {
+        .transition(opacity 0.2s ease-in);
+        position: absolute;
+        z-index: 10;
+        left: 15px;
+        bottom: 15px;
+        opacity: 0;
+    }
+    &:hover {
+        padding-bottom: @grid-gutter-width + 5;
+        .truncator-link {
+            opacity: 1;
+        }
+    }
+}
+
+
+/*.wide .media-item {
+    width: 186px;
+}*/
