@@ -28,6 +28,8 @@ module.exports.makeApp = function () {
     const mocks = require('./fixtures')
     mocks.initMocks()
   }
+  // Explicitely set views location - this is needed for Zeit to work
+  app.set('views', path.join(__dirname, '/views'))
 
   // Middlewares
   // Theme comes first so it overrides
