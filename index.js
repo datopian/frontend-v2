@@ -15,12 +15,6 @@ const dmsRoutes = require('./routes/dms')
 const cmsRoutes = require('./routes/cms')
 
 module.exports.makeApp = function () {
-  i18n.configure({
-    locales: ['en'],
-    cookie: 'defaultLocale',
-    directory: __dirname+'/locales'
-  })
-
   const app = express()
   app.set('config', config)
   app.set('port', config.get('app:port'))
@@ -30,6 +24,18 @@ module.exports.makeApp = function () {
   }
   // Explicitely set views location - this is needed for Zeit to work
   app.set('views', path.join(__dirname, '/views'))
+
+  // i18n
+  let locales = ['en']
+  if (config.get('LOCALES')) {
+    locales = config.get('LOCALES').split(',')
+  }
+  const translationsDir = config.get('TRANSLATIONS') || '/i18n'
+  i18n.configure({
+    locales,
+    cookie: 'defaultLocale',
+    directory: __dirname + translationsDir
+  })
 
   // Middlewares
   // Theme comes first so it overrides
