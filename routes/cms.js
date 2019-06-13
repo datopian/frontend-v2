@@ -25,6 +25,13 @@ module.exports = function () {
     // Get the post using slug
     let slug = [req.params.parent, req.params.page].join('/')
     slug = slug.startsWith('/') ? slug.substr(1) : slug
+    // Locale of request, eg, 'en'
+    const locale = req.getLocale()
+    // To handle content in multiple languages, we create a page per language
+    // on WordPress with a suffix in a slug, e.g., if locale is 'da' => 'page-da'
+    if (locale !== 'en') {
+      slug += `-${locale}`
+    }
     try {
       const post = await Model.getPost(slug)
       res.render('static.html', {
