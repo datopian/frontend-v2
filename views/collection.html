@@ -37,44 +37,23 @@
           </div>
           <div class="col-sm-6">
             <form class="search-form form form-inline" class="input-group col-xs-12" action="/{{ item.name }}" method="GET">
-              <input type="text" class="form-control" placeholder="Search..." name="q" value="{{ query }}" required autofocus/>
+              <input type="text" class="form-control" placeholder="Search..." name="q" value="{{ query.q }}" required autofocus/>
             </form>
           </div>
         </div>
 
         <div id="publisher-package-list">
 
-          {% if packages|length > 0 %}
+          {% if result.count > 0 %}
             <section class="search-page">
               <section class="results">
-                {{ snippets.package_list_show(packages) }}
+                {{ snippets.package_list_show(result.results) }}
               </section>
             </section>
             <!-- Pagination -->
             {% if result.count > 10 %}
-              <nav aria-label="Datasets">
-                <ul class="pagination">
-                  <li class="page-item">
-                    <a class="page-link" href="/{{ item.name }}?{{ query }}&page=1" aria-label="Previous">
-                      <span aria-hidden="true">&laquo;</span>
-                      <span class="sr-only">Previous</span>
-                    </a>
-                  </li>
-                  {% for page in pages %}
-                    {% if page == '...' %}
-                    <li class="page-item disabled"><span class="page-link">{{page}}</span></li>
-                    {% else %}
-                    <li class="page-item {{ 'current-page' if currentPage == page }}"><a class="page-link" href="/{{ item.name }}?q={{ query }}&page={{ page }}">{{page}}</a></li>
-                    {% endif %}
-                  {% endfor %}
-                  <li class="page-item">
-                    <a class="page-link" href="/{{ item.name }}?{{ query }}&page={{ totalPages }}" aria-label="Next">
-                      <span aria-hidden="true">&raquo;</span>
-                      <span class="sr-only">Next</span>
-                    </a>
-                  </li>
-                </ul>
-              </nav>
+              {% set path = 'collections/' + item.name %}
+              {{ snippets.pagination(query.q, pages, result, path) }}
             {% endif %}
             <!-- end of pagination -->
           {% endif %}

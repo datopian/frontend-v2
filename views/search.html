@@ -50,100 +50,12 @@
 
           <!-- Results -->
           <section class="results">
-            <div class="package-summary-list">
-              {% for package in result.results  %}
-                <div class="row">
-                    <div class="col-sm-12 pad-xs-left-zero pad-xs-right-zero ">
-                        <div class="square">
-                          <div class="content">
-                            <div class="row">
-                              <div class="col-sm-8 pad-xs-left-zero pad-xs-right-zero">
-                                <a href="/{{ package.organization.name or 'dataset' }}/{{ package.name }}"><h3>{{ package.title or package.name }}</h3></a>
-                              </div>
-                              <div class="col-sm-4 pad-xs-left-zero pad-xs-right-zero">
-                                <span class="pull-right">
-                                  updated {{ package.metadata_modified.slice(0, 10) }}
-                                </span>
-                              </div>
-                            </div>
-                            <div class="row">
-                              <div class="col-sm-4 pad-xs-left-zero pad-xs-right-zero">
-                                <span>{{ package.name }}</span>
-                              </div>
-                              <div class="col-sm-8 pad-xs-left-zero pad-xs-right-zero">
-                                <ul class="pull-right">
-                                  <li>
-                                      <img src="/static/img/logo-cube03.png" class="img-responsive img-circle avatar" />
-                                      <a href="/{{ package.organization.name or 'dataset' }}"><span>{{ package.organization.name or 'dataset' }}</span></a>
-                                  </li>
-                                  <li><img src="/static/img/folder.png" class="img-icons"/><span>Files {{ package.resources|length }}</span></li>
-                                  <li><img src="/static/img/hard-disk.png" class="img-icons"/><span>N/A</span></li>
-                                </ul>
-                              </div>
-                            </div>
-                            <div class="row">
-                              <div class="col-sm-12 pad-xs-left-zero pad-xs-right-zero">
-                                  {% if package.readmeSnippet %}
-                                  <p class="readme">
-                                    {{ package.readmeSnippet }}
-                                    <a href="/{{ package.organization.name or 'dataset' }}/{{ package.name }}">
-                                      Explore Dataset <span>&rsaquo;</span>
-                                    </a>
-                                  </p>
-                                  {% elif package.readmeHtml %}
-                                  <p class="readme">
-                                    {{ package.readmeHtml|safe }}
-                                    <a href="/{{ package.organization.name or 'dataset' }}/{{ package.name }}">
-                                      Explore Dataset <span>&rsaquo;</span>
-                                    </a>
-                                  </p>
-                                  {% elif package.description %}
-                                  <p class="readme">
-                                    {% if package.description|length > 200 %}
-                                      {{ package.description|truncate(200) }}
-                                    {% else %}
-                                      {{ package.description }}
-                                    {% endif %}
-                                    <a href="/{{ package.organization.name or 'dataset' }}/{{ package.name }}">
-                                      Explore Dataset <span>&rsaquo;</span>
-                                    </a>
-                                  </p>
-                                  {% endif %}
-                              </div>
-                            </div>
-                          </div>
-                      </div>
-                    </div>
-                </div>
-              {% endfor %}
-              </div>
+            {{ snippets.package_list_show(result.results) }}
           </section>
 
           <!-- Pagination -->
           {% if result.count > 10 %}
-            <nav aria-label="Datasets" class="text-center">
-              <ul class="pagination">
-                <li class="page-item">
-                  <a class="page-link" href="/search?q={{ query.q }}&from=0" aria-label="Previous">
-                    <span aria-hidden="true">&laquo;</span>
-                    <span class="sr-only">Previous</span>
-                  </a>
-                </li>
-                {% for page in pages %}
-                  {% if page == '...' %}
-                  <li class="page-item disabled"><span class="page-link">{{page}}</span></li>
-                  {% else %}
-                  <li class="page-item {{ 'current-page' if currentPage == page }}"><a class="page-link" href="/search?q={{ query.q }}&from={{ (page - 1) * 10 }}">{{page}}</a></li>
-                  {% endif %}
-                {% endfor %}
-                <li class="page-item">
-                  <a class="page-link" href="/search?q={{ query.q }}&from={{ result.count - (result.count % 10) | int }}" aria-label="Next">
-                    <span aria-hidden="true">&raquo;</span>
-                    <span class="sr-only">Next</span>
-                  </a>
-                </li>
-              </ul>
-            </nav>
+            {{ snippets.pagination(query.q, pages, result, 'search') }}
           {% endif %}
           <!-- end of pagination -->
       </div>

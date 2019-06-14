@@ -1,5 +1,5 @@
 {
-  "name": "frontend-eds",
+  "name": "frontend-opendk",
   "version": 2,
   "builds": [
     {
@@ -10,11 +10,9 @@
   ],
   "env": {
     "NODE_ENV": "staging",
-    "API_URL": "https://energidataservice.dk/api/3/action/",
+    "API_URL": "https://portal.opendata.dk/api/3/action/",
     "WP_URL": "https://edscms.home.blog/",
-    "THEME": "eds",
-    "LOCALES": "en,da",
-    "TRANSLATIONS": "/themes/eds/i18n"
+    "THEME": "opendk"
   },
   "routes": [
     {

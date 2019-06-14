@@ -178,9 +178,6 @@
 
   {% block scripts %}{% endblock %}
 
-	<script src="/static/js/emojify.js"></script>
-  <script type="text/javascript" src="/static/js/smoothscroll.min.js"></script>
-
   <script>
     // Switch languages:
     function languageSwitcher(el) {
@@ -189,49 +186,6 @@
         document.cookie = 'defaultLocale=' + language;
         location.reload();
       }
-    }
-
-    // Emojify text:
-    emojify.setConfig({
-      only_crawl_id    : null,            // Use to restrict where emojify.js applies
-      img_dir          : '/static/img/emoji',  // Directory for emoji images
-      ignored_tags     : {                // Ignore the following tags
-          'SCRIPT'  : 1,
-          'TEXTAREA': 1,
-          'PRE'     : 1,
-          'CODE'    : 1
-      }
-    });
-    emojify.run();
-
-    function getCookie(name) {
-      var value = "; " + document.cookie;
-      var parts = value.split("; " + name + "=");
-      if (parts.length == 2) return parts.pop().split(";").shift();
-    }
-
-    function scrollDown(el) {
-      document.querySelector(el.attributes.href.value).scrollIntoView({
-        behavior: 'smooth'
-      });
-    }
-    // Popover on avatar icon in navbar and certified
-    jQuery(document).ready(function(){
-      jQuery('[data-toggle="popover"]').popover({
-        'placement': 'bottom',
-        'trigger': 'focus',
-        'html': true
-      });
-
-      $('.certified-tick').attr('data-original-title','<b>Datahub Certified</b> <ul><li>&#x25CF; Quality assured data </li><li>&#x25CF; Sources audited </li><li>&#x25CF; Premium data available for bespoke formatting, additional data and guaranteed updates with SLA</li></ul>');
-      $('[data-toggle="tooltip"]').tooltip({html:true});
-
-    });
-    // Set avatar in navbar using id in cookies
-    var src = `https://www.gravatar.com/avatar/${getCookie('id')}?d=https%3A%2F%2Ftesting.datahub.io%2Fstatic%2Fimg%2Flogo-cube03.png`;
-    var avatar = document.getElementById('avatar');
-    if (avatar) {
-      avatar.src = src;
     }
   </script>
 
