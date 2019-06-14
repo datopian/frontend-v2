@@ -16,5 +16,9 @@
 @import "components/article-preview";
 @import "components/twitter-feed";
 @import "components/home";
+@import "components/data-file-type";
 
 @import "tailwindcss/utilities";
+
+/* code highlighting */
+@import "codehilite.css";

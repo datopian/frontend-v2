@@ -71,7 +71,7 @@ Welcome - Home
       </a>
       <div class="article-preview_text">
         <h1 class="article-preview_heading">
-          <a href="#">Smart Messe: Åbne data som løsning og leg</a>
+          <a class="article-preview_heading-link" href="#">Smart Messe: Åbne data som løsning og leg</a>
         </h1>
         <time class="article-preview_date">14. maj, 2019</time>
         <p class="article-preview_content">
@@ -87,7 +87,7 @@ Welcome - Home
       </a>
       <div class="article-preview_text">
         <h1 class="article-preview_heading">
-          <a href="#">Smart Messe: Åbne data som løsning og leg</a>
+          <a class="article-preview_heading-link" href="#">Smart Messe: Åbne data som løsning og leg</a>
         </h1>
         <time class="article-preview_date">14. maj, 2019</time>
         <p class="article-preview_content">
@@ -103,7 +103,7 @@ Welcome - Home
       </a>
       <div class="article-preview_text">
         <h1 class="article-preview_heading">
-          <a href="#">Smart Messe: Åbne data som løsning og leg</a>
+          <a class="article-preview_heading-link" href="#">Smart Messe: Åbne data som løsning og leg</a>
         </h1>
         <time class="article-preview_date">14. maj, 2019</time>
         <p class="article-preview_content">
@@ -125,8 +125,8 @@ Welcome - Home
               <span class="font-semibold text-3xl leading-none">17</span> <span class="leading-none">jun</span>
             </time>
             <div class="px-6">
-              <h3 class="font-semibold text-2xl">Sleep in the City - Kunst baseret på åbne data</h3>
-              <p>
+              <h3 class="font-semibold text-2xl text-primary">Sleep in the City - Kunst baseret på åbne data</h3>
+              <p class="text-gray-500">
                 I kunstværket Sleep in the City kombineres åbne data fra sensorer i Aarhus’ City Lab med søvndata og videokunst. Sensorerne i Aarhus måler luftkvalitet, trafik...
               </p>
             </div>
@@ -140,8 +140,8 @@ Welcome - Home
               <span class="font-semibold text-3xl leading-none">17</span> <span class="leading-none">jun</span>
             </time>
             <div class="px-6">
-              <h3 class="font-semibold text-2xl">Sleep in the City - Kunst baseret på åbne data</h3>
-              <p>
+              <h3 class="font-semibold text-2xl text-primary">Sleep in the City - Kunst baseret på åbne data</h3>
+              <p class="text-gray-500">
                 I kunstværket Sleep in the City kombineres åbne data fra sensorer i Aarhus’ City Lab med søvndata og videokunst. Sensorerne i Aarhus måler luftkvalitet, trafik...
               </p>
             </div>
@@ -160,7 +160,7 @@ Welcome - Home
       <p class="leading-relaxed">
         Open Data DK er en forening for danske kommuner og regioner. Formålet med Open Data DK er at skabe transparens i den offentlige forvaltning og skabe grobund for datadreven vækst. Data gøres åbne og frit tilgængelige for at understøtte produktivitet og innovation ved en højere grad af udnyttelse af data.
       </p>
-      <a class="font-semibold" href="#">More</a>
+      <a class="font-semibold text-white" href="#">More</a>
     </div>
     <div id="tweets" class="twitter-feed"></div>
   </section>
@@ -185,10 +185,10 @@ Welcome - Home
   var configProfile = {
     "profile": {"screenName": 'OpenDataDK'},
     "domId": 'tweets',
-    "maxTweets": 6,
+    "maxTweets": 8,
     "showUser": false,
     "showTime": false,
-    "showImages": true,
+    "showImages": false, //https://github.com/jasonmayes/Twitter-Post-Fetcher/issues/182
     "showRetweet": false
   };
   twitterFetcher.fetch(configProfile);

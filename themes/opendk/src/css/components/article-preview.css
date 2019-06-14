@@ -32,6 +32,10 @@
   @apply font-semibold text-2xl leading-snug mt-gutter mb-3;
 }
 
+.article-preview_heading-link {
+  color: inherit;
+}
+
 .article-preview_date {
   @apply text-gray-500 block mb-2;
 }

@@ -13,3 +13,7 @@ svg {
     @apply fill-current;
   }
 }
+
+a {
+  @apply text-secondary;
+}
