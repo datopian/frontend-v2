@@ -131,3 +131,39 @@ yarn test
 # watch mode:
 yarn test:watch
 ```
+
+## Deployment
+
+*You can deploy this app to any host that supports NodeJS.*
+
+### Zeit Now
+
+Read the docs - https://zeit.co/examples/nodejs
+
+Suggested config file (`now.json`):
+
+```json
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "index.js",
+      "use": "@now/node-server",
+      "config": { "maxLambdaSize": "50mb" }
+    }
+  ],
+  "env": {
+    "NODE_ENV": "development"
+  },
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/index.js"
+    }
+  ]
+}
+```
+
+### Heroku
+
+Read the docs about Deployment of NodeJS apps on Heroku - https://devcenter.heroku.com/articles/deploying-nodejs.
