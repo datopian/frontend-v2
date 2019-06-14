@@ -97,8 +97,7 @@ module.exports = function () {
         title: collection.title, // needed because this is used in base.html
         item: collection,
         result,
-        query: req.query ? req.query.q : '',
-        totalPages,
+        query: req.query,
         pages
       })
     } catch (e) {
@@ -171,8 +170,7 @@ module.exports = function () {
         avatar: profile.image_display_url || profile.image_url,
         joinDate: joinMonth + ' ' + joinYear,
         result,
-        query: req.query ? req.query.q : '',
-        totalPages,
+        query: req.query,
         pages
       })
     } catch(err) {

@@ -37,17 +37,17 @@
           </div>
           <div class="col-sm-6">
             <form class="search-form form form-inline" class="input-group col-xs-12" action="/{{ item.name }}" method="GET">
-              <input type="text" class="form-control" placeholder="Search..." name="q" value="{{ query }}" required autofocus/>
+              <input type="text" class="form-control" placeholder="Search..." name="q" value="{{ query.q }}" required autofocus/>
             </form>
           </div>
         </div>
 
         <div id="publisher-package-list">
 
-          {% if packages|length > 0 %}
+          {% if result.count > 0 %}
             <section class="search-page">
               <section class="results">
-                {{ snippets.package_list_show(packages) }}
+                {{ snippets.package_list_show(result.results) }}
               </section>
             </section>
             <!-- Pagination -->
