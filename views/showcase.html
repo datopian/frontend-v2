@@ -108,7 +108,7 @@
               <th class="col-xs-4">Download</th>
             </thead>
             <tbody>
-            {% for resource in dataset.downloads %}
+            {% for resource in dataset.downloads or dataset.resources %}
               <tr>
                 <td class="col-xs-2">
                   <i class="far fa-file-alt"></i> <a href="#resource-{{resource.name}}" onclick="scrollDown(this)" class="anchor-link" title="{{resource.title or resource.name}}">{{resource.name}}</a>
