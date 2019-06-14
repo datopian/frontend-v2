@@ -1,18 +1,15 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <title>Page Not Found</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <link rel="icon" type="img/ico" href="/static/img/favicon.ico" sizes="16x16">
-    <link rel="stylesheet" media="screen" href="/static/stylesheets/app.css">
-</head>
-<body class="not-found">
-  <div>
-    <h1>404</h1>
-    <h1>{{ message }}</h1>
-    <p>{{ comment }}</p>
-  </div>
-</body>
-</html>
-<!-- IE needs 512+ bytes: http://blogs.msdn.com/b/ieinternals/archive/2010/08/19/http-error-pages-in-internet-explorer.aspx -->
+{% extends "base.html" %}
+
+{% block title %}
+{{ message }}
+{% endblock %}
+
+{% block bodyclass %}not-found{% endblock %}
+
+{% block content %}
+<div>
+  <h1>{{ status }}</h1>
+  <h1>{{ message }}</h1>
+  <p>{{ comment }}</p>
+</div>
+{% endblock %}
