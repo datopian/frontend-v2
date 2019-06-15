@@ -167,3 +167,190 @@ Suggested config file (`now.json`):
 ### Heroku
 
 Read the docs about Deployment of NodeJS apps on Heroku - https://devcenter.heroku.com/articles/deploying-nodejs.
+
+## Theming
+
+By default, the frontend app uses DataHub theme which contains of templates (`/views/`) and assets (`/public/`).
+
+If you need to customize the design of the site, you can create your own theme in the `/themes/` directory. E.g., we can create a theme called `example` with `public` and `views` directories so that they override default assets in `/public/` and templates in `/views/`:
+
+```
+/themes/example/public
+/themes/example/views
+```
+
+To start using created template you need to set `THEME` environment variable to your theme name (you also can do it via `.env` file):
+
+```
+export THEME=example
+```
+
+---
+**NOTE**
+
+The default assets and templates are used, if a file isn't found in your theme. This allows you to change specific part of the templates or assets.
+
+---
+
+### Variables available in each page
+
+#### Macros (helpers)
+
+All default macros are located at `/views/_snippets.html`.
+
+Importing macros in a template:
+
+```html
+{% import '_snippets.html' as snippets %}
+```
+
+Use it:
+
+```html
+{{ snippets.package_list_show(packages) }}
+```
+
+##### List data packages
+
+Example on search page:
+
+![](https://i.imgur.com/jECzGkG.png)
+
+* Macros: `package_list_show`
+* Parameters:
+  * list of data packages
+* Returns: list of HTML elements. Each element is sort of a summary card for a data package.
+
+##### List data package licenses or sources
+
+Example:
+
+![](https://i.imgur.com/Wa3yMQc.png)
+
+
+* Macros: `listify`
+* Parameters:
+  * list of standard data package licenses or sources
+* Returns: HTML anchor tag or span element
+
+#### Home page
+
+Bespoke ...
+
+#### Search page
+
+```javascript
+{
+  title: 'Search',
+  result: [list of data packages],
+  query: {q: '', size: '', from: '', sort: ''},
+  pages: [list of pages to display in pagination]
+}
+```
+
+#### Showcase page
+
+```javascript
+{
+  title: ...,
+  dataset: datapackage, // a standard data package ...
+  owner: {
+    name: "rufuspollock"
+    title: "Rufus Pollock",
+    avatar: "...." // url to image for this
+    route: "/rufuspollock",
+  }
+}
+```
+
+In standard Data package we have `created` and `modified` fields which is a timestamp and it isn't human readable (`2019-01-01 00:00:00`). We want to show it as `January 1, 2019`. The easiest would be to convert in controller and pass it through. E.g., in template if you access `dataset.created` it would print nicely formatted date.
+
+#### Organization page
+
+```javascript
+{
+  // org
+  title: 'owner name',
+  owner (name): 'owner name',
+  description: 'description from profile',
+  avatar: 'url to image',
+  joinDate: 'eg, June 2019',
+
+  // misc ...
+  result: [list of data packages],
+  query: {q: '', size: '', from: '', sort: ''},
+  pages: [list of pages to display in pagination]
+}
+```
+
+#### Collections page
+
+List of collections page.
+
+```javascript
+{
+  title: 'Dataset Collections',
+  description: 'Catalogue of datasets ...',
+  collections: [
+    {
+      name: '',
+      title: '',
+      summary: '',
+      image: ''
+    },
+    ... // more collection objects
+  ]
+}
+```
+
+#### Individual collection page
+
+```javascript
+{
+  title: 'title of collection',
+  item: {
+    name: '',
+    title: '',
+    summary: '',
+    image: ''
+  },
+
+  // Misc
+  result: [list of data packages],
+  query: {q: '', size: '', from: '', sort: ''},
+  pages: [list of pages to display in pagination]
+}
+```
+
+#### Blog
+
+List of posts.
+
+```javascript
+{
+  posts: [{post}, ...]
+}
+```
+
+``{post}`` object is a WP post object containing all available metadata. Below is main stuff that we use:
+
+```javascript
+{
+  title: '',
+  slug: '',
+  content: '',
+  date: ''
+  modified: ''
+}
+```
+
+#### Article / post page
+
+```javascript
+{
+  title: '',
+  content: '',
+  published: 'formatted published date',
+  modified: 'formatted modified date'
+}
+```
