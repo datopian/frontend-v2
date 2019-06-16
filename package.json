@@ -30,7 +30,7 @@
   "homepage": "https://github.com/datopian/frontend-v2#readme",
   "devDependencies": {
     "ava": "^2.0.0",
-    "browser-sync": "^2.26.5",
+    "browser-sync": "^2.26.7",
     "coveralls": "^3.0.3",
     "cssnano": "^4.1.10",
     "gulp": "^4.0.2",
