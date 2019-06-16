@@ -15,7 +15,8 @@ module.exports = function () {
 
   async function listStaticPages(req, res) {
     // Get latest 10 blog posts
-    const posts = await Model.getListOfPosts()
+    const size = 10
+    const posts = await Model.getListOfPosts(size)
     res.render('blog.html', {
       posts
     })
