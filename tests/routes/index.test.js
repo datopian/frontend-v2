@@ -120,3 +120,23 @@ test('Collection page works', async t => {
 
   t.true(res.text.includes('<!-- collection page test placeholder -->'))
 })
+
+
+// Not found tests
+test('If a page is not found in neither CMS or DMS, it returns 404 page', async t => {
+  const agent = request(app)
+  let res = await agent
+    .get('/not-found-slug')
+
+  t.true(res.text.includes('<!-- placeholder for testing 404 page -->'))
+
+  res = await agent
+    .get('/collections/nonexistent-collection')
+
+  t.true(res.text.includes('<!-- placeholder for testing 404 page -->'))
+
+  res = await agent
+    .get('/nonexistent-org/nonexistent-dataset')
+
+  t.true(res.text.includes('<!-- placeholder for testing 404 page -->'))
+})
