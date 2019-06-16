@@ -354,3 +354,51 @@ List of posts.
   modified: 'formatted modified date'
 }
 ```
+
+### i18n
+
+#### Configure
+
+Define location of translation files. We recommend creating `i18n` directory in your theme:
+
+```
+TRANSLATIONS=/themes/example/i18n
+```
+
+List of available locales then auto detected by filenames.
+
+Use `defaultLocale` cookie to set the site's locale. E.g., if `defaultLocale=en`, then `/themes/example/i18n/en.json` file is used.
+
+#### i18n of the site
+
+In your templates:
+
+```html
+{{ __('Hello world!') }}
+{{ __('Hi %s', 'you') }} // Hi you
+{{ __('Hi {{ name }}', { name: 'you' }) }} // Hi you
+```
+
+This will add a phrase/word to your translation file if it is unknown.
+
+Plurals translation:
+
+```html
+{{ __n('%s dog', 1) }} // 1 dog
+{{ __n('%s dog', 3) }} // 3 dogs
+```
+
+In your translation file:
+
+```json
+{
+  "%s dog": {
+    "one": "%s dog",
+    "other": "%s dogs"
+  }
+}
+```
+
+#### i18n of the content
+
+You can have a page in WordPress with the same slug as original page plus locale at the end. E.g., for `/about` page we would have two pages on WP, `about` (English) and `about-da` (Danish). When fetching a content we can check the user's locale and get content in his/her language.
