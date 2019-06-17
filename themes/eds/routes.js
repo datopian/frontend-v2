@@ -1,5 +1,3 @@
 module.exports = function (app) {
-  app.get('/mine', (req, res) => {
-    res.send('HELLO MINE')
-  })
+  // Add custom routes and controller logic here
 }
