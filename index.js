@@ -38,6 +38,7 @@ module.exports.makeApp = function () {
   const themeName = config.get('THEME')
   if (themeName) {
     app.use('/static', express.static(path.join(__dirname, `/${themeDir}/${themeName}/public`)))
+    require(`./${themeDir}/${themeName}/routes.js`)(app)
   }
   // Default assets
   app.use('/static', express.static(path.join(__dirname, '/public')))
