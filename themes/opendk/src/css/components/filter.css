@@ -1,5 +1,5 @@
 .filter-button {
-  @apply flex px-4 py-2 justify-between items-center w-full;
+  @apply flex px-4 py-2 justify-between items-center w-full text-primary;
   position: relative;
 
   &[aria-pressed="true"] {
@@ -8,7 +8,7 @@
 }
 
 .filter-button_count {
-  @apply bg-gray-100 text-sm text-gray-500 px-1 ml-2;
+  @apply bg-gray-200 text-sm text-gray-500 px-1 ml-2;
 
   @nest [aria-pressed="true"] & {
     @apply bg-white text-secondary;

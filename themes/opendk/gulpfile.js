@@ -2,7 +2,6 @@ const gulp = require('gulp');
 const postcss = require('gulp-postcss');
 const postcssPresetEnv = require('postcss-preset-env');
 const svgSprite = require('gulp-svg-sprite');
-const nodemon = require('gulp-nodemon');
 
 // CSS
 gulp.task('css', function () {
@@ -17,7 +16,7 @@ gulp.task('css', function () {
         require('tailwindcss'),
         require('cssnano')
       ]))
-    .pipe(gulp.dest('./opendk/public/stylesheets'));
+    .pipe(gulp.dest('./public/stylesheets'));
 });
 
 
@@ -31,26 +30,8 @@ gulp.task('icons', function(done) {
         }
       }
     ))
-    .pipe(gulp.dest('./opendk/views/partials'));
+    .pipe(gulp.dest('./views/partials'));
     done();
-});
-
-
-// server
-gulp.task("server", cb => {
-  let started = false;
-
-  return nodemon({
-    script: 'index.js',
-    options: '-e', // -e means we watch for changes in templates too
-    ext: 'js html',
-    env: { 'API_URL': 'https://demo.ckan.org/api/3/action/' }
-  }).on("start", () => {
-    if (!started) {
-      cb();
-      started = true;
-    }
-  });
 });
 
 
@@ -68,5 +49,5 @@ gulp.task('watch:icons', function() {
 
 gulp.task('watch', gulp.parallel('watch:css', 'watch:icons'));
 
-// deafult task (this task is not completing..)
-gulp.task('default', gulp.parallel('watch', 'server'));
+// deafult task
+gulp.task('default', gulp.parallel('watch'));

@@ -6,10 +6,18 @@ p {
   @nest .site-footer &:not(:last-child) {
     @apply mb-4;
   }
+
+  @nest .content & {
+    @apply leading-relaxed my-6;
+  }
 }
 
 svg {
   @nest .site-footer & {
     @apply fill-current;
   }
+}
+
+a {
+  @apply text-secondary;
 }

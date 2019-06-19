@@ -1,0 +1,48 @@
+.article-preview_image {
+  display: block;
+  @apply h-56;
+}
+
+.article-preview_img {
+  @apply h-full w-full object-cover;
+}
+
+@screen xl {
+  /* add the decorative bookmark tab */
+  .article-preview_text {
+    @nest .home & {
+      padding-left: 4rem;
+      position: relative;
+
+      &::before {
+        content: '';
+        width: 2.5rem;
+        height: 3.2rem;
+        position: absolute;
+        left: 0;
+        top: 0.4rem;
+        @apply bg-secondary;
+        background-image: url("../img/tab-mask.svg");
+        background-repeat: no-repeat;
+        background-size: 100% auto;
+        background-position: left 2rem;
+      }
+    }
+  }
+}
+
+.article-preview_heading {
+  @apply font-semibold text-2xl leading-snug mt-gutter mb-3;
+}
+
+.article-preview_heading-link {
+  color: inherit;
+}
+
+.article-preview_date {
+  @apply text-gray-500 block mb-2;
+}
+
+.article-preview_content {
+  @apply leading-relaxed;
+}

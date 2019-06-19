@@ -1,5 +1,6 @@
 .site-footer_link {
   @apply underline;
+  color: inherit;
 
   &:hover {
     @apply text-white;

@@ -13,6 +13,8 @@
 }
 
 .breadcrumb_link {
+  @apply text-gray-500;
+
   &[aria-current] {
     @apply text-primary font-semibold;
   }

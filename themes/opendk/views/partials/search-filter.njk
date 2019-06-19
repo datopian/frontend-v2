@@ -1,9 +1,9 @@
 {% for facet, values in result.facets %}
 <section class="mb-6 md:pr-10">
-  <h2 class="bg-gray-100 px-4 py-3 border-t border-gray-100 font-bold">{{ facet }}</h2>
+  <h2 class="bg-gray-200 px-4 py-3 border-t border-gray-200 font-bold">{{ facet }}</h2>
   <ul>
     {% for name, value in values %}
-    <li class="border-t border-gray-100">
+    <li class="border-t border-gray-200">
       <a href="/search?q={{ facet }}:{{ name }} {{ query.q }}" class="filter-button" aria-label="{{ name }} ({{ value }} results)">
         {{ name }}
         <span class="filter-button_count">{{ value }}</span>
