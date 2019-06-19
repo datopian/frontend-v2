@@ -4,11 +4,16 @@
   &[aria-current] {
     @apply border-primary;
   }
+
+  @nest .main-nav_subnav & {
+    border: none;
+    @apply text-base font-normal;
+  }
 }
 
 @screen lg {
   .main-nav_link {
-    @apply border-b-4 py-1 px-0;
+    @apply border-b-4 py-1 px-0 flex items-center;
   }
 }
 
@@ -21,5 +26,23 @@
     &[data-expanded="false"] {
       display: none;
     }
+  }
+}
+
+@screen lg {
+  .main-nav_subnav {
+    position: absolute;
+    opacity: 0;
+    transition: opacity 0.5s ease 0.2s;
+    pointer-events: none;
+    @apply bg-white shadow px-3 py-2;
+  }
+
+  .main-nav_item:hover > ul,
+  .main-nav_item:focus-within > ul,
+  .main-nav_item ul:hover,
+  .main-nav_item ul:focus {
+     opacity: 1;
+     pointer-events: all;
   }
 }
