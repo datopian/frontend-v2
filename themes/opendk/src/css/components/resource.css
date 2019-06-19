@@ -1,0 +1,7 @@
+.resource {
+  @apply border-b-2 border-gray-200;
+
+  &:nth-child(even) {
+    @apply bg-gray-100;
+  }
+}

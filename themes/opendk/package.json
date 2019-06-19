@@ -1,0 +1,17 @@
+{
+  "name": "OpenDataDK",
+  "version": "1.0.0",
+  "description": "Open Data DK theme for Datahub",
+  "scripts": {},
+  "author": "Datopian",
+  "license": "MIT",
+  "devDependencies": {
+    "cssnano": "^4.1.10",
+    "gulp": "^4.0.2",
+    "gulp-postcss": "^8.0.0",
+    "gulp-svg-sprite": "^1.5.0",
+    "postcss-import": "^12.0.1",
+    "postcss-preset-env": "^6.6.0",
+    "tailwindcss": "^1.0.4"
+  }
+}

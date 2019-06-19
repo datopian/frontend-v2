@@ -1,0 +1,25 @@
+.info-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.info-list_title,
+.info-list_description {
+  @apply border-t-2 border-gray-200 text-sm py-1;
+}
+
+.info-list_title {
+  @apply font-bold;
+
+  &:first-child {
+    border: none;
+
+    & + .info-list_description {
+      border: none;
+    }
+  }
+}
+
+.info-list_description {
+  @apply pl-2;
+}

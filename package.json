@@ -32,17 +32,10 @@
     "ava": "^2.0.0",
     "browser-sync": "^2.26.7",
     "coveralls": "^3.0.3",
-    "cssnano": "^4.1.10",
-    "gulp": "^4.0.2",
-    "gulp-nodemon": "^2.4.2",
-    "gulp-postcss": "^8.0.0",
-    "gulp-svg-sprite": "^1.5.0",
     "nock": "^10.0.6",
+    "nodemon": "^1.19.1",
     "nyc": "^14.1.1",
-    "postcss-import": "^12.0.1",
-    "postcss-preset-env": "^6.6.0",
-    "supertest": "^4.0.2",
-    "tailwindcss": "^1.0.3"
+    "supertest": "^4.0.2"
   },
   "dependencies": {
     "connect-flash": "^0.1.1",

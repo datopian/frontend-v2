@@ -5,31 +5,82 @@
 {% block bodyclass %}blog{% endblock %}
 
 {% block content %}
-<!-- blog post page test placeholder -->
-<div role="main">
-  <div class="container">
-    <div class="inner_container">
-      <div class="page-header text-center">
-        <h1>
-          {{title}}
-        </h1>
-        {% if published %}
-          <p class="meta-info">
-            <i class="fa fa-calendar-o" aria-hidden="true"></i> Published: {{published}}
-          </p>
-        {% endif %}
-        {% if modified %}
-          <p class="meta-info">
-            <i class="fa fa-calendar-o" aria-hidden="true"></i> Last modified: {{modified}}
-          </p>
-        {% endif %}
-      </div>
-      <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-          {{content | safe}}
-        </div>
-      </div>
+<div class="container mx-auto p-gutter">
+  <nav class="breadcrumb" aria-label="breadcrumb">
+    <ol>
+      <li class="breadcrumb_item">
+        <a class="breadcrumb_link" href="/">Home</a>
+      </li>
+      <li class="breadcrumb_item">
+        <a class="breadcrumb_link" href="/news">Blog</a>
+      </li>
+      <li class="breadcrumb_item">
+        <a class="breadcrumb_link" href="/news" aria-current="page">{{title}}</a>
+      </li>
+    </ol>
+  </nav>
+</div>
+
+<div class="container mx-auto lg:flex p-gutter">
+
+  <main class="mb-gutter lg:mb-0 lg:w-2/3 lg:mr-gutter">
+    <!-- featured image -->
+    <img class="w-full" src="http://www.opendata.dk/sites/default/files/styles/node_banner/public/odaa/blog/img_e0051.jpg" />
+    <p class="text-sm italic text-gray-500 my-4">
+      Der var en hel del fokus på åbne data til Smart Messen i Rønde. Både dialogworkshop mellem kommuner og virksomheder om åbne mobilitetsdata og spil, der baserede sig på åbne data om bl.a. affald.
+    </p>
+
+    <h1 class="text-4xl font-semibold">{{title}}</h1>
+
+    {% if published %}
+    <time class="text-gray-500">{{published}}</time>
+    {% endif %}
+    {% if modified %}
+    <!-- {{modified}} -->
+    {% endif %}
+
+    <div class="content">
+      {{content | safe}}
     </div>
+  </main>
+
+  <div class="lg:w-1/3 lg:pl-gutter">
+    <!-- share links -->
+    <h2 class="bg-gray-200 px-4 py-3 font-bold mb-1">Share</h2>
+    <ul class="text-sm">
+      <li class="border-b-2 border-gray-200">
+        <a class="block px-4 py-3 text-primary" href="https://twitter.com/home?status=permalink">Twitter</a><!-- need permalink -->
+      </li>
+      <li>
+        <a class="block px-4 py-3 text-primary" href="https://www.facebook.com/sharer/sharer.php?u=permalink">Facebook</a><!-- need permalink -->
+      </li>
+    </ul>
+    <!-- share links end -->
+
+    <h2 class="bg-gray-200 px-4 py-3 font-bold mb-2 mt-gutter">Mest populære blogindlæg</h2>
+    <ul>
+      <li class="border-b-2 border-gray-200">
+        <article class="px-4 py-3">
+          <h1><a class="text-primary font-semibold">Åbne data afslører valgfejl: Ja- og nej-stemmer blev byttet om</a></h1>
+          <time class="text-sm">29/05/2015</time>
+        </article>
+      </li>
+
+      <li class="border-b-2 border-gray-200">
+        <article class="px-4 py-3">
+          <h1><a class="text-primary font-semibold">Åbne data afslører valgfejl: Ja- og nej-stemmer blev byttet om</a></h1>
+          <time class="text-sm">29/05/2015</time>
+        </article>
+      </li>
+
+      <li>
+        <article class="px-4 py-3">
+          <h1><a class="text-primary font-semibold">Åbne data afslører valgfejl: Ja- og nej-stemmer blev byttet om</a></h1>
+          <time class="text-sm">29/05/2015</time>
+        </article>
+      </li>
+    </ul>
+
   </div>
 </div>
 

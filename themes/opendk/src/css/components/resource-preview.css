@@ -1,0 +1,20 @@
+/* React rendered stuff */
+
+.handsontable { /* seems to need a fixed height, as defined in https://datahub.io/static/sass/_dataset.scss */
+  height: 66vh;
+  overflow: auto;
+}
+
+.datahub-meta {
+  display: none;
+}
+
+.share-and-embed {
+  display: flex;
+  align-items: center;
+  @apply mb-4;
+
+  & input {
+    @apply border border-gray-500 px-2 py-1 mx-3;
+  }
+}
