@@ -1,7 +1,7 @@
 .hljs {
   display: block;
   overflow-x: auto;
-  @apply bg-gray-100 p-4 text-sm;
+  @apply bg-gray-200 p-4 text-sm;
 }
 
 .hljs, .hljs-subst {

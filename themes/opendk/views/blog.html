@@ -5,53 +5,122 @@
 {% block bodyclass %}blog{% endblock %}
 
 {% block content %}
-<!-- blog home page test placeholder -->
-<section class="blog-page">
-  <div class="container">
+<div class="container mx-auto p-gutter">
+  <nav class="breadcrumb" aria-label="breadcrumb">
+    <ol>
+      <li class="breadcrumb_item">
+        <a class="breadcrumb_link" href="/">Home</a>
+      </li>
+      <li class="breadcrumb_item">
+        <a class="breadcrumb_link" href="/news" aria-current="page">Blog</a>
+      </li>
+    </ol>
+  </nav>
+</div>
 
-    <div class="inner_container">
-      {% for post in posts %}
-      <div class="post">
-        <a href="/news/{{post.slug}}">
-          <h2>{{post.title}}</h2>
-        </a>
-        <p class="meta">
-          <i class="fa fa-calendar-o" aria-hidden="true"></i> {{post.modified}}
-        </p>
-        {{post.content | safe | truncate(100)}}
-        <p><a href="/news/{{post.slug}}">Read more</a></p>
+<div class="container mx-auto md:flex p-gutter">
+
+  <main class="md:w-2/3 md:mr-gutter lg:flex flex-wrap">
+
+    <!-- static posts -->
+    <article class="article-preview mb-gutter pb-gutter lg:w-1/2 lg:pr-gutter">
+      <a class="article-preview_image" href="#">
+        <img class="article-preview_img" src="http://www.opendata.dk/sites/default/files/styles/node_banner/public/odaa/blog/img_e0051.jpg" />
+      </a>
+      <div class="article-preview_text">
+        <h1 class="article-preview_heading">
+          <a class="article-preview_heading-link" href="#">Smart Messe: Åbne data som løsning og leg</a>
+        </h1>
+        <time class="article-preview_date">14. maj, 2019</time>
+        <div class="article-preview_content">
+          I forbindelse med Internet Week Denmark afholdt Syddjurs Kommune Danmarks første Smart Messe. Her talte Nikolaj Sonne bl.a. om ulovlig høst af private data – men på messen var der også en del fokus...
+        </div>
       </div>
+    </article>
 
-      {% endfor %}
-    </div>
+    <article class="article-preview mb-gutter pb-gutter lg:w-1/2 lg:pl-gutter">
+      <a class="article-preview_image" href="#">
+        <img class="article-preview_img" src="http://www.opendata.dk/sites/default/files/styles/node_banner/public/odaa/blog/img_e0051.jpg" />
+      </a>
+      <div class="article-preview_text">
+        <h1 class="article-preview_heading">
+          <a class="article-preview_heading-link" href="#">Smart Messe: Åbne data som løsning og leg</a>
+        </h1>
+        <time class="article-preview_date">14. maj, 2019</time>
+        <div class="article-preview_content">
+          I forbindelse med Internet Week Denmark afholdt Syddjurs Kommune Danmarks første Smart Messe. Her talte Nikolaj Sonne bl.a. om ulovlig høst af private data – men på messen var der også en del fokus...
+        </div>
+      </div>
+    </article>
+    <!-- static posts end -->
 
-  </div>
-  <!-- Subscribe Form -->
-  <div class="subscribe-form text-center"  id="form-for-blog">
-  <div class="row">
-  <div class="col-sm-4 col-sm-offset-4">
-  <form action="" method="POST">
+    <!-- posts -->
+    {% set postCycler = cycler("odd", "even") %}
+    {% for post in posts %}
+    {% if postCycler.next() == "odd" %}
+    <article class="article-preview mb-gutter pb-gutter lg:w-1/2 lg:pr-gutter">
+    {% else %}
+    <article class="article-preview mb-gutter pb-gutter lg:w-1/2 lg:pl-gutter">
+    {% endif %}
+      <a class="article-preview_image" href="/news/{{post.slug}}">
+        <img class="article-preview_img" src="http://www.opendata.dk/sites/default/files/styles/node_banner/public/odaa/blog/img_e0051.jpg" />
+      </a>
+      <div class="article-preview_text">
+        <h1 class="article-preview_heading">
+          <a class="article-preview_heading-link" href="/news/{{post.slug}}">{{post.title}}</a>
+        </h1>
+        <time class="article-preview_date">{{post.modified}}</time>
+        <div class="article-preview_content">
+          {{post.content | safe | truncate(200)}}
+        </div>
+      </div>
+    </article>
+    {% endfor %}
+  </main>
+
+  <div class="md:w-1/3 md:pl-gutter">
+    <h2 class="bg-gray-200 px-4 py-3 font-bold mb-2">Mest populære blogindlæg</h2>
+    <ul>
+      <li class="border-b-2 border-gray-200">
+        <article class="px-4 py-3">
+          <h1><a class="text-primary font-semibold">Åbne data afslører valgfejl: Ja- og nej-stemmer blev byttet om</a></h1>
+          <time class="text-sm">29/05/2015</time>
+        </article>
+      </li>
+
+      <li class="border-b-2 border-gray-200">
+        <article class="px-4 py-3">
+          <h1><a class="text-primary font-semibold">Åbne data afslører valgfejl: Ja- og nej-stemmer blev byttet om</a></h1>
+          <time class="text-sm">29/05/2015</time>
+        </article>
+      </li>
+
+      <li>
+        <article class="px-4 py-3">
+          <h1><a class="text-primary font-semibold">Åbne data afslører valgfejl: Ja- og nej-stemmer blev byttet om</a></h1>
+          <time class="text-sm">29/05/2015</time>
+        </article>
+      </li>
+    </ul>
+
+    <!-- <form action="" method="POST">
       <input type="hidden" name="u" value="d7c1b37384908cd31dbe44d77">
       <input type="hidden" name="id" value="97878f666d">
       <div id="mergeTable" class="mergeTable">
-          <div class="mergeRow dojoDndItem mergeRow-email" id="mergeRow-0">
-              <h3>Subscribe</h3>
-              <div class="field-group form-group">
-                  <input type="email" class="form-control  custom-input" name="MERGE0" id="MERGE0" size="25" value="" placeholder="Enter Your Email" required  >
-
-
-              </div>
+        <div class="" id="mergeRow-0">
+          <h3>Subscribe</h3>
+          <div class="">
+            <input type="email" class="" name="MERGE0" id="MERGE0" size="25" value="" placeholder="Enter Your Email" required  >
           </div>
+        </div>
       </div>
-
-      <div class="submit_container clear">
-          <input type="submit" class="formEmailButton btn btn-lg btn-primary" name="submit" value="Subscribe">
+      <div class="">
+        <input type="submit" class="" name="submit" value="Subscribe">
       </div>
       <input type="hidden" name="ht" value="7e3c30f92918a0476227f6e94f3fe76633002feb:MTUyNTg0Nzk0My44ODk=">
       <input type="hidden" name="mc_signupsource" value="hosted">
-  </form>
+    </form> -->
   </div>
-  </div>
-  </div>
-</section>
+</div>
+
 {% endblock %}

@@ -7,23 +7,26 @@
   @apply h-full w-full object-cover;
 }
 
-@screen lg {
+@screen xl {
+  /* add the decorative bookmark tab */
   .article-preview_text {
-    padding-left: 4rem;
-    position: relative;
+    @nest .home & {
+      padding-left: 4rem;
+      position: relative;
 
-    &::before {
-      content: '';
-      width: 2.5rem;
-      height: 3.2rem;
-      position: absolute;
-      left: 0;
-      top: 0.4rem;
-      @apply bg-secondary;
-      background-image: url("../img/tab-mask.svg");
-      background-repeat: no-repeat;
-      background-size: 100% auto;
-      background-position: left 2rem;
+      &::before {
+        content: '';
+        width: 2.5rem;
+        height: 3.2rem;
+        position: absolute;
+        left: 0;
+        top: 0.4rem;
+        @apply bg-secondary;
+        background-image: url("../img/tab-mask.svg");
+        background-repeat: no-repeat;
+        background-size: 100% auto;
+        background-position: left 2rem;
+      }
     }
   }
 }

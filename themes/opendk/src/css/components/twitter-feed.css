@@ -2,7 +2,7 @@
   & li {
     display: inline-flex;
     flex-direction: column;
-    @apply bg-gray-100 p-10 my-6;
+    @apply bg-gray-200 p-10 my-6;
   }
 
   & a {

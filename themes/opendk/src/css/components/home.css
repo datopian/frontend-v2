@@ -44,13 +44,13 @@
 
 
 .home_events {
-  @apply bg-gray-100 py-10;
+  @apply bg-gray-200 py-10;
   position: relative;
 
   &::before,
   &::after {
     content: '';
-    @apply bg-gray-100 w-gutter;
+    @apply bg-gray-200 w-gutter;
     position: absolute;
     top: 0;
     bottom: 0;

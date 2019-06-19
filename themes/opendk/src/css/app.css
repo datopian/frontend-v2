@@ -17,6 +17,9 @@
 @import "components/twitter-feed";
 @import "components/home";
 @import "components/data-file-type";
+@import "components/resource";
+@import "components/info-list";
+@import "components/resource-preview";
 
 @import "tailwindcss/utilities";
 
