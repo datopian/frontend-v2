@@ -1,0 +1,12 @@
+.tabs {
+  display: flex;
+}
+
+.tabs_link {
+  display: block;
+  @apply px-4 py-3 bg-gray-200 mr-3 text-primary;
+
+  &[aria-selected="true"] {
+    @apply bg-primary text-white;
+  }
+}

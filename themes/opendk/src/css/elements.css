@@ -21,3 +21,27 @@ svg {
 a {
   @apply text-secondary;
 }
+
+h1, h2, h3, h4, h5, h6 {
+  @nest .content & {
+    @apply font-semibold;
+  }
+}
+
+h2 {
+  @nest .content & {
+    @apply text-2xl;
+  }
+}
+
+h3 {
+  @nest .content & {
+    @apply text-xl;
+  }
+}
+
+h4 {
+  @nest .content & {
+    @apply text-lg;
+  }
+}

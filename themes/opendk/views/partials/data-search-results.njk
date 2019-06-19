@@ -1,0 +1,43 @@
+<ul>
+  {% for package in result.results  %}
+  <li class="mt-10">
+    <div>
+      <h3 class="text-2xl font-semibold">
+        <a class="text-primary" href="/{{ package.organization.name or 'dataset' }}/{{ package.name }}">{{ package.title or package.name }}</a>
+      </h3>
+      <a href="/{{ package.organization.name or 'dataset' }}" class="text-gray-500 block mt-1">
+        {{ package.organization.name or 'dataset' }}
+      </a>
+      <div class="leading-relaxed mt-2">
+        {% if package.readmeSnippet %}
+        <p>
+          {{ package.readmeSnippet }}
+        </p>
+        {% elif package.readmeHtml %}
+        <p>
+          {{ package.readmeHtml|safe }}
+        </p>
+        {% elif package.description %}
+        <p>
+          {% if package.description|length > 200 %}
+            {{ package.description|truncate(200) }}
+          {% else %}
+            {{ package.description }}
+          {% endif %}
+        </p>
+        {% endif %}
+      </div>
+    </div>
+
+    <ul class="mt-2">
+      {% for resource in package.resources %}
+      {% if resource.format %}
+      <li class="inline">
+        <a href="/{{ package.organization.name or 'dataset' }}/{{ package.name }}" data-format="{{ resource.format }}" class="bg-gray-200 text-sm text-gray-500 px-2 py-1">{{ resource.format }}</a>
+      </li>
+      {% endif %}
+      {% endfor %}
+    </ul>
+  </li>
+  {% endfor %}
+</ul>

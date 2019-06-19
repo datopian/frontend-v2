@@ -8,80 +8,117 @@
 {% block bodyclass %}search{% endblock %}
 
 {% block content %}
-<div class="container">
-  <div class="inner_container">
-    <div class="row">
+<div class="container mx-auto p-gutter">
+  <nav class="breadcrumb" aria-label="breadcrumb">
+    <ol>
+      <li class="breadcrumb_item">
+        <a class="breadcrumb_link" href="/">Home</a>
+      </li>
+      <li class="breadcrumb_item">
+        <a class="breadcrumb_link" href="">Organizations</a>
+      </li>
+      <li class="breadcrumb_item">
+        <a class="breadcrumb_link" href="" aria-current="page">{{ owner }}</a>
+      </li>
 
-      <div class="col-sm-3 profile">
-        <div class="row">
-          <div class="col-sm-12 col-xs-6">
-            <img src="{{avatar}}" class="img-responsive">
-          </div>
-          <div class="col-sm-12 col-xs-6">
-            {% if owner %}
-              <h2 class="owner">{{ owner }}</h2>
-            {% endif %}
-            {% if name %}
-              <p class="name">{{ name }}</p>
-            {% endif %}
-            {% if joinDate %}
-              <p class="join-date">Since {{ joinDate }}</p>
-            {% endif %}
-          </div>
-        </div>
-      </div>
+    </ol>
+  </nav>
+</div>
 
-      <div class="col-sm-offset-1 col-sm-8">
-        <div class="row">
-          <div class="col-sm-6 col-xs-12">
-            <h2 class="owner-page-title">Datasets <span class="badge" title="{{result.count}} published datasets">{{result.count}}</span></h2>
-          </div>
-          <div class="col-sm-6">
-            <form class="search-form form form-inline" class="input-group col-xs-12" action="/{{ owner }}" method="GET">
-              <input type="text" class="form-control" placeholder="Search..." name="q" value="{{ query }}" required autofocus/>
-            </form>
-          </div>
-        </div>
+<div class="container mx-auto md:flex p-gutter">
+  <div class="md:w-1/3 md:mr-gutter">
 
-        <div id="publisher-package-list">
+    <div class="mb-gutter md:mr-10 md:pb-2">
+      <img src="{{avatar}}" class="mb-4 h-24">
+      <h2 class="text-primary text-xl font-semibold">{{ owner }}</h2>
+      <p class="py-2 text-sm">
+        I Aarhus Kommune har vi siden 2013 haft en lokal open data platform. Den har vi flyttet over på den nationale open data platform, portal.opendata.dk. Du finder Aarhus Kommunes...
+      </p>
+      <!-- {{result.count}}
+      {{ joinDate }} -->
+    </div>
 
-          {% if packages|length > 0 %}
-            <section class="search-page">
-              <section class="results">
-                {{ snippets.package_list_show(packages) }}
-              </section>
-            </section>
-            <!-- Pagination -->
-            {% if result.count > 10 %}
-              <nav aria-label="Datasets">
-                <ul class="pagination">
-                  <li class="page-item">
-                    <a class="page-link" href="/{{ owner }}?{{ query }}&page=1" aria-label="Previous">
-                      <span aria-hidden="true">&laquo;</span>
-                      <span class="sr-only">Previous</span>
-                    </a>
-                  </li>
-                  {% for page in pages %}
-                    {% if page == '...' %}
-                    <li class="page-item disabled"><span class="page-link">{{page}}</span></li>
-                    {% else %}
-                    <li class="page-item {{ 'current-page' if currentPage == page }}"><a class="page-link" href="/search?q={{ query }}&page={{ page }}">{{page}}</a></li>
-                    {% endif %}
-                  {% endfor %}
-                  <li class="page-item">
-                    <a class="page-link" href="/{{ owner }}?{{ query }}&page={{ totalPages }}" aria-label="Next">
-                      <span aria-hidden="true">&raquo;</span>
-                      <span class="sr-only">Next</span>
-                    </a>
-                  </li>
-                </ul>
-              </nav>
-            {% endif %}
-            <!-- end of pagination -->
-          {% endif %}
-        </div>
-      </div>
+    <button id="filter-toggle" class="bg-primary w-full text-white mb-6 p-3 invisible md:hidden">
+      Toggle filters
+    </button>
+    <div class="search-filters">
+      {% include "./partials/search-filter.njk" %}
     </div>
   </div>
+
+  <main class="md:w-2/3">
+
+    <ul class="tabs mb-10" data-tabs>
+    	<li class="tabs_item">
+        <a class="tabs_link" data-tabby-default href="#datasets">Datasets</a>
+      </li>
+    	<li class="tabs_item">
+        <a class="tabs_link" href="#about">About</a>
+      </li>
+    </ul>
+
+    <div id="datasets">
+      <!-- datasets tab content -->
+      {% include "./partials/data-search-form.njk" %}
+      {% include "./partials/data-search-results.njk" %}
+      {% include "./partials/data-search-pagination.njk" %}
+      <!-- datasets tab content end -->
+    </div>
+
+    <div id="about">
+      <!-- about tab content -->
+      <h1 class="text-3xl font-semibold">{{ owner }}</h1>
+
+      <div class="content">
+        <p>
+          I Aarhus Kommune har vi siden 2013 haft en lokal open data platform. Den har vi flyttet over på den nationale open data platform, portal.opendata.dk.
+        </p>
+        <p>
+          Du finder Aarhus Kommunes datasæt ved at klikke på fanebladet ”Datasæt” eller gå til denne side.
+        </p>
+        <h2>Dataejer</h2>
+        <p>
+          Hvis du er dataejer og plejer at uploade data til www.odaa.dk, skal du oprette dig på portal.opendata.dk (https://portal.opendata.dk/user/register) og sende dit brugernavn til Birgitte Kjærgaard. Hun vil derefter tilføje dig til Aarhus-organisationen på platformen, hvilket giver dig adgang til at lægge data op der.
+        </p>
+        <h2>Databruger</h2>
+        <p>
+          Der er ingen registrering før brug af vores data. Hvis du tidligere har været oprettet på www.odaa.dk med henblik på at anvende vores data, behøver du altså ikke oprette dig igen her på portal.opendata.dk. Men du må meget gerne fortælle os, hvis du laver noget med de åbne data. Skriv til info.
+        </p>
+        <p>
+          Har du ønsker til data fra Aarhus Kommune, som endnu ikke er udstillet, er du velkommen til at skrive til Open Data Aarhus. Vi er meget interesserede i at høre, hvilke data der er behov og interesse for.
+        </p>
+        <p>
+          Med venlig hilsen Open Data Aarhus
+        </p>
+      </div>
+      <!-- about tab content end -->
+    </div>
+
+  </main>
 </div>
+
+{% endblock %}
+
+{% block scripts %}
+<script src="//cdn.jsdelivr.net/gh/cferdinandi/tabby@12/dist/js/tabby.polyfills.min.js"></script>
+<script>
+  var filterToggle = document.getElementById("filter-toggle");
+  var filterTarget = filterToggle.nextElementSibling;
+
+  // hide filters
+  filterTarget.setAttribute("data-expanded", "false");
+
+  // show toggle
+  filterToggle.classList.remove("invisible");
+
+  // toggle filters with button
+  filterToggle.onclick = function() {
+    let expanded = filterToggle.getAttribute('aria-expanded') === 'true' || false;
+    filterToggle.setAttribute('aria-expanded', !expanded);
+    filterTarget.setAttribute("data-expanded", !expanded);
+  }
+
+  var tabs = new Tabby('[data-tabs]');
+
+</script>
 {% endblock %}
