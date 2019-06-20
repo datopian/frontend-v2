@@ -86,40 +86,6 @@
       </li>
       <!-- data file end -->
       {% endfor %}
-
-      <!-- static file -->
-      <li class="mb-6">
-        <h3 class="text-2xl font-semibold">
-          <a href="#">Socioøkonomiske data, Aarhus - 2019</a>
-        </h3>
-        <p>
-          Data er fra januar 2019, og beskriver socioøkonomiske forhold for forskellige...
-        </p>
-        <nav>
-          <a class="data-file-type" href="#">
-            <dl class="data-file-type_inner">
-              <dt class="data-file-type_term">
-                XLS
-              </dt>
-              <dd class="data-file-type_size">
-                800kB
-              </dd>
-            </dl>
-          </a>
-          <a class="data-file-type" href="/{{ owner }}/{{ dataset.name }}/r/{{ resource.name }}.{{ alt.format }}{{ '?v='+revisionId if revisionId }}">
-            <dl class="data-file-type_inner">
-              <dt class="data-file-type_term">
-                CSV
-              </dt>
-              <dd class="data-file-type_size">
-                30kB
-              </dd>
-            </dl>
-          </a>
-        </nav>
-      </li>
-      <!-- static file end -->
-
     </ul>
   </div>
   <!-- info end -->
@@ -140,21 +106,20 @@
       <h2 class="bg-gray-200 px-4 py-3 font-bold mt-4 mb-1">Share</h2>
       <ul class="text-sm">
         <li class="border-b-2 border-gray-200">
-          <a class="block px-4 py-3 text-primary" href="https://twitter.com/home?status=permalink">Twitter</a><!-- need permalink -->
+          <a class="block px-4 py-3 text-primary" href="https://twitter.com/home?status=permalink">Twitter</a><!-- need permalink --> <!-- TODO -->
         </li>
         <li>
-          <a class="block px-4 py-3 text-primary" href="https://www.facebook.com/sharer/sharer.php?u=permalink">Facebook</a><!-- need permalink -->
+          <a class="block px-4 py-3 text-primary" href="https://www.facebook.com/sharer/sharer.php?u=permalink">Facebook</a><!-- need permalink --> <!-- TODO -->
         </li>
       </ul>
       <!-- share links end -->
 
+      {% if dataset.license %}
       <h2 class="bg-gray-200 px-4 py-3 font-bold mt-4 mb-1">License</h2>
       <a class="text-sm block px-4 py-3 text-primary">
-        Aarhus licens
+        {{snippets.listify([dataset.license])}}
       </a>
-      <!-- {% if dataset.license %}
-      {{snippets.listify([dataset.license])}}
-      {% endif %} -->
+      {% endif %}
 
     </div>
   </div>
