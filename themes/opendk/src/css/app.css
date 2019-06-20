@@ -21,6 +21,7 @@
 @import "components/info-list";
 @import "components/resource-preview";
 @import "components/tabs";
+@import "components/secondary-nav";
 
 @import "tailwindcss/utilities";
 

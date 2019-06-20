@@ -25,6 +25,16 @@ a {
 h1, h2, h3, h4, h5, h6 {
   @nest .content & {
     @apply font-semibold;
+
+    &:not(:first-child) {
+      margin-top: 2em;
+    }
+  }
+}
+
+h1 {
+  @nest .content & {
+    @apply text-3xl;
   }
 }
 
@@ -43,5 +53,30 @@ h3 {
 h4 {
   @nest .content & {
     @apply text-lg;
+  }
+}
+
+ul,
+ol {
+  @nest .content & {
+    @apply my-5 pl-10;
+  }
+}
+
+ul {
+  @nest .content & {
+    @apply list-disc;
+  }
+}
+
+ol {
+  @nest .content & {
+    @apply list-decimal;
+  }
+}
+
+li {
+  @nest .content & {
+    @apply my-1;
   }
 }
