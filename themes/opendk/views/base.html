@@ -29,7 +29,7 @@
               </svg>
             </button>
 
-            <nav class="main-nav mt-4 py-2 lg:my-2 bg-white right-0 z-10 lg:static">
+            <nav class="main-nav mt-4 py-2 lg:my-2 bg-white right-0 z-10 lg:relative">
               <ul class="lg:flex md:text-xl lg:text-2xl">
                 <li class="main-nav_item lg:mx-3">
                   <a class="main-nav_link" href="/news">Blog</a>
@@ -65,9 +65,14 @@
                 </li>
                 <li class="flex items-center text-primary lg:ml-6">
                   <a id="search-link" href="/search">
-                    <span class="main-nav_link lg:hidden">Search</span>
-                    <svg class="w-8 h-8 fill-current hidden lg:block"><use xlink:href="#search" /></svg>
+                    <span class="main-nav_link hidden">Search</span>
+                    <svg class="main-nav_search-toggle-icon w-8 h-8" data-toggle="show"><use xlink:href="#search" /></svg>
+                    <svg class="main-nav_search-toggle-icon w-8 h-6" data-toggle="hide"><use xlink:href="#cross" /></svg>
                   </a>
+                  <form class="main-nav_search w-full px-6 py-2 lg:p-0 lg:absolute lg:left-0 lg:right-0 lg:pr-12 lg:pointer-events-none" id="header-search">
+                    <input type="text" class="border-2 border-solid border-gray-200 px-3 py-2 lg:px-4 lg:py-3 lg:text-xl outline-none focus:border-secondary w-full pointer-events-auto" placeholder="Search" id="header-search-input">
+                  </form>
+
                 </li>
               </ul>
             </nav>
@@ -171,7 +176,9 @@
       // replace link with a button
       var searchLink = document.getElementById("search-link");
       var searchButton = document.createElement("button");
-      searchButton.setAttribute("id", "show-search");
+      var searchForm = document.getElementById("header-search");
+      searchButton.setAttribute("class", "main-nav_search-toggle");
+      searchButton.setAttribute("aria-expanded", "false");
 
       while (searchLink.childNodes.length > 0) {
         searchButton.appendChild(searchLink.childNodes[0]);
@@ -179,7 +186,17 @@
 
       searchLink.replaceWith(searchButton);
 
-      // TODO: implement a modal
+      // button toggles form
+      searchButton.onclick = function() {
+        let expanded = searchButton.getAttribute('aria-expanded') === 'true' || false;
+        searchButton.setAttribute('aria-expanded', !expanded);
+        searchForm.setAttribute("data-expanded", !expanded);
+
+        if (!expanded) {
+          document.getElementById("header-search-input").focus();
+        }
+      }
+
     </script>
     {% block scripts %}{% endblock %}
   </body>

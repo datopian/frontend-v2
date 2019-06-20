@@ -46,3 +46,39 @@
      pointer-events: all;
   }
 }
+
+.main-nav_search-toggle {
+  display: none;
+}
+@screen lg {
+  .main-nav_search-toggle {
+    display: block;
+  }
+  .main-nav_search-toggle-icon {
+    @apply fill-current;
+
+    &[data-toggle="show"] {
+      display: block;
+
+      @nest [aria-expanded="true"] & {
+        display: none;
+      }
+    }
+
+    &[data-toggle="hide"] {
+      display: none;
+
+      @nest [aria-expanded="true"] & {
+        display: block;
+      }
+    }
+  }
+
+  .main-nav_search {
+    display: none;
+
+    &[data-expanded="true"] {
+      display: block;
+    }
+  }
+}
