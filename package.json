@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "Frontend application for CKAN backend.",
   "main": "index.js",
+  "engines": {
+    "node": "8.10.0"
+  },
   "directories": {
     "lib": "lib",
     "test": "tests"
