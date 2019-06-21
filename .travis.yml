@@ -8,12 +8,3 @@ install:
 
 script:
   - yarn test:report
-
-before_deploy:
-  - npm i -g now
-
-deploy:
-  provider: script
-  script: now -t $NOW_TOKEN -A now.demo.json -S datopian1 && now -t $NOW_TOKEN -A now.eds.json -S datopian1 && now -t $NOW_TOKEN -A now.opendk.json -S datopian1
-  on:
-    branch: master
