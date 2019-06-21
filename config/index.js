@@ -18,6 +18,7 @@ nconf.defaults({
   API_URL: api_url,
   SITE_URL: process.env.SITE_URL || 'http://0.0.0.0:4000',
   WP_URL: process.env.WP_URL || 'http://127.0.0.1:6000',
+  WP_TOKEN: process.env.WP_TOKEN || '',
   THEME_DIR: process.env.THEME_DIR || 'themes'
 })
 

@@ -43,6 +43,8 @@ Use `WP_URL` environment variable to point to your WordPress instance. For examp
 export WP_URL=https://edscms.home.blog/
 ```
 
+If your blog is private, you can set up `WP_TOKEN` environment variable to pass your access token. To get access token for private WP blog, check out this - https://developer.wordpress.com/docs/oauth2/.
+
 ## API
 
 *All of the controller and views use the API module - they don’t see backend.*
