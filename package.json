@@ -4,7 +4,7 @@
   "description": "Frontend application for CKAN backend.",
   "main": "index.js",
   "engines": {
-    "node": "8.10.0"
+    "node": ">=8.10.0"
   },
   "directories": {
     "lib": "lib",
