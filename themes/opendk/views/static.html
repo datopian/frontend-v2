@@ -15,7 +15,7 @@
         <a class="breadcrumb_link" href="/news">Blog</a>
       </li>
       <li class="breadcrumb_item">
-        <a class="breadcrumb_link" href="/news" aria-current="page">{{title}}</a> <!-- TODO missing path -->
+        <a class="breadcrumb_link" href="/news" aria-current="page">{{slug}}</a>
       </li>
     </ol>
   </nav>
@@ -25,7 +25,7 @@
 
   <main class="mb-gutter lg:mb-0 lg:w-2/3 lg:mr-gutter">
     <!-- featured image -->
-    <img class="w-full" src="http://www.opendata.dk/sites/default/files/styles/node_banner/public/odaa/blog/img_e0051.jpg" /> <!-- TODO hard-coded -->
+    <img class="w-full" src="{{image or '/static/img/placeholder.svg'}}" />
     <p class="text-sm italic text-gray-500 my-4">
       Der var en hel del fokus på åbne data til Smart Messen i Rønde. Både dialogworkshop mellem kommuner og virksomheder om åbne mobilitetsdata og spil, der baserede sig på åbne data om bl.a. affald.
     </p> <!-- TODO hard-coded -->
@@ -49,10 +49,10 @@
     <h2 class="bg-gray-200 px-4 py-3 font-bold mb-1">Share</h2>
     <ul class="text-sm">
       <li class="border-b-2 border-gray-200">
-        <a class="block px-4 py-3 text-primary" href="https://twitter.com/home?status=permalink">Twitter</a><!-- need permalink --> <!-- TODO -->
+        <a class="block px-4 py-3 text-primary" href="https://twitter.com/intent/tweet?url={{thisPageFullUrl}}&text={{title}}" target="_blank">Twitter</a>
       </li>
       <li>
-        <a class="block px-4 py-3 text-primary" href="https://www.facebook.com/sharer/sharer.php?u=permalink">Facebook</a><!-- need permalink --> <!-- TODO -->
+        <a class="block px-4 py-3 text-primary" href="https://www.facebook.com/sharer/sharer.php?u={{thisPageFullUrl}}" target="_blank">Facebook</a>
       </li>
     </ul>
     <!-- share links end -->

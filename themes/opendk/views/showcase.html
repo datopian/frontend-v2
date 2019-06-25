@@ -18,7 +18,7 @@
         <a class="breadcrumb_link" href="/search">Data</a>
       </li>
       <li class="breadcrumb_item">
-        <a class="breadcrumb_link" href="/search" aria-current="page">{{ dataset.title or dataset.name }}</a>
+        <a class="breadcrumb_link" href="/search/{{ dataset.name }}" aria-current="page">{{ dataset.title or dataset.name }}</a>
       </li>
     </ol>
   </nav>
@@ -60,7 +60,7 @@
           {{ resource.description or resource.title }}
         </p>
         <nav>
-          <a class="data-file-type" href="/{{ owner }}/{{ dataset.name }}/r/{{ resource.name }}.{{ resource.format }}{{ '?v='+revisionId if revisionId }}">
+          <a class="data-file-type" href="/{{ owner.name }}/{{ dataset.name }}/r/{{ resource.name }}.{{ resource.format }}{{ '?v='+revisionId if revisionId }}">
             <dl class="data-file-type_inner">
               <dt class="data-file-type_term">
                 {{ resource.format }}
@@ -71,7 +71,7 @@
             </dl>
           </a>
           {% for alt in resource.otherFormats %}
-          <a class="data-file-type" href="/{{ owner }}/{{ dataset.name }}/r/{{ resource.name }}.{{ alt.format }}{{ '?v='+revisionId if revisionId }}">
+          <a class="data-file-type" href="/{{ owner.name }}/{{ dataset.name }}/r/{{ resource.name }}.{{ alt.format }}{{ '?v='+revisionId if revisionId }}">
             <dl class="data-file-type_inner">
               <dt class="data-file-type_term">
                 {{alt.format}}
@@ -94,22 +94,22 @@
   <div class="lg:w-1/3 lg:ml-gutter lg:pl-10">
     <div class="">
       <h2 class="bg-gray-200 px-4 py-3 font-bold mb-4">Organization</h2>
-      <img src="../static/img/org.svg" class="m-4 h-24" />
+      <img src="{{ owner.avatar or '../static/img/org.svg'}}" class="m-4 h-24" />
 
-      <a class="px-4 text-primary text-xl font-semibold" href="/{{ owner }}">{{ owner }}</a>
+      <a class="px-4 text-primary text-xl font-semibold" href="/{{ owner.name }}">{{ owner.title }}</a>
 
       <p class="px-4 py-2 text-sm">
-        I Aarhus Kommune har vi siden 2013 haft en lokal open data platform. Den har vi flyttet over på den nationale open data platform, portal.opendata.dk. Du finder Aarhus Kommunes... <a href="/{{ owner }}" class="text-primary font-bold">Læs mere</a>
+        {{ owner.description | truncate(200) }} <a href="/{{ owner.name }}" class="text-primary font-bold">Læs mere</a>
       </p>
 
       <!-- share links -->
       <h2 class="bg-gray-200 px-4 py-3 font-bold mt-4 mb-1">Share</h2>
       <ul class="text-sm">
         <li class="border-b-2 border-gray-200">
-          <a class="block px-4 py-3 text-primary" href="https://twitter.com/home?status=permalink">Twitter</a><!-- need permalink --> <!-- TODO -->
+          <a class="block px-4 py-3 text-primary" href="https://twitter.com/intent/tweet?url={{thisPageFullUrl}}&text={{dataset.title or dataset.name}}" target="_blank">Twitter</a>
         </li>
         <li>
-          <a class="block px-4 py-3 text-primary" href="https://www.facebook.com/sharer/sharer.php?u=permalink">Facebook</a><!-- need permalink --> <!-- TODO -->
+          <a class="block px-4 py-3 text-primary" href="https://www.facebook.com/sharer/sharer.php?u={{thisPageFullUrl}}" target="_blank">Facebook</a>
         </li>
       </ul>
       <!-- share links end -->
@@ -142,7 +142,7 @@
         {{resource.name}}
         {% endif %}
         &nbsp;
-        <a href="/{{ owner }}/{{ dataset.name }}/r/{{ resource.name }}.{{ resource.format }}">
+        <a href="/{{ owner.name }}/{{ dataset.name }}/r/{{ resource.name }}.{{ resource.format }}">
         </a>
       </h2>
 
@@ -151,7 +151,7 @@
            data-type="resource-preview" data-resource="{{ loop.index - 1 }}"></div>
       <!-- End of div elements for React -->
       <p class="text-sm my-4">
-        This is a preview version. There might be more data in <a href="/{{ owner }}/{{ dataset.name }}/r/{{ resource.name }}.{{ resource.format }}{{ '?v='+revisionId if revisionId }}">the original version.</a>
+        This is a preview version. There might be more data in <a href="/{{ owner.name }}/{{ dataset.name }}/r/{{ resource.name }}.{{ resource.format }}{{ '?v='+revisionId if revisionId }}">the original version.</a>
       </p>
 
       {% if resource.format == "csv" %}
@@ -189,43 +189,6 @@
 <!-- resource end -->
 {% endfor %}
 
-<!-- Similar datasets -->
-{% if dataset.related %}
-<!-- <div class="container mx-auto p-gutter">
-  <h2 class="">Similar Datasets</h2>
-  <section class="">
-    <div class="">
-      {% for item in dataset.related %}
-      <div class="">
-        <div class="">
-
-          <h4>{{item.title}}</h4>
-
-          <div class="">
-             <div class="">
-               {% if item.publisher %}
-               <p class="">
-                 <a href="/{{item.publisher}}" class="">{{item.publisher}}</a>
-               </p>
-               {% endif %}
-               {% if item.formats %}
-               <p class="">
-                 {{ item.formats | join(',') }}
-               </p>
-               {% endif %}
-               <p>
-                 <a href="{{item.path}}" class="">View &rsaquo;</a>
-               </p>
-             </div>
-          </div>
-        </div>
-      </div>
-      {% endfor %}
-    </div>
-  </section>
-</div> -->
-{% endif %}
-<!-- End of Similar datasets -->
 
 <div class="container mx-auto p-gutter">
   <div class="lg:flex justify-between">
@@ -285,12 +248,6 @@
 
     <!-- Additional info end -->
   </div>
-
-  <!-- Link to datapackage.json - putting here to be hidden for now -->
-  <!-- <div class="">
-    <a href="/{{ owner }}/{{ dataset.name }}/datapackage.json" class="">Datapackage.json</a>
-  </div> -->
-  <!-- end of link to datapackage.json -->
 
 </div>
 {% endblock %}
