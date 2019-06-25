@@ -68,7 +68,7 @@ test('Showcase page works', async t => {
   t.plan(2)
 
   const res = await request(app)
-    .get('/dataset/co2emis')
+    .get('/test_org_00/co2emis')
 
   t.is(res.statusCode, 200)
   t.true(res.text.includes('<!-- showcase page test placeholder -->'))

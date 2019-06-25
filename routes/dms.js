@@ -131,10 +131,18 @@ module.exports = function () {
       datapackage.views.push(view)
     })
 
+    const profile = await Model.getProfile(req.params.owner)
+
     res.render('showcase.html', {
       title: req.params.owner + ' | ' + req.params.name,
       dataset: datapackage,
-      owner: req.params.owner,
+      owner: {
+        name: profile.name,
+        title: profile.title,
+        description: profile.description, // TODO: md => html
+        avatar: profile.image_display_url || profile.image_url
+      },
+      thisPageFullUrl: req.protocol + '://' + req.get('host') + req.originalUrl,
       dpId: JSON.stringify(datapackage).replace(/\\/g, '\\\\').replace(/\'/g, "\\'")
     })
   })
@@ -164,11 +172,14 @@ module.exports = function () {
       const pages = utils.pagination(currentPage, totalPages)
 
       res.render('owner.html', {
-        title: owner,
-        owner,
-        description: profile.description,
-        avatar: profile.image_display_url || profile.image_url,
-        joinDate: joinMonth + ' ' + joinYear,
+        title: profile.title,
+        owner: {
+          name: profile.name,
+          title: profile.title,
+          description: profile.description, // TODO: md => html
+          avatar: profile.image_display_url || profile.image_url,
+          joinDate: joinMonth + ' ' + joinYear,
+        },
         result,
         query: req.query,
         pages
