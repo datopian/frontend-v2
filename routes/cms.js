@@ -16,7 +16,17 @@ module.exports = function () {
   async function listStaticPages(req, res) {
     // Get latest 10 blog posts
     const size = 10
-    const posts = await Model.getListOfPosts(size)
+    let posts = await Model.getListOfPosts(size)
+    posts = posts.map(post => {
+      return {
+        slug: post.slug,
+        title: post.title,
+        content: post.content,
+        published: moment(post.date).format('MMMM Do, YYYY'),
+        modified: moment(post.modified).format('MMMM Do, YYYY'),
+        image: post.featured_image
+      }
+    })
     res.render('blog.html', {
       posts
     })
@@ -36,10 +46,13 @@ module.exports = function () {
     try {
       const post = await Model.getPost(slug)
       res.render('static.html', {
+        slug: post.slug,
         title: post.title,
         content: post.content,
         published: moment(post.date).format('MMMM Do, YYYY'),
         modified: moment(post.modified).format('MMMM Do, YYYY'),
+        image: post.featured_image,
+        thisPageFullUrl: req.protocol + '://' + req.get('host') + req.originalUrl
       })
     } catch (err) {
       if (err.statusCode === 404) {
