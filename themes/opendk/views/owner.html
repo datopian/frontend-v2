@@ -32,7 +32,7 @@
       <img src="{{owner.avatar}}" class="mb-4 h-24">
       <h2 class="text-primary text-xl font-semibold">{{ owner.title }}</h2>
       <p class="py-2 text-sm">
-        {{ owner.description | truncate(200) }}
+        {{ owner.description | safe | truncate(200) }}
       </p>
     </div>
 
@@ -72,7 +72,7 @@
           Publishing data since {{ owner.joinDate }}
         </p>
         <p>
-          {{ owner.description }}
+          {{ owner.description | safe }}
         </p>
       </div>
       <!-- about tab content end -->

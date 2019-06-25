@@ -197,3 +197,10 @@ module.exports.pagination = (c, m) => {
   }
   return rangeWithDots;
 }
+
+
+module.exports.processMarkdown = require('markdown-it')({
+  html: true,
+  linkify: true,
+  typographer: true
+})
