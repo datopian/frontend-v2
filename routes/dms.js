@@ -53,7 +53,8 @@ module.exports = function () {
         result,
         query: req.query,
         totalPages,
-        pages
+        pages,
+        currentPage
       })
     } catch (e) {
       next(e)
@@ -98,7 +99,9 @@ module.exports = function () {
         item: collection,
         result,
         query: req.query,
-        pages
+        totalPages,
+        pages,
+        currentPage
       })
     } catch (e) {
       next(e)
@@ -182,7 +185,9 @@ module.exports = function () {
         },
         result,
         query: req.query,
-        pages
+        totalPages,
+        pages,
+        currentPage
       })
     } catch(err) {
       next(err)

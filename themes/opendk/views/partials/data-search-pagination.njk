@@ -3,7 +3,12 @@
   <nav aria-label="Datasets" class="mt-gutter pt-gutter text-sm">
     <ul class="inline-flex border border-gray-200">
       <li class="border border-gray-200">
-        <a class="block px-3 py-2" href="/search?q={{ query.q }}&from=0" aria-label="Previous">
+        {% if currentPage == 1 %}
+          {% set from = 0 %}
+        {% else %}
+          {% set from = (currentPage - 2) * 10 %}
+        {% endif %}
+        <a class="block px-3 py-2" href="/search?q={{ query.q }}&from={{ from }}" aria-label="Previous">
           <span class="">Previous</span>
         </a>
       </li>
@@ -14,12 +19,12 @@
         </li>
         {% else %}
         <li class="border border-gray-200">
-          <a class="block px-3 py-2 {{ 'bg-secondary' if currentPage == page }}" href="/search?q={{ query.q }}&from={{ (page - 1) * 10 }}">{{page}}</a>
+          <a class="block px-3 py-2 {{ 'bg-secondary secondary-nav_link' if currentPage == page }}" href="/search?q={{ query.q }}&from={{ (page - 1) * 10 }}">{{page}}</a>
         </li>
         {% endif %}
       {% endfor %}
       <li class="border border-gray-200">
-        <a class="block px-3 py-2" href="/search?q={{ query.q }}&from={{ result.count - (result.count % 10) | int }}" aria-label="Next">
+        <a class="block px-3 py-2" href="/search?q={{ query.q }}&from={{ currentPage * 10 }}" aria-label="Next">
           <span class="">Next</span>
         </a>
       </li>
