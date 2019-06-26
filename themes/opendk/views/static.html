@@ -11,11 +11,13 @@
       <li class="breadcrumb_item">
         <a class="breadcrumb_link" href="/">Home</a>
       </li>
+      {% if parentSlug %}
       <li class="breadcrumb_item">
-        <a class="breadcrumb_link" href="/news">Blog</a>
+        <a class="breadcrumb_link" href="/{{parentSlug}}">{{parentSlug}}</a>
       </li>
+      {% endif %}
       <li class="breadcrumb_item">
-        <a class="breadcrumb_link" href="/news" aria-current="page">{{slug}}</a>
+        <a class="breadcrumb_link" href="#" aria-current="page">{{slug}}</a>
       </li>
     </ol>
   </nav>
@@ -25,19 +27,9 @@
 
   <main class="mb-gutter lg:mb-0 lg:w-2/3 lg:mr-gutter">
     <!-- featured image -->
-    <img class="w-full" src="{{image or '/static/img/placeholder.svg'}}" />
-    <p class="text-sm italic text-gray-500 my-4">
-      Der var en hel del fokus på åbne data til Smart Messen i Rønde. Både dialogworkshop mellem kommuner og virksomheder om åbne mobilitetsdata og spil, der baserede sig på åbne data om bl.a. affald.
-    </p> <!-- TODO hard-coded -->
+    <img class="w-full" src="{{ image }}" />
 
     <h1 class="text-4xl font-semibold">{{title}}</h1>
-
-    {% if published %}
-    <time class="text-gray-500">{{published}}</time>
-    {% endif %}
-    {% if modified %}
-    <!-- {{modified}} -->
-    {% endif %}
 
     <div class="content">
       {{content | safe}}
@@ -56,32 +48,6 @@
       </li>
     </ul>
     <!-- share links end -->
-
-    <!-- TODO hard-coded -->
-    <h2 class="bg-gray-200 px-4 py-3 font-bold mb-2 mt-gutter">Mest populære blogindlæg</h2>
-    <ul>
-      <li class="border-b-2 border-gray-200">
-        <article class="px-4 py-3">
-          <h1><a class="text-primary font-semibold">Åbne data afslører valgfejl: Ja- og nej-stemmer blev byttet om</a></h1>
-          <time class="text-sm">29/05/2015</time>
-        </article>
-      </li>
-
-      <li class="border-b-2 border-gray-200">
-        <article class="px-4 py-3">
-          <h1><a class="text-primary font-semibold">Åbne data afslører valgfejl: Ja- og nej-stemmer blev byttet om</a></h1>
-          <time class="text-sm">29/05/2015</time>
-        </article>
-      </li>
-
-      <li>
-        <article class="px-4 py-3">
-          <h1><a class="text-primary font-semibold">Åbne data afslører valgfejl: Ja- og nej-stemmer blev byttet om</a></h1>
-          <time class="text-sm">29/05/2015</time>
-        </article>
-      </li>
-    </ul>
-
   </div>
 </div>
 
