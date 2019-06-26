@@ -1,36 +1,13 @@
 {% extends "base.html" %}
 
-{% block title%}{{title}}{% endblock %}
+{% block title %}
+Welcome - About
+{% endblock %}
 
-{% block bodyclass %}blog{% endblock %}
+{% block bodyclass %}static{% endblock %}
 
 {% block content %}
-<!-- blog post page test placeholder -->
-<div role="main">
-  <div class="container">
-    <div class="inner_container">
-      <div class="page-header text-center">
-        <h1>
-          {{title}}
-        </h1>
-        {% if published %}
-          <p class="meta-info">
-            <i class="fa fa-calendar-o" aria-hidden="true"></i> Published: {{published}}
-          </p>
-        {% endif %}
-        {% if modified %}
-          <p class="meta-info">
-            <i class="fa fa-calendar-o" aria-hidden="true"></i> Last modified: {{modified}}
-          </p>
-        {% endif %}
-      </div>
-      <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-          {{content | safe}}
-        </div>
-      </div>
-    </div>
-  </div>
+<div>
+  {{ title }}
 </div>
-
 {% endblock %}

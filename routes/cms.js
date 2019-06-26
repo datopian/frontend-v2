@@ -11,7 +11,8 @@ module.exports = function () {
   const Model = new cms.CmsModel()
 
   router.get('/news', listStaticPages)
-  router.get(['/news/:page', '/:page', '/:parent/:page'], showStaticPage)
+  router.get('/news/:page', showPostPage)
+  router.get(['/:page', '/:parent/:page'], showStaticPage)
 
   async function listStaticPages(req, res) {
     // Get latest 10 blog posts
@@ -32,6 +33,24 @@ module.exports = function () {
     })
   }
 
+  async function showPostPage(req, res, next) {
+    const slug = req.params.page
+    try {
+      const post = await Model.getPost(slug)
+      res.render('post.html', {
+        slug: post.slug,
+        title: post.title,
+        content: post.content,
+        published: moment(post.date).format('MMMM Do, YYYY'),
+        modified: moment(post.modified).format('MMMM Do, YYYY'),
+        image: post.featured_image,
+        thisPageFullUrl: req.protocol + '://' + req.get('host') + req.originalUrl
+      })
+    } catch (err) {
+      next(err)
+    }
+  }
+
   async function showStaticPage(req, res, next) {
     // Get the post using slug
     let slug = [req.params.parent, req.params.page].join('/')
@@ -47,10 +66,9 @@ module.exports = function () {
       const post = await Model.getPost(slug)
       res.render('static.html', {
         slug: post.slug,
+        parentSlug: req.params.parent,
         title: post.title,
         content: post.content,
-        published: moment(post.date).format('MMMM Do, YYYY'),
-        modified: moment(post.modified).format('MMMM Do, YYYY'),
         image: post.featured_image,
         thisPageFullUrl: req.protocol + '://' + req.get('host') + req.originalUrl
       })
