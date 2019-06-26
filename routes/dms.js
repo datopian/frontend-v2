@@ -67,7 +67,8 @@ module.exports = function () {
       res.render('collections-home.html', {
         title: 'Dataset Collections',
         description: 'Catalogue of datasets for a particular project or team, or on a particular theme, or as a very simple way to help people find and search your own published datasets.',
-        collections
+        collections,
+        slug: 'collections'
       })
     } catch (e) {
       next(e)
@@ -148,6 +149,20 @@ module.exports = function () {
       thisPageFullUrl: req.protocol + '://' + req.get('host') + req.originalUrl,
       dpId: JSON.stringify(datapackage).replace(/\\/g, '\\\\').replace(/\'/g, "\\'")
     })
+  })
+
+  router.get('/organization', async (req, res, next) => {
+    try {
+      const collections = await Model.getOrganizations()
+      res.render('collections-home.html', {
+        title: 'Organizations',
+        description: 'CKAN Organizations are used to create, manage and publish collections of datasets. Users can have different roles within an Organization, depending on their level of authorisation to create, edit and publish.',
+        collections,
+        slug: 'organization'
+      })
+    } catch (err) {
+      next(err)
+    }
   })
 
   // MUST come last in order to catch all the publisher pages

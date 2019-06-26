@@ -86,6 +86,17 @@ test('Redirect for org page works', async t => {
 })
 
 
+test('Organization list page works', async t => {
+  t.plan(2)
+
+  const res = await request(app)
+    .get('/organization')
+
+  t.is(res.statusCode, 200)
+  t.true(res.text.includes('<!-- collections list page test placeholder -->'))
+})
+
+
 test('Organization page works', async t => {
   t.plan(2)
 

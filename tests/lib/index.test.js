@@ -118,6 +118,7 @@ test('getCollections (list of collections) api works', async t => {
   t.is(result.length, 1)
 })
 
+
 test('getCollection api works', async t => {
   t.plan(1)
 
@@ -128,8 +129,18 @@ test('getCollection api works', async t => {
     name: name,
     title: 'Economic Data',
     summary: 'A collection of economic indicators available on DataHub.',
-    image: 'https://datahub.io/static/img/awesome-data/economic-data.png'
+    image: 'https://datahub.io/static/img/awesome-data/economic-data.png',
+    count: 2
   }
 
   t.deepEqual(result, expected)
+})
+
+
+test('getOrganizations api works', async t => {
+  t.plan(1)
+
+  const result = await DmsModel.getOrganizations()
+
+  t.is(result.length, 1)
 })

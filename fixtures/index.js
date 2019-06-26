@@ -158,6 +158,19 @@ module.exports.initMocks = function() {
     'Content-Length',
     '549' ])
 
+
+  nock('http://127.0.0.1:5000', {"encodedQueryParams":true})
+    .persist()
+    .post('/api/3/action/organization_list', {"all_fields":true, "sort": "package_count"})
+    .reply(200, {"help":"http://127.0.0.1:5000/api/3/action/help_show?name=organization_list","success":true,"result":[{"approval_status":"approved","image_display_url":"","package_count":2,"title":"Test org","name":"test-org","is_organization":true,"image_url":"","type":"organization","num_followers":0,"id":"","description":""}]}, [ 'Server',
+    'PasteWSGIServer/0.5 Python/2.7.12',
+    'Date',
+    'Mon, 10 Jun 2019 13:55:07 GMT',
+    'Content-Type',
+    'application/json;charset=utf-8',
+    'Content-Length',
+    '549' ])
+
   nock('http://127.0.0.1:5000', {"encodedQueryParams":true})
     .persist()
     .post('/api/3/action/group_show', {"id":"test-group"})

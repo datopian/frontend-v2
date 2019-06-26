@@ -21,10 +21,6 @@
   </div>
 </section>
 
-
-<!---------------------- Awesome Data cards ---------------------->
-
-
 <section class="data-cards">
   <div class="container">
 
@@ -36,9 +32,9 @@
             <img src="{{ collection.image }}">
           </div>
           <div class="col-xs-10">
-            <a href="/collections/{{ collection.name }}" class="title">{{ collection.title }}</a>
+            <a href="/{{slug}}/{{ collection.name }}" class="title">{{ collection.title }}</a>
             <p>{{ collection.summary }}</p>
-            <a href="/collections/{{ collection.name }}" class="view">View Collection</a>
+            <a href="/{{slug}}/{{ collection.name }}" class="view">View</a>
           </div>
         </div>
       </div>

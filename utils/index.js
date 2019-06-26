@@ -109,13 +109,15 @@ module.exports.convertToStandardCollection = (descriptor) => {
     name: '',
     title: '',
     summary: '',
-    image: ''
+    image: '',
+    count: null
   }
 
   standard.name = descriptor.name
   standard.title = descriptor.title || descriptor.display_name
-  standard.summary = descriptor.description
+  standard.summary = descriptor.description ? descriptor.description.substring(0, 100) : ''
   standard.image = descriptor.image_display_url || descriptor.image_url
+  standard.count = descriptor.package_count || ''
 
   return standard
 }
