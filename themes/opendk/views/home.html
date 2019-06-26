@@ -64,54 +64,24 @@ Welcome - Home
   </header>
 
   <section class="md:flex">
-    <!-- article-preview --> <!-- TODO hard-coded -->
+    {% for post in posts %}
+    <!-- article-preview -->
     <article class="article-preview my-gutter pb-gutter md:w-1/3 md:mr-gutter">
-      <a class="article-preview_image" href="#">
-        <img class="article-preview_img" src="http://www.opendata.dk/sites/default/files/styles/node_banner/public/odaa/blog/img_e0051.jpg" />
+      <a class="article-preview_image" href="/news/{{post.slug}}">
+        <img class="article-preview_img" src="{{post.image or '/static/img/placeholder.svg'}}" />
       </a>
       <div class="article-preview_text">
         <h1 class="article-preview_heading">
-          <a class="article-preview_heading-link" href="#">Smart Messe: Åbne data som løsning og leg</a>
+          <a class="article-preview_heading-link" href="/news/{{post.slug}}">{{ post.title }}</a>
         </h1>
-        <time class="article-preview_date">14. maj, 2019</time>
+        <time class="article-preview_date">{{ post.modified }}</time>
         <p class="article-preview_content">
-          I forbindelse med Internet Week Denmark afholdt Syddjurs Kommune Danmarks første Smart Messe. Her talte Nikolaj Sonne bl.a. om ulovlig høst af private data – men på messen var der også en del fokus...
+          {{post.content | safe | truncate(200)}}
         </p>
       </div>
     </article>
     <!-- article-preview end -->
-    <!-- article-preview -->
-    <article class="article-preview my-gutter pb-gutter md:w-1/3 md:mx-gutter">
-      <a class="article-preview_image" href="#">
-        <img class="article-preview_img" src="http://www.opendata.dk/sites/default/files/styles/node_banner/public/odaa/blog/img_e0051.jpg" />
-      </a>
-      <div class="article-preview_text">
-        <h1 class="article-preview_heading">
-          <a class="article-preview_heading-link" href="#">Smart Messe: Åbne data som løsning og leg</a>
-        </h1>
-        <time class="article-preview_date">14. maj, 2019</time>
-        <p class="article-preview_content">
-          I forbindelse med Internet Week Denmark afholdt Syddjurs Kommune Danmarks første Smart Messe. Her talte Nikolaj Sonne bl.a. om ulovlig høst af private data – men på messen var der også en del fokus...
-        </p>
-      </div>
-    </article>
-    <!-- article-preview end -->
-    <!-- article-preview -->
-    <article class="article-preview my-gutter pb-gutter md:w-1/3 md:ml-gutter">
-      <a class="article-preview_image" href="#">
-        <img class="article-preview_img" src="http://www.opendata.dk/sites/default/files/styles/node_banner/public/odaa/blog/img_e0051.jpg" />
-      </a>
-      <div class="article-preview_text">
-        <h1 class="article-preview_heading">
-          <a class="article-preview_heading-link" href="#">Smart Messe: Åbne data som løsning og leg</a>
-        </h1>
-        <time class="article-preview_date">14. maj, 2019</time>
-        <p class="article-preview_content">
-          I forbindelse med Internet Week Denmark afholdt Syddjurs Kommune Danmarks første Smart Messe. Her talte Nikolaj Sonne bl.a. om ulovlig høst af private data – men på messen var der også en del fokus...
-        </p>
-      </div>
-    </article>
-    <!-- article-preview end -->
+    {% endfor %}
   </section>
 
   <!-- if future events -->
