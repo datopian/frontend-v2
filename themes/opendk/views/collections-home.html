@@ -31,9 +31,9 @@
     <li class="sm:w-1/2 lg:w-1/3">
       <a class="flex bg-gray-200 p-4 text-primary my-4 sm:mx-4" href="/{{ slug }}/{{ collection.name }}">
         <div class="w-24 h-24 bg-secondary mr-4 p-4 flex-shrink-0 flex justify-center">
-          <img src="{{ collection.image }}">
+          <img class="w-full" src="{{ collection.image }}">
         </div>
-        <div class="flex flex-col justify-center">
+        <div class="flex flex-col justify-center overflow-hidden">
           <h2 class="font-semibold text-lg">{{ collection.title }}</h2>
           <p>{{ collection.summary }}</p>
         </div>
