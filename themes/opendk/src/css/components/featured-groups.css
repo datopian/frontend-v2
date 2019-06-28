@@ -42,7 +42,9 @@
 }
 
 .featured-groups_img {
-
+  /* needed for IE11 */
+  width: 100%;
+  height: 100%;
 }
 
 .featured-groups_name {
