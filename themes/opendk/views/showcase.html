@@ -130,33 +130,25 @@
 </div>
 
 
-{% for resource in dataset.resources %}
-<!-- resource -->
+{% for view in dataset.views %}
+{% set viewName = view.resources[0].name or view.resources[0] %}
+<!-- view -->
 <div class="resource">
   <div class="container mx-auto p-gutter">
-    {% if resource.format !== 'zip' %}
     <div class="">
-      <!-- Heading for each resource -->
-      <h2 id="resource-{{resource.name}}" class="text-2xl font-semibold mb-6">
-        {% if resource.title %}
-        {{resource.title}}
-        {% else %}
-        {{resource.name}}
-        {% endif %}
-        &nbsp;
-        <a href="/{{ owner.name }}/{{ dataset.name }}/r/{{ resource.name }}.{{ resource.format }}">
-        </a>
+      <!-- Heading for each view -->
+      <h2 id="resource-{{viewName}}" class="text-2xl font-semibold mb-6">
+        {{view.title}}
       </h2>
 
       <!-- Placeholder div elements for React components: preview tables -->
-      <div id="resource-{{loop.index - 1}}" class="react-me text-sm"
-           data-type="resource-preview" data-resource="{{ loop.index - 1 }}"></div>
+      <div id="datapackage-view-{{view.id}}" class="react-me text-sm"></div>
       <!-- End of div elements for React -->
       <p class="text-sm my-4">
-        This is a preview version. There might be more data in <a href="/{{ owner.name }}/{{ dataset.name }}/r/{{ resource.name }}.{{ resource.format }}{{ '?v='+revisionId if revisionId }}">the original version.</a>
+        This is a preview version. There might be more data in the original version.
       </p>
 
-      {% if resource.format == "csv" %}
+      {% if view.resources[0].schema %}
        <h3 class="text-lg font-semibold mt-gutter mb-2">Field information</h3>
        <table class="w-full">
          <thead>
@@ -168,7 +160,7 @@
            </tr>
          </thead>
          <tbody>
-           {% for field in resource.schema.fields %}
+           {% for field in view.resources[0].schema.fields %}
            <tr>
              <th class="text-left border-t-2 border-gray-200 text-sm py-1">{{field.name}}</th>
              <td class="text-left border-t-2 border-gray-200 text-sm py-1">{{loop.index}}</td>
@@ -180,12 +172,7 @@
        </table>
      {% endif %}
     </div>
-    {% else %}
-    <!-- Placeholder div elements for React components: preview tables -->
-    <div id="resource-{{loop.index - 1}}" class="react-me"
-         data-type="resource-preview" data-resource="{{ loop.index - 1 }}"></div>
-    <!-- End of div elements for React -->
-    {% endif %}
+
   </div>
 </div>
 <!-- resource end -->
@@ -252,6 +239,8 @@
   </div>
 
 </div>
+
+<div class="react-me-datapackage-views" data-datapackage-json='{{ dpId | safe }}'></div>
 {% endblock %}
 
 
@@ -262,13 +251,9 @@
     var query = document.getElementById('search-input').value;
     window.location.href = '/search?q=' + query;
   }
-
-
-  // pass DP_ID to front-end -->
-  var DP_ID = JSON.parse('{{ dpId | safe }}');
 </script>
 
-<link rel="stylesheet" media="screen" href="https://raw.githack.com/datopian/frontend-showcase-js/gh-pages/dist/main.css">
-<script type="text/javascript" src="https://raw.githack.com/datopian/frontend-showcase-js/gh-pages/dist/bundle.js"></script>
+<link rel="stylesheet" media="screen" href="https://raw.githack.com/datopian/datapackage-views-js/master/dist/css/main.css">
+<script type="text/javascript" src="https://raw.githack.com/datopian/datapackage-views-js/master/dist/js/main.js"></script>
 
 {% endblock %}
