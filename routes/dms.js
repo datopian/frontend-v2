@@ -2,6 +2,7 @@
 
 const express = require('express')
 const moment = require('moment')
+const bytes = require('bytes')
 
 const config = require('../config')
 const dms = require('../lib/dms')
@@ -136,24 +137,30 @@ module.exports = function () {
       return
     }
 
-    // Since "frontend-showcase-js" library renders views according to
-    // descriptor's "views" property, we need to include "preview" views:
+    // Since "datapackage-views-js" library renders views according to
+    // descriptor's "views" property, we need to generate view objects:
     datapackage.views = datapackage.views || []
-    datapackage.resources.forEach(resource => {
+    datapackage.resources.forEach((resource, index) => {
+      // Convert bytes into human-readable format:
+      resource.size = resource.size ? bytes(resource.size, {decimalPlaces: 0}) : resource.size
       const view = {
-        datahub: {
-          type: 'preview'
-        },
+        id: index,
+        title: resource.title || resource.name,
         resources: [
            resource.name
         ],
-        specType: 'table'
+        specType: null
+      }
+      // Add 'table' views for each tabular resource:
+      const tabularFormats = ['csv', 'tsv', 'dsv', 'xls', 'xlsx']
+      resource.format = resource.format.toLowerCase()
+      if (tabularFormats.includes(resource.format)) {
+        view.specType = 'table'
       }
       datapackage.views.push(view)
     })
 
     const profile = await Model.getProfile(req.params.owner)
-
     res.render('showcase.html', {
       title: req.params.owner + ' | ' + req.params.name,
       dataset: datapackage,
