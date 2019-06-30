@@ -89,7 +89,9 @@ module.exports.ckanToDataPackage = function (descriptor) {
     }
 
     if (resource.url) {
-      resource.path = resource.url
+      // Requesting 'http' URLs from 'https' origin isn't allowed due to 'Mixed Content' policy
+      // TODO: this is a temporary solution for now
+      resource.path = resource.url.replace('http://', 'https://')
       delete resource.url
     }
 
