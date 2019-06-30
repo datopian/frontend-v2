@@ -3,12 +3,10 @@
     display: inline-flex;
     flex-direction: column;
     @apply bg-gray-200 p-10 my-6;
-  }
-
-  & a {
     overflow-wrap: break-word;
     word-wrap: break-word;
-    word-break: break-word;
+    word-break: break-all;
+    width: 100%; /* fixes IE11 layout issue */
   }
 
   & .interact {
