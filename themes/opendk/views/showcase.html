@@ -54,20 +54,22 @@
       <!-- data file -->
       <li class="mb-6">
         <h3 class="text-2xl font-semibold">
-          <a href="#resource-{{resource.name}}">{{resource.name}}</a>
+          <a href="#resource-{{resource.name}}">{{resource.title or resource.name}}</a>
         </h3>
         <p>
           {{ resource.description or resource.title }}
         </p>
         <nav>
-          <a class="data-file-type" href="/{{ owner.name }}/{{ dataset.name }}/r/{{ resource.name }}.{{ resource.format }}{{ '?v='+revisionId if revisionId }}">
+          <a class="data-file-type" href="{{ resource.path }}">
             <dl class="data-file-type_inner">
               <dt class="data-file-type_term">
-                {{ resource.format }}
+                Download
               </dt>
+              {% if resource.size %}
               <dd class="data-file-type_size">
-                {{resource.prettyBytes}}
+                {{resource.size}}
               </dd>
+              {% endif %}
             </dl>
           </a>
           {% for alt in resource.otherFormats %}
@@ -94,7 +96,7 @@
   <div class="lg:w-1/3 lg:ml-gutter lg:pl-10">
     <div class="">
       <h2 class="bg-gray-200 px-4 py-3 font-bold mb-4">Organization</h2>
-      <img src="{{ owner.avatar or '../static/img/org.svg'}}" class="m-4 h-24" />
+      <img src="{{ owner.avatar or '/static/img/org.svg'}}" class="m-4 h-24" />
 
       <a class="px-4 text-primary text-xl font-semibold" href="/{{ owner.name }}">{{ owner.title }}</a>
 
