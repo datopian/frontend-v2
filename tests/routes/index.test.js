@@ -136,8 +136,10 @@ test('Collection page works', async t => {
 // Not found tests
 test('If a page is not found in neither CMS or DMS, it returns 404 page', async t => {
   const agent = request(app)
+  console.log(1)
   let res = await agent
     .get('/not-found-slug')
+  console.log(2)
 
   t.true(res.text.includes('<!-- placeholder for testing 404 page -->'))
 

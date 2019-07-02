@@ -214,6 +214,7 @@ module.exports.processMarkdown = require('markdown-it')({
  * or []
  */
 module.exports.loadThemeRoutes = function (app) {
+  console.log('Loading configured theme routes...')
   const config = require('../config')
   const path = require('path')
   
@@ -221,15 +222,51 @@ module.exports.loadThemeRoutes = function (app) {
     const themes = config.get('CKAN_THEME_ROUTES')
     const themePath = config.get('CKAN_THEME_PATH') || './themes'
     
-    console.log(themes, themePath)
     return themes.split(' ').forEach(theme => {
       const resource = path.join(process.cwd(), themePath, theme, 'routes.js')
-      console.log(resource)
       require(resource)(app)
     })
   } catch (e) {
     const themes = config.get('CKAN_THEME_ROUTES').split(" ") || []
-    console.warn('WARNING: Failed to load configured themeRoutes', themes, e)
+    console.warn('WARNING: Failed to load configured theme routes', themes, e)
     return []
   }
 }
+
+module.exports.loadUserPlugins = function (app) {
+  console.log('Loading configured plugins...')
+  const fs = require('fs')
+  const config = require('../config')
+  const path = require('path')
+  
+  try {
+    const plugins = config.get('CKAN_FE_PLUGINS')
+
+    // define plugin paths
+    const pluginPath = config.get('CKAN_PLUGIN_DIRECTORY') || './plugins'
+    const nodeModulesPath = config.get('NODE_MODULES_PATH') || './node_modules'
+    
+    // try to load each resource
+    return plugins.split(' ').forEach(plugin => {
+      const userResource = path.join(process.cwd(), pluginPath, plugin, 'index.js')
+      const npmResource = path.join(process.cwd(), nodeModulesPath, plugin)
+      
+      // look for plugin in user space
+      if (fs.existsSync(userResource)) {
+        require(userResource)(app)
+      // otherwise look in node_modules
+      } else if (fs.existsSync(npmResource)) {
+        const middleware = require(plugin)
+        app.use(middleware())
+      } else {
+        // if all else fails give the user a helping hand
+        const userPluginPath = path.resolve(process.cwd(), pluginPath, plugin)
+        throw new Error(`Cannot find configured plugin ${plugin}. Is it installed? If the plugin is an npm module try to run\n"yarn add ${plugin}"\nIf it is a user plugin, make sure you have a directory at ${userPluginPath} and a valid index.js file there.`)
+      }
+    })
+  } catch (e) {
+    const plugins = config.get('CKAN_FE_PLUGINS').split(" ") || []
+    console.warn('WARNING: Failed to load configured plugins',plugins, e)
+    return []
+  }
+} 

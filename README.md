@@ -111,6 +111,88 @@ Here is the summary of existing routes at the moment:
   * Post: `/news/my-post`
   * Anything else: `/foo/bar`
 
+## Extensions
+The platform can be extended in the following ways:
+
+### Theme Routes
+You can add a `routes.js` file to your theme. Define a module.export with a function that receives the express `app` object, and use it to add routes, middleware, etc, to the frontend app.
+
+*NOTE* You do not need to return anything from this function, just extend the app object by reference.
+
+Add the following to your `.env` file (or to your node environment via any available  method):
+`CKAN_THEME_ROUTES: "your_cool_theme"`
+
+And in `/themes/your_cool_theme/routes.js`:
+```
+module.exports = function (app) {
+  // extend the express app object as you see fit
+  // for example, add a route /foo
+  app.get('/foo', (req, res) => {
+    res.render('example.html', {
+      title: 'Example Theme route',
+      content: {foo: 'Hello theme route'}
+    })  
+  })  
+}
+```
+
+### Plugins
+#### User Defined Plugins
+Users can define plugins.
+
+Create a directory with the plugins name in `/plugins`
+Add an `index.js` file that uses the app object, as in `theme routes` above.
+
+Add the plugin name to your `.env` file (or to your node environment via any available method). Separate multiple plugins with a space:
+`CKAN_FE_PLUGINS="your_cool_plugin"`
+
+For example, we will create a `req_parameter_logger` plugin:
+
+`plugins/req_parameter_logger/index.js`
+```
+module.exports = function(app) {
+  app.use((req, res, next) => {
+    console.log("EXAMPLE PLUGIN LOGGER {req query}:", req.query)
+    next()
+  })  
+}
+```
+
+Add the plugin name to your .env file.
+Now when we can run `$ yarn start`
+
+Our plugin will be loaded:
+
+```
+Loading configured plugins...
+Loading configured theme routes...
+Listening on :4000
+```
+
+If we visit `localhost:4000?q=123&q1=12451`we will see the following in our console:
+
+```
+EXAMPLE PLUGIN LOGGER {req query}: { q: '123', q1: '12451' }
+EXAMPLE PLUGIN LOGGER {req query}: {}
+```
+
+#### NPM Plugins
+If an express middleware plugin is available as a standalone module on npm you can install it as-is by installing the package via npm, and adding it to your `CKAN_FE_PLUGINS` variable in `.env`
+
+For example, we will install the cookie-parser plugin, alongside our example_plugin.
+
+in `.env`:
+`CKAN_FE_PLUGINS="example_plugin cookie-parser"`
+
+now install the npm package:
+`$ yarn add cookie-parser`
+
+Cookie-parser will now be applied to all of your requests as express middleware!
+
+(For instance, you could take advantage of this in custom routes, etc)
+
+For more on express middleware: https://expressjs.com/en/guide/using-middleware.html
+
 ## Tests
 
 Run tests (note that tests are running against mocked API_URL set to http://127.0.0.1:5000/api/3/action/):

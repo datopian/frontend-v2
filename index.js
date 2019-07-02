@@ -11,7 +11,7 @@ const i18n = require("i18n")
 const config = require('./config')
 const dmsRoutes = require('./routes/dms')
 const cmsRoutes = require('./routes/cms')
-const { loadThemeRoutes } = require('./utils')
+const { loadThemeRoutes, loadUserPlugins } = require('./utils')
 
 module.exports.makeApp = function () {
   const app = express()
@@ -52,6 +52,7 @@ module.exports.makeApp = function () {
   app.use(session({ secret: 'keyboard cat', cookie: { maxAge: 60000 }}))
   app.use(flash())
   
+  loadUserPlugins(app)
   loadThemeRoutes(app)
 
   // Redirect x/y/ to x/y
