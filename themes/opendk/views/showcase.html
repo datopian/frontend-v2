@@ -34,12 +34,12 @@
 
     <!-- short readme -->
     {% if dataset.readmeSnippet %}
-      <div class="leading-relaxed">{{dataset.readmeSnippet}} <a href="#readme" onclick="scrollDown(this)">read more</a></div>
+      <div class="leading-relaxed">{{dataset.readmeSnippet}} <a href="#readme" onclick="scrollDown(this)" class="text-primary font-bold">Læs mere</a></div>
     {% elif dataset.readmeHtml %}
       <div class="leading-relaxed">{{dataset.readmeHtml|safe}}</div>
     {% elif dataset.description %}
       {% if dataset.description|length > 250 %}
-        <div class="leading-relaxed">{{dataset.description|truncate(200)}} <a href="#readme" onclick="scrollDown(this)">read more</a></div>
+        <div class="leading-relaxed">{{dataset.description|truncate(200)}} <a href="#readme" onclick="scrollDown(this)" class="text-primary font-bold">Læs mere</a></div>
       {% else %}
         <div class="leading-relaxed">{{dataset.description}}</div>
       {% endif %}
@@ -63,11 +63,11 @@
           <a class="data-file-type" href="{{ resource.path }}">
             <dl class="data-file-type_inner">
               <dt class="data-file-type_term">
-                Download
+                Download {% if resource.format %}({{ resource.format }}){% endif %}
               </dt>
               {% if resource.size %}
               <dd class="data-file-type_size">
-                {{resource.size}}
+                [{{resource.size}}]
               </dd>
               {% endif %}
             </dl>
@@ -118,7 +118,7 @@
 
       {% if dataset.license %}
       <h2 class="bg-gray-200 px-4 py-3 font-bold mt-4 mb-1">License</h2>
-      <a class="text-sm block px-4 py-3 text-primary">
+      <a class="text-sm block px-4 py-3 text-primary" target="_blank">
         {{snippets.listify([dataset.license])}}
       </a>
       {% endif %}
