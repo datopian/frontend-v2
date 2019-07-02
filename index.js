@@ -1,5 +1,3 @@
-'use strict'
-
 const path = require('path')
 const express = require('express')
 const cors = require('cors')
@@ -13,6 +11,7 @@ const i18n = require("i18n")
 const config = require('./config')
 const dmsRoutes = require('./routes/dms')
 const cmsRoutes = require('./routes/cms')
+const { loadThemeRoutes } = require('./utils')
 
 module.exports.makeApp = function () {
   const app = express()
@@ -52,6 +51,8 @@ module.exports.makeApp = function () {
   app.use(i18n.init)
   app.use(session({ secret: 'keyboard cat', cookie: { maxAge: 60000 }}))
   app.use(flash())
+  
+  loadThemeRoutes(app)
 
   // Redirect x/y/ to x/y
   app.use((req, res, next) => {

@@ -208,3 +208,28 @@ module.exports.processMarkdown = require('markdown-it')({
   linkify: true,
   typographer: true
 })
+
+/**
+ * Returns an array of express Router instances
+ * or []
+ */
+module.exports.loadThemeRoutes = function (app) {
+  const config = require('../config')
+  const path = require('path')
+  
+  try {
+    const themes = config.get('CKAN_THEME_ROUTES')
+    const themePath = config.get('CKAN_THEME_PATH') || './themes'
+    
+    console.log(themes, themePath)
+    return themes.split(' ').forEach(theme => {
+      const resource = path.join(process.cwd(), themePath, theme, 'routes.js')
+      console.log(resource)
+      require(resource)(app)
+    })
+  } catch (e) {
+    const themes = config.get('CKAN_THEME_ROUTES').split(" ") || []
+    console.warn('WARNING: Failed to load configured themeRoutes', themes, e)
+    return []
+  }
+}
