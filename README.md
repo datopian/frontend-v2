@@ -194,9 +194,14 @@ Cookie-parser will now be applied to all of your requests as express middleware!
 For more on express middleware: https://expressjs.com/en/guide/using-middleware.html
 
 ## Tests
+Set `.env` to hit mocked services:
 
-Run tests (note that tests are running against mocked API_URL set to http://127.0.0.1:5000/api/3/action/):
+```bash
+API_URL=http://127.0.0.1:5000/api/3/action/
+WP_URL=http://127.0.0.1:6000
+```
 
+Run tests:
 ```bash
 yarn test
 
