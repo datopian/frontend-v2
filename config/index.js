@@ -19,7 +19,9 @@ nconf.defaults({
   SITE_URL: process.env.SITE_URL || 'http://0.0.0.0:4000',
   WP_URL: process.env.WP_URL || 'http://127.0.0.1:6000',
   WP_TOKEN: process.env.WP_TOKEN || '',
-  THEME_DIR: process.env.THEME_DIR || 'themes'
+  THEME_DIR: process.env.THEME_DIR || 'themes',
+  NODE_MODULES_PATH: process.env.NODE_MODULES_PATH || 'node_modules',
+  CKAN_PLUGIN_DIRECTORY: process.env.CKAN_PLUGIN_DIRECTORY || 'plugins'
 })
 
 module.exports = {

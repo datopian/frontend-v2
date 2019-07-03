@@ -5,6 +5,33 @@ const mocks = require('../../fixtures')
 mocks.initMocks()
 
 const app = require('../../index').makeApp()
+const config = require('../../config')
+
+
+// THEME ROUTES
+// @@TODO Test fail case for theme routes
+test('Theme defined route exists when CKAN_THEME_ROUTES is set', async t => {
+  t.plan(3)
+  
+  const res = await request(app)
+    .get('/foo')
+  
+  t.is(config.get('CKAN_THEME_ROUTES'), 'example')
+  t.is(res.statusCode, 200)
+  t.true(res.text.includes('Hello theme route'))
+})
+
+
+// PLUGINS
+// @@TODO Test fail case for plugins
+// @@TODO Test load plugin from npm
+test('User-plugin-provided res has expected custom header present', async t => {
+  t.plan(1)
+
+  const res = await request(app)
+    .get('/')
+  t.true(res.headers['x-my-custom-header'] === '1234')
+})
 
 
 // CMS

@@ -241,10 +241,8 @@ module.exports.loadUserPlugins = function (app) {
   
   try {
     const plugins = config.get('CKAN_FE_PLUGINS')
-
-    // define plugin paths
-    const pluginPath = config.get('CKAN_PLUGIN_DIRECTORY') || './plugins'
-    const nodeModulesPath = config.get('NODE_MODULES_PATH') || './node_modules'
+    const pluginPath = config.get('CKAN_PLUGIN_DIRECTORY')
+    const nodeModulesPath = config.get('NODE_MODULES_PATH')
     
     // try to load each resource
     return plugins.split(' ').forEach(plugin => {
