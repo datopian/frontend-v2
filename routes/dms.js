@@ -151,12 +151,18 @@ module.exports = function () {
         ],
         specType: null
       }
+      resource.format = resource.format.toLowerCase()
       // Add 'table' views for each tabular resource:
       const tabularFormats = ['csv', 'tsv', 'dsv', 'xls', 'xlsx']
-      resource.format = resource.format.toLowerCase()
       if (tabularFormats.includes(resource.format)) {
         view.specType = 'table'
+      } else if (resource.format.includes('json')) {
+        // Add 'map' views for each geo resource:
+        view.specType = 'map'
+      } else if (resource.format === 'pdf') {
+        view.specType = 'document'
       }
+
       datapackage.views.push(view)
     })
 
@@ -171,7 +177,7 @@ module.exports = function () {
         avatar: profile.image_display_url || profile.image_url
       },
       thisPageFullUrl: req.protocol + '://' + req.get('host') + req.originalUrl,
-      dpId: JSON.stringify(datapackage).replace(/\\/g, '\\\\').replace(/\'/g, "\\'")
+      dpId: JSON.stringify(datapackage) //.replace(/\\/g, '\\\\').replace(/\'/g, "\\'")
     })
   })
 
