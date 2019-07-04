@@ -13,13 +13,24 @@ const config = require('../../config')
 test('Theme defined route exists when CKAN_THEME_ROUTES is set', async t => {
   config.set('CKAN_THEME_ROUTES', 'example')
   config.set('THEME', 'example')
-  const app = require('../../index').makeApp()
+const app = require('../../index').makeApp()
   
   const res = await request(app)
     .get('/foo')
   
   t.is(res.statusCode, 200)
   t.true(res.text.includes('Hello theme route'))
+})
+
+
+test('Theme defined route does NOT exists when CKAN_THEME_ROUTES is set', async t => {
+  config.set('THEME', 'example')
+  config.set('CKAN_THEME_ROUTES', '')
+  
+  const res = await request(app)
+    .get('/foo')
+  
+  t.is(res.statusCode, 500)
 })
 
 
