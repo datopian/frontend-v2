@@ -222,6 +222,8 @@ module.exports.loadThemeRoutes = function (app) {
     const themes = config.get('CKAN_THEME_ROUTES')
     const themePath = config.get('CKAN_THEME_PATH') || './themes'
     
+    if (!themes) return
+
     return themes.split(' ').forEach(theme => {
       const resource = path.join(process.cwd(), themePath, theme, 'routes.js')
       require(resource)(app)
@@ -244,6 +246,8 @@ module.exports.loadUserPlugins = function (app) {
     const pluginPath = config.get('CKAN_PLUGIN_DIRECTORY')
     const nodeModulesPath = config.get('NODE_MODULES_PATH')
     
+    if (!plugins) return 
+
     // try to load each resource
     return plugins.split(' ').forEach(plugin => {
       const userResource = path.join(process.cwd(), pluginPath, plugin, 'index.js')

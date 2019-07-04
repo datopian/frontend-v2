@@ -6,6 +6,8 @@ require('dotenv').config()
 nconf.argv()
   .env()
 
+nconf.use('memory')
+
 const api_url = process.env.API_URL || 'http://127.0.0.1:5000/api/3/action/'
 
 // This is the object that you want to override in your own local config
@@ -21,7 +23,9 @@ nconf.defaults({
   WP_TOKEN: process.env.WP_TOKEN || '',
   THEME_DIR: process.env.THEME_DIR || 'themes',
   NODE_MODULES_PATH: process.env.NODE_MODULES_PATH || 'node_modules',
-  CKAN_PLUGIN_DIRECTORY: process.env.CKAN_PLUGIN_DIRECTORY || 'plugins'
+  CKAN_FE_PLUGINS: process.env.CKAN_FE_PLUGINS || '',
+  CKAN_PLUGIN_DIRECTORY: process.env.CKAN_PLUGIN_DIRECTORY || 'plugins',
+  CKAN_THEME_ROUTES: process.env.CKAN_THEME_ROUTES || '',
 })
 
 module.exports = {

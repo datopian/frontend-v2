@@ -11,12 +11,13 @@ const config = require('../../config')
 // THEME ROUTES
 // @@TODO Test fail case for theme routes
 test('Theme defined route exists when CKAN_THEME_ROUTES is set', async t => {
-  t.plan(3)
+  config.set('CKAN_THEME_ROUTES', 'example')
+  config.set('THEME', 'example')
+  const app = require('../../index').makeApp()
   
   const res = await request(app)
     .get('/foo')
   
-  t.is(config.get('CKAN_THEME_ROUTES'), 'example')
   t.is(res.statusCode, 200)
   t.true(res.text.includes('Hello theme route'))
 })
@@ -26,6 +27,8 @@ test('Theme defined route exists when CKAN_THEME_ROUTES is set', async t => {
 // @@TODO Test fail case for plugins
 // @@TODO Test load plugin from npm
 test('User-plugin-provided res has expected custom header present', async t => {
+  config.set('CKAN_FE_PLUGINS', "example_plugin cookie-parser")
+  const app = require('../../index').makeApp()
   t.plan(1)
 
   const res = await request(app)
