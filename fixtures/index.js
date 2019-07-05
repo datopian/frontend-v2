@@ -11,7 +11,276 @@ module.exports.initMocks = function() {
   nock('http://127.0.0.1:5000', {"encodedQueryParams":true})
     .persist()
     .post('/api/3/action/package_search', {"facet.field":["organization","groups","tags","res_format","license_id"],"facet.limit":5})
-    .reply(200, {"help":"http://127.0.0.1:5000/api/3/action/help_show?name=package_search","success":true,"result":{"count":2,"sort":"title_string asc","facets":{"organization":{"test_org_00":2},"license_id":{},"res_format":{"CSV":1},"groups":{},"tags":{}},"results":[{"license_title":null,"maintainer":null,"relationships_as_object":[],"private":false,"maintainer_email":null,"num_tags":0,"update_frequency":"P1D","id":"d2d18eea-d98a-4f9a-a580-13131e2a88dc","metadata_created":"2019-06-10T13:09:12.713162","metadata_modified":"2019-06-10T13:12:22.161302","author":"Energinet","author_email":"energidata@energinet.dk","state":"active","version":"2017","creator_user_id":"5a6c2aa5-dece-4792-adfd-b825978f321f","type":"dataset","resources":[{"cache_last_updated":null,"package_id":"d2d18eea-d98a-4f9a-a580-13131e2a88dc","filters":"[]","datastore_active":true,"id":"42c7a4f1-f755-450f-9b5b-31b6085b9b19","size":null,"state":"active","schema":"{'fields': [{'type': 'text', 'name': 'Country Name', 'id': 'Country Name'}, {'type': 'text', 'name': 'Country Code', 'id': 'Country Code'}, {'type': 'float', 'name': 'Year', 'id': 'Year'}, {'info': {'notes': 'GDP in current USD'}, 'type': 'float', 'id': 'Value', 'name': 'Value', 'description': 'GDP in current USD'}]}","hash":"","description":"","format":"CSV","last_modified":"2019-06-10T13:12:22.080475","url_type":"datastore","attributes":"[]","path":"data/gdp.csv","mimetype":null,"cache_url":null,"name":"gdp","created":"2019-06-10T13:09:13.613813","url":"http://127.0.0.1:5000/datastore/dump/42c7a4f1-f755-450f-9b5b-31b6085b9b19","mimetype_inner":null,"position":0,"revision_id":"a81405b5-fe0b-49c5-845a-82bb0b01a843","resource_type":null}],"num_resources":1,"tags":[],"groups":[],"license_id":null,"relationships_as_subject":[],"organization":{"description":"Just another test organization.","created":"2019-03-27T21:26:27.501417","title":"Test Organization","name":"test_org_00","is_organization":true,"state":"active","image_url":"http://placekitten.com/g/200/100","revision_id":"24612477-8155-497c-9e8d-5fef03f94c52","type":"organization","id":"2669d62a-f122-4256-9382-21c260ceef40","approval_status":"approved"},"name":"gdp","isopen":false,"url":null,"notes":"Country, regional and world GDP in current US Dollars ($). Regional means collections of countries e.g. Europe & Central Asia. Data is sourced from the World Bank and turned into a standard normalized CSV.","owner_org":"2669d62a-f122-4256-9382-21c260ceef40","title":"Country, Regional and World GDP (Gross Domestic Product)","revision_id":"1820bf3f-082d-4119-a0ab-0e1dfae1bb3c","resolution":"One hour (PT1H)"},{"license_title":null,"maintainer":null,"relationships_as_object":[],"private":false,"maintainer_email":null,"num_tags":0,"update_frequency":"P1D","id":"223a978e-8f40-4277-ba6f-9127b9e98e9e","metadata_created":"2019-06-10T13:22:02.718193","metadata_modified":"2019-06-10T13:23:43.580947","author":"Energinet","author_email":"energidata@energinet.dk","state":"active","version":null,"creator_user_id":"5a6c2aa5-dece-4792-adfd-b825978f321f","type":"dataset","resources":[{"cache_last_updated":null,"package_id":"223a978e-8f40-4277-ba6f-9127b9e98e9e","filters":"[]","datastore_active":true,"id":"bd9adb32-e96d-4002-8efb-688eae64b065","size":null,"state":"active","schema":"{'fields': [{'type': 'text', 'name': 'Country Name', 'id': 'Country Name'}, {'type': 'text', 'name': 'Country Code', 'id': 'Country Code'}, {'type': 'float', 'name': 'Year', 'id': 'Year'}, {'type': 'float', 'name': 'Value', 'id': 'Value'}]}","hash":"","description":"","format":"CSV","last_modified":"2019-06-10T13:23:43.520760","url_type":"datastore","attributes":"[]","path":"data/population.csv","mimetype":null,"cache_url":null,"name":"population","created":"2019-06-10T13:22:03.166187","url":"http://127.0.0.1:5000/datastore/dump/bd9adb32-e96d-4002-8efb-688eae64b065","mimetype_inner":null,"position":0,"revision_id":"9c20df7e-84fb-48f9-954b-c7cb56ceef3b","resource_type":null}],"num_resources":1,"tags":[],"groups":[],"license_id":null,"relationships_as_subject":[],"organization":{"description":"Just another test organization.","created":"2019-03-27T21:26:27.501417","title":"Test Organization","name":"test_org_00","is_organization":true,"state":"active","image_url":"http://placekitten.com/g/200/100","revision_id":"24612477-8155-497c-9e8d-5fef03f94c52","type":"organization","id":"2669d62a-f122-4256-9382-21c260ceef40","approval_status":"approved"},"name":"population","isopen":false,"url":null,"notes":"Population figures for countries, regions (e.g. Asia) and the world. Data comes originally from World Bank and has been converted into standard CSV.","owner_org":"2669d62a-f122-4256-9382-21c260ceef40","title":"Population figures for countries, regions (e.g. Asia) and the world","revision_id":"421e6b78-524c-4c9b-92bc-e77c50280dab","resolution":"One hour (PT1H)"}],"search_facets":{"organization":{"items":[{"count":2,"display_name":"Test Organization","name":"test_org_00"}],"title":"organization"},"tags":{"items":[],"title":"tags"},"groups":{"items":[],"title":"groups"},"res_format":{"items":[{"count":1,"display_name":"CSV","name":"CSV"}],"title":"res_format"},"license_id":{"items":[],"title":"license_id"}}}}, [ 'Server',
+    .reply(200, {
+      "help": "http://127.0.0.1:5000/api/3/action/help_show?name=package_search",
+      "success": true,
+      "result": {
+        "count": 3,
+        "sort": "title_string asc",
+        "facets": {
+          "organization": {
+            "test_org_00": 2
+          },
+          "license_id": {},
+          "res_format": {
+            "CSV": 1
+          },
+          "groups": {},
+          "tags": {}
+        },
+        "results": [
+          {
+            "license_title": null,
+            "maintainer": null,
+            "relationships_as_object": [],
+            "private": false,
+            "maintainer_email": null,
+            "num_tags": 0,
+            "update_frequency": "P1D",
+            "id": "d2d18eea-d98a-4f9a-a580-13131e2a88dc",
+            "metadata_created": "2019-06-10T13:09:12.713162",
+            "metadata_modified": "2019-06-10T13:12:22.161302",
+            "author": "Energinet",
+            "author_email": "energidata@energinet.dk",
+            "state": "active",
+            "version": "2017",
+            "creator_user_id": "5a6c2aa5-dece-4792-adfd-b825978f321f",
+            "type": "dataset",
+            "resources": [
+              {
+                "cache_last_updated": null,
+                "package_id": "d2d18eea-d98a-4f9a-a580-13131e2a88dc",
+                "filters": "[]",
+                "datastore_active": true,
+                "id": "42c7a4f1-f755-450f-9b5b-31b6085b9b19",
+                "size": null,
+                "state": "active",
+                "schema": "{'fields': [{'type': 'text', 'name': 'Country Name', 'id': 'Country Name'}, {'type': 'text', 'name': 'Country Code', 'id': 'Country Code'}, {'type': 'float', 'name': 'Year', 'id': 'Year'}, {'info': {'notes': 'GDP in current USD'}, 'type': 'float', 'id': 'Value', 'name': 'Value', 'description': 'GDP in current USD'}]}",
+                "hash": "",
+                "description": "",
+                "format": "CSV",
+                "last_modified": "2019-06-10T13:12:22.080475",
+                "url_type": "datastore",
+                "attributes": "[]",
+                "path": "data/gdp.csv",
+                "mimetype": null,
+                "cache_url": null,
+                "name": "gdp",
+                "created": "2019-06-10T13:09:13.613813",
+                "url": "http://127.0.0.1:5000/datastore/dump/42c7a4f1-f755-450f-9b5b-31b6085b9b19",
+                "mimetype_inner": null,
+                "position": 0,
+                "revision_id": "a81405b5-fe0b-49c5-845a-82bb0b01a843",
+                "resource_type": null
+              }
+            ],
+            "num_resources": 1,
+            "tags": [],
+            "groups": [],
+            "license_id": null,
+            "relationships_as_subject": [],
+            "organization": {
+              "description": "Just another test organization.",
+              "created": "2019-03-27T21:26:27.501417",
+              "title": "Test Organization",
+              "name": "test_org_00",
+              "is_organization": true,
+              "state": "active",
+              "image_url": "http://placekitten.com/g/200/100",
+              "revision_id": "24612477-8155-497c-9e8d-5fef03f94c52",
+              "type": "organization",
+              "id": "2669d62a-f122-4256-9382-21c260ceef40",
+              "approval_status": "approved"
+            },
+            "name": "gdp",
+            "isopen": false,
+            "url": null,
+            "notes": "Country, regional and world GDP in current US Dollars ($). Regional means collections of countries e.g. Europe & Central Asia. Data is sourced from the World Bank and turned into a standard normalized CSV.",
+            "owner_org": "2669d62a-f122-4256-9382-21c260ceef40",
+            "title": "Country, Regional and World GDP (Gross Domestic Product)",
+            "revision_id": "1820bf3f-082d-4119-a0ab-0e1dfae1bb3c",
+            "resolution": "One hour (PT1H)"
+          },
+          {
+            "license_title": null,
+            "maintainer": null,
+            "relationships_as_object": [],
+            "private": false,
+            "maintainer_email": null,
+            "num_tags": 0,
+            "update_frequency": "P1D",
+            "id": "223a978e-8f40-4277-ba6f-9127b9e98e9e",
+            "metadata_created": "2019-06-10T13:22:02.718193",
+            "metadata_modified": "2019-06-10T13:23:43.580947",
+            "author": "Energinet",
+            "author_email": "energidata@energinet.dk",
+            "state": "active",
+            "version": null,
+            "creator_user_id": "5a6c2aa5-dece-4792-adfd-b825978f321f",
+            "type": "dataset",
+            "resources": [
+              {
+                "cache_last_updated": null,
+                "package_id": "223a978e-8f40-4277-ba6f-9127b9e98e9e",
+                "filters": "[]",
+                "datastore_active": true,
+                "id": "bd9adb32-e96d-4002-8efb-688eae64b065",
+                "size": null,
+                "state": "active",
+                "schema": "{'fields': [{'type': 'text', 'name': 'Country Name', 'id': 'Country Name'}, {'type': 'text', 'name': 'Country Code', 'id': 'Country Code'}, {'type': 'float', 'name': 'Year', 'id': 'Year'}, {'type': 'float', 'name': 'Value', 'id': 'Value'}]}",
+                "hash": "",
+                "description": "",
+                "format": "CSV",
+                "last_modified": "2019-06-10T13:23:43.520760",
+                "url_type": "datastore",
+                "attributes": "[]",
+                "path": "data/population.csv",
+                "mimetype": null,
+                "cache_url": null,
+                "name": "population",
+                "created": "2019-06-10T13:22:03.166187",
+                "url": "http://127.0.0.1:5000/datastore/dump/bd9adb32-e96d-4002-8efb-688eae64b065",
+                "mimetype_inner": null,
+                "position": 0,
+                "revision_id": "9c20df7e-84fb-48f9-954b-c7cb56ceef3b",
+                "resource_type": null
+              }
+            ],
+            "num_resources": 1,
+            "tags": [],
+            "groups": [],
+            "license_id": null,
+            "relationships_as_subject": [],
+            "organization": {
+              "description": "Just another test organization.",
+              "created": "2019-03-27T21:26:27.501417",
+              "title": "Test Organization",
+              "name": "test_org_00",
+              "is_organization": true,
+              "state": "active",
+              "image_url": "http://placekitten.com/g/200/100",
+              "revision_id": "24612477-8155-497c-9e8d-5fef03f94c52",
+              "type": "organization",
+              "id": "2669d62a-f122-4256-9382-21c260ceef40",
+              "approval_status": "approved"
+            },
+            "name": "population",
+            "isopen": false,
+            "url": null,
+            "notes": "Population figures for countries, regions (e.g. Asia) and the world. Data comes originally from World Bank and has been converted into standard CSV.",
+            "owner_org": "2669d62a-f122-4256-9382-21c260ceef40",
+            "title": "Population figures for countries, regions (e.g. Asia) and the world",
+            "revision_id": "421e6b78-524c-4c9b-92bc-e77c50280dab",
+            "resolution": "One hour (PT1H)"
+          },
+          {
+            "license_title": null,
+            "maintainer": null,
+            "relationships_as_object": [],
+            "private": false,
+            "maintainer_email": null,
+            "num_tags": 0,
+            "update_frequency": "P1D",
+            "id": "223a978e-8f40-4277-ba6f-9127b9e98e9e",
+            "metadata_created": "2019-07-05T13:22:02.718193",
+            "metadata_modified": "2019-07-05T13:23:43.580947",
+            "author": "Energinet",
+            "author_email": "energidata@energinet.dk",
+            "state": "active",
+            "version": null,
+            "creator_user_id": "5a6c2aa5-dece-4792-adfd-b825978f321f",
+            "type": "dataset",
+            "resources": [
+              {
+                "cache_last_updated": null,
+                "package_id": "fake-pkg-id",
+                "filters": "[]",
+                "datastore_active": true,
+                "id": "fake-res-id",
+                "size": "51654",
+                "state": "active",
+                "hash": "",
+                "description": "This is a test GeoJSON resource",
+                "format": "geojson",
+                "last_modified": "2019-07-05T13:23:43.520760",
+                "url_type": "",
+                "attributes": "[]",
+                "path": "data/map.geojson",
+                "mimetype": null,
+                "cache_url": null,
+                "name": "geojson",
+                "created": "2019-07-05T13:22:03.166187",
+                "url": "http://127.0.0.1:5000/filestore/geojson-file.geojson",
+                "mimetype_inner": null,
+                "position": 0,
+                "revision_id": "9c20df7e-84fb-48f9-954b-c7cb56ceef3b",
+                "resource_type": null
+              }
+            ],
+            "num_resources": 1,
+            "tags": [],
+            "groups": [],
+            "license_id": null,
+            "relationships_as_subject": [],
+            "organization": {
+              "description": "Just another test organization.",
+              "created": "2019-03-27T21:26:27.501417",
+              "title": "Test Organization",
+              "name": "test_org_00",
+              "is_organization": true,
+              "state": "active",
+              "image_url": "http://placekitten.com/g/200/100",
+              "revision_id": "24612477-8155-497c-9e8d-5fef03f94c52",
+              "type": "organization",
+              "id": "2669d62a-f122-4256-9382-21c260ceef40",
+              "approval_status": "approved"
+            },
+            "name": "geojson",
+            "isopen": false,
+            "url": null,
+            "notes": "This is an example dataset that demonstrates how to package up GeoJSON data and display it on the map. We are using GeoJSON data for United Kingdom.",
+            "owner_org": "2669d62a-f122-4256-9382-21c260ceef40",
+            "title": "GeoJSON example",
+            "revision_id": "421e6b78-524c-4c9b-92bc-e77c50280dab",
+            "resolution": "One hour (PT1H)"
+          }
+        ],
+        "search_facets": {
+          "organization": {
+            "items": [
+              {
+                "count": 2,
+                "display_name": "Test Organization",
+                "name": "test_org_00"
+              }
+            ],
+            "title": "organization"
+          },
+          "tags": {
+            "items": [],
+            "title": "tags"
+          },
+          "groups": {
+            "items": [],
+            "title": "groups"
+          },
+          "res_format": {
+            "items": [
+              {
+                "count": 1,
+                "display_name": "CSV",
+                "name": "CSV"
+              }
+            ],
+            "title": "res_format"
+          },
+          "license_id": {
+            "items": [],
+            "title": "license_id"
+          }
+        }
+      }
+    }, [ 'Server',
     'PasteWSGIServer/0.5 Python/2.7.12',
     'Date',
     'Mon, 10 Jun 2019 13:29:35 GMT',
@@ -48,6 +317,92 @@ module.exports.initMocks = function() {
     .persist()
     .post('/api/3/action/package_show', {"name_or_id":"population"})
     .reply(200, {"help":"http://127.0.0.1:5000/api/3/action/help_show?name=package_show","success":true,"result":{"license_title":null,"maintainer":null,"relationships_as_object":[],"private":false,"maintainer_email":null,"num_tags":0,"update_frequency":"P1D","id":"223a978e-8f40-4277-ba6f-9127b9e98e9e","metadata_created":"2019-06-10T13:22:02.718193","metadata_modified":"2019-06-10T13:23:43.580947","author":"Energinet","author_email":"energidata@energinet.dk","state":"active","version":null,"creator_user_id":"5a6c2aa5-dece-4792-adfd-b825978f321f","type":"dataset","resources":[{"cache_last_updated":null,"package_id":"223a978e-8f40-4277-ba6f-9127b9e98e9e","filters":[],"datastore_active":true,"id":"bd9adb32-e96d-4002-8efb-688eae64b065","size":null,"state":"active","schema":{"fields":[{"type":"string","name":"Country Name"},{"type":"string","name":"Country Code"},{"type":"year","name":"Year"},{"type":"number","name":"Value"}]},"hash":"","description":"","format":"csv","last_modified":"2019-06-10T13:23:43.520760","url_type":"datastore","attributes":[],"path":"data/population.csv","mimetype":null,"cache_url":null,"name":"population","created":"2019-06-10T13:22:03.166187","url":"https://pkgstore.datahub.io/core/population/population_csv/data/ead5be05591360d33ad1a37382f8f8b1/population_csv.csv","mimetype_inner":null,"position":0,"revision_id":"9c20df7e-84fb-48f9-954b-c7cb56ceef3b","resource_type":null}],"num_resources":1,"tags":[],"groups":[],"license_id":null,"relationships_as_subject":[],"organization":{"description":"Just another test organization.","created":"2019-03-27T21:26:27.501417","title":"Test Organization","name":"test_org_00","is_organization":true,"state":"active","image_url":"http://placekitten.com/g/200/100","revision_id":"24612477-8155-497c-9e8d-5fef03f94c52","type":"organization","id":"2669d62a-f122-4256-9382-21c260ceef40","approval_status":"approved"},"name":"population","isopen":false,"url":null,"notes":"Population figures for countries, regions (e.g. Asia) and the world. Data comes originally from World Bank and has been converted into standard CSV.","owner_org":"2669d62a-f122-4256-9382-21c260ceef40","title":"Population figures for countries, regions (e.g. Asia) and the world","revision_id":"421e6b78-524c-4c9b-92bc-e77c50280dab","resolution":"One hour (PT1H)"}}, [ 'Server',
+    'PasteWSGIServer/0.5 Python/2.7.12',
+    'Date',
+    'Mon, 10 Jun 2019 13:45:59 GMT',
+    'Content-Type',
+    'application/json;charset=utf-8',
+    'Content-Length',
+    '2474' ])
+
+  nock('http://127.0.0.1:5000', {"encodedQueryParams":true})
+    .persist()
+    .post('/api/3/action/package_show', {"name_or_id":"geojson"})
+    .reply(200, {
+      "help": "http://127.0.0.1:5000/api/3/action/help_show?name=package_show",
+      "success": true,
+      "result": {
+        "license_title": null,
+        "maintainer": null,
+        "relationships_as_object": [],
+        "private": false,
+        "maintainer_email": null,
+        "num_tags": 0,
+        "update_frequency": "P1D",
+        "id": "223a978e-8f40-4277-ba6f-9127b9e98e9e",
+        "metadata_created": "2019-07-05T13:22:02.718193",
+        "metadata_modified": "2019-07-05T13:23:43.580947",
+        "author": "Energinet",
+        "author_email": "energidata@energinet.dk",
+        "state": "active",
+        "version": null,
+        "creator_user_id": "5a6c2aa5-dece-4792-adfd-b825978f321f",
+        "type": "dataset",
+        "resources": [
+          {
+            "cache_last_updated": null,
+            "package_id": "223a978e-8f40-4277-ba6f-9127b9e98e9e",
+            "filters": [],
+            "datastore_active": true,
+            "id": "fake-res-id",
+            "size": 51654,
+            "state": "active",
+            "hash": "",
+            "description": "",
+            "format": "geojson",
+            "last_modified": "2019-07-05T13:23:43.520760",
+            "url_type": "",
+            "attributes": [],
+            "path": "data/map.geojson",
+            "mimetype": null,
+            "cache_url": null,
+            "name": "population",
+            "created": "2019-06-10T13:22:03.166187",
+            "url": "https://pkgstore.datahub.io/examples/geojson-tutorial/example/data/db696b3bf628d9a273ca9907adcea5c9/example.geojson",
+            "mimetype_inner": null,
+            "position": 0,
+            "revision_id": "9c20df7e-84fb-48f9-954b-c7cb56ceef3b",
+            "resource_type": null
+          }
+        ],
+        "num_resources": 1,
+        "tags": [],
+        "groups": [],
+        "license_id": null,
+        "relationships_as_subject": [],
+        "organization": {
+          "description": "Just another test organization.",
+          "created": "2019-03-27T21:26:27.501417",
+          "title": "Test Organization",
+          "name": "test_org_00",
+          "is_organization": true,
+          "state": "active",
+          "image_url": "http://placekitten.com/g/200/100",
+          "revision_id": "24612477-8155-497c-9e8d-5fef03f94c52",
+          "type": "organization",
+          "id": "2669d62a-f122-4256-9382-21c260ceef40",
+          "approval_status": "approved"
+        },
+        "name": "geojson",
+        "isopen": false,
+        "url": null,
+        "notes": "This is an example dataset that demonstrates how to package up GeoJSON data and display it on the map. We are using GeoJSON data for United Kingdom.",
+        "owner_org": "2669d62a-f122-4256-9382-21c260ceef40",
+        "title": "GeoJSON example",
+        "revision_id": "421e6b78-524c-4c9b-92bc-e77c50280dab",
+        "resolution": "One hour (PT1H)"
+      }
+    }, [ 'Server',
     'PasteWSGIServer/0.5 Python/2.7.12',
     'Date',
     'Mon, 10 Jun 2019 13:45:59 GMT',
