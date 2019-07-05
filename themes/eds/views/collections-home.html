@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+
+{% block title%}{{title}}{% endblock %}
+
+{% block bodyclass %}awesome{% endblock %}
+
+{% block content %}
+
+<!-- collections list page test placeholder -->
+<section class="awesome-dashboard-heading">
+  <div role="main">
+    <div id="content" class="container-fluid">
+      <div class="toolbar">
+        <ol class="breadcrumb">
+          <li class="home"><a href="/"><i class="fa fa-home"></i><span> Home</span></a></li>
+          <li class="active"><a class=" active" href="/organization">Organizations</a></li>
+        </ol>
+      </div>
+      <div class="row wrapper">
+        <div class=" col-md-12 ">
+          <div class="flash-messages">
+          </div>
+        </div>
+        <div class="col-md-10 col-md-offset-1">
+        </div>
+        <aside class="col-md-3">
+          <div class="module module-narrow module-shallow">
+            <h2 class="module-heading">
+              <i class="fa fa-info-circle"></i>
+              What are Organizations?
+            </h2>
+            <div class="module-content">
+              <p>
+                All datasets are attached to an organization/company. The organization is responsible for publishing and maintaining data and for data quality in general. The organization is also responsible for providing data support and to support data usage.
+              </p>
+            </div>
+          </div>
+        </aside>
+        <div class="col-md-9 ">
+          <article class="module">
+            <div class="module-content">
+              <h1 class="hide-heading">Organizations</h1>
+              <form id="organization-search-form" class="search-form no-bottom-border" method="get" data-module="select-switch">
+                <div class="order-by-wrapper">
+                  <div class="form-select">
+                    <ul class="list-inline">
+                      <li><label for="field-order-by">Order by</label></li>
+                      <li>
+                        <select id="field-order-by" name="sort" class="form-control" onchange="this.form.submit()">
+                          <option value="title asc">Name Ascending</option>
+                          <option value="title desc">Name Descending</option>
+                        </select>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-7">
+                    <h3>{{ collections|length }} organization{{ "s" if collections|length != 1 else ""}} found</h3>
+                  </div>
+                </div>
+              </form>
+              <ul class="media-grid" data-module="media-grid">
+                {% for collection in collections %}
+                  <li class="media-item">
+                    <img src="{{ collection.image if collection.image else 'static/img/placeholder-organization.png'}}" alt="{{ collection.name }}" class="media-image">
+                    <h3 class="media-heading">{{ collection.title }}</h3>
+                    <strong class="count">{{ collection.count }} Dataset{{ 's' if collection.count > 1 else '' }}</strong>
+                    <a href="/organization/{{ collection.name }}" title="{{ collection.title }}" class="media-view">
+                      <span>View {{ collection.title }}</span>
+                    </a>
+                  </li>
+                {% endfor %}
+                <li class="clearfix js-hide"></li>
+              </ul>
+            </div>
+          </article>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}
