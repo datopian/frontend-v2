@@ -10,11 +10,9 @@ const config = require('../../config')
 
 // THEME ROUTES
 // @@TODO Test fail case for theme routes
-test('Theme defined route exists when CKAN_THEME_ROUTES is set', async t => {
-  config.set('CKAN_THEME_ROUTES', 'example')
+test('Theme defined route exists when THEME is set', async t => {
   config.set('THEME', 'example')
-const app = require('../../index').makeApp()
-  
+  const app = require('../../index').makeApp()
   const res = await request(app)
     .get('/foo')
   
@@ -23,10 +21,9 @@ const app = require('../../index').makeApp()
 })
 
 
-test('Theme defined route does NOT exists when CKAN_THEME_ROUTES is set', async t => {
-  config.set('THEME', 'example')
-  config.set('CKAN_THEME_ROUTES', '')
-  
+test('Theme defined route does NOT exists when THEME is not set', async t => {
+  config.set('THEME', 'opendk')
+  const app = require('../../index').makeApp()
   const res = await request(app)
     .get('/foo')
   
@@ -38,7 +35,7 @@ test('Theme defined route does NOT exists when CKAN_THEME_ROUTES is set', async 
 // @@TODO Test fail case for plugins
 // @@TODO Test load plugin from npm
 test('User-plugin-provided res has expected custom header present', async t => {
-  config.set('CKAN_FE_PLUGINS', "example_plugin cookie-parser")
+  config.set('PLUGINS', "example cookie-parser")
   const app = require('../../index').makeApp()
   t.plan(1)
 
@@ -177,10 +174,8 @@ test('Collection page works', async t => {
 // Not found tests
 test('If a page is not found in neither CMS or DMS, it returns 404 page', async t => {
   const agent = request(app)
-  console.log(1)
   let res = await agent
     .get('/not-found-slug')
-  console.log(2)
 
   t.true(res.text.includes('<!-- placeholder for testing 404 page -->'))
 

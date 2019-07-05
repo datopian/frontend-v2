@@ -13,7 +13,6 @@ const dmsRoutes = require('./routes/dms')
 const cmsRoutes = require('./routes/cms')
 const { loadThemeRoutes, loadUserPlugins } = require('./utils')
 
-process.env.CKAN_THEME_ROUTES = 'foo'
 module.exports.makeApp = function () {
   const app = express()
   app.set('config', config)

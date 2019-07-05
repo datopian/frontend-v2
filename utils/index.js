@@ -1,3 +1,7 @@
+const config = require('../config')
+const path = require('path')
+const fs = require('fs')
+
 module.exports.ckanToDataPackage = function (descriptor) {
   // Make a copy
   const datapackage = JSON.parse(JSON.stringify(descriptor))
@@ -215,35 +219,27 @@ module.exports.processMarkdown = require('markdown-it')({
  */
 module.exports.loadThemeRoutes = function (app) {
   console.log('Loading configured theme routes...')
-  const config = require('../config')
-  const path = require('path')
   
   try {
-    const themes = config.get('CKAN_THEME_ROUTES')
-    const themePath = config.get('CKAN_THEME_PATH') || './themes'
-    
-    if (!themes) return
-
-    return themes.split(' ').forEach(theme => {
-      const resource = path.join(process.cwd(), themePath, theme, 'routes.js')
-      require(resource)(app)
-    })
+    const theme = config.get('THEME')
+    const themePath = config.get('THEME_DIR')
+    console.log(theme, themePath)
+    if (!theme) return
+    const resource = path.join(process.cwd(), themePath, theme, 'routes.js')
+    console.log(resource)
+    require(resource)(app)
   } catch (e) {
-    const themes = config.get('CKAN_THEME_ROUTES').split(" ") || []
-    console.warn('WARNING: Failed to load configured theme routes', themes, e)
-    return []
+    const theme = config.get('THEME')
+    console.warn(`WARNING: Failed to load configured theme routes for ${theme}`)
   }
 }
 
 module.exports.loadUserPlugins = function (app) {
   console.log('Loading configured plugins...')
-  const fs = require('fs')
-  const config = require('../config')
-  const path = require('path')
   
   try {
-    const plugins = config.get('CKAN_FE_PLUGINS')
-    const pluginPath = config.get('CKAN_PLUGIN_DIRECTORY')
+    const plugins = config.get('PLUGINS')
+    const pluginPath = config.get('PLUGIN_DIR')
     const nodeModulesPath = config.get('NODE_MODULES_PATH')
     
     if (!plugins) return 
@@ -267,7 +263,7 @@ module.exports.loadUserPlugins = function (app) {
       }
     })
   } catch (e) {
-    const plugins = config.get('CKAN_FE_PLUGINS').split(" ") || []
+    const plugins = config.get('PLUGINS').split(" ") || []
     console.warn('WARNING: Failed to load configured plugins',plugins, e)
     return []
   }

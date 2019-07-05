@@ -23,9 +23,8 @@ nconf.defaults({
   WP_TOKEN: process.env.WP_TOKEN || '',
   THEME_DIR: process.env.THEME_DIR || 'themes',
   NODE_MODULES_PATH: process.env.NODE_MODULES_PATH || 'node_modules',
-  CKAN_FE_PLUGINS: process.env.CKAN_FE_PLUGINS || '',
-  CKAN_PLUGIN_DIRECTORY: process.env.CKAN_PLUGIN_DIRECTORY || 'plugins',
-  CKAN_THEME_ROUTES: process.env.CKAN_THEME_ROUTES || '',
+  PLUGINS: process.env.FE_PLUGINS || '',
+  PLUGIN_DIR: process.env.PLUGIN_DIR || 'plugins',
 })
 
 module.exports = {
