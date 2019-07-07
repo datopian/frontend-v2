@@ -10,3 +10,6 @@ yarn-error.log
 sandbox/*
 .env
 .nyc_output/*
+
+# VIM swap files
+.*.sw*

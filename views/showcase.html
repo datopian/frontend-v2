@@ -111,20 +111,20 @@
             {% for resource in dataset.downloads or dataset.resources %}
               <tr>
                 <td class="col-xs-2">
-                  <i class="far fa-file-alt"></i> <a href="#resource-{{resource.name}}" onclick="scrollDown(this)" class="anchor-link" title="{{resource.title or resource.name}}">{{resource.name}}</a>
+                  <i class="far fa-file-alt"></i> <a href="#resource-{{resource.name}}" onclick="scrollDown(this)" class="anchor-link" title="{{resource.title or resource.name}}">{{resource.title or resource.name}}</a>
                 </td>
                 <td class="col-xs-4" title="{{ resource.description or resource.title }}">
                   {{ resource.description or resource.title }}
                 </td>
                 <td class="col-xs-1" title="{{ resource.prettyBytes }}">
-                  {{ resource.prettyBytes }}
+                  {{ resource.size }}
                 </td>
                 <td class="col-xs-1" title="{{ resource.modified }}">
                   {{ resource.modified }}
                 </td>
                 <td class="download truncate col-xs-4">
-                  <a href="/{{ owner.name }}/{{ dataset.name }}/r/{{ resource.name }}.{{ resource.format }}{{ '?v='+revisionId if revisionId }}">
-                    {{ resource.format }} ({{resource.prettyBytes}})
+                  <a href="{{ resource.path }}">
+                    {{ resource.format or 'Data file' }} {% if resource.size %}({{resource.size}}){% endif %}
                   </a>
                   {% for alt in resource.otherFormats %}
                   ,
@@ -140,30 +140,22 @@
         </div>
 
         <!-- preview + field information -->
-        {% for resource in dataset.resources %}
-        {% if resource.format !== 'zip' %}
+        {% for view in dataset.views %}
+        {% set viewName = view.resources[0].name or view.resources[0] %}
+
         <div class="resource-info part">
           <!-- Heading for each resource -->
-          <h2 id="resource-{{resource.name}}" class="section-title">
-            {% if resource.title %}
-            {{resource.title}} [{{resource.name}}]
-            {% else %}
-            {{resource.name}}
-            {% endif %}
-            &nbsp;
-            <a href="/{{ owner.name }}/{{ dataset.name }}/r/{{ resource.name }}.{{ resource.format }}">
-              <i class="far fa-arrow-alt-circle-down" aria-hidden="true" style="font-size:0.9em"></i>
-            </a>
+          <h2 id="resource-{{viewName}}" class="section-title">
+            {{view.title}}
           </h2>
 
           <!-- Placeholder div elements for React components: preview tables -->
-          <div id="resource-{{loop.index - 1}}" class="react-me tables"
-               data-type="resource-preview" data-resource="{{ loop.index - 1 }}"></div>
+          <div id="datapackage-view-{{view.id}}" class="react-me tables"></div>
           <!-- End of div elements for React -->
           <p class="notice">
-            This is a preview version. There might be more data in <a href="/{{ owner.name }}/{{ dataset.name }}/r/{{ resource.name }}.{{ resource.format }}{{ '?v='+revisionId if revisionId }}">the original version.</a>
+            This is a preview version. There might be more data in the original version.
           </p>
-          {% if resource.format == "csv" %}
+          {% if view.resources[0].schema %}
            <h3 class="section-title">Field information</h3>
            <table class="table table-bordered table-striped resource-summary">
              <thead>
@@ -175,7 +167,7 @@
                </tr>
              </thead>
              <tbody>
-               {% for field in resource.schema.fields %}
+               {% for field in view.resources[0].schema.fields %}
                <tr>
                  <th>{{field.name}}</th>
                  <td>{{loop.index}}</td>
@@ -187,12 +179,7 @@
            </table>
          {% endif %}
         </div>
-        {% else %}
-        <!-- Placeholder div elements for React components: preview tables -->
-        <div id="resource-{{loop.index - 1}}" class="react-me tables"
-             data-type="resource-preview" data-resource="{{ loop.index - 1 }}"></div>
-        <!-- End of div elements for React -->
-        {% endif %}
+
         {% endfor %}
 
         <!-- Similar datasets -->
@@ -320,6 +307,8 @@
   </div><!-- end of link to datapackage.json -->
 
 </div>
+
+<div class="react-me-datapackage-views" data-datapackage-json='{{ dpId | safe }}'></div>
 {% endblock %}
 
 
@@ -352,12 +341,6 @@
   }
 </script>
 
-<!-- pass DP_ID to front-end -->
-<script type="text/javascript">
-  var DP_ID = JSON.parse('{{ dpId | safe }}');
-</script>
-
-<link rel="stylesheet" media="screen" href="https://raw.githack.com/datopian/frontend-showcase-js/gh-pages/dist/main.css">
-<script type="text/javascript" src="https://raw.githack.com/datopian/frontend-showcase-js/gh-pages/dist/bundle.js"></script>
+<script type="text/javascript" src="https://raw.githack.com/datopian/datapackage-views-js/master/dist/js/main.js"></script>
 
 {% endblock %}

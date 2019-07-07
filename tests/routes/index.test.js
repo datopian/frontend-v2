@@ -5,6 +5,44 @@ const mocks = require('../../fixtures')
 mocks.initMocks()
 
 const app = require('../../index').makeApp()
+const config = require('../../config')
+
+
+// THEME ROUTES
+// @@TODO Test fail case for theme routes
+test('Theme defined route exists when THEME is set', async t => {
+  config.set('THEME', 'example')
+  const app = require('../../index').makeApp()
+  const res = await request(app)
+    .get('/foo')
+  
+  t.is(res.statusCode, 200)
+  t.true(res.text.includes('Hello theme route'))
+})
+
+
+test('Theme defined route does NOT exists when THEME is not set', async t => {
+  config.set('THEME', 'opendk')
+  const app = require('../../index').makeApp()
+  const res = await request(app)
+    .get('/foo')
+  
+  t.is(res.statusCode, 500)
+})
+
+
+// PLUGINS
+// @@TODO Test fail case for plugins
+// @@TODO Test load plugin from npm
+test('User-plugin-provided res has expected custom header present', async t => {
+  config.set('PLUGINS', "example cookie-parser")
+  const app = require('../../index').makeApp()
+  t.plan(1)
+
+  const res = await request(app)
+    .get('/')
+  t.true(res.headers['x-my-custom-header'] === '1234')
+})
 
 
 // CMS
