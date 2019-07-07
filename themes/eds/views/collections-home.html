@@ -13,7 +13,7 @@
       <div class="toolbar">
         <ol class="breadcrumb">
           <li class="home"><a href="/"><i class="fa fa-home"></i><span> Home</span></a></li>
-          <li class="active"><a class=" active" href="/organization">Organizations</a></li>
+          <li class="active"><a class=" active" href="{{ slug }}">{{ title }}</a></li>
         </ol>
       </div>
       <div class="row wrapper">
@@ -27,11 +27,11 @@
           <div class="module module-narrow module-shallow">
             <h2 class="module-heading">
               <i class="fa fa-info-circle"></i>
-              What are Organizations?
+              What are {{ title }}?
             </h2>
             <div class="module-content">
               <p>
-                All datasets are attached to an organization/company. The organization is responsible for publishing and maintaining data and for data quality in general. The organization is also responsible for providing data support and to support data usage.
+                {{ description }}
               </p>
             </div>
           </div>
@@ -39,8 +39,8 @@
         <div class="col-md-9 ">
           <article class="module">
             <div class="module-content">
-              <h1 class="hide-heading">Organizations</h1>
-              <form id="organization-search-form" class="search-form no-bottom-border" method="get" data-module="select-switch">
+              <h1 class="hide-heading">{{ title }}</h1>
+              <form id="{{ slug }}-search-form" class="search-form no-bottom-border" method="get" data-module="select-switch">
                 <div class="order-by-wrapper">
                   <div class="form-select">
                     <ul class="list-inline">
@@ -56,7 +56,7 @@
                 </div>
                 <div class="row">
                   <div class="col-md-7">
-                    <h3>{{ collections|length }} organization{{ "s" if collections|length != 1 else ""}} found</h3>
+                    <h3>{{ collections|length }} {{ "organization" if slug=="organization" else "collection" }}{{ "s" if collections|length != 1 else ""}} found</h3>
                   </div>
                 </div>
               </form>
@@ -65,8 +65,8 @@
                   <li class="media-item">
                     <img src="{{ collection.image if collection.image else 'static/img/placeholder-organization.png'}}" alt="{{ collection.name }}" class="media-image">
                     <h3 class="media-heading">{{ collection.title }}</h3>
-                    <strong class="count">{{ collection.count }} Dataset{{ 's' if collection.count > 1 else '' }}</strong>
-                    <a href="/organization/{{ collection.name }}" title="{{ collection.title }}" class="media-view">
+                    <strong class="count">{{ collection.count }} Dataset{{ 's' if collection.count != 1 else '' }}</strong>
+                    <a href="/{{slug}}/{{ collection.name }}" title="{{ collection.title }}" class="media-view">
                       <span>View {{ collection.title }}</span>
                     </a>
                   </li>
