@@ -77,7 +77,7 @@
 	"E.g. environment": "F.eks. environment",
 	"Search through the Energinet DataStore datasets": "Søg i Energinet Data Service datasæt",
 	"Search": "Søg",
-	"What are Organizations?": "Hvad er en organisation",
+	"What are Organizations?": "Hvad er en organisation?",
 	"All datasets are attached to an organization/company. The organization is responsible for publishing and maintaining data and for data quality in general. The organization is also responsible for providing data support and to support data usage.": "Alle datasæt er tilknyttet én organisation/selskab. Organisationen er ansvarlig for at udgive og vedligeholde data og for datakvaliteten generelt. Organisationen er også ansvarlig for at yde support på datasættet og understøtte, at data bringes i anvendelse.",
 	"View {organization_name}": "Se {organization_name}",
 	"Unsubscribe": "Følg ikke",
@@ -160,5 +160,14 @@
 	"Transmission Lines": "Transmission",
 	"CO2 Emissions": "CO2 Emissioner",
 	"Gas": "Gas",
-	"Highlighted data": "Highlighted data"
+	"Highlighted data": "Highlighted data",
+	"Tags": "Tags",
+	"Formats": "Formater",
+	"Licenses": "Licenser",
+	"Organization": "Organisationer",
+	"Relevance": "Relevans",
+	"Last Modified": "Sidst modificeret",
+	"What are Dataset Collections?": "Hvad er grupper?",
+	"Dataset Collections": "Grupper",
+	"Show More Groups": "Show More Groups"
 }

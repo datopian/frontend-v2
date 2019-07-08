@@ -14,7 +14,7 @@
             <div class="toolbar">
                 <ol class="breadcrumb">
                     <li class="home"><a href="/"><i class="fa fa-home"></i><span> Home</span></a></li>
-                    <li class="active"><a href="/search">Datasets</a></li>
+                    <li class="active"><a href="/search">{{__('Datasets')}}</a></li>
                 </ol>
             </div>
             <div class="row wrapper">
@@ -34,21 +34,13 @@
                                 </h2>
                                 <nav>
                                     <ul class="list-unstyled nav nav-simple nav-facet">
-                                        <li class="nav-item">
-                                            <a href="/dataset?organization=tso-electricity" title="">
-                                                <span>TSO Electricity (25)</span>
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="/dataset?organization=tso-gas" title="">
-                                                <span>TSO Gas (8)</span>
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="/dataset?organization=gas-storage-denmark" title="">
-                                                <span>Gas Storage Denmark (4)</span>
-                                            </a>
-                                        </li>
+                                        {% for org in result.search_facets.organization.items %}
+                                            <li class="nav-item">
+                                                <a href="/search?organization={{ org.name }}" title="">
+                                                    <span>{{ org.display_name }} ({{ org.count }})</span>
+                                                </a>
+                                            </li>
+                                        {% endfor %}
                                     </ul>
                                 </nav>
                                 <p class="module-footer">
@@ -62,65 +54,19 @@
                                 </h2>
                                 <nav>
                                     <ul class="list-unstyled nav nav-simple nav-facet">
-                                        <li class="nav-item">
-                                            <a href="/dataset?groups=electricity-production"
-                                               title="Electricity Production ">
-                                                <span>Electricity Product... (12)</span>
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="/dataset?groups=electricity-consumption"
-                                               title="Electricity Consumption">
-                                                <span>Electricity Consump... (9)</span>
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="/dataset?groups=gas-quality" title="">
-                                                <span>Gas  (9)</span>
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="/dataset?groups=ancillaryservices" title="">
-                                                <span>Ancillary Services (6)</span>
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="/dataset?groups=production-and-consumption"
-                                               title="Production and Consumption">
-                                                <span>Production and Cons... (6)</span>
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="/dataset?groups=transmission-lines" title="">
-                                                <span>Transmission Lines (5)</span>
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="/dataset?groups=whole-sale-market" title="">
-                                                <span>Whole Sale Market (5)</span>
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="/dataset?groups=reserves" title="">
-                                                <span>Reserves (4)</span>
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="/dataset?groups=day-ahead-market" title="">
-                                                <span>Day Ahead Market (3)</span>
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="/dataset?groups=auctions-transmission-capasity"
-                                               title="Auctions, Transmission Capacity">
-                                                <span>Auctions, Transmiss... (2)</span>
-                                            </a>
-                                        </li>
+                                        {% for group in result.search_facets.groups.items %}
+                                            <li class="nav-item">
+                                                <a href="/search?groups={{ group.name }}"
+                                                   title="{{ group.display_name }}">
+                                                    <span>{{ group.display_name }} ({{ group.count }})</span>
+                                                </a>
+                                            </li>
+                                        {% endfor %}
                                     </ul>
                                 </nav>
 
                                 <p class="module-footer">
-                                    <a href="/dataset?_groups_limit=0" class="read-more">Show More Groups</a>
+                                    <a href="/search?_groups_limit=0" class="read-more">{{__('Show More Groups')}}</a>
                                 </p>
                             </section>
                             <section class="module module-narrow module-shallow">
@@ -131,37 +77,13 @@
                                 </h2>
                                 <nav>
                                     <ul class="list-unstyled nav nav-simple nav-facet">
-                                        <li class="nav-item">
-                                            <a href="/dataset?tags=1+hour+resolution" title="">
-                                                <span>1 hour resolution (18)</span>
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="/dataset?tags=Price+area+resolution" title="">
-                                                <span>Price area resolution (8)</span>
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="/dataset?tags=5+min+resolution" title="">
-                                                <span>5 min resolution (3)</span>
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="/dataset?tags=1+month+resolution" title="">
-                                                <span>1 month resolution (2)</span>
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="/dataset?tags=1+Day+resolution" title="">
-                                                <span>1 Day resolution (1)</span>
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="/dataset?tags=Grid+Company+resolution"
-                                               title="Grid Company resolution">
-                                                <span>Grid Company resolu... (1)</span>
-                                            </a>
-                                        </li>
+                                        {% for tag in result.search_facets.tags.items %}
+                                            <li class="nav-item">
+                                                <a href="/search?tags={{ tag.name }}" title="">
+                                                    <span>{{ tag.display_name }} ({{ tag.count }})</span>
+                                                </a>
+                                            </li>
+                                        {% endfor %}
                                     </ul>
                                 </nav>
 
@@ -172,16 +94,17 @@
 
                                 <h2 class="module-heading">
                                     <i class="fa fa-filter"></i>
-
-                                    Formats
+                                    {{__('Formats')}}
                                 </h2>
                                 <nav>
                                     <ul class="list-unstyled nav nav-simple nav-facet">
-                                        <li class="nav-item">
-                                            <a href="/dataset?res_format=Data" title="">
-                                                <span>Data (37)</span>
-                                            </a>
-                                        </li>
+                                        {% for format in result.search_facets.res_format.items %}
+                                            <li class="nav-item">
+                                                <a href="/search?res_format={{ format.name }}" title="">
+                                                    <span>{{ format.display_name }} ({{ format.count }})</span>
+                                                </a>
+                                            </li>
+                                        {% endfor %}
                                     </ul>
                                 </nav>
 
@@ -192,16 +115,18 @@
 
                                 <h2 class="module-heading">
                                     <i class="fa fa-filter"></i>
-                                    Licenses
+                                    {{__('Licenses')}}
                                 </h2>
                                 <nav>
                                     <ul class="list-unstyled nav nav-simple nav-facet">
-                                        <li class="nav-item">
-                                            <a href="/dataset?license_id=eds-license"
-                                               title="Conditions for use of Danish public sector data">
-                                                <span>Conditions for use ... (37)</span>
-                                            </a>
-                                        </li>
+                                        {% for license in result.search_facets.license_id.items %}
+                                            <li class="nav-item">
+                                                <a href="/search?license_id={{ license.name }}"
+                                                   title="{{ license.display_name }}">
+                                                    <span>{{ license.display_name }} ({{ license.count }})</span>
+                                                </a>
+                                            </li>
+                                        {% endfor %}
                                     </ul>
                                 </nav>
                                 <p class="module-footer">
@@ -217,24 +142,20 @@
                         <div class="module-content">
                             <div class="pull-right">
                             </div>
-                            <form id="dataset-search-form" class="search-form" method="get" data-module="select-switch">
+                            <form id="dataset-search-form" class="search-form" method="get" data-module="select-switch" >
                                 <div class="order-by-wrapper">
                                     <div class="form-select">
                                         <ul class="list-inline">
-                                            <li><label for="field-order-by">Order by</label></li>
+                                            <li><label for="field-order-by">{{__('Order by')}}</label></li>
                                             <li>
-                                                <select id="field-order-by" name="sort" class="form-control">
-                                                    <option value="score desc, metadata_modified desc">Relevance
-                                                    </option>
-                                                    <option value="title_string asc" selected="selected">Name
-                                                        Ascending
-                                                    </option>
-                                                    <option value="title_string desc">Name Descending</option>
-                                                    <option value="metadata_modified desc">Last Modified</option>
+                                                <select id="field-order-by" name="sort" class="form-control" onchange="this.form.submit()">
+                                                    <option value="score desc, metadata_modified desc" {% if result.sort=="score desc, metadata_modified desc" %} selected {% endif %}>{{__('Relevance')}}</option>
+                                                    <option value="title_string asc" {% if result.sort=="title_string asc" %} selected {% endif %}>{{__('Name Ascending')}}</option>
+                                                    <option value="title_string desc" {% if result.sort =="title_string desc" %} selected {% endif %}>{{__('Name Descending')}}</option>
+                                                    <option value="metadata_modified desc" {% if result.sort=="metadata_modified desc" %} selected {% endif %}>{{__('Last Modified')}}</option>
                                                 </select>
                                             </li>
                                         </ul>
-                                        <button class="btn js-hide" type="submit">Go</button>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -269,8 +190,7 @@
                                 {% endfor %}
                             </ul>
                         </div>
-
-
+                        {% if totalPages > 1 %}
                         <div class='pagination-wrapper'>
                             <ul class='pagination'>
                                 {% for page in pages %}
@@ -279,15 +199,10 @@
                                 <li><a href="/search?page={{ totalPages }}">»</a></li>
                             </ul>
                         </div>
-
+                        {% endif %}
                     </section>
-
-
                 </div>
-
-
             </div>
-
         </div>
     </div>
 
