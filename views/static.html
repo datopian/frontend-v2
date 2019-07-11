@@ -1,13 +1,26 @@
 {% extends "base.html" %}
 
-{% block title %}
-Welcome - About
-{% endblock %}
+{% block title%}{{title}}{% endblock %}
 
-{% block bodyclass %}static{% endblock %}
+{% block bodyclass %}blog static{% endblock %}
 
 {% block content %}
-<div>
-  {{ title }}
+<!-- blog post page test placeholder -->
+<div role="main">
+  <div class="container">
+    <div class="inner_container">
+      <div class="page-header text-center">
+        <h1>
+          {{title}}
+        </h1>
+      </div>
+      <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+          {{content | safe}}
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
+
 {% endblock %}
