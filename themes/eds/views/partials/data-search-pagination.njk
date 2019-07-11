@@ -1,0 +1,18 @@
+{% if totalPages > 1 %}
+<div class='pagination-wrapper'>
+    <ul class='pagination'>
+        {% for page in pages %}
+          {% if page == '...' %}
+            <li class="border border-gray-200">
+              <span class="block px-3 py-2">{{page}}</span>
+            </li>
+          {% else %}
+            <li class="border border-gray-200">
+              <a class="{{ 'active' if currentPage == page }}" href="/search?q={{ query.q }}&from={{ (page - 1) * 10 }}">{{page}}</a>
+            </li>
+          {% endif %}
+        {% endfor %}
+        <li><a href="/search?q={{ query.q }}&from={{ (totalPages - 1) * 10 }}">»</a></li>
+    </ul>
+</div>
+{% endif %}

@@ -1,0 +1,104 @@
+<div>
+    <section class="module module-narrow module-shallow">
+        <h2 class="module-heading">
+            <i class="fa fa-filter"></i>
+            {{__('Organizations')}}
+        </h2>
+        <nav>
+            <ul class="list-unstyled nav nav-simple nav-facet">
+                {% for org in result.search_facets.organization.items %}
+                    <li class="nav-item">
+                        <a href="/search?q=organization:{{ org.name }}{% if query.q %} {{query.q}}{% endif %}{% if query.sort %}&sort={{query.sort}}{% endif %}" title="">
+                            <span>{{ org.display_name }} ({{ org.count }})</span>
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </nav>
+        <p class="module-footer">
+        </p>
+    </section>
+    <section class="module module-narrow module-shallow">
+
+        <h2 class="module-heading">
+            <i class="fa fa-filter"></i>
+            {{__('Groups')}}
+        </h2>
+        <nav>
+            <ul class="list-unstyled nav nav-simple nav-facet">
+                {% for group in result.search_facets.groups.items %}
+                    <li class="nav-item">
+                        <a href="/search?q=groups:{{ group.name }} {% if query.q %} {{query.q}}{% endif %}{% if query.sort %}&sort={{query.sort}}{% endif %}"
+                           title="{{ group.display_name }}">
+                            <span>{{ group.display_name }} ({{ group.count }})</span>
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </nav>
+
+    </section>
+    <section class="module module-narrow module-shallow">
+
+        <h2 class="module-heading">
+            <i class="fa fa-filter"></i>
+            {{__('Tags')}}
+        </h2>
+        <nav>
+            <ul class="list-unstyled nav nav-simple nav-facet">
+                {% for tag in result.search_facets.tags.items %}
+                    <li class="nav-item">
+                        <a href="/search?q=tags:{{ tag.name }} {% if query.q %} {{query.q}}{% endif %}{% if query.sort %}&sort={{query.sort}}{% endif %}" title="">
+                            <span>{{ tag.display_name }} ({{ tag.count }})</span>
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </nav>
+
+        <p class="module-footer">
+        </p>
+    </section>
+    <section class="module module-narrow module-shallow">
+
+        <h2 class="module-heading">
+            <i class="fa fa-filter"></i>
+            {{__('Formats')}}
+        </h2>
+        <nav>
+            <ul class="list-unstyled nav nav-simple nav-facet">
+                {% for format in result.search_facets.res_format.items %}
+                    <li class="nav-item">
+                        <a href="/search?q=res_format:{{ format.name }} {% if query.q %} {{query.q}}{% endif %}{% if query.sort %}&sort={{query.sort}}{% endif %}" title="">
+                            <span>{{ format.display_name }} ({{ format.count }})</span>
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </nav>
+
+        <p class="module-footer">
+        </p>
+    </section>
+    <section class="module module-narrow module-shallow">
+
+        <h2 class="module-heading">
+            <i class="fa fa-filter"></i>
+            {{__('Licenses')}}
+        </h2>
+        <nav>
+            <ul class="list-unstyled nav nav-simple nav-facet">
+                {% for license in result.search_facets.license_id.items %}
+                    <li class="nav-item">
+                        <a href="/search?q=license_id:{{ license.name }} {% if query.q %} {{query.q}}{% endif %}{% if query.sort %}&sort={{query.sort}}{% endif %}"
+                           title="{{ license.display_name }}">
+                            <span>{{ license.display_name }} ({{ license.count }})</span>
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </nav>
+        <p class="module-footer">
+        </p>
+    </section>
+</div>
