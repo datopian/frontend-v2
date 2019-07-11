@@ -50,164 +50,17 @@
           </section>
         </div>
         <div class="filters">
-          <div>
-            <section class="module module-narrow module-shallow">
-              <h2 class="module-heading">
-                <i class="fa fa-filter"></i>
-                {{__('Organizations')}}
-              </h2>
-              <nav>
-                <ul class="list-unstyled nav nav-simple nav-facet">
-                  {% for org in result.search_facets.organization.items %}
-                    <li class="nav-item">
-                      <a href="/collection/{{ item.name }}?{{ result.search_facets.organization.title }}={{ org.name }}" title="">
-                        <span>{{ org.display_name }} ({{ org.count }})</span>
-                      </a>
-                    </li>
-                  {% endfor %}
-                </ul>
-              </nav>
-              <p class="module-footer">
-              </p>
-            </section>
-            <section class="module module-narrow module-shallow">
-              <h2 class="module-heading">
-                <i class="fa fa-filter"></i>
-                {{__('Groups')}}
-              </h2>
-              <nav>
-                <ul class="list-unstyled nav nav-simple nav-facet">
-                  {% for group in result.search_facets.groups.items %}
-                    <li class="nav-item">
-                      <a href="/collection/{{ item.name }}?{{ result.search_facets.groups.title }}={{ group.name }}" title="">
-                        <span>{{ group.display_name }} ({{ group.count }})</span>
-                      </a>
-                    </li>
-                  {% endfor %}
-                </ul>
-              </nav>
-              <p class="module-footer">
-              </p>
-            </section>
-            <section class="module module-narrow module-shallow">
-              <h2 class="module-heading">
-                <i class="fa fa-filter"></i>
-                {{__('Tags')}}
-              </h2>
-              <nav>
-                <ul class="list-unstyled nav nav-simple nav-facet">
-                  {% for tag in result.search_facets.tags.items %}
-                    <li class="nav-item">
-                      <a href="/collection/{{ item.name }}?{{ result.search_facets.tags.title }}={{ tag.name }}" title="">
-                        <span>{{ tag.display_name }} ({{ tag.count }})</span>
-                      </a>
-                    </li>
-                 {% endfor %}
-                </ul>
-              </nav>
-              <p class="module-footer">
-              </p>
-            </section>
-            <section class="module module-narrow module-shallow">
-              <h2 class="module-heading">
-                <i class="fa fa-filter"></i>
-                {{__('Formats')}}
-              </h2>
-              <nav>
-                <ul class="list-unstyled nav nav-simple nav-facet">
-                  {% for format in result.search_facets.res_format.items %}
-                    <li class="nav-item">
-                      <a href="/collection/{{ item.name }}?{{ result.search_facets.res_format.title }}={{ format.name }}" title="">
-                        <span>{{ format.display_name }} ({{ format.count }})</span>
-                      </a>
-                    </li>
-                  {% endfor %}
-                </ul>
-              </nav>
-              <p class="module-footer">
-              </p>
-            </section>
-            <section class="module module-narrow module-shallow">
-              <h2 class="module-heading">
-                <i class="fa fa-filter"></i>
-                {{__('Licenses')}}
-              </h2>
-              <nav>
-                <ul class="list-unstyled nav nav-simple nav-facet">
-                  {% for license in result.search_facets.license_id.items %}
-                    <li class="nav-item">
-                      <a href="/collection/{{ item.name }}?{{ result.search_facets.license_id.title }}={{ license.name }}" title="">
-                        <span>{{ license.display_name }} ({{ license.count }})</span>
-                      </a>
-                    </li>
-                  {% endfor %}
-                </ul>
-              </nav>
-              <p class="module-footer">
-              </p>
-            </section>
-          </div>
+          {% include "./partials/search-filter.njk" %}
           <a class="close no-text hide-filters"><i class="fa fa-times-circle"></i><span class="text">close</span></a>
         </div>
       </aside>
       <div class="col-md-9 ">
         <article class="module">
           <div class="module-content">
-            <form id="group-datasets-search-form" class="search-form" method="get" data-module="select-switch">
-              <div class="order-by-wrapper">
-                <div class="form-select">
-                  <ul class="list-inline">
-                    <li><label for="field-order-by">{{__('Order by')}}</label></li>
-                    <li>
-                      <select id="field-order-by" name="sort" class="form-control" onchange="this.form.submit()">
-                        <option value="score desc, metadata_modified desc" {% if result.sort=="score desc, metadata_modified desc" %} selected {% endif %}>{{__('Relevance')}}</option>
-                        <option value="title_string asc" {% if result.sort=="title_string asc" %} selected {% endif %}>{{__('Name Ascending')}}</option>
-                        <option value="title_string desc" {% if result.sort =="title_string desc" %} selected {% endif %}>{{__('Name Descending')}}</option>
-                        <option value="metadata_modified desc" {% if result.sort=="metadata_modified desc" %} selected {% endif %}>{{__('Last Modified')}}</option>
-                      </select>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-7">
-                  <h3>{{ result.results|length }} dataset{{ "s" if result.results|length != 1 else ""}} found</h3>
-                </div>
-              </div>
-            </form>
-            <ul class="dataset-list list-unstyled">
-              {% for dataset in result.results %}
-                <li class="dataset-item">
-                  <div class="row">
-                    <div class="col-md-8">
-                      <div class="dataset-content">
-                        <h3 class="dataset-heading">
-                          <a href="/search/{{ dataset.name }}">{{ dataset.title }}</a>
-                            <span class="indicator-update fa fa-refresh" title="Recently updated dataset"></span>
-                        </h3>
-                        <div>{{ dataset.description|truncate(180) }}</div>
-                      </div>
-                      <ul class="dataset-resources list-unstyled">
-                        <li>
-                          <a href="/search/{{ dataset.name }}" class="label" data-format="data">Data</a>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </li>
-              {% endfor %}
-            </ul>
+            {% include "./partials/data-search-form.njk" %}
+            {% include "./partials/data-search-results.njk" %}
           </div>
-          {% if totalPages > 1 %}
-            <div class='pagination-wrapper'>
-              <ul class='pagination'>
-                {% for page in pages %}
-                <li class="{{ 'active' if page==currentPage else '' }}"><a href="/collections/{{ item.name }}?page={{ page }}">{{ page }}</a></li>
-                {% endfor %}
-                <li><a href="/collections/{{ item.name }}?page={{ totalPages }}">»</a></li>
-              </ul>
-            </div>
-          {% endif %}
+          {% include "./partials/data-search-pagination.njk" %}
         </article>
       </div>
     </div>
