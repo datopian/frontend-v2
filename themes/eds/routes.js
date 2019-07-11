@@ -65,43 +65,46 @@ module.exports = function (app) {
     // in EDS, all resources are in 'data' format which isn't valid for previewing
     datapackage.resources[0].format = 'csv'
 
-    const schema = {
-      fields: [
-        {
-          name: 'GasDay',
-          title: 'Gas Day',
-          type: 'date',
-          description: 'Gas Day is a period commencing at 06:00 CET on any day and ending at 06:00 CET on the following day. The Gas Day is reduced to 23 Hours at the transition to summer time and is increased to 25 Hours at the transition to winter time.',
-          example: '2017-12-24',
-          unit: 'Days'
-        },
-        {
-          name: 'KWhFromBiogas',
-          type: 'number'
-        },
-        {
-          name: 'KWhToDenmark',
-          type: 'number'
-        },
-        {
-          name: 'KWhFromNorthSea',
-          type: 'number'
-        },
-        {
-          name: 'KWhToOrFromStorage',
-          type: 'number'
-        },
-        {
-          name: 'KWhToOrFromGermany',
-          type: 'number'
-        },
-        {
-          name: 'KWhToSweden',
-          type: 'number'
-        }
-      ]
+    // This is hardcoded schema for gasflow dataset for a demo:
+    if (datapackage.name === 'gasflow') {
+      const schema = {
+        fields: [
+          {
+            name: 'GasDay',
+            title: 'Gas Day',
+            type: 'date',
+            description: 'Gas Day is a period commencing at 06:00 CET on any day and ending at 06:00 CET on the following day. The Gas Day is reduced to 23 Hours at the transition to summer time and is increased to 25 Hours at the transition to winter time.',
+            example: '2017-12-24',
+            unit: 'Days'
+          },
+          {
+            name: 'KWhFromBiogas',
+            type: 'number'
+          },
+          {
+            name: 'KWhToDenmark',
+            type: 'number'
+          },
+          {
+            name: 'KWhFromNorthSea',
+            type: 'number'
+          },
+          {
+            name: 'KWhToOrFromStorage',
+            type: 'number'
+          },
+          {
+            name: 'KWhToOrFromGermany',
+            type: 'number'
+          },
+          {
+            name: 'KWhToSweden',
+            type: 'number'
+          }
+        ]
+      }
+      datapackage.resources[0].schema = schema
     }
-    datapackage.resources[0].schema = schema
 
     // Since "datapackage-views-js" library renders views according to
     // descriptor's "views" property, we need to generate view objects:
