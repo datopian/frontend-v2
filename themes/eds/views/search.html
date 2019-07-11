@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% import '_snippets.html' as snippets %}
+
+{% block title %}
+{{ title }}
+{% endblock %}
+
+{% block bodyclass %}search{% endblock %}
+
+{% block content %}
+<section class="search-page">
+    <div role="main">
+        <div id="content" class="container-fluid">
+            <div class="toolbar">
+                <ol class="breadcrumb">
+                    <li class="home"><a href="/"><i class="fa fa-home"></i><span> Home</span></a></li>
+                    <li class="active"><a href="/search">{{__('Datasets')}}</a></li>
+                </ol>
+            </div>
+            <div class="row wrapper">
+                <div class=" col-md-12 ">
+                    <div class="flash-messages">
+                    </div>
+                </div>
+                <div class="col-md-10 col-md-offset-1">
+                </div>
+                <aside class="col-md-3">
+                    <div class="filters">
+                        {% include "./partials/search-filter.njk" %}
+                        <a class="close no-text hide-filters"><i class="fa fa-times-circle"></i><span
+                                class="text">close</span></a>
+                    </div>
+                </aside>
+                <div class="col-md-9 ">
+                    <section class="module">
+                        <div class="module-content">
+                            {% include "./partials/data-search-form.njk" %}
+                            {% include "./partials/data-search-results.njk" %}
+                        </div>
+                        {% include "./partials/data-search-pagination.njk" %}
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+{% endblock %}

@@ -1,0 +1,23 @@
+<form id="dataset-search-form" class="search-form" method="get" data-module="select-switch" >
+    <input name="q" value="{{ query.q }}" style="display:none" />
+    <div class="order-by-wrapper">
+        <div class="form-select">
+            <ul class="list-inline">
+                <li><label for="field-order-by">{{__('Order by')}}</label></li>
+                <li>
+                    <select id="field-order-by" name="sort" class="form-control" onchange="this.form.submit()">
+                        <option value="score desc, metadata_modified desc" {% if result.sort=="score desc, metadata_modified desc" %} selected {% endif %}>{{__('Relevance')}}</option>
+                        <option value="title_string asc" {% if result.sort=="title_string asc" %} selected {% endif %}>{{__('Name Ascending')}}</option>
+                        <option value="title_string desc" {% if result.sort =="title_string desc" %} selected {% endif %}>{{__('Name Descending')}}</option>
+                        <option value="metadata_modified desc" {% if result.sort=="metadata_modified desc" %} selected {% endif %}>{{__('Last Modified')}}</option>
+                    </select>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-7">
+            <h3>{{ result.count }} dataset{{ "s" if result.count != 1 else ""}} found</h3>
+        </div>
+    </div>
+</form>

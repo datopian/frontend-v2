@@ -254,25 +254,37 @@ Welcome - Home
                     <span>{{__('News')}}</span>
                 </h4>
 
-                <div class="info-item">
-                    <p class="info-item-date">April 10, 2019</p>
-                    <h5 class="info-item-title">
-                        <a href="/news/e70e5615-3c9e-44bc-b560-d9aad60365f0">Opdatering til ny version d. 10. april 2019/update to new version the 10th of April 2019</a>
-                        <span class="info-item-arrow">
-                            &gt;
-                        </span>
-                    </h5>
-                </div>
+                {% for post in posts %}
+                    <div class="info-item">
+                        <p class="info-item-date">{{ post.published }}</p>
+                        <h5 class="info-item-title">
+                            <a href="/news/{{ post.slug }}">{{ post.title }}</a>
+                            <span class="info-item-arrow">
+                                &gt;
+                            </span>
+                        </h5>
+                    </div>
+                {% endfor %}
 
-                <div class="info-item">
-                    <p class="info-item-date">February 5, 2019</p>
-                    <h5 class="info-item-title">
-                        <a href="/news/e73c3ff4-9da5-44f6-bad5-53b2c11a9e4b">Der kan nu downloades igen / You can now download again</a>
-                        <span class="info-item-arrow">
-                            &gt;
-                        </span>
-                    </h5>
-                </div>
+<!--                <div class="info-item">-->
+<!--                    <p class="info-item-date">April 10, 2019</p>-->
+<!--                    <h5 class="info-item-title">-->
+<!--                        <a href="/news/e70e5615-3c9e-44bc-b560-d9aad60365f0">Opdatering til ny version d. 10. april 2019/update to new version the 10th of April 2019</a>-->
+<!--                        <span class="info-item-arrow">-->
+<!--                            &gt;-->
+<!--                        </span>-->
+<!--                    </h5>-->
+<!--                </div>-->
+
+<!--                <div class="info-item">-->
+<!--                    <p class="info-item-date">February 5, 2019</p>-->
+<!--                    <h5 class="info-item-title">-->
+<!--                        <a href="/news/e73c3ff4-9da5-44f6-bad5-53b2c11a9e4b">Der kan nu downloades igen / You can now download again</a>-->
+<!--                        <span class="info-item-arrow">-->
+<!--                            &gt;-->
+<!--                        </span>-->
+<!--                    </h5>-->
+<!--                </div>-->
 
 
                 <a class="btn btn-xs btn-primary" href="/news">{{__('See all news')}}</a>
