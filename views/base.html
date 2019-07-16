@@ -21,14 +21,13 @@
     <script id="ga-gtag" async></script>
 
     <script>
-      $.get("/ga-id", function(data) {
-        document.getElementById("ga-gtag").src = "https://www.googletagmanager.com/gtag/js?id="+data;
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-
-        gtag('config', data);
-      });
+        $.get("/ga-id", function(data) {
+            document.getElementById("ga-gtag").src = "https://www.googletagmanager.com/gtag/js?id="+data;
+            gtag('js', new Date());
+            gtag('config', data);
+        });
 
     </script>
   </head>
