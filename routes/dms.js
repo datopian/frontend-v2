@@ -15,6 +15,10 @@ module.exports = function () {
   const Model = new dms.DmsModel(config)
   const CmsModel = new cms.CmsModel()
 
+  router.get('/ga-id', (req, res) => {
+    res.send(config.get('GA_ID'))
+  })
+
   // -----------------------------------------------
   // Redirects
 
