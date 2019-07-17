@@ -7,6 +7,10 @@ const utils = require('../../utils')
 
 module.exports = function (app) {
   app.get('/:owner/:name', async (req, res, next) => {
+    if (req.params.owner === 'news') {
+      next()
+      return
+    }
     const Model = new dms.DmsModel(config)
     let datapackage = null
 
