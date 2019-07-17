@@ -123,7 +123,7 @@
                   {{ resource.modified }}
                 </td>
                 <td class="download truncate col-xs-4">
-                  <a href="{{ resource.path }}">
+                  <a href="{{ resource.path }}" onclick="sendEvent('{{ resource.format }}', '{{ dataset.name }}', '{{ resource.title }}')">
                     {{ resource.format or 'Data file' }} {% if resource.size %}({{resource.size}}){% endif %}
                   </a>
                   {% for alt in resource.otherFormats %}
@@ -338,6 +338,14 @@
    function goToSearch() {
     var query = document.getElementById('search-input').value;
     window.location.href = '/search?q=' + query;
+  }
+
+  function sendEvent(fileFormat, eventCategory, resourceTitle) {
+      gtag('event', fileFormat.toUpperCase() + " downloaded", {
+          'event_label': fileFormat.toUpperCase() + " - " + resourceTitle,
+          'event_category': eventCategory,
+          'non_interaction': true
+      });
   }
 </script>
 
