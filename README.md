@@ -147,7 +147,10 @@ $ yarn add your_ckan_ng_theme
 And in `.env`
 ```
 THEME=your_ckan_ng_theme
+THEME_DIR=node_modules
 ```
+
+> *NOTE*: Make sure to set `THEME_DIR` to `node_modules`!!!
 
 ### Plugins
 
