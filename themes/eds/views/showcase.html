@@ -28,7 +28,7 @@
               <!-- Buttons -->
               <ul>
                 <li>
-                  <button class="data-explorer-filters-toggle btn btn-primary">
+                  <button class="data-explorer-filters-toggle btn btn-primary" onclick="toggleFilters()">
                     <span class="fa fa-filter"></span>
                     <span class="fa-label">Filter</span>
                   </button>
@@ -61,12 +61,22 @@
             <h1 class="page-heading">{{ dataset.title }}</h1>
             <div class="data-explorer">
               <p class="lead">
-                Total number of rows: <strong class="total-results">{{ dataset.resources[0].rows }}</strong>
+                Total number of rows: <strong class="total-results" id="numberOfRows">{{ dataset.resources[0].rows }}</strong>
               </p>
               <hr />
               <!-- preview table -->
               {% for view in dataset.views %}
               <!-- Placeholder div elements for React components: preview tables -->
+              <div class="panel panel-default data-explorer-filters" style="display:none;">
+                <div class="panel-heading">
+                  <h2 class="panel-title"><span class="fa fa-tasks"></span><span class="fa-label">Data Explorer Filters</span></h2>
+                </div>
+                <div class="panel-body">
+                  <!-- filters -->
+                  <div id="datapackage-filter-{{view.id}}" class="react-me">No data filters are assigned to this Data Explorer view yet. You are viewing an unfiltered version of the complete resource data.</div>
+                </div>
+              </div>
+              <!-- preview tables -->
               <div id="datapackage-view-{{view.id}}" class="react-me tables"></div>
               <!-- End of div elements for React -->
               {% endfor %}
@@ -238,7 +248,22 @@
 {% endblock %}
 
 {% block scripts %}
+<script>
+  function toggleFilters() {
+    var filtersElement = document.getElementsByClassName('data-explorer-filters')[0];
+    if (filtersElement.style.display === 'none') {
+      filtersElement.style.display = 'block';
+    } else {
+      filtersElement.style.display = 'none';
+    }
+  }
+</script>
 
+<!-- datastore-query-builder -->
+<script type="text/javascript" src="https://raw.githack.com/datopian/datastore-query-builder/master/dist/js/runtime~main.js"></script>
+<script type="text/javascript" src="https://raw.githack.com/datopian/datastore-query-builder/master/dist/js/2.js"></script>
+<script type="text/javascript" src="https://raw.githack.com/datopian/datastore-query-builder/master/dist/js/main.js"></script>
+<!-- datapackage-views-js -->
 <script type="text/javascript" src="https://raw.githack.com/datopian/datapackage-views-js/master/dist/js/main.js"></script>
 
 {% endblock %}

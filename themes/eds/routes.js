@@ -71,6 +71,7 @@ module.exports = function (app) {
 
     // This is hardcoded schema for gasflow dataset for a demo:
     if (datapackage.name === 'gasflow') {
+      datapackage.resources[0].name = 'gasflow'
       const schema = {
         fields: [
           {
