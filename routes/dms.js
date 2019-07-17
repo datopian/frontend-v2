@@ -177,7 +177,7 @@ module.exports = function () {
         avatar: profile.image_display_url || profile.image_url
       },
       thisPageFullUrl: req.protocol + '://' + req.get('host') + req.originalUrl,
-      dpId: JSON.stringify(datapackage) //.replace(/\\/g, '\\\\').replace(/\'/g, "\\'")
+      dpId: JSON.stringify(datapackage).replace(/'/g, "&#x27;") // replace single quotes
     })
   })
 
