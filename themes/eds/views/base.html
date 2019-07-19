@@ -51,6 +51,17 @@
   <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script id="ga-gtag" async></script>
+
+  <script>
+      document.getElementById("ga-gtag").src = "https://www.googletagmanager.com/gtag/js?id={{ $GA_ID }}";
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', '{{ $GA_ID }}');
+  </script>
+
 </head>
 <body class="{% block bodyclass %}{{bodyclass}}{% endblock %}">
     <!-- Page header -->
