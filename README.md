@@ -197,6 +197,17 @@ Cookie-parser will now be applied to all of your requests as express middleware!
 
 For more on express middleware: https://expressjs.com/en/guide/using-middleware.html
 
+#### Google analytics plugin
+
+To add Google Analytics tracking code to page templates, 
+enable the plugin in your `.env` file:
+
+```bash
+PLUGINS=google-analytics
+GA_ID=UA-000000000-0
+```
+
+
 ## Tests
 
 Set `.env` to hit mocked services:
