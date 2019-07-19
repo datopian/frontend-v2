@@ -7,6 +7,10 @@ const utils = require('../../utils')
 
 module.exports = function (app) {
   app.get('/:owner/:name', async (req, res, next) => {
+    if (req.params.owner === 'news') {
+      next()
+      return
+    }
     const Model = new dms.DmsModel(config)
     let datapackage = null
 
@@ -67,6 +71,7 @@ module.exports = function (app) {
 
     // This is hardcoded schema for gasflow dataset for a demo:
     if (datapackage.name === 'gasflow') {
+      datapackage.resources[0].name = 'gasflow'
       const schema = {
         fields: [
           {
