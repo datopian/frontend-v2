@@ -41,7 +41,7 @@
                     <ul class="dropdown-menu">
                       {% for item in dataset.downloads %}
                       <li>
-                        <a href="{{ item.path }}" class="data-extract-btn" data-format="{{ item.format }}">{{ item.format }}</a>
+                        <a href="{{ item.path }}" class="data-extract-btn" data-format="{{ item.format }}"  onclick="sendGAEvent('{{ dataset.name }}', '{{ dataset.resources[0].name }}', '{{ item.format }}')">{{ item.format }}</a>
                       </li>
                       <br />
                       {% endfor %}
@@ -256,6 +256,15 @@
     } else {
       filtersElement.style.display = 'none';
     }
+  }
+
+  function sendGAEvent(datasetName, resourceName, resourceFormat) {
+      gtag('event', "download", {
+          'event_category': datasetName,
+          'event_label': resourceName,
+          'value':resourceFormat,
+          'non_interaction': true
+      });
   }
 </script>
 
