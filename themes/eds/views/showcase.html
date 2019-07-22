@@ -41,7 +41,7 @@
                     <ul class="dropdown-menu">
                       {% for item in dataset.downloads %}
                       <li>
-                        <a href="{{ item.path }}" class="data-extract-btn" data-format="{{ item.format }}"  onclick="sendGAEvent('{{ dataset.name }}', '{{ dataset.resources[loop.index0].name }}', '{{ item.format }}')">{{ item.format }}</a>
+                        <a href="{{ item.path }}" class="data-extract-btn" data-format="{{ item.format }}"  onclick="sendGAEvent('{{ dataset.name }}', '{{ dataset.resources[0].name }}', '{{ item.format }}')">{{ item.format }}</a>
                       </li>
                       <br />
                       {% endfor %}
