@@ -115,15 +115,15 @@ Here is the summary of existing routes at the moment:
 
 The platform can be extended in the following ways:
 
-### Theme Routes
+### Theme
 
-Your theme needs a `routes.js` file which defines a `module.export` function that receives the express `app` object. Use `app` to add routes, middleware, etc, to the frontend app.
+Your theme needs an `index.js` file which defines a `module.export` function that receives the express `app` object. Use `app` to add routes, middleware, etc, to the frontend app.
 
-When your theme is enabled, the `routes.js` file will be parsed by the app.
+When your theme is enabled, the `index.js` file will be executed by the app.
 
 *NOTE* You do not need to return anything from this function, just extend the app object by reference.
 
-And in `/themes/your_cool_theme/routes.js`:
+And in `/themes/your_cool_theme/index.js`:
 ```
 module.exports = function (app) {
   // extend the express app object as you see fit
@@ -136,6 +136,21 @@ module.exports = function (app) {
   })  
 }
 ```
+
+#### NPM
+Themes can be loaded via npm:
+
+```
+$ yarn add your_ckan_ng_theme
+```
+
+And in `.env`
+```
+THEME=your_ckan_ng_theme
+THEME_DIR=node_modules
+```
+
+> *NOTE*: Make sure to set `THEME_DIR` to `node_modules`!!!
 
 ### Plugins
 

@@ -211,58 +211,67 @@ module.exports.processMarkdown = require('markdown-it')({
   typographer: true
 })
 
+
 /**
- * Returns an array of express Router instances
- * or []
- */
-module.exports.loadThemeRoutes = function (app) {
-  console.log('Loading configured theme routes...')
+ * Look for user resource in configured directory
+ * or in node_moduels directory
+ **/
+function loadExtension(extension, extensionsPath) {
+  console.log(extension) // stdout
+  const nodeModulesPath = config.get('NODE_MODULES_PATH')
+  const userResource = path.join(process.cwd(), extensionsPath, extension, 'index.js')
+  const npmResource = path.join(process.cwd(), nodeModulesPath, extension)
+
+  // look for plugin in user space
+  if (fs.existsSync(userResource)) {
+    return require(userResource)
+  // otherwise look in node_modules
+  } else if (fs.existsSync(npmResource)) {
+    return require(extension)
+  } else {
+    // if all else fails give the user a helping hand
+    throw new Error(`Cannot find configured extension -- ${extension}. Is it installed? If the extension is an npm module try to run\n"yarn add ${extension}"\nIf it is a user extension, make sure the the directory at ${extensionsPath} exists and there is a valid index.js file there.`)
+  }
+}
+
+/**
+ * Load configured theme from theme directory
+ * or via node_modules
+ **/
+module.exports.loadTheme = function (app) {
+  console.log('Loading configured theme...')
   
   try {
     const theme = config.get('THEME')
     const themePath = config.get('THEME_DIR')
-    console.log(theme, themePath)
     if (!theme) return
-    const resource = path.join(process.cwd(), themePath, theme, 'routes.js')
-    console.log(resource)
-    require(resource)(app)
+    loadExtension(theme, themePath, 'theme')(app)
   } catch (e) {
     const theme = config.get('THEME')
-    console.warn(`WARNING: Failed to load configured theme routes for ${theme}`)
+    console.warn(`WARNING: Failed to load theme -- ${theme}`)
   }
 }
 
-module.exports.loadUserPlugins = function (app) {
+/**
+ * Iterate over configured plugins and load via plugins directory
+ * or via node_modules folder
+ **/
+module.exports.loadPlugins = function (app) {
   console.log('Loading configured plugins...')
   
   try {
     const plugins = config.get('PLUGINS')
     const pluginPath = config.get('PLUGIN_DIR')
-    const nodeModulesPath = config.get('NODE_MODULES_PATH')
     
     if (!plugins) return 
 
     // try to load each resource
     return plugins.split(' ').forEach(plugin => {
-      const userResource = path.join(process.cwd(), pluginPath, plugin, 'index.js')
-      const npmResource = path.join(process.cwd(), nodeModulesPath, plugin)
-      
-      // look for plugin in user space
-      if (fs.existsSync(userResource)) {
-        require(userResource)(app)
-      // otherwise look in node_modules
-      } else if (fs.existsSync(npmResource)) {
-        const middleware = require(plugin)
-        app.use(middleware())
-      } else {
-        // if all else fails give the user a helping hand
-        const userPluginPath = path.resolve(process.cwd(), pluginPath, plugin)
-        throw new Error(`Cannot find configured plugin ${plugin}. Is it installed? If the plugin is an npm module try to run\n"yarn add ${plugin}"\nIf it is a user plugin, make sure you have a directory at ${userPluginPath} and a valid index.js file there.`)
-      }
+      loadExtension(plugin, pluginPath, 'plugin')(app)
     })
   } catch (e) {
     const plugins = config.get('PLUGINS').split(" ") || []
-    console.warn('WARNING: Failed to load configured plugins',plugins, e)
+    console.warn('WARNING: Failed to load configured plugins', plugins, e)
     return []
   }
 } 

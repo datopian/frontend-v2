@@ -8,8 +8,7 @@ const app = require('../../index').makeApp()
 const config = require('../../config')
 
 
-// THEME ROUTES
-// @@TODO Test fail case for theme routes
+// THEME
 test('Theme defined route exists when THEME is set', async t => {
   config.set('THEME', 'example')
   const app = require('../../index').makeApp()
@@ -31,8 +30,18 @@ test('Theme defined route does NOT exists when THEME is not set', async t => {
 })
 
 
+test('Missing theme load is caught and app still loads', async t => {
+  config.set('THEME', "no-way-no-how")
+  const app = require('../../index').makeApp()
+  t.plan(1)
+
+  const res = await request(app)
+    .get('/')
+  t.is(res.statusCode, 200)
+})
+
+
 // PLUGINS
-// @@TODO Test fail case for plugins
 // @@TODO Test load plugin from npm
 test('User-plugin-provided res has expected custom header present', async t => {
   config.set('PLUGINS', "example cookie-parser")
@@ -43,6 +52,19 @@ test('User-plugin-provided res has expected custom header present', async t => {
     .get('/')
   t.true(res.headers['x-my-custom-header'] === '1234')
 })
+
+
+test('Missing plugin load is caught and app still loads', async t => {
+  config.set('PLUGINS', "no-way-no-how")
+  const app = require('../../index').makeApp()
+  t.plan(1)
+
+  const res = await request(app)
+    .get('/')
+  t.is(res.statusCode, 200)
+})
+
+
 
 
 // CMS
