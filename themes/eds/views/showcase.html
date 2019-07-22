@@ -41,7 +41,7 @@
                     <ul class="dropdown-menu">
                       {% for item in dataset.downloads %}
                       <li>
-                        <a href="{{ item.path }}" class="data-extract-btn" data-format="{{ item.format }}"  onclick="sendGAEvent('{{ dataset.name }}', '{{ dataset.resources[0].name }}', '{{ item.format }}')">{{ item.format }}</a>
+                        <a href="{{ item.path }}" class="data-extract-btn" data-format="{{ item.format }}"  onclick="sendGAEvent('{{ dataset.name }}', '{{ dataset.resources[0].name }}', 'full data', '{{ item.format }}')">{{ item.format }}</a>
                       </li>
                       <br />
                       {% endfor %}
@@ -258,12 +258,20 @@
     }
   }
 
-  function sendGAEvent(datasetName, resourceName, resourceFormat) {
-      gtag('event', "download", {
+  // Track downloads of displayed data (filtered)
+  var downloadables = document.getElementsByClassName('downloadables')[0];
+  var downloadCSVButton = downloadables.getElementsByTagName('a')[0];
+  var downloadJSONButton = downloadables.getElementsByTagName('button')[0];
+  downloadCSVButton.onclick = sendGAEvent('{{ dataset.name }}', '{{ dataset.resources[0].name }}', 'displayed data', 'CSV');
+  downloadJSONButton.onclick = sendGAEvent('{{ dataset.name }}', '{{ dataset.resources[0].name }}', 'displayed data', 'JSON');
+
+  // Script for sending events data to Google Analytics
+  function sendGAEvent(datasetName, resourceName, downloadType, resourceFormat) {
+      gtag('event', 'download', {
           'event_category': datasetName,
           'event_label': resourceName,
-          'value':resourceFormat,
-          'non_interaction': true
+          'dimension0': downloadType,
+          'dimension1': resourceFormat
       });
   }
 </script>
