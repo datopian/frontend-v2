@@ -67,7 +67,7 @@
                   {% if slug=="organization" %}
                     <strong class="count">{{ collection.count }} Dataset{{ 's' if collection.count != 1 else '' }}</strong>
                   {% endif %}
-                  <a href="/{{slug}}/{{ collection.name }}" title="{{ collection.title }}" class="media-view">
+                  <a href="{{ '/'+slug if slug!='organization' else '' }}/{{ collection.name }}" title="{{ collection.title }}" class="media-view">
                     <span>View {{ collection.title }}</span>
                   </a>
                 </li>
