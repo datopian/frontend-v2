@@ -259,20 +259,30 @@
   }
 
   // Track downloads of displayed data (filtered)
-  var downloadables = document.getElementsByClassName('downloadables')[0];
-  var downloadCSVButton = downloadables.getElementsByTagName('a')[0];
-  var downloadJSONButton = downloadables.getElementsByTagName('button')[0];
-  downloadCSVButton.onclick = sendGAEvent('{{ dataset.name }}', '{{ dataset.resources[0].name }}', 'displayed data', 'CSV');
-  downloadJSONButton.onclick = sendGAEvent('{{ dataset.name }}', '{{ dataset.resources[0].name }}', 'displayed data', 'JSON');
+  var addDownlaodTrackersInterval = setInterval(addDownloadTrackers, 1000);
+  function addDownloadTrackers() {
+    var downloadables = document.getElementsByClassName('downloadables')[0];
+    if (downloadables) {
+      clearInterval(addDownlaodTrackersInterval);
+      var downloadCSVButton = downloadables.getElementsByTagName('a')[0];
+      var downloadJSONButton = downloadables.getElementsByTagName('button')[0];
+      downloadCSVButton.onclick = function() {
+        sendGAEvent('{{ dataset.name }}', '{{ dataset.resources[0].name }}', 'displayed data', 'CSV');
+      }
+      downloadJSONButton.onclick = function() {
+        sendGAEvent('{{ dataset.name }}', '{{ dataset.resources[0].name }}', 'displayed data', 'JSON');
+      }
+    }
+  }
 
   // Script for sending events data to Google Analytics
   function sendGAEvent(datasetName, resourceName, downloadType, resourceFormat) {
-      gtag('event', 'download', {
-          'event_category': datasetName,
-          'event_label': resourceName,
-          'downloaded data type': downloadType,
-          'downloaded data format': resourceFormat
-      });
+    gtag('event', 'download', {
+      'event_category': datasetName,
+      'event_label': resourceName,
+      'downloaded data type': downloadType,
+      'downloaded data format': resourceFormat
+    });
   }
 </script>
 
