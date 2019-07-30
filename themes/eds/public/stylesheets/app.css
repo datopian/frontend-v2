@@ -3747,92 +3747,16 @@ video {
   font-weight: 900;
 }
 
-.h-0 {
-  height: 0;
+.h-1\/4 {
+  height: 25%;
 }
 
-.h-1 {
-  height: 0.25rem;
+.h-1\/2 {
+  height: 50%;
 }
 
-.h-2 {
-  height: 0.5rem;
-}
-
-.h-3 {
-  height: 0.75rem;
-}
-
-.h-4 {
-  height: 1rem;
-}
-
-.h-5 {
-  height: 1.25rem;
-}
-
-.h-6 {
-  height: 1.5rem;
-}
-
-.h-8 {
-  height: 2rem;
-}
-
-.h-10 {
-  height: 2.5rem;
-}
-
-.h-12 {
-  height: 3rem;
-}
-
-.h-16 {
-  height: 4rem;
-}
-
-.h-20 {
-  height: 5rem;
-}
-
-.h-24 {
-  height: 6rem;
-}
-
-.h-32 {
-  height: 8rem;
-}
-
-.h-40 {
-  height: 10rem;
-}
-
-.h-48 {
-  height: 12rem;
-}
-
-.h-56 {
-  height: 14rem;
-}
-
-.h-64 {
-  height: 16rem;
-}
-
-.h-auto {
-  height: auto;
-}
-
-.h-px {
-  height: 1px;
-}
-
-.h-full {
-  height: 100%;
-}
-
-.h-screen {
-  height: 100vh;
+.h-3\/4 {
+  height: 75%;
 }
 
 .leading-none {
@@ -7659,6 +7583,82 @@ video {
   z-index: auto;
 }
 
+.news {
+  content: '';
+  position: absolute;
+  width: 1px;
+  background-color: #d3d3d3;
+  top: 12px;
+  bottom: 22px;
+  margin-left: -2px;
+}
+
+.post {
+  color: #d3d3d3;
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background-color: #d3d3d3;
+  border-radius: 50%;
+  z-index: 1;
+  left: -12px;
+  top: 12px;
+  padding: 2px 0 0 7px;
+  content: '';
+}
+
+.post-last {
+  color: #ecc94b;
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background-color: #ecc94b;
+  border-radius: 50%;
+  z-index: 1;
+  left: -12px;
+  top: 12px;
+  padding: 2px 0 0 7px;
+  content: '';
+}
+
+.after\:news:after {
+  content: '';
+  position: absolute;
+  width: 1px;
+  background-color: #d3d3d3;
+  top: 12px;
+  bottom: 22px;
+  margin-left: -2px;
+}
+
+.after\:post:after {
+  color: #d3d3d3;
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background-color: #d3d3d3;
+  border-radius: 50%;
+  z-index: 1;
+  left: -12px;
+  top: 12px;
+  padding: 2px 0 0 7px;
+  content: '';
+}
+
+.after\:post-last:after {
+  color: #ecc94b;
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background-color: #ecc94b;
+  border-radius: 50%;
+  z-index: 1;
+  left: -12px;
+  top: 12px;
+  padding: 2px 0 0 7px;
+  content: '';
+}
+
 @media (min-width: 640px) {
   .sm\:appearance-none {
     -webkit-appearance: none;
@@ -10780,92 +10780,16 @@ video {
     font-weight: 900;
   }
 
-  .sm\:h-0 {
-    height: 0;
+  .sm\:h-1\/4 {
+    height: 25%;
   }
 
-  .sm\:h-1 {
-    height: 0.25rem;
+  .sm\:h-1\/2 {
+    height: 50%;
   }
 
-  .sm\:h-2 {
-    height: 0.5rem;
-  }
-
-  .sm\:h-3 {
-    height: 0.75rem;
-  }
-
-  .sm\:h-4 {
-    height: 1rem;
-  }
-
-  .sm\:h-5 {
-    height: 1.25rem;
-  }
-
-  .sm\:h-6 {
-    height: 1.5rem;
-  }
-
-  .sm\:h-8 {
-    height: 2rem;
-  }
-
-  .sm\:h-10 {
-    height: 2.5rem;
-  }
-
-  .sm\:h-12 {
-    height: 3rem;
-  }
-
-  .sm\:h-16 {
-    height: 4rem;
-  }
-
-  .sm\:h-20 {
-    height: 5rem;
-  }
-
-  .sm\:h-24 {
-    height: 6rem;
-  }
-
-  .sm\:h-32 {
-    height: 8rem;
-  }
-
-  .sm\:h-40 {
-    height: 10rem;
-  }
-
-  .sm\:h-48 {
-    height: 12rem;
-  }
-
-  .sm\:h-56 {
-    height: 14rem;
-  }
-
-  .sm\:h-64 {
-    height: 16rem;
-  }
-
-  .sm\:h-auto {
-    height: auto;
-  }
-
-  .sm\:h-px {
-    height: 1px;
-  }
-
-  .sm\:h-full {
-    height: 100%;
-  }
-
-  .sm\:h-screen {
-    height: 100vh;
+  .sm\:h-3\/4 {
+    height: 75%;
   }
 
   .sm\:leading-none {
@@ -17814,92 +17738,16 @@ video {
     font-weight: 900;
   }
 
-  .md\:h-0 {
-    height: 0;
+  .md\:h-1\/4 {
+    height: 25%;
   }
 
-  .md\:h-1 {
-    height: 0.25rem;
+  .md\:h-1\/2 {
+    height: 50%;
   }
 
-  .md\:h-2 {
-    height: 0.5rem;
-  }
-
-  .md\:h-3 {
-    height: 0.75rem;
-  }
-
-  .md\:h-4 {
-    height: 1rem;
-  }
-
-  .md\:h-5 {
-    height: 1.25rem;
-  }
-
-  .md\:h-6 {
-    height: 1.5rem;
-  }
-
-  .md\:h-8 {
-    height: 2rem;
-  }
-
-  .md\:h-10 {
-    height: 2.5rem;
-  }
-
-  .md\:h-12 {
-    height: 3rem;
-  }
-
-  .md\:h-16 {
-    height: 4rem;
-  }
-
-  .md\:h-20 {
-    height: 5rem;
-  }
-
-  .md\:h-24 {
-    height: 6rem;
-  }
-
-  .md\:h-32 {
-    height: 8rem;
-  }
-
-  .md\:h-40 {
-    height: 10rem;
-  }
-
-  .md\:h-48 {
-    height: 12rem;
-  }
-
-  .md\:h-56 {
-    height: 14rem;
-  }
-
-  .md\:h-64 {
-    height: 16rem;
-  }
-
-  .md\:h-auto {
-    height: auto;
-  }
-
-  .md\:h-px {
-    height: 1px;
-  }
-
-  .md\:h-full {
-    height: 100%;
-  }
-
-  .md\:h-screen {
-    height: 100vh;
+  .md\:h-3\/4 {
+    height: 75%;
   }
 
   .md\:leading-none {
@@ -24848,92 +24696,16 @@ video {
     font-weight: 900;
   }
 
-  .lg\:h-0 {
-    height: 0;
+  .lg\:h-1\/4 {
+    height: 25%;
   }
 
-  .lg\:h-1 {
-    height: 0.25rem;
+  .lg\:h-1\/2 {
+    height: 50%;
   }
 
-  .lg\:h-2 {
-    height: 0.5rem;
-  }
-
-  .lg\:h-3 {
-    height: 0.75rem;
-  }
-
-  .lg\:h-4 {
-    height: 1rem;
-  }
-
-  .lg\:h-5 {
-    height: 1.25rem;
-  }
-
-  .lg\:h-6 {
-    height: 1.5rem;
-  }
-
-  .lg\:h-8 {
-    height: 2rem;
-  }
-
-  .lg\:h-10 {
-    height: 2.5rem;
-  }
-
-  .lg\:h-12 {
-    height: 3rem;
-  }
-
-  .lg\:h-16 {
-    height: 4rem;
-  }
-
-  .lg\:h-20 {
-    height: 5rem;
-  }
-
-  .lg\:h-24 {
-    height: 6rem;
-  }
-
-  .lg\:h-32 {
-    height: 8rem;
-  }
-
-  .lg\:h-40 {
-    height: 10rem;
-  }
-
-  .lg\:h-48 {
-    height: 12rem;
-  }
-
-  .lg\:h-56 {
-    height: 14rem;
-  }
-
-  .lg\:h-64 {
-    height: 16rem;
-  }
-
-  .lg\:h-auto {
-    height: auto;
-  }
-
-  .lg\:h-px {
-    height: 1px;
-  }
-
-  .lg\:h-full {
-    height: 100%;
-  }
-
-  .lg\:h-screen {
-    height: 100vh;
+  .lg\:h-3\/4 {
+    height: 75%;
   }
 
   .lg\:leading-none {
@@ -31882,92 +31654,16 @@ video {
     font-weight: 900;
   }
 
-  .xl\:h-0 {
-    height: 0;
+  .xl\:h-1\/4 {
+    height: 25%;
   }
 
-  .xl\:h-1 {
-    height: 0.25rem;
+  .xl\:h-1\/2 {
+    height: 50%;
   }
 
-  .xl\:h-2 {
-    height: 0.5rem;
-  }
-
-  .xl\:h-3 {
-    height: 0.75rem;
-  }
-
-  .xl\:h-4 {
-    height: 1rem;
-  }
-
-  .xl\:h-5 {
-    height: 1.25rem;
-  }
-
-  .xl\:h-6 {
-    height: 1.5rem;
-  }
-
-  .xl\:h-8 {
-    height: 2rem;
-  }
-
-  .xl\:h-10 {
-    height: 2.5rem;
-  }
-
-  .xl\:h-12 {
-    height: 3rem;
-  }
-
-  .xl\:h-16 {
-    height: 4rem;
-  }
-
-  .xl\:h-20 {
-    height: 5rem;
-  }
-
-  .xl\:h-24 {
-    height: 6rem;
-  }
-
-  .xl\:h-32 {
-    height: 8rem;
-  }
-
-  .xl\:h-40 {
-    height: 10rem;
-  }
-
-  .xl\:h-48 {
-    height: 12rem;
-  }
-
-  .xl\:h-56 {
-    height: 14rem;
-  }
-
-  .xl\:h-64 {
-    height: 16rem;
-  }
-
-  .xl\:h-auto {
-    height: auto;
-  }
-
-  .xl\:h-px {
-    height: 1px;
-  }
-
-  .xl\:h-full {
-    height: 100%;
-  }
-
-  .xl\:h-screen {
-    height: 100vh;
+  .xl\:h-3\/4 {
+    height: 75%;
   }
 
   .xl\:leading-none {

@@ -14,5 +14,13 @@ module.exports = {
     }
   },
   variants: {},
-  plugins: []
+  plugins: [
+    function({ addVariant, e }) {
+      addVariant('after', ({ modifySelectors, separator }) => {
+        modifySelectors(({ className }) => {
+          return `.${e(`after${separator}${className}`)}:after`
+        })
+      })
+    }
+  ]
 }
