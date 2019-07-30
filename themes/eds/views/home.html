@@ -1,326 +1,155 @@
-{% extends "base.html" %}
+{% extends "base-home.html" %}
 
 {% block title %}
 Welcome - Home
 {% endblock %}
 
 {% block content %}
-
-<div class="homepage layout-1">
-    <div class="container">
-
-            <div class=" col-md-12 ">
-
-            <div class="flash-messages">
-
-            </div>
-
-            </div>
-
+<div class="text-sm font-hairline">
+  <div class="bg-white">
+    <div class="container flex justify-end">
+      <a class="p-2" href="/user/login">LOGIN</a>
+      <a class="p-2" href="/user/register">REGISTER</a>
+      <select onchange="languageSwitcher(this)" class="block appearance-none text-edsgreen pl-2 rounded leading-tight">
+        <option value="en" data-language="en" data-language-name="English"><a href="#">ENGLISH</a></option>
+        <option value="da" data-language="da" data-language-name="Danish"><a href="#">DANISH</a></option>
+      </select>
     </div>
+  </div>
 
-      <div class="section-wrapper banner-wrapper">
+  <div class="bg-edsgray p-5">
     <div class="container">
-        <div class="banner-flex-center">
-            <h2 class="banner-title">{{ __('Welcome to Energi Data Service') }}</h2>
-            <p class="banner-lead">{{__('Open energy data from Energinet to society')}}</p>
+      <img class='h-24' src="/static/img/ckan-logo.png">
+    </div>
+  </div>
+
+  <div class="container mx-auto px-gutter bg-white my-20">
+    <div class="flex mb-4">
+      <div class="flex mb-4 mr-2">
+
+        <div class="inline-block bg-edsdarkgreen text-white flex content-center flex-wrap justify-center p-10">
+         <img src="/static/img/ckan-logo.png">
         </div>
-    </div>
-</div>
 
-<div class="section-wrapper dataguide-wrapper">
-    <div class="container">
-        <div class="row">
-        <p class="dataguide-lead">{{__('Shortcuts for select energidata')}}</p>
-            <div class="col-md-10 col-md-offset-1">
-                <div class="media-grid">
-
-
-
-  <div class="media-item">
-
-  <section class="group-list module module-narrow module-shallow">
-
-      <header class="module-heading">
-
-
-
-
-          <a class="module-image" href="/group/production-and-consumption">
-            <img src="/static/img/dataguide-icons/Elektricitet@3x.png" alt="{{__('Production and Consumption')}}">
-          </a>
-
-
-          <h3 class="media-heading"><a href="/group/production-and-consumption">{{__('Production and Consumption')}}</a></h3>
-
-      </header>
-
-  </section>
-
-  </div>
-
-  <div class="media-item">
-
-  <section class="group-list module module-narrow module-shallow">
-
-      <header class="module-heading">
-
-
-
-
-          <a class="module-image" href="/group/whole-sale-market">
-            <img src="/static/img/dataguide-icons/Penge@3x.png" alt="{{__('Whole Sale Market')}}">
-          </a>
-
-
-          <h3 class="media-heading"><a href="/group/whole-sale-market">{{__('Whole Sale Market')}}</a></h3>
-
-      </header>
-
-  </section>
-
-  </div>
-
-  <div class="media-item">
-
-  <section class="group-list module module-narrow module-shallow">
-
-      <header class="module-heading">
-
-
-
-
-          <a class="module-image" href="/group/ancillaryservices">
-            <img src="/static/img/dataguide-icons/Samarbejde@3x.png" alt="{{__('Ancillary Services')}}">
-          </a>
-
-
-          <h3 class="media-heading"><a href="/group/ancillaryservices">{{__('Ancillary Services')}}</a></h3>
-
-      </header>
-
-  </section>
-
-  </div>
-
-  <div class="media-item">
-
-  <section class="group-list module module-narrow module-shallow">
-
-      <header class="module-heading">
-
-
-
-
-          <a class="module-image" href="/group/transmission-lines">
-            <img src="/static/img/dataguide-icons/El-mast@3x.png" alt="{{__('Transmission Lines')}}">
-          </a>
-
-
-          <h3 class="media-heading"><a href="/group/transmission-lines">{{__('Transmission Lines')}}</a></h3>
-
-      </header>
-
-  </section>
-
-  </div>
-
-  <div class="media-item">
-
-  <section class="group-list module module-narrow module-shallow">
-
-      <header class="module-heading">
-
-
-
-
-          <a class="module-image" href="/group/co2-emission">
-            <img src="/static/img/dataguide-icons/CO2@3x.png" alt="{{__('CO2 Emissions')}}">
-          </a>
-
-
-          <h3 class="media-heading"><a href="/group/co2-emission">{{__('CO2 Emissions')}}</a></h3>
-
-      </header>
-
-  </section>
-
-  </div>
-
-  <div class="media-item">
-
-  <section class="group-list module module-narrow module-shallow">
-
-      <header class="module-heading">
-
-
-
-
-          <a class="module-image" href="/group/gas-quality">
-            <img src="/static/img/dataguide-icons/Gas@3x.png " alt="{{__('Gas')}}">
-          </a>
-
-
-          <h3 class="media-heading"><a href="/group/gas-quality">{{__('Gas')}}</a></h3>
-
-      </header>
-
-  </section>
-
-  </div>
-
-                </div>
-            </div>
+        <div class="inline-block bg-edsgreen text-white p-16">
+          <p>
+            Energinet generates and harvest large amounts of energy data. Through Energi Data Service, we make these data available to
+          </p>
+          <a class="text-yellow-500" href="/search">GO TO SERVICE ></a>
         </div>
-    </div>
-</div>
 
-<!-- Quick Facts -->
-<div role="main" class="hero quick-facts-wrapper">
-    <div class="container">
-        <div class="section-wrapper">
-            <div class="row">
-                <p class="quick-fact-lead">{{__('Highlighted data')}}</p>
+      </div>
 
-                <div class="col-md-4 col-sm-6">
-                    <div class="quick-fact-graph">
+      <div class="flex mb-4 mx-2">
 
-  <div id="view-ebdbbebb-ccbe-4bff-9a74-b057a0f25066" data-id="ebdbbebb-ccbe-4bff-9a74-b057a0f25066" data-title="CO2 emission next 6 hours" data-description="" data-graph_height="150" data-show_axis="1" class="graph-container-resource-view">
-
-
-
-<div data-module="c3charts_builder" data-module-resource-id="d856694b-5e0e-463b-acc4-d9d7d895128a" data-module-resource-view="{&quot;x_label_position&quot;: &quot;inner-right&quot;, &quot;description&quot;: &quot;&quot;, &quot;measure_unit_x&quot;: &quot;&quot;, &quot;resource_id&quot;: &quot;d856694b-5e0e-463b-acc4-d9d7d895128a&quot;, &quot;color_pattern&quot;: &quot;&quot;, &quot;sql_keys&quot;: [&quot;Minutes5DK&quot;, &quot;PriceArea&quot;, &quot;hourdk&quot;, &quot;CO2Emission&quot;], &quot;y_tick_count&quot;: &quot;2&quot;, &quot;t_padding&quot;: &quot;5&quot;, &quot;header&quot;: &quot;&quot;, &quot;l_padding&quot;: &quot;&quot;, &quot;y_label_position&quot;: &quot;inner-top&quot;, &quot;chart_type&quot;: &quot;Line Chart&quot;, &quot;sql_data&quot;: [{&quot;Minutes5DK&quot;: &quot;12:00&quot;, &quot;PriceArea&quot;: &quot;DK1&quot;, &quot;hourdk&quot;: &quot;2019-04-10 12:00&quot;, &quot;CO2Emission&quot;: 220}, {&quot;Minutes5DK&quot;: &quot;13:00&quot;, &quot;PriceArea&quot;: &quot;DK1&quot;, &quot;hourdk&quot;: &quot;2019-04-10 13:00&quot;, &quot;CO2Emission&quot;: 223}, {&quot;Minutes5DK&quot;: &quot;14:00&quot;, &quot;PriceArea&quot;: &quot;DK1&quot;, &quot;hourdk&quot;: &quot;2019-04-10 14:00&quot;, &quot;CO2Emission&quot;: 231}, {&quot;Minutes5DK&quot;: &quot;15:00&quot;, &quot;PriceArea&quot;: &quot;DK1&quot;, &quot;hourdk&quot;: &quot;2019-04-10 15:00&quot;, &quot;CO2Emission&quot;: 219}, {&quot;Minutes5DK&quot;: &quot;16:00&quot;, &quot;PriceArea&quot;: &quot;DK1&quot;, &quot;hourdk&quot;: &quot;2019-04-10 16:00&quot;, &quot;CO2Emission&quot;: 231}, {&quot;Minutes5DK&quot;: &quot;17:00&quot;, &quot;PriceArea&quot;: &quot;DK1&quot;, &quot;hourdk&quot;: &quot;2019-04-10 17:00&quot;, &quot;CO2Emission&quot;: 243}], &quot;x_fields&quot;: &quot;Minutes5DK&quot;, &quot;id&quot;: &quot;ebdbbebb-ccbe-4bff-9a74-b057a0f25066&quot;, &quot;remap_key&quot;: &quot;&quot;, &quot;key_fields&quot;: &quot;CO2Emission&quot;, &quot;x_tick_count&quot;: &quot;2&quot;, &quot;title&quot;: &quot;CO2 emission next 6 hours&quot;, &quot;b_padding&quot;: &quot;&quot;, &quot;view_type&quot;: &quot;Chart builder&quot;, &quot;measure_unit_y&quot;: &quot;g/kWh&quot;, &quot;text_chart_number_action&quot;: &quot;substract&quot;, &quot;legend&quot;: &quot;hide&quot;, &quot;r_padding&quot;: &quot;&quot;, &quot;package_id&quot;: &quot;7ce49eb4-b1e3-4863-b62c-786dcc15329a&quot;, &quot;sql_expression&quot;: &quot;with b as (\r\nSELECT \&quot;Minutes5UTC\&quot;, date_trunc('hour', \&quot;Minutes5UTC\&quot;) as hourutc, date_trunc('hour', \&quot;Minutes5DK\&quot;) as hourdk, \&quot;PriceArea\&quot;, \&quot;CO2Emission\&quot;\r\n  FROM \&quot;d856694b-5e0e-463b-acc4-d9d7d895128a\&quot; \r\n  WHERE \&quot;PriceArea\&quot; = 'DK1' \r\n    AND \&quot;Minutes5UTC\&quot; >= (current_timestamp at time zone 'UTC') \r\n    AND \&quot;Minutes5UTC\&quot; < ((current_timestamp at time zone 'UTC') + INTERVAL '6 hours')       \r\n)\r\n, a as (\r\nselect hourutc, CAST(AVG(\&quot;CO2Emission\&quot;) as INTEGER) AS CO2\r\n from b\r\n GROUP BY hourutc \r\n ORDER BY hourutc ASC LIMIT 6\r\n)\r\nselect distinct to_char(b.hourDK, 'HH24:MI') as \&quot;Minutes5DK\&quot;, b.\&quot;PriceArea\&quot;, b.hourDK, a.CO2 as \&quot;CO2Emission\&quot; from a\r\ninner join b on a.hourutc = b.hourutc\r\norder by b.hourDK ASC limit 6&quot;, &quot;data_labels&quot;: &quot;True&quot;}" id="c3chart-d856694b-5e0e-463b-acc4-d9d7d895128a" class="c3chart c3" style="max-height: 150px; position: relative;"><svg width="360" height="150" style="overflow: hidden;"><defs><clipPath id="c3-1554892502367-clip"><rect width="308" height="111"></rect></clipPath><clipPath id="c3-1554892502367-clip-xaxis"><rect x="-51" y="-20" width="390" height="50"></rect></clipPath><clipPath id="c3-1554892502367-clip-yaxis"><rect x="-49" y="-9" width="70" height="140"></rect></clipPath><clipPath id="c3-1554892502367-clip-grid"><rect width="308" height="111"></rect></clipPath><clipPath id="c3-1554892502367-clip-subchart"><rect width="308"></rect></clipPath></defs><g transform="translate(50.5,9.5)"><text class="c3-text c3-empty" text-anchor="middle" dominant-baseline="middle" x="154" y="55.5" style="opacity: 0;"></text><rect class="c3-zoom-rect" width="308" height="111" style="opacity: 0;"></rect><g clip-path="url(https://www.energidataservice.dk/#c3-1554892502367-clip)" class="c3-regions" style="visibility: visible;"></g><g clip-path="url(https://www.energidataservice.dk/#c3-1554892502367-clip-grid)" class="c3-grid" style="visibility: visible;"><g class="c3-xgrid-focus"><line class="c3-xgrid-focus" x1="-10" x2="-10" y1="0" y2="111" style="visibility: hidden;"></line></g></g><g clip-path="url(https://www.energidataservice.dk/#c3-1554892502367-clip)" class="c3-chart"><g class="c3-event-rects c3-event-rects-single" style="fill-opacity: 0;"><rect class=" c3-event-rect c3-event-rect-0" x="0" y="0" width="52" height="111"></rect><rect class=" c3-event-rect c3-event-rect-1" x="52" y="0" width="52" height="111"></rect><rect class=" c3-event-rect c3-event-rect-2" x="103" y="0" width="52" height="111"></rect><rect class=" c3-event-rect c3-event-rect-3" x="154" y="0" width="52" height="111"></rect><rect class=" c3-event-rect c3-event-rect-4" x="206" y="0" width="52" height="111"></rect><rect class=" c3-event-rect c3-event-rect-5" x="257" y="0" width="52" height="111"></rect></g><g class="c3-chart-bars"><g class="c3-chart-bar c3-target c3-target-CO2Emission" style="opacity: 1; pointer-events: none;"><g class=" c3-shapes c3-shapes-CO2Emission c3-bars c3-bars-CO2Emission" style="cursor: pointer;"></g></g></g><g class="c3-chart-lines"><g class="c3-chart-line c3-target c3-target-CO2Emission" style="opacity: 1; pointer-events: none;"><g class=" c3-shapes c3-shapes-CO2Emission c3-lines c3-lines-CO2Emission"><path class=" c3-shape c3-shape c3-line c3-line-CO2Emission" d="M26,88.4985481997677L78,79.63530778164922L129,56L180,91.45296167247385L232,56L283,20.547038327526156" style="stroke: rgb(0, 165, 141); opacity: 1;"></path></g><g class=" c3-shapes c3-shapes-CO2Emission c3-areas c3-areas-CO2Emission"><path class=" c3-shape c3-shape c3-area c3-area-CO2Emission" d="M 26 88.4985481997677" style="fill: rgb(0, 165, 141); opacity: 0.2;"></path></g><g class=" c3-selected-circles c3-selected-circles-CO2Emission"></g><g class=" c3-shapes c3-shapes-CO2Emission c3-circles c3-circles-CO2Emission" style="cursor: pointer;"><circle class=" c3-shape c3-shape-0 c3-circle c3-circle-0" r="2.5" cx="26" cy="88.4985481997677" style="fill: rgb(0, 165, 141); opacity: 1;"></circle><circle class=" c3-shape c3-shape-1 c3-circle c3-circle-1" r="2.5" cx="78" cy="79.63530778164922" style="fill: rgb(0, 165, 141); opacity: 1;"></circle><circle class=" c3-shape c3-shape-2 c3-circle c3-circle-2" r="2.5" cx="129" cy="56" style="fill: rgb(0, 165, 141); opacity: 1;"></circle><circle class=" c3-shape c3-shape-3 c3-circle c3-circle-3" r="2.5" cx="180" cy="91.45296167247385" style="fill: rgb(0, 165, 141); opacity: 1;"></circle><circle class=" c3-shape c3-shape-4 c3-circle c3-circle-4" r="2.5" cx="232" cy="56" style="fill: rgb(0, 165, 141); opacity: 1;"></circle><circle class=" c3-shape c3-shape-5 c3-circle c3-circle-5" r="2.5" cx="283" cy="20.547038327526156" style="fill: rgb(0, 165, 141); opacity: 1;"></circle></g></g></g><g class="c3-chart-arcs" transform="translate(154,50.5)"><text class="c3-chart-arcs-title" style="text-anchor: middle; opacity: 0;"></text></g><g class="c3-chart-texts"><g class="c3-chart-text c3-target c3-target-CO2Emission" style="opacity: 1; pointer-events: none;"><g class=" c3-texts c3-texts-CO2Emission"><text class=" c3-text c3-text-0" text-anchor="middle" style="stroke: none; fill: rgb(0, 165, 141); fill-opacity: 1;" x="26" y="82.4985481997677">220</text><text class=" c3-text c3-text-1" text-anchor="middle" style="stroke: none; fill: rgb(0, 165, 141); fill-opacity: 1;" x="78" y="73.63530778164922">223</text><text class=" c3-text c3-text-2" text-anchor="middle" style="stroke: none; fill: rgb(0, 165, 141); fill-opacity: 1;" x="129" y="50">231</text><text class=" c3-text c3-text-3" text-anchor="middle" style="stroke: none; fill: rgb(0, 165, 141); fill-opacity: 1;" x="180" y="85.45296167247385">219</text><text class=" c3-text c3-text-4" text-anchor="middle" style="stroke: none; fill: rgb(0, 165, 141); fill-opacity: 1;" x="232" y="50">231</text><text class=" c3-text c3-text-5" text-anchor="middle" style="stroke: none; fill: rgb(0, 165, 141); fill-opacity: 1;" x="283" y="14.547038327526156">243</text></g></g></g></g><g clip-path="url(https://www.energidataservice.dk/#c3-1554892502367-clip-grid)" class="c3-grid c3-grid-lines"><g class="c3-xgrid-lines"></g><g class="c3-ygrid-lines"></g></g><g class="c3-axis c3-axis-x" clip-path="url(https://www.energidataservice.dk/#c3-1554892502367-clip-xaxis)" transform="translate(0,111)" style="visibility: visible; opacity: 1;"><text class="c3-axis-x-label" transform="" style="text-anchor: end;" x="308" dx="-0.5em" dy="-0.5em"></text><g class="tick" transform="translate(26, 0)" style="opacity: 1;"><line y2="6" x1="0" x2="0"></line><text y="9" x="0" transform="" style="text-anchor: middle; display: block;"><tspan x="0" dy=".71em" dx="0">12:00</tspan></text></g><g class="tick" transform="translate(78, 0)" style="opacity: 1;"><line y2="6" x1="0" x2="0"></line><text y="9" x="0" transform="" style="text-anchor: middle; display: block;"><tspan x="0" dy=".71em" dx="0">13:00</tspan></text></g><g class="tick" transform="translate(129, 0)" style="opacity: 1;"><line y2="6" x1="0" x2="0"></line><text y="9" x="0" transform="" style="text-anchor: middle; display: block;"><tspan x="0" dy=".71em" dx="0">14:00</tspan></text></g><g class="tick" transform="translate(180, 0)" style="opacity: 1;"><line y2="6" x1="0" x2="0"></line><text y="9" x="0" transform="" style="text-anchor: middle; display: block;"><tspan x="0" dy=".71em" dx="0">15:00</tspan></text></g><g class="tick" transform="translate(232, 0)" style="opacity: 1;"><line y2="6" x1="0" x2="0"></line><text y="9" x="0" transform="" style="text-anchor: middle; display: block;"><tspan x="0" dy=".71em" dx="0">16:00</tspan></text></g><g class="tick" transform="translate(283, 0)" style="opacity: 1;"><line y2="6" x1="0" x2="0"></line><text y="9" x="0" transform="" style="text-anchor: middle; display: block;"><tspan x="0" dy=".71em" dx="0">17:00</tspan></text></g><path class="domain" d="M0,6V0H308V6"></path></g><g class="c3-axis c3-axis-y" clip-path="url(https://www.energidataservice.dk/#c3-1554892502367-clip-yaxis)" transform="translate(0,0)" style="visibility: visible; opacity: 1;"><text class="c3-axis-y-label" transform="rotate(-90)" style="text-anchor: end;" x="0" dx="-0.5em" dy="1.2em">g/kWh</text><g class="tick" transform="translate(0,111)" style="opacity: 1;"><line x2="-6"></line><text x="-9" y="0" style="text-anchor: end;"><tspan x="-9" dy="3">212</tspan></text></g><g class="tick" transform="translate(0,1)" style="opacity: 1;"><line x2="-6"></line><text x="-9" y="0" style="text-anchor: end;"><tspan x="-9" dy="3">249</tspan></text></g><path class="domain" d="M-6,1H0V111H-6"></path></g><g class="c3-axis c3-axis-y2" transform="translate(308,0)" style="visibility: hidden; opacity: 1;"><text class="c3-axis-y2-label" transform="rotate(-90)" style="text-anchor: end;" x="0" dx="-0.5em" dy="-0.5em"></text><g class="tick" transform="translate(0,111)" style="opacity: 1;"><line x2="6" y2="0"></line><text x="9" y="0" style="text-anchor: start;"><tspan x="9" dy="3">0</tspan></text></g><g class="tick" transform="translate(0,100)" style="opacity: 1;"><line x2="6" y2="0"></line><text x="9" y="0" style="text-anchor: start;"><tspan x="9" dy="3">0.1</tspan></text></g><g class="tick" transform="translate(0,90)" style="opacity: 1;"><line x2="6" y2="0"></line><text x="9" y="0" style="text-anchor: start;"><tspan x="9" dy="3">0.2</tspan></text></g><g class="tick" transform="translate(0,78)" style="opacity: 1;"><line x2="6" y2="0"></line><text x="9" y="0" style="text-anchor: start;"><tspan x="9" dy="3">0.3</tspan></text></g><g class="tick" transform="translate(0,67)" style="opacity: 1;"><line x2="6" y2="0"></line><text x="9" y="0" style="text-anchor: start;"><tspan x="9" dy="3">0.4</tspan></text></g><g class="tick" transform="translate(0,56)" style="opacity: 1;"><line x2="6" y2="0"></line><text x="9" y="0" style="text-anchor: start;"><tspan x="9" dy="3">0.5</tspan></text></g><g class="tick" transform="translate(0,46)" style="opacity: 1;"><line x2="6" y2="0"></line><text x="9" y="0" style="text-anchor: start;"><tspan x="9" dy="3">0.6</tspan></text></g><g class="tick" transform="translate(0,35)" style="opacity: 1;"><line x2="6" y2="0"></line><text x="9" y="0" style="text-anchor: start;"><tspan x="9" dy="3">0.7</tspan></text></g><g class="tick" transform="translate(0,23)" style="opacity: 1;"><line x2="6" y2="0"></line><text x="9" y="0" style="text-anchor: start;"><tspan x="9" dy="3">0.8</tspan></text></g><g class="tick" transform="translate(0,12)" style="opacity: 1;"><line x2="6" y2="0"></line><text x="9" y="0" style="text-anchor: start;"><tspan x="9" dy="3">0.9</tspan></text></g><g class="tick" transform="translate(0,1)" style="opacity: 1;"><line x2="6" y2="0"></line><text x="9" y="0" style="text-anchor: start;"><tspan x="9" dy="3">1</tspan></text></g><path class="domain" d="M6,1H0V111H6"></path></g></g><g transform="translate(20.5,150.5)" style="visibility: hidden;"><g clip-path="url(https://www.energidataservice.dk/#c3-1554892502367-clip-subchart)" class="c3-chart"><g class="c3-chart-bars"></g><g class="c3-chart-lines"></g></g><g clip-path="url(https://www.energidataservice.dk/#c3-1554892502367-clip)" class="c3-brush" style="pointer-events: all; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><rect class="background" x="0" width="338" style="visibility: hidden; cursor: crosshair;"></rect><rect class="extent" x="0" width="0" style="cursor: move;"></rect><g class="resize e" transform="translate(0,0)" style="cursor: ew-resize; display: none;"><rect x="-3" width="6" height="6" style="visibility: hidden;"></rect></g><g class="resize w" transform="translate(0,0)" style="cursor: ew-resize; display: none;"><rect x="-3" width="6" height="6" style="visibility: hidden;"></rect></g></g><g class="c3-axis-x" transform="translate(0,0)" clip-path="url(https://www.energidataservice.dk/#c3-1554892502367-clip-xaxis)" style="opacity: 1;"><g class="tick" transform="translate(26, 0)" style="opacity: 1;"><line y2="6" x1="0" x2="0"></line><text y="9" x="0" transform="" style="text-anchor: middle; display: block;"><tspan x="0" dy=".71em" dx="0">12:00</tspan></text></g><g class="tick" transform="translate(78, 0)" style="opacity: 1;"><line y2="6" x1="0" x2="0"></line><text y="9" x="0" transform="" style="text-anchor: middle; display: block;"><tspan x="0" dy=".71em" dx="0">13:00</tspan></text></g><g class="tick" transform="translate(129, 0)" style="opacity: 1;"><line y2="6" x1="0" x2="0"></line><text y="9" x="0" transform="" style="text-anchor: middle; display: block;"><tspan x="0" dy=".71em" dx="0">14:00</tspan></text></g><g class="tick" transform="translate(180, 0)" style="opacity: 1;"><line y2="6" x1="0" x2="0"></line><text y="9" x="0" transform="" style="text-anchor: middle; display: block;"><tspan x="0" dy=".71em" dx="0">15:00</tspan></text></g><g class="tick" transform="translate(232, 0)" style="opacity: 1;"><line y2="6" x1="0" x2="0"></line><text y="9" x="0" transform="" style="text-anchor: middle; display: block;"><tspan x="0" dy=".71em" dx="0">16:00</tspan></text></g><g class="tick" transform="translate(283, 0)" style="opacity: 1;"><line y2="6" x1="0" x2="0"></line><text y="9" x="0" transform="" style="text-anchor: middle; display: block;"><tspan x="0" dy=".71em" dx="0">17:00</tspan></text></g><path class="domain" d="M0,6V0H308V6"></path></g></g><g transform="translate(0,150)" style="visibility: hidden;"></g></svg><div class="c3-tooltip-container" style="position: absolute; pointer-events: none; display: none;"></div></div>
-
-  </div>
-
-
-
-
-
-
-
-  <a class="quick-fact-title" href="/dataset/7ce49eb4-b1e3-4863-b62c-786dcc15329a/resource_extract/d856694b-5e0e-463b-acc4-d9d7d895128a">CO2 emission next 6 hours</a>
-
-                    </div>
-                </div>
-
-                <div class="col-md-4 col-sm-6">
-                    <div class="quick-fact-graph">
-
-  <div id="view-9c4afd0a-6829-447e-ae98-c12c1fb604f9" data-id="9c4afd0a-6829-447e-ae98-c12c1fb604f9" data-title="Share of biogas in the gas system" data-description="" data-graph_height="150" data-show_axis="1" class="graph-container-resource-view">
-
-
-
-<div data-module="c3charts_builder" data-module-resource-id="f40147ba-8e83-438e-9e89-bfddd0cba81f" data-module-resource-view="{&quot;x_label_position&quot;: &quot;inner-right&quot;, &quot;description&quot;: &quot;&quot;, &quot;measure_unit_x&quot;: &quot;&quot;, &quot;resource_id&quot;: &quot;f40147ba-8e83-438e-9e89-bfddd0cba81f&quot;, &quot;color_pattern&quot;: &quot;&quot;, &quot;sql_keys&quot;: [&quot;GasDay&quot;, &quot;KWhFromBiogas&quot;], &quot;y_tick_count&quot;: &quot;2&quot;, &quot;t_padding&quot;: &quot;5&quot;, &quot;header&quot;: &quot;&quot;, &quot;l_padding&quot;: &quot;&quot;, &quot;y_label_position&quot;: &quot;inner-top&quot;, &quot;chart_type&quot;: &quot;Line Chart&quot;, &quot;sql_data&quot;: [{&quot;GasDay&quot;: &quot;AP&quot;, &quot;KWhFromBiogas&quot;: 6.3}, {&quot;GasDay&quot;: &quot;MA&quot;, &quot;KWhFromBiogas&quot;: 6.7}, {&quot;GasDay&quot;: &quot;JU&quot;, &quot;KWhFromBiogas&quot;: 6.7}, {&quot;GasDay&quot;: &quot;JU&quot;, &quot;KWhFromBiogas&quot;: 7.3}, {&quot;GasDay&quot;: &quot;AU&quot;, &quot;KWhFromBiogas&quot;: 7.5}, {&quot;GasDay&quot;: &quot;SE&quot;, &quot;KWhFromBiogas&quot;: 7.9}, {&quot;GasDay&quot;: &quot;OC&quot;, &quot;KWhFromBiogas&quot;: 7.9}, {&quot;GasDay&quot;: &quot;NO&quot;, &quot;KWhFromBiogas&quot;: 8.4}, {&quot;GasDay&quot;: &quot;DE&quot;, &quot;KWhFromBiogas&quot;: 8.8}, {&quot;GasDay&quot;: &quot;JA&quot;, &quot;KWhFromBiogas&quot;: 9.0}, {&quot;GasDay&quot;: &quot;FE&quot;, &quot;KWhFromBiogas&quot;: 9.7}, {&quot;GasDay&quot;: &quot;MA&quot;, &quot;KWhFromBiogas&quot;: 10.9}], &quot;x_fields&quot;: &quot;GasDay&quot;, &quot;id&quot;: &quot;9c4afd0a-6829-447e-ae98-c12c1fb604f9&quot;, &quot;remap_key&quot;: &quot;&quot;, &quot;key_fields&quot;: &quot;KWhFromBiogas&quot;, &quot;x_tick_count&quot;: &quot;2&quot;, &quot;title&quot;: &quot;Share of biogas in the gas system&quot;, &quot;b_padding&quot;: &quot;0&quot;, &quot;view_type&quot;: &quot;Chart builder&quot;, &quot;measure_unit_y&quot;: &quot;Pct&quot;, &quot;text_chart_number_action&quot;: &quot;substract&quot;, &quot;legend&quot;: &quot;hide&quot;, &quot;r_padding&quot;: &quot;&quot;, &quot;package_id&quot;: &quot;9c12a3dd-71e8-433b-b78e-72021838d987&quot;, &quot;sql_expression&quot;: &quot;with c1 as (\r\n\tselect cast(date_trunc('month', \&quot;GasDay\&quot;) as date) as mn,  Sum(\&quot;KWhFromBiogas\&quot;) as bio, Sum(ABS(\&quot;KWhToDenmark\&quot;)) as cons\r\n\tfrom \&quot;gasflow\&quot; \r\n\twhere cast(date_trunc('month', now() AT TIME ZONE 'UTC' - interval '2 year') as date) <= \&quot;GasDay\&quot; AND \&quot;GasDay\&quot; < cast(date_trunc('month', now() AT TIME ZONE 'UTC') as date)\r\n\tgroup by cast(date_trunc('month', \&quot;GasDay\&quot;) as date)\r\n)\r\n, c2 as (\r\n\tselect mn, cons, sum(cons) OVER (order by mn rows between 11 preceding and current row) as yearcons, bio,\r\n\tdate_part('days', date_trunc('month', mn) - '1DAY - 1MONTH'::INTERVAL) as days\r\n\tfrom c1\r\n)\r\nselect LEFT(TO_CHAR(mn, 'MON'), 2) as \&quot;GasDay\&quot;, round( CAST(float8 (bio * 365 / days / yearcons * 100) as numeric), 1) as \&quot;KWhFromBiogas\&quot;\r\nfrom c2 \r\nwhere mn >= cast(date_trunc('month', now() AT TIME ZONE 'Europe/Rome' - interval '1 year') as date)\r\norder by mn&quot;, &quot;data_labels&quot;: &quot;True&quot;}" id="c3chart-f40147ba-8e83-438e-9e89-bfddd0cba81f" class="c3chart c3" style="max-height: 150px; position: relative;"><svg width="360" height="150" style="overflow: hidden;"><defs><clipPath id="c3-1554892502448-clip"><rect width="318" height="111"></rect></clipPath><clipPath id="c3-1554892502448-clip-xaxis"><rect x="-41" y="-20" width="390" height="50"></rect></clipPath><clipPath id="c3-1554892502448-clip-yaxis"><rect x="-39" y="-9" width="60" height="140"></rect></clipPath><clipPath id="c3-1554892502448-clip-grid"><rect width="318" height="111"></rect></clipPath><clipPath id="c3-1554892502448-clip-subchart"><rect width="318"></rect></clipPath></defs><g transform="translate(40.5,9.5)"><text class="c3-text c3-empty" text-anchor="middle" dominant-baseline="middle" x="159" y="55.5" style="opacity: 0;"></text><rect class="c3-zoom-rect" width="318" height="111" style="opacity: 0;"></rect><g clip-path="url(https://www.energidataservice.dk/#c3-1554892502448-clip)" class="c3-regions" style="visibility: visible;"></g><g clip-path="url(https://www.energidataservice.dk/#c3-1554892502448-clip-grid)" class="c3-grid" style="visibility: visible;"><g class="c3-xgrid-focus"><line class="c3-xgrid-focus" x1="-10" x2="-10" y1="0" y2="111" style="visibility: hidden;"></line></g></g><g clip-path="url(https://www.energidataservice.dk/#c3-1554892502448-clip)" class="c3-chart"><g class="c3-event-rects c3-event-rects-single" style="fill-opacity: 0;"><rect class=" c3-event-rect c3-event-rect-0" x="0" y="0" width="28" height="111"></rect><rect class=" c3-event-rect c3-event-rect-1" x="27" y="0" width="28" height="111"></rect><rect class=" c3-event-rect c3-event-rect-2" x="53" y="0" width="28" height="111"></rect><rect class=" c3-event-rect c3-event-rect-3" x="80" y="0" width="28" height="111"></rect><rect class=" c3-event-rect c3-event-rect-4" x="106" y="0" width="28" height="111"></rect><rect class=" c3-event-rect c3-event-rect-5" x="133" y="0" width="28" height="111"></rect><rect class=" c3-event-rect c3-event-rect-6" x="159" y="0" width="28" height="111"></rect><rect class=" c3-event-rect c3-event-rect-7" x="186" y="0" width="28" height="111"></rect><rect class=" c3-event-rect c3-event-rect-8" x="212" y="0" width="28" height="111"></rect><rect class=" c3-event-rect c3-event-rect-9" x="239" y="0" width="28" height="111"></rect><rect class=" c3-event-rect c3-event-rect-10" x="265" y="0" width="28" height="111"></rect><rect class=" c3-event-rect c3-event-rect-11" x="292" y="0" width="28" height="111"></rect></g><g class="c3-chart-bars"><g class="c3-chart-bar c3-target c3-target-KWhFromBiogas" style="opacity: 1; pointer-events: none;"><g class=" c3-shapes c3-shapes-KWhFromBiogas c3-bars c3-bars-KWhFromBiogas" style="cursor: pointer;"></g></g></g><g class="c3-chart-lines"><g class="c3-chart-line c3-target c3-target-KWhFromBiogas" style="opacity: 1; pointer-events: none;"><g class=" c3-shapes c3-shapes-KWhFromBiogas c3-lines c3-lines-KWhFromBiogas"><path class=" c3-shape c3-shape c3-line c3-line-KWhFromBiogas" d="M14,91.45296167247386L41,85.28722920769582L67,85.28722920769582L94,76.03863051052873L120,72.9557642781397L147,66.79003181336161L173,66.79003181336161L200,59.08286623238903L226,52.91713376761097L253,49.83426753522195L279,39.044235721860346L306,20.547038327526145" style="stroke: rgb(0, 165, 141); opacity: 1;"></path></g><g class=" c3-shapes c3-shapes-KWhFromBiogas c3-areas c3-areas-KWhFromBiogas"><path class=" c3-shape c3-shape c3-area c3-area-KWhFromBiogas" d="M 14 91.45296167247386" style="fill: rgb(0, 165, 141); opacity: 0.2;"></path></g><g class=" c3-selected-circles c3-selected-circles-KWhFromBiogas"></g><g class=" c3-shapes c3-shapes-KWhFromBiogas c3-circles c3-circles-KWhFromBiogas" style="cursor: pointer;"><circle class=" c3-shape c3-shape-0 c3-circle c3-circle-0" r="2.5" cx="14" cy="91.45296167247386" style="fill: rgb(0, 165, 141); opacity: 1;"></circle><circle class=" c3-shape c3-shape-1 c3-circle c3-circle-1" r="2.5" cx="41" cy="85.28722920769582" style="fill: rgb(0, 165, 141); opacity: 1;"></circle><circle class=" c3-shape c3-shape-2 c3-circle c3-circle-2" r="2.5" cx="67" cy="85.28722920769582" style="fill: rgb(0, 165, 141); opacity: 1;"></circle><circle class=" c3-shape c3-shape-3 c3-circle c3-circle-3" r="2.5" cx="94" cy="76.03863051052873" style="fill: rgb(0, 165, 141); opacity: 1;"></circle><circle class=" c3-shape c3-shape-4 c3-circle c3-circle-4" r="2.5" cx="120" cy="72.9557642781397" style="fill: rgb(0, 165, 141); opacity: 1;"></circle><circle class=" c3-shape c3-shape-5 c3-circle c3-circle-5" r="2.5" cx="147" cy="66.79003181336161" style="fill: rgb(0, 165, 141); opacity: 1;"></circle><circle class=" c3-shape c3-shape-6 c3-circle c3-circle-6" r="2.5" cx="173" cy="66.79003181336161" style="fill: rgb(0, 165, 141); opacity: 1;"></circle><circle class=" c3-shape c3-shape-7 c3-circle c3-circle-7" r="2.5" cx="200" cy="59.08286623238903" style="fill: rgb(0, 165, 141); opacity: 1;"></circle><circle class=" c3-shape c3-shape-8 c3-circle c3-circle-8" r="2.5" cx="226" cy="52.91713376761097" style="fill: rgb(0, 165, 141); opacity: 1;"></circle><circle class=" c3-shape c3-shape-9 c3-circle c3-circle-9" r="2.5" cx="253" cy="49.83426753522195" style="fill: rgb(0, 165, 141); opacity: 1;"></circle><circle class=" c3-shape c3-shape-10 c3-circle c3-circle-10" r="2.5" cx="279" cy="39.044235721860346" style="fill: rgb(0, 165, 141); opacity: 1;"></circle><circle class=" c3-shape c3-shape-11 c3-circle c3-circle-11" r="2.5" cx="306" cy="20.547038327526145" style="fill: rgb(0, 165, 141); opacity: 1;"></circle></g></g></g><g class="c3-chart-arcs" transform="translate(159,50.5)"><text class="c3-chart-arcs-title" style="text-anchor: middle; opacity: 0;"></text></g><g class="c3-chart-texts"><g class="c3-chart-text c3-target c3-target-KWhFromBiogas" style="opacity: 1; pointer-events: none;"><g class=" c3-texts c3-texts-KWhFromBiogas"><text class=" c3-text c3-text-0" text-anchor="middle" style="stroke: none; fill: rgb(0, 165, 141); fill-opacity: 1;" x="14" y="85.45296167247386">6.3</text><text class=" c3-text c3-text-1" text-anchor="middle" style="stroke: none; fill: rgb(0, 165, 141); fill-opacity: 1;" x="41" y="79.28722920769582">6.7</text><text class=" c3-text c3-text-2" text-anchor="middle" style="stroke: none; fill: rgb(0, 165, 141); fill-opacity: 1;" x="67" y="79.28722920769582">6.7</text><text class=" c3-text c3-text-3" text-anchor="middle" style="stroke: none; fill: rgb(0, 165, 141); fill-opacity: 1;" x="94" y="70.03863051052873">7.3</text><text class=" c3-text c3-text-4" text-anchor="middle" style="stroke: none; fill: rgb(0, 165, 141); fill-opacity: 1;" x="120" y="66.9557642781397">7.5</text><text class=" c3-text c3-text-5" text-anchor="middle" style="stroke: none; fill: rgb(0, 165, 141); fill-opacity: 1;" x="147" y="60.79003181336161">7.9</text><text class=" c3-text c3-text-6" text-anchor="middle" style="stroke: none; fill: rgb(0, 165, 141); fill-opacity: 1;" x="173" y="60.79003181336161">7.9</text><text class=" c3-text c3-text-7" text-anchor="middle" style="stroke: none; fill: rgb(0, 165, 141); fill-opacity: 1;" x="200" y="53.08286623238903">8.4</text><text class=" c3-text c3-text-8" text-anchor="middle" style="stroke: none; fill: rgb(0, 165, 141); fill-opacity: 1;" x="226" y="46.91713376761097">8.8</text><text class=" c3-text c3-text-9" text-anchor="middle" style="stroke: none; fill: rgb(0, 165, 141); fill-opacity: 1;" x="253" y="43.83426753522195">9</text><text class=" c3-text c3-text-10" text-anchor="middle" style="stroke: none; fill: rgb(0, 165, 141); fill-opacity: 1;" x="279" y="33.044235721860346">9.7</text><text class=" c3-text c3-text-11" text-anchor="middle" style="stroke: none; fill: rgb(0, 165, 141); fill-opacity: 1;" x="306" y="14.547038327526145">10.9</text></g></g></g></g><g clip-path="url(https://www.energidataservice.dk/#c3-1554892502448-clip-grid)" class="c3-grid c3-grid-lines"><g class="c3-xgrid-lines"></g><g class="c3-ygrid-lines"></g></g><g class="c3-axis c3-axis-x" clip-path="url(https://www.energidataservice.dk/#c3-1554892502448-clip-xaxis)" transform="translate(0,111)" style="visibility: visible; opacity: 1;"><text class="c3-axis-x-label" transform="" style="text-anchor: end;" x="318" dx="-0.5em" dy="-0.5em"></text><g class="tick" transform="translate(14, 0)" style="opacity: 1;"><line y2="6" x1="0" x2="0"></line><text y="9" x="0" transform="" style="text-anchor: middle; display: block;"><tspan x="0" dy=".71em" dx="0">AP</tspan></text></g><g class="tick" transform="translate(41, 0)" style="opacity: 1;"><line y2="6" x1="0" x2="0"></line><text y="9" x="0" transform="" style="text-anchor: middle; display: block;"><tspan x="0" dy=".71em" dx="0">MA</tspan></text></g><g class="tick" transform="translate(67, 0)" style="opacity: 1;"><line y2="6" x1="0" x2="0"></line><text y="9" x="0" transform="" style="text-anchor: middle; display: block;"><tspan x="0" dy=".71em" dx="0">JU</tspan></text></g><g class="tick" transform="translate(94, 0)" style="opacity: 1;"><line y2="6" x1="0" x2="0"></line><text y="9" x="0" transform="" style="text-anchor: middle; display: block;"><tspan x="0" dy=".71em" dx="0">JU</tspan></text></g><g class="tick" transform="translate(120, 0)" style="opacity: 1;"><line y2="6" x1="0" x2="0"></line><text y="9" x="0" transform="" style="text-anchor: middle; display: block;"><tspan x="0" dy=".71em" dx="0">AU</tspan></text></g><g class="tick" transform="translate(147, 0)" style="opacity: 1;"><line y2="6" x1="0" x2="0"></line><text y="9" x="0" transform="" style="text-anchor: middle; display: block;"><tspan x="0" dy=".71em" dx="0">SE</tspan></text></g><g class="tick" transform="translate(173, 0)" style="opacity: 1;"><line y2="6" x1="0" x2="0"></line><text y="9" x="0" transform="" style="text-anchor: middle; display: block;"><tspan x="0" dy=".71em" dx="0">OC</tspan></text></g><g class="tick" transform="translate(200, 0)" style="opacity: 1;"><line y2="6" x1="0" x2="0"></line><text y="9" x="0" transform="" style="text-anchor: middle; display: block;"><tspan x="0" dy=".71em" dx="0">NO</tspan></text></g><g class="tick" transform="translate(226, 0)" style="opacity: 1;"><line y2="6" x1="0" x2="0"></line><text y="9" x="0" transform="" style="text-anchor: middle; display: block;"><tspan x="0" dy=".71em" dx="0">DE</tspan></text></g><g class="tick" transform="translate(253, 0)" style="opacity: 1;"><line y2="6" x1="0" x2="0"></line><text y="9" x="0" transform="" style="text-anchor: middle; display: block;"><tspan x="0" dy=".71em" dx="0">JA</tspan></text></g><g class="tick" transform="translate(279, 0)" style="opacity: 1;"><line y2="6" x1="0" x2="0"></line><text y="9" x="0" transform="" style="text-anchor: middle; display: block;"><tspan x="0" dy=".71em" dx="0">FE</tspan></text></g><g class="tick" transform="translate(306, 0)" style="opacity: 1;"><line y2="6" x1="0" x2="0"></line><text y="9" x="0" transform="" style="text-anchor: middle; display: block;"><tspan x="0" dy=".71em" dx="0">MA</tspan></text></g><path class="domain" d="M0,6V0H318V6"></path></g><g class="c3-axis c3-axis-y" clip-path="url(https://www.energidataservice.dk/#c3-1554892502448-clip-yaxis)" transform="translate(0,0)" style="visibility: visible; opacity: 1;"><text class="c3-axis-y-label" transform="rotate(-90)" style="text-anchor: end;" x="0" dx="-0.5em" dy="1.2em">Pct</text><g class="tick" transform="translate(0,111)" style="opacity: 1;"><line x2="-6"></line><text x="-9" y="0" style="text-anchor: end;"><tspan x="-9" dy="3">5</tspan></text></g><g class="tick" transform="translate(0,1)" style="opacity: 1;"><line x2="-6"></line><text x="-9" y="0" style="text-anchor: end;"><tspan x="-9" dy="3">12</tspan></text></g><path class="domain" d="M-6,1H0V111H-6"></path></g><g class="c3-axis c3-axis-y2" transform="translate(318,0)" style="visibility: hidden; opacity: 1;"><text class="c3-axis-y2-label" transform="rotate(-90)" style="text-anchor: end;" x="0" dx="-0.5em" dy="-0.5em"></text><g class="tick" transform="translate(0,111)" style="opacity: 1;"><line x2="6" y2="0"></line><text x="9" y="0" style="text-anchor: start;"><tspan x="9" dy="3">0</tspan></text></g><g class="tick" transform="translate(0,100)" style="opacity: 1;"><line x2="6" y2="0"></line><text x="9" y="0" style="text-anchor: start;"><tspan x="9" dy="3">0.1</tspan></text></g><g class="tick" transform="translate(0,90)" style="opacity: 1;"><line x2="6" y2="0"></line><text x="9" y="0" style="text-anchor: start;"><tspan x="9" dy="3">0.2</tspan></text></g><g class="tick" transform="translate(0,78)" style="opacity: 1;"><line x2="6" y2="0"></line><text x="9" y="0" style="text-anchor: start;"><tspan x="9" dy="3">0.3</tspan></text></g><g class="tick" transform="translate(0,67)" style="opacity: 1;"><line x2="6" y2="0"></line><text x="9" y="0" style="text-anchor: start;"><tspan x="9" dy="3">0.4</tspan></text></g><g class="tick" transform="translate(0,56)" style="opacity: 1;"><line x2="6" y2="0"></line><text x="9" y="0" style="text-anchor: start;"><tspan x="9" dy="3">0.5</tspan></text></g><g class="tick" transform="translate(0,46)" style="opacity: 1;"><line x2="6" y2="0"></line><text x="9" y="0" style="text-anchor: start;"><tspan x="9" dy="3">0.6</tspan></text></g><g class="tick" transform="translate(0,35)" style="opacity: 1;"><line x2="6" y2="0"></line><text x="9" y="0" style="text-anchor: start;"><tspan x="9" dy="3">0.7</tspan></text></g><g class="tick" transform="translate(0,23)" style="opacity: 1;"><line x2="6" y2="0"></line><text x="9" y="0" style="text-anchor: start;"><tspan x="9" dy="3">0.8</tspan></text></g><g class="tick" transform="translate(0,12)" style="opacity: 1;"><line x2="6" y2="0"></line><text x="9" y="0" style="text-anchor: start;"><tspan x="9" dy="3">0.9</tspan></text></g><g class="tick" transform="translate(0,1)" style="opacity: 1;"><line x2="6" y2="0"></line><text x="9" y="0" style="text-anchor: start;"><tspan x="9" dy="3">1</tspan></text></g><path class="domain" d="M6,1H0V111H6"></path></g></g><g transform="translate(20.5,150.5)" style="visibility: hidden;"><g clip-path="url(https://www.energidataservice.dk/#c3-1554892502448-clip-subchart)" class="c3-chart"><g class="c3-chart-bars"></g><g class="c3-chart-lines"></g></g><g clip-path="url(https://www.energidataservice.dk/#c3-1554892502448-clip)" class="c3-brush" style="pointer-events: all; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><rect class="background" x="0" width="338" style="visibility: hidden; cursor: crosshair;"></rect><rect class="extent" x="0" width="0" style="cursor: move;"></rect><g class="resize e" transform="translate(0,0)" style="cursor: ew-resize; display: none;"><rect x="-3" width="6" height="6" style="visibility: hidden;"></rect></g><g class="resize w" transform="translate(0,0)" style="cursor: ew-resize; display: none;"><rect x="-3" width="6" height="6" style="visibility: hidden;"></rect></g></g><g class="c3-axis-x" transform="translate(0,0)" clip-path="url(https://www.energidataservice.dk/#c3-1554892502448-clip-xaxis)" style="opacity: 1;"><g class="tick" transform="translate(14, 0)" style="opacity: 1;"><line y2="6" x1="0" x2="0"></line><text y="9" x="0" transform="" style="text-anchor: middle; display: block;"><tspan x="0" dy=".71em" dx="0">AP</tspan></text></g><g class="tick" transform="translate(41, 0)" style="opacity: 1;"><line y2="6" x1="0" x2="0"></line><text y="9" x="0" transform="" style="text-anchor: middle; display: block;"><tspan x="0" dy=".71em" dx="0">MA</tspan></text></g><g class="tick" transform="translate(67, 0)" style="opacity: 1;"><line y2="6" x1="0" x2="0"></line><text y="9" x="0" transform="" style="text-anchor: middle; display: block;"><tspan x="0" dy=".71em" dx="0">JU</tspan></text></g><g class="tick" transform="translate(94, 0)" style="opacity: 1;"><line y2="6" x1="0" x2="0"></line><text y="9" x="0" transform="" style="text-anchor: middle; display: block;"><tspan x="0" dy=".71em" dx="0">JU</tspan></text></g><g class="tick" transform="translate(120, 0)" style="opacity: 1;"><line y2="6" x1="0" x2="0"></line><text y="9" x="0" transform="" style="text-anchor: middle; display: block;"><tspan x="0" dy=".71em" dx="0">AU</tspan></text></g><g class="tick" transform="translate(147, 0)" style="opacity: 1;"><line y2="6" x1="0" x2="0"></line><text y="9" x="0" transform="" style="text-anchor: middle; display: block;"><tspan x="0" dy=".71em" dx="0">SE</tspan></text></g><g class="tick" transform="translate(173, 0)" style="opacity: 1;"><line y2="6" x1="0" x2="0"></line><text y="9" x="0" transform="" style="text-anchor: middle; display: block;"><tspan x="0" dy=".71em" dx="0">OC</tspan></text></g><g class="tick" transform="translate(200, 0)" style="opacity: 1;"><line y2="6" x1="0" x2="0"></line><text y="9" x="0" transform="" style="text-anchor: middle; display: block;"><tspan x="0" dy=".71em" dx="0">NO</tspan></text></g><g class="tick" transform="translate(226, 0)" style="opacity: 1;"><line y2="6" x1="0" x2="0"></line><text y="9" x="0" transform="" style="text-anchor: middle; display: block;"><tspan x="0" dy=".71em" dx="0">DE</tspan></text></g><g class="tick" transform="translate(253, 0)" style="opacity: 1;"><line y2="6" x1="0" x2="0"></line><text y="9" x="0" transform="" style="text-anchor: middle; display: block;"><tspan x="0" dy=".71em" dx="0">JA</tspan></text></g><g class="tick" transform="translate(279, 0)" style="opacity: 1;"><line y2="6" x1="0" x2="0"></line><text y="9" x="0" transform="" style="text-anchor: middle; display: block;"><tspan x="0" dy=".71em" dx="0">FE</tspan></text></g><g class="tick" transform="translate(306, 0)" style="opacity: 1;"><line y2="6" x1="0" x2="0"></line><text y="9" x="0" transform="" style="text-anchor: middle; display: block;"><tspan x="0" dy=".71em" dx="0">MA</tspan></text></g><path class="domain" d="M0,6V0H318V6"></path></g></g><g transform="translate(0,150)" style="visibility: hidden;"></g></svg><div class="c3-tooltip-container" style="position: absolute; pointer-events: none; display: none;"></div></div>
-
-  </div>
-
-
-  <a class="quick-fact-title" href="/dataset/9c12a3dd-71e8-433b-b78e-72021838d987/resource_extract/f40147ba-8e83-438e-9e89-bfddd0cba81f">Share of biogas in the gas system</a>
-
-                    </div>
-                </div>
-
-                <div class="col-md-4 col-sm-6">
-                    <div class="quick-fact-graph">
-
-
-  <div id="view-ac8b292b-f318-4ac6-b8ae-0851b436038d" data-id="ac8b292b-f318-4ac6-b8ae-0851b436038d" data-title="Consumption coverage last hour" data-description="" data-graph_height="150" data-show_axis="1" class="graph-container-resource-view">
-
-
-
-<div data-module="c3charts_builder" data-module-resource-id="02356e88-7c4e-4ee9-b896-275d217cc1b9" data-module-resource-view="{&quot;x_label_position&quot;: &quot;inner-right&quot;, &quot;description&quot;: &quot;&quot;, &quot;measure_unit_x&quot;: &quot;&quot;, &quot;resource_id&quot;: &quot;02356e88-7c4e-4ee9-b896-275d217cc1b9&quot;, &quot;color_pattern&quot;: &quot;&quot;, &quot;sql_keys&quot;: [&quot;Wind and Solar power&quot;, &quot;Other&quot;], &quot;y_tick_count&quot;: &quot;2&quot;, &quot;t_padding&quot;: &quot;5&quot;, &quot;header&quot;: &quot;&quot;, &quot;l_padding&quot;: &quot;&quot;, &quot;y_label_position&quot;: &quot;inner-top&quot;, &quot;chart_type&quot;: &quot;Pie Chart&quot;, &quot;sql_data&quot;: [{&quot;Wind and Solar power&quot;: 40, &quot;Other&quot;: 60}], &quot;id&quot;: &quot;ac8b292b-f318-4ac6-b8ae-0851b436038d&quot;, &quot;remap_key&quot;: &quot;&quot;, &quot;key_fields&quot;: &quot;TotalLoad&quot;, &quot;sql_expression&quot;: &quot;Select cast(sum(\&quot;s1\&quot;+\&quot;s2\&quot;)/sum(\&quot;p1\&quot;+\&quot;p2\&quot;)*100 as int) as \&quot;Wind and Solar power\&quot;, \r\ncase when sum(\&quot;s1\&quot;+\&quot;s2\&quot;)/sum(\&quot;p1\&quot;+\&quot;p2\&quot;) > 1 then 0 \r\nelse cast(100-sum(\&quot;s1\&quot;+\&quot;s2\&quot;)/sum(\&quot;p1\&quot;+\&quot;p2\&quot;)*100 as int) end as \&quot;Other\&quot;\r\nfrom\r\n    (select * from\r\n        (\r\n            (SELECT \&quot;OffshoreWindPower\&quot; + \&quot;OnshoreWindPower\&quot; + \&quot;SolarPower\&quot; as s1, \&quot;TotalLoad\&quot; as p1, \&quot;HourUTC\&quot; as h1\r\n            FROM electricitybalancenonv\r\n            WHERE \&quot;SolarPower\&quot; IS NOT NULL \r\n                AND \&quot;PriceArea\&quot; = 'DK1') as dk1\r\n          inner join  \r\n            (SELECT \&quot;OffshoreWindPower\&quot; + \&quot;OnshoreWindPower\&quot; + \&quot;SolarPower\&quot; as s2, \&quot;TotalLoad\&quot; as p2, \&quot;HourUTC\&quot; as h2\r\n            FROM electricitybalancenonv\r\n            WHERE \&quot;SolarPower\&quot; IS NOT NULL \r\n                AND \&quot;PriceArea\&quot; = 'DK2') as dk2\r\n             on h1 = h2\r\n        ) \r\n order by h1 desc limit 1 -- 1 week\r\n    ) as detail&quot;, &quot;x_tick_count&quot;: &quot;2&quot;, &quot;title&quot;: &quot;Consumption coverage last hour&quot;, &quot;b_padding&quot;: &quot;5&quot;, &quot;view_type&quot;: &quot;Chart builder&quot;, &quot;measure_unit_y&quot;: &quot;&quot;, &quot;text_chart_number_action&quot;: &quot;substract&quot;, &quot;legend&quot;: &quot;bottom&quot;, &quot;r_padding&quot;: &quot;&quot;, &quot;package_id&quot;: &quot;a6e2ea74-a0ca-49e9-be58-1a6ec816f869&quot;, &quot;use_sql_keys&quot;: &quot;False&quot;}" id="c3chart-02356e88-7c4e-4ee9-b896-275d217cc1b9" class="c3chart c3" style="max-height: 150px; position: relative;"><svg width="360" height="150" style="overflow: hidden;"><defs><clipPath id="c3-1554892502499-clip"><rect width="360" height="114.5"></rect></clipPath><clipPath id="c3-1554892502499-clip-xaxis"><rect x="-31" y="-20" width="422" height="46.5"></rect></clipPath><clipPath id="c3-1554892502499-clip-yaxis"><rect x="-29" y="-9" width="20" height="143.5"></rect></clipPath><clipPath id="c3-1554892502499-clip-grid"><rect width="360" height="114.5"></rect></clipPath><clipPath id="c3-1554892502499-clip-subchart"><rect width="360"></rect></clipPath></defs><g transform="translate(0.5,9.5)"><text class="c3-text c3-empty" text-anchor="middle" dominant-baseline="middle" x="180" y="57.25" style="opacity: 0;"></text><rect class="c3-zoom-rect" width="360" height="114.5" style="opacity: 0;"></rect><g clip-path="url(https://www.energidataservice.dk/#c3-1554892502499-clip)" class="c3-regions" style="visibility: hidden;"></g><g clip-path="url(https://www.energidataservice.dk/#c3-1554892502499-clip-grid)" class="c3-grid" style="visibility: hidden;"><g class="c3-xgrid-focus"><line class="c3-xgrid-focus" x1="-10" x2="-10" y1="0" y2="114.5" style="visibility: hidden;"></line></g></g><g clip-path="url(https://www.energidataservice.dk/#c3-1554892502499-clip)" class="c3-chart"><g class="c3-event-rects c3-event-rects-single" style="fill-opacity: 0;"><rect class=" c3-event-rect c3-event-rect-0" x="0" y="0" width="360" height="114.5"></rect></g><g class="c3-chart-bars"><g class="c3-chart-bar c3-target c3-target-Wind-and-Solar-power" style="opacity: 1; pointer-events: none;"><g class=" c3-shapes c3-shapes-Wind-and-Solar-power c3-bars c3-bars-Wind-and-Solar-power" style="cursor: pointer;"></g></g><g class="c3-chart-bar c3-target c3-target-Other" style="opacity: 1; pointer-events: none;"><g class=" c3-shapes c3-shapes-Other c3-bars c3-bars-Other" style="cursor: pointer;"></g></g></g><g class="c3-chart-lines"><g class="c3-chart-line c3-target c3-target-Wind-and-Solar-power" style="opacity: 1; pointer-events: none;"><g class=" c3-shapes c3-shapes-Wind-and-Solar-power c3-lines c3-lines-Wind-and-Solar-power"></g><g class=" c3-shapes c3-shapes-Wind-and-Solar-power c3-areas c3-areas-Wind-and-Solar-power"></g><g class=" c3-selected-circles c3-selected-circles-Wind-and-Solar-power"></g><g class=" c3-shapes c3-shapes-Wind-and-Solar-power c3-circles c3-circles-Wind-and-Solar-power" style="cursor: pointer;"></g></g><g class="c3-chart-line c3-target c3-target-Other" style="opacity: 1; pointer-events: none;"><g class=" c3-shapes c3-shapes-Other c3-lines c3-lines-Other"></g><g class=" c3-shapes c3-shapes-Other c3-areas c3-areas-Other"></g><g class=" c3-selected-circles c3-selected-circles-Other"></g><g class=" c3-shapes c3-shapes-Other c3-circles c3-circles-Other" style="cursor: pointer;"></g></g></g><g class="c3-chart-arcs" transform="translate(180,52.25)"><text class="c3-chart-arcs-title" style="text-anchor: middle; opacity: 0;"></text><g class="c3-chart-arc c3-target c3-target-Wind-and-Solar-power"><g class=" c3-shapes c3-shapes-Wind-and-Solar-power c3-arcs c3-arcs-Wind-and-Solar-power"><path class=" c3-shape c3-shape c3-arc c3-arc-Wind-and-Solar-power" transform="" style="fill: rgb(0, 165, 141); cursor: pointer; opacity: 1;" d="M-29.176190460667645,40.15758105828644A49.637499999999996,49.637499999999996 0 0,1 -9.118260823901511e-15,-49.637499999999996L0,0Z"></path></g><text dy=".35em" class="" transform="translate(-21.23144511080527,-6.89851469598847)" style="opacity: 1; text-anchor: middle; pointer-events: none;">40.0%</text></g><g class="c3-chart-arc c3-target c3-target-Other"><g class=" c3-shapes c3-shapes-Other c3-arcs c3-arcs-Other"><path class=" c3-shape c3-shape c3-arc c3-arc-Other" transform="" style="fill: rgb(9, 80, 93); cursor: pointer; opacity: 1;" d="M3.039420274633837e-15,-49.637499999999996A49.637499999999996,49.637499999999996 0 1,1 -29.176190460667645,40.15758105828644L0,0Z"></path></g><text dy=".35em" class="" transform="translate(21.23144511080527,6.898514695988478)" style="opacity: 1; text-anchor: middle; pointer-events: none;">60.0%</text></g></g><g class="c3-chart-texts"><g class="c3-chart-text c3-target c3-target-Wind-and-Solar-power" style="opacity: 1; pointer-events: none;"><g class=" c3-texts c3-texts-Wind-and-Solar-power"></g></g><g class="c3-chart-text c3-target c3-target-Other" style="opacity: 1; pointer-events: none;"><g class=" c3-texts c3-texts-Other"></g></g></g></g><g clip-path="url(https://www.energidataservice.dk/#c3-1554892502499-clip-grid)" class="c3-grid c3-grid-lines"><g class="c3-xgrid-lines"></g><g class="c3-ygrid-lines"></g></g><g class="c3-axis c3-axis-x" clip-path="url(https://www.energidataservice.dk/#c3-1554892502499-clip-xaxis)" transform="translate(0,114.5)" style="visibility: visible; opacity: 0;"><text class="c3-axis-x-label" transform="" style="text-anchor: end;" x="360" dx="-0.5em" dy="-0.5em"></text><g class="tick" transform="translate(180, 0)" style="opacity: 1;"><line y2="6" x1="0" x2="0"></line><text y="9" x="0" transform="" style="text-anchor: middle; display: block;"><tspan x="0" dy=".71em" dx="0"></tspan></text></g><path class="domain" d="M0,6V0H360V6"></path></g><g class="c3-axis c3-axis-y" clip-path="url(https://www.energidataservice.dk/#c3-1554892502499-clip-yaxis)" transform="translate(0,0)" style="visibility: visible; opacity: 0;"><text class="c3-axis-y-label" transform="rotate(-90)" style="text-anchor: end;" x="0" dx="-0.5em" dy="1.2em"></text><g class="tick" transform="translate(0,115)" style="opacity: 1;"><line x2="-6"></line><text x="-9" y="0" style="text-anchor: end;"><tspan x="-9" dy="3">34</tspan></text></g><g class="tick" transform="translate(0,1)" style="opacity: 1;"><line x2="-6"></line><text x="-9" y="0" style="text-anchor: end;"><tspan x="-9" dy="3">65</tspan></text></g><path class="domain" d="M-6,1H0V114.5H-6"></path></g><g class="c3-axis c3-axis-y2" transform="translate(360,0)" style="visibility: hidden; opacity: 0;"><text class="c3-axis-y2-label" transform="rotate(-90)" style="text-anchor: end;" x="0" dx="-0.5em" dy="-0.5em"></text><g class="tick" transform="translate(0,115)" style="opacity: 1;"><line x2="6" y2="0"></line><text x="9" y="0" style="text-anchor: start;"><tspan x="9" dy="3">0</tspan></text></g><g class="tick" transform="translate(0,104)" style="opacity: 1;"><line x2="6" y2="0"></line><text x="9" y="0" style="text-anchor: start;"><tspan x="9" dy="3">0.1</tspan></text></g><g class="tick" transform="translate(0,92)" style="opacity: 1;"><line x2="6" y2="0"></line><text x="9" y="0" style="text-anchor: start;"><tspan x="9" dy="3">0.2</tspan></text></g><g class="tick" transform="translate(0,81)" style="opacity: 1;"><line x2="6" y2="0"></line><text x="9" y="0" style="text-anchor: start;"><tspan x="9" dy="3">0.3</tspan></text></g><g class="tick" transform="translate(0,70)" style="opacity: 1;"><line x2="6" y2="0"></line><text x="9" y="0" style="text-anchor: start;"><tspan x="9" dy="3">0.4</tspan></text></g><g class="tick" transform="translate(0,58)" style="opacity: 1;"><line x2="6" y2="0"></line><text x="9" y="0" style="text-anchor: start;"><tspan x="9" dy="3">0.5</tspan></text></g><g class="tick" transform="translate(0,47)" style="opacity: 1;"><line x2="6" y2="0"></line><text x="9" y="0" style="text-anchor: start;"><tspan x="9" dy="3">0.6</tspan></text></g><g class="tick" transform="translate(0,36)" style="opacity: 1;"><line x2="6" y2="0"></line><text x="9" y="0" style="text-anchor: start;"><tspan x="9" dy="3">0.7</tspan></text></g><g class="tick" transform="translate(0,24)" style="opacity: 1;"><line x2="6" y2="0"></line><text x="9" y="0" style="text-anchor: start;"><tspan x="9" dy="3">0.8</tspan></text></g><g class="tick" transform="translate(0,13)" style="opacity: 1;"><line x2="6" y2="0"></line><text x="9" y="0" style="text-anchor: start;"><tspan x="9" dy="3">0.9</tspan></text></g><g class="tick" transform="translate(0,1)" style="opacity: 1;"><line x2="6" y2="0"></line><text x="9" y="0" style="text-anchor: start;"><tspan x="9" dy="3">1</tspan></text></g><path class="domain" d="M6,1H0V114.5H6"></path></g></g><g transform="translate(0.5,150.5)" style="visibility: hidden;"><g clip-path="url(https://www.energidataservice.dk/#c3-1554892502499-clip-subchart)" class="c3-chart"><g class="c3-chart-bars"></g><g class="c3-chart-lines"></g></g><g clip-path="url(https://www.energidataservice.dk/#c3-1554892502499-clip)" class="c3-brush" style="pointer-events: all; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><rect class="background" x="0" width="360" style="visibility: hidden; cursor: crosshair;"></rect><rect class="extent" x="0" width="0" style="cursor: move;"></rect><g class="resize e" transform="translate(0,0)" style="cursor: ew-resize; display: none;"><rect x="-3" width="6" height="6" style="visibility: hidden;"></rect></g><g class="resize w" transform="translate(0,0)" style="cursor: ew-resize; display: none;"><rect x="-3" width="6" height="6" style="visibility: hidden;"></rect></g></g><g class="c3-axis-x" transform="translate(0,0)" clip-path="url(https://www.energidataservice.dk/#c3-1554892502499-clip-xaxis)" style="opacity: 0;"><g class="tick" transform="translate(180, 0)" style="opacity: 1;"><line y2="6" x1="0" x2="0"></line><text y="9" x="0" transform="" style="text-anchor: middle; display: block;"><tspan x="0" dy=".71em" dx="0"></tspan></text></g><path class="domain" d="M0,6V0H360V6"></path></g></g><g transform="translate(0,128.5)"><g class="c3-legend-item c3-legend-item-Wind-and-Solar-power" style="visibility: visible; cursor: pointer;"><text x="81.46875" y="9" style="pointer-events: none;">Wind and Solar power</text><rect class="c3-legend-item-event" x="67.46875" y="-5" width="172.5625" height="21.5" style="fill-opacity: 0;"></rect><rect class="c3-legend-item-tile" x="67.46875" y="0" width="10" height="10" style="pointer-events: none; fill: rgb(0, 165, 141);"></rect></g><g class="c3-legend-item c3-legend-item-Other" style="visibility: visible; cursor: pointer;"><text x="254.03125" y="9" style="pointer-events: none;">Other</text><rect class="c3-legend-item-event" x="240.03125" y="-5" width="52.5" height="21.5" style="fill-opacity: 0;"></rect><rect class="c3-legend-item-tile" x="240.03125" y="0" width="10" height="10" style="pointer-events: none; fill: rgb(9, 80, 93);"></rect></g></g></svg><div class="c3-tooltip-container" style="position: absolute; pointer-events: none; display: none;"></div></div>
-
-  </div>
-
-
-  <a class="quick-fact-title" href="/dataset/a6e2ea74-a0ca-49e9-be58-1a6ec816f869/resource_extract/02356e88-7c4e-4ee9-b896-275d217cc1b9">Consumption coverage last hour</a>
-
-                    </div>
-                </div>
-
-            </div>
+        <div class="inline-block bg-edsdarkgreen text-white flex content-center flex-wrap justify-center p-10">
+          <img src="/static/img/ckan-logo.png">
         </div>
-    </div>
-</div>
-<!-- ./Quick Facts -->
 
-<!-- Info -->
-<div class="section-wrapper info-wrapper">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-6">
-                <h4 class="section-title">
-                    <span>{{__('News')}}</span>
-                </h4>
-
-                {% for post in posts %}
-                    <div class="info-item">
-                        <p class="info-item-date">{{ post.published }}</p>
-                        <h5 class="info-item-title">
-                            <a href="/news/{{ post.slug }}">{{ post.title }}</a>
-                            <span class="info-item-arrow">
-                                &gt;
-                            </span>
-                        </h5>
-                    </div>
-                {% endfor %}
-
-<!--                <div class="info-item">-->
-<!--                    <p class="info-item-date">April 10, 2019</p>-->
-<!--                    <h5 class="info-item-title">-->
-<!--                        <a href="/news/e70e5615-3c9e-44bc-b560-d9aad60365f0">Opdatering til ny version d. 10. april 2019/update to new version the 10th of April 2019</a>-->
-<!--                        <span class="info-item-arrow">-->
-<!--                            &gt;-->
-<!--                        </span>-->
-<!--                    </h5>-->
-<!--                </div>-->
-
-<!--                <div class="info-item">-->
-<!--                    <p class="info-item-date">February 5, 2019</p>-->
-<!--                    <h5 class="info-item-title">-->
-<!--                        <a href="/news/e73c3ff4-9da5-44f6-bad5-53b2c11a9e4b">Der kan nu downloades igen / You can now download again</a>-->
-<!--                        <span class="info-item-arrow">-->
-<!--                            &gt;-->
-<!--                        </span>-->
-<!--                    </h5>-->
-<!--                </div>-->
-
-
-                <a class="btn btn-xs btn-primary" href="/news">{{__('See all news')}}</a>
-            </div>
-            <div class="col-md-6">
-                <h4 class="section-title">
-                    <span>{{__('My Energy Data Service')}}</span>
-                </h4>
-                <p class="list-registration-main">{{__('As a registered user, you can receive notifications about news and changes in datasets or groups. Sign in, stay tuned, and bring your input to the Energy Data Service community.')}}
-                </p>
-                <ul class="list-unstyled list-registration-benefits">
-                    <li>
-                        <img class="eds-icon" src="/static/img/svg/voicebox.svg">
-                        <span>{{__('Join the forum associated with the individual datasets')}}</span>
-                    </li>
-                    <li>
-                        <img class="eds-icon" src="/static/img/svg/threepeople.svg">
-                        <span>{{__('Follow a dataset or a group of data and receive notifications for future changes')}}</span>
-                    </li>
-                    <li>
-                        <img class="eds-icon" src="/static/img/svg/checkbox.svg">
-                        <span>{{__('Subscribe to news and get notified when new data are released')}}</span>
-                    </li>
-                    <li>
-                        <img class="eds-icon" src="/static/img/svg/thumbsup.svg">
-                        <span>{{__('Help Energinet to provide better service and support')}}</span>
-                    </li>
-                </ul>
-                 <a class="btn btn-primary" href="/user/register">{{__('Register')}}</a>
-            </div>
-
+        <div class="inline-block bg-edsgreen text-white p-16">
+          <p>
+            Marketdata enables you to download a range of market relevant data manually for insights into market trends etc.        </p>
+          <a class="text-yellow-500" href="/marketdata">GO TO SERVICE ></a>
         </div>
-    </div>
-</div>
-<!-- ./Info -->
 
+      </div>
+
+      <div class="flex mb-4 ml-2">
+
+        <div class="inline-block bg-edsdarkgreen text-white flex content-center flex-wrap justify-center p-10">
+          <img src="/static/img/ckan-logo.png">
+        </div>
+
+        <div class="inline-block bg-edsgreen text-white p-16">
+          <p>
+            Express any idea that you might have in relation to the use of data, and we will test it with you. We are open to any ideas!        </p>
+          <a class="text-yellow-500" href="https://energinet.dk/El/Data-om-energisystemet/Open-Door-Lab">GO TO SERVICE ></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex mb-4 my-20">
+      <div class="w-3/5 mr-2">
+        <img src="/static/img/chart-temp-image.png">
+      </div>
+      <div class="w-2/5 ml-2 text-edsgreen">
+        <p class="text-6xl">REPORTS FOR DOWNLOAD</p>
+        <p class="text-2xl">ENERGINET OFFERS AF RANGE OF SERVICES OFFERING OPEN DATASETS FOR FREE USE BY ANYONE. THESE ARE AVAILABLE FOR DOWNLOAD.</p>
+        <p class="text-2xl">Furthermore, you can see these shortcuts for easy access to the most popular datasets:</p>
+        <div class="flex mb-4">
+          <div class="w-1/5"><img class="w-24" src="/static/img/dataguide-icons/Elektricitet@3x.png"></div>
+          <div class="w-4/5 text-2xl p-8"><a href="/group/production-and-consumption">PRODUCTION AND USE</a></div>
+        </div>
+        <div class="flex mb-4">
+          <div class="w-1/5"><img class="w-24" src="/static/img/dataguide-icons/Penge@3x.png"></div>
+          <div class="w-4/5 text-2xl p-8"><a href="/group/whole-sale-market">WHOLE SALE MARKET</a></div>
+        </div>
+        <div class="flex mb-4">
+          <div class="w-1/5"><img class="w-24" src="/static/img/dataguide-icons/Samarbejde@3x.png"></div>
+          <div class="w-4/5 text-2xl p-8"><a href="/group/ancillaryservices">SYSTEM PERFORMANCE</a></div>
+        </div>
+        <div class="flex mb-4">
+          <div class="w-1/5"><img class="w-24" src="/static/img/dataguide-icons/El-mast@3x.png"></div>
+          <div class="w-4/5 text-2xl p-8"><a href="/group/transmission-lines">TRANSMISSION LINES</a></div>
+        </div>
+        <div class="flex mb-4">
+          <div class="w-1/5"><img class="w-24" src="/static/img/dataguide-icons/CO2@3x.png"></div>
+          <div class="w-4/5 text-2xl p-8"><a href="/group/co2-emission">CO2 EMISSIONS</a></div>
+        </div>
+        <div class="flex mb-4">
+          <div class="w-1/5"><img class="w-24" src="/static/img/dataguide-icons/Gas@3x.png"></div>
+          <div class="w-4/5 text-2xl p-8"><a href="/group/gas-quality">GAS</a></div>
+        </div>
+
+
+      </div>
+    </div>
+
+    <div class="flex mb-4 my-20">
+      <div class="w-1/4 mr-2">
+        <img src="/static/img/temp-news.png">
+      </div>
+      <div class="w-2/4 bg-gray-200 mx-2 p-8 text-gray-600">
+        <div class="text-6xl uppercase">{{ posts[0].title }}</div>
+        <hr>
+        <div class="text-4xl">{{ posts[0].published }}</div>
+        <p>{{ posts[0].content }}</p>
+      </div>
+      <div class="w-1/4 ml-2  text-white  ">
+          <div class="inline-block bg-edsgreen p-8">
+            <p> OPERATIONAL STATUS</p>
+            <div class="flex mb-4">
+              <div class="w-1/4 text-yellow-500">14.10.19</div>
+              <div class="w-3/4">Update planed for next monday.</div>
+            </div>
+            <div class="flex mb-4">
+              <div class="w-1/4 text-yellow-500">14.10.19</div>
+              <div class="w-3/4">Update planed for next monday.</div>
+            </div>
+            <div class="flex mb-4">
+              <div class="w-1/4 text-yellow-500">14.10.19</div>
+              <div class="w-3/4">Update planed for next monday.</div>
+            </div>
+          </div>
+      </div>
+    </div>
+
+
+
+  <!--  {% for post in posts %}-->
+  <!--  <div class="info-item">-->
+  <!--    <p class="info-item-date">{{ post.published }}</p>-->
+  <!--    <h5 class="info-item-title">-->
+  <!--      <a href="/news/{{ post.slug }}">{{ post.title }}</a>-->
+  <!--      <span class="info-item-arrow">-->
+  <!--                                &gt;-->
+  <!--                            </span>-->
+  <!--    </h5>-->
+  <!--  </div>-->
+  <!--  {% endfor %}-->
+
+
+  </div>
 </div>
 
 {% endblock %}
