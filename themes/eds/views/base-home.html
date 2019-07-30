@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>
+    {% block title%}{{title}}{% endblock %}
+    - ENERGI DATA SERVICE
+  </title>
+  <meta name="author" content="Energinet">
+  <meta name="keywords" content="{{keywords or 'energinet,eds,data,open data,datasets,public data,csv,json,excel,xml'}}">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <!-- Twitter card -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="{{dataset.title or title}}" />
+  <meta name="twitter:image" content="{{metaImage or '/static/img/ckan-logo.png'}}" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="{{dataset.title or title}}" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Energinet" />
+  <meta property="og:image" content="{{metaImage or '/static/img/ckan-logo.png'}}" />
+  <meta property="og:image:alt" content="Energinet" />
+
+  {% if metaDescription %}
+  <meta name="description" content="{{metaDescription}}" />
+  <meta name="twitter:description" content="{{metaDescription}}" />
+  <meta property="og:description" content="{{metaDescription}}" />
+  {% elif dataset and (dataset.description or dataset.readmeSnippet or dataset.readmeHtml) %}
+  <meta name="description" content="{{dataset.description or dataset.readmeSnippet or dataset.readmeHtml|safe}}" />
+  <meta name="twitter:description" content="{{dataset.description or dataset.readmeSnippet or dataset.readmeHtml|safe}}" />
+  <meta property="og:description" content="{{dataset.description or dataset.readmeSnippet or dataset.readmeHtml|safe}}" />
+  {% else %}
+  <meta name="description" content="{{description or 'Open energy data from Energinet to society'}}">
+  <meta name="twitter:description" content="{{description or 'Open energy data from Energinet to society'}}" />
+  <meta property="og:description" content="{{description or 'Open energy data from Energinet to society'}}" />
+  {% endif %}
+
+  <link rel="apple-touch-icon" href="/static/img/energi-data-service-favicon-180.png" sizes="180x180">
+  <link rel="icon" href="/static/img/energi-data-service-favicon-192.png" type="image/png" sizes="192x192">
+  <link rel="shortcut icon" href="/static/img/energi-data-service-favicon-512.png" type="image/png" sizes="512x512">
+
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i" rel="stylesheet">
+  {% if dataset %}
+  <link rel="stylesheet" media="screen" href="https://raw.githack.com/datopian/datastore-query-builder/master/dist/css/2.css">
+  <link rel="stylesheet" media="screen" href="https://raw.githack.com/datopian/datastore-query-builder/master/dist/css/main.css">
+  <link rel="stylesheet" media="screen" href="https://raw.githack.com/datopian/datapackage-views-js/master/dist/css/main.css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.3/leaflet.css">
+  {% endif %}
+  <link rel="stylesheet" media="screen" href="/static/stylesheets/app.css">
+  <link rel="stylesheet" media="screen" href="/static/stylesheets/main.css">
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script id="ga-gtag" async></script>
+
+  <script>
+      document.getElementById("ga-gtag").src = "https://www.googletagmanager.com/gtag/js?id={{ $GA_ID }}";
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', '{{ $GA_ID }}', {
+          'custom_map': {
+              'dimension1': 'downloaded data type',
+              'dimension2': 'downloaded data format'
+          }
+      });
+  </script>
+
+</head>
+<body class="{% block bodyclass %}{{bodyclass}}{% endblock %} bg-white">
+
+{% if message.length > 0 %}
+<div class="container">
+  <div class="inner_container">
+    <div class="alert alert-danger" role="alert">{{ message | safe }}</div>
+  </div>
+</div>
+{% endif %}
+
+{% block content %}{{content}}{% endblock %}
+
+
+<!-- Footer Sections -->
+<footer class="site-footer bg-edsgreen">
+  <div class="container">
+
+    <div class="row">
+      <div class="col-md-4">
+        <a href="http://energinet.dk/" target="blank"><img class="footer-logo" src="/static/img/energinet-logo.svg" width="160" height="40" alt="Energinet logo"></a>
+        <p>
+          {{__('Energinet has a lot of energy data and through Energi Data Service, we want to make these data available. The portal will be expanded regularly. We hope you will join us on the journey, and will contribute with advice and feedback.')}}
+        </p>
+      </div>
+      <div class="col-md-4 footer-links footer-border">
+        <h4 class="footer-header">Info</h4>
+        <ul class="list-footer-no-bullets">
+          <li><a href="mailto:energidata@en%65rgi%6Eet.dk">energidata@energinet.dk</a></li>
+          <li>+45 70 10 22 44</li>
+          <li>ENERGINET</li>
+          <li>TONNE KJÆRSVEJ 65</li>
+          <li>7000 FREDERICIA</li>
+          <li>DANMARK</li>
+        </ul>
+      </div>
+      <div class="col-md-4 attribution">
+        <h4 class="footer-header">Powered by</h4>
+        <ul class="list-footer-no-bullets">
+
+
+          <li><a class="hide-text ckan-footer-logo" target="blank" href="http://ckan.org">CKAN</a></li>
+
+          <li>
+            <a href="http://www.opendefinition.org/okd/" target="blank"><img src="/static/img/od_80x15_blue.png"></a>
+          </li>
+
+          <li>
+            <img class="eds-icon-x2" src="/static/img/svg/gitlab-logo.svg">
+            <span><a href="https://gitlab.com/energinet/eds" target="blank">Git Repository</a></span>
+          </li>
+
+        </ul>
+      </div>
+    </div>
+
+  </div>
+
+
+</footer>
+<!-- end of footer -->
+
+
+
+{% block scripts %}{% endblock %}
+
+<script>
+    // Switch languages:
+    function languageSwitcher(el) {
+        if (el.className != 'active') {
+            var language = el.value;
+            document.cookie = 'defaultLocale=' + language;
+            location.reload();
+        }
+    }
+</script>
+
+</body>
+
+</html>

@@ -1,0 +1,45 @@
+@tailwind base;
+
+@tailwind components;
+
+@tailwind utilities;
+
+@variants after {
+  .news {
+    content: '';
+    position: absolute;
+    width: 1px;
+    background-color: #d3d3d3;
+    top: 12px;
+    bottom: 22px;
+    margin-left: -2px;
+  }
+
+  .post {
+    color: #d3d3d3;
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background-color: #d3d3d3;
+    border-radius: 50%;
+    z-index: 1;
+    left: -12px;
+    top: 12px;
+    padding: 2px 0 0 7px;
+    content: '';
+  }
+
+  .post-last {
+    color: #ecc94b;
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background-color: #ecc94b;
+    border-radius: 50%;
+    z-index: 1;
+    left: -12px;
+    top: 12px;
+    padding: 2px 0 0 7px;
+    content: '';
+  }
+}

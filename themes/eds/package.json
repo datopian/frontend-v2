@@ -1,0 +1,16 @@
+{
+  "name": "eds",
+  "version": "1.0.0",
+  "description": "EDS theme for NG CKAN frontend.",
+  "main": "index.js",
+  "scripts": {
+    "build": "postcss src/tailwind.css -o public/stylesheets/app.css"
+  },
+  "author": "Datopian",
+  "license": "ISC",
+  "dependencies": {
+    "autoprefixer": "^9.6.1",
+    "postcss-cli": "^6.1.3",
+    "tailwindcss": "^1.0.5"
+  }
+}

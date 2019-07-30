@@ -7,7 +7,8 @@ const utils = require('../../utils')
 
 module.exports = function (app) {
   app.get('/:owner/:name', async (req, res, next) => {
-    if (req.params.owner === 'news') {
+    const exceptions = ['news', 'group', 'organization', 'collections']
+    if (exceptions.includes(req.params.owner)) {
       next()
       return
     }
