@@ -8,8 +8,6 @@ Welcome - Home
 <div class="text-sm font-hairline">
   <div class="bg-white">
     <div class="container flex justify-end">
-      <a class="p-2" href="/user/login">LOGIN</a>
-      <a class="p-2" href="/user/register">REGISTER</a>
       <select onchange="languageSwitcher(this)" class="block appearance-none text-edsgreen pl-2 rounded leading-tight">
         <option value="en" data-language="en" data-language-name="English"><a href="#">ENGLISH</a></option>
         <option value="da" data-language="da" data-language-name="Danish"><a href="#">DANISH</a></option>
@@ -17,13 +15,17 @@ Welcome - Home
     </div>
   </div>
 
+  <!-- Navbar -->
   <div class="bg-edsgray p-5">
     <div class="container">
-      <img class='h-24' src="/static/img/ckan-logo.png">
+      <img class='w-24' src="/static/img/ckan-logo.png">
     </div>
   </div>
+  <!-- End of navbar -->
 
   <div class="container mx-auto px-gutter bg-white my-20">
+
+    <!-- Section 1: 3 services -->
     <div class="flex mb-4">
       <div class="flex mb-4 mr-2">
 
@@ -35,7 +37,7 @@ Welcome - Home
           <p>
             Energinet generates and harvest large amounts of energy data. Through Energi Data Service, we make these data available to
           </p>
-          <a class="text-yellow-500" href="/search">GO TO SERVICE ></a>
+          <a class="text-yellow-500" href="/search">GO TO SERVICE &rsaquo;</a>
         </div>
 
       </div>
@@ -49,7 +51,7 @@ Welcome - Home
         <div class="inline-block bg-edsgreen text-white p-16">
           <p>
             Marketdata enables you to download a range of market relevant data manually for insights into market trends etc.        </p>
-          <a class="text-yellow-500" href="/marketdata">GO TO SERVICE ></a>
+          <a class="text-yellow-500" href="/marketdata">GO TO SERVICE &rsaquo;</a>
         </div>
 
       </div>
@@ -63,59 +65,98 @@ Welcome - Home
         <div class="inline-block bg-edsgreen text-white p-16">
           <p>
             Express any idea that you might have in relation to the use of data, and we will test it with you. We are open to any ideas!        </p>
-          <a class="text-yellow-500" href="https://energinet.dk/El/Data-om-energisystemet/Open-Door-Lab">GO TO SERVICE ></a>
+          <a class="text-yellow-500" href="/open-door-lab">GO TO SERVICE &rsaquo;</a>
         </div>
       </div>
     </div>
+    <!-- End of section 1 -->
 
+    <!-- Section 2: quick facts charts and reports for download -->
     <div class="flex mb-4 my-20">
-      <div class="w-3/5 mr-2">
-        <img src="/static/img/chart-temp-image.png">
+      <div class="w-3/5 mr-2 h-full">
+        <div class="flex h-1/2 mb-2">
+          <div class="w-2/3 pr-1">
+            <div class="react-me" id="quick-fact-0">Quick fact 0</div>
+          </div>
+          <div class="w-1/3">
+            <div class="react-me" id="quick-fact-1">Quick fact 1</div>
+          </div>
+        </div>
+        <div class="flex h-1/2">
+          <div class="w-1/3 pr-1">
+            <div class="react-me" id="quick-fact-2">Quick fact 2</div>
+          </div>
+          <div class="w-1/3 pr-1">
+            <div class="react-me" id="quick-fact-3">Quick fact 3</div>
+          </div>
+          <div class="w-1/3">
+            <div class="react-me" id="quick-fact-4">Quick fact 4</div>
+          </div>
+        </div>
       </div>
       <div class="w-2/5 ml-2 text-edsgreen">
-        <p class="text-6xl">REPORTS FOR DOWNLOAD</p>
-        <p class="text-2xl">ENERGINET OFFERS AF RANGE OF SERVICES OFFERING OPEN DATASETS FOR FREE USE BY ANYONE. THESE ARE AVAILABLE FOR DOWNLOAD.</p>
+        <h2 class="text-6xl uppercase font-thin">Reports for download</h2>
+        <p class="text-2xl uppercase">Energinet offers a range of services offering open datasets for free use by anyone. These are available for download.</p>
         <p class="text-2xl">Furthermore, you can see these shortcuts for easy access to the most popular datasets:</p>
         <div class="flex mb-4">
           <div class="w-1/5"><img class="w-24" src="/static/img/dataguide-icons/Elektricitet@3x.png"></div>
-          <div class="w-4/5 text-2xl p-8"><a href="/group/production-and-consumption">PRODUCTION AND USE</a></div>
+          <div class="w-4/5 text-2xl py-8"><a href="/collections/production-and-consumption">PRODUCTION AND USE</a></div>
         </div>
         <div class="flex mb-4">
           <div class="w-1/5"><img class="w-24" src="/static/img/dataguide-icons/Penge@3x.png"></div>
-          <div class="w-4/5 text-2xl p-8"><a href="/group/whole-sale-market">WHOLE SALE MARKET</a></div>
+          <div class="w-4/5 text-2xl py-8"><a href="/collections/whole-sale-market">WHOLE SALE MARKET</a></div>
         </div>
         <div class="flex mb-4">
           <div class="w-1/5"><img class="w-24" src="/static/img/dataguide-icons/Samarbejde@3x.png"></div>
-          <div class="w-4/5 text-2xl p-8"><a href="/group/ancillaryservices">SYSTEM PERFORMANCE</a></div>
+          <div class="w-4/5 text-2xl py-8"><a href="/collections/ancillaryservices">SYSTEM PERFORMANCE</a></div>
         </div>
         <div class="flex mb-4">
           <div class="w-1/5"><img class="w-24" src="/static/img/dataguide-icons/El-mast@3x.png"></div>
-          <div class="w-4/5 text-2xl p-8"><a href="/group/transmission-lines">TRANSMISSION LINES</a></div>
+          <div class="w-4/5 text-2xl py-8"><a href="/collections/transmission-lines">TRANSMISSION LINES</a></div>
         </div>
         <div class="flex mb-4">
           <div class="w-1/5"><img class="w-24" src="/static/img/dataguide-icons/CO2@3x.png"></div>
-          <div class="w-4/5 text-2xl p-8"><a href="/group/co2-emission">CO2 EMISSIONS</a></div>
+          <div class="w-4/5 text-2xl py-8"><a href="/collections/co2-emission">CO2 EMISSIONS</a></div>
         </div>
         <div class="flex mb-4">
           <div class="w-1/5"><img class="w-24" src="/static/img/dataguide-icons/Gas@3x.png"></div>
-          <div class="w-4/5 text-2xl p-8"><a href="/group/gas-quality">GAS</a></div>
+          <div class="w-4/5 text-2xl py-8"><a href="/collections/gas-quality">GAS</a></div>
         </div>
-
-
       </div>
     </div>
+    <!-- End of section 2 -->
 
+    <!-- Section 3: News and operational status -->
     <div class="flex mb-4 my-20">
+
+      <!-- List of news -->
       <div class="w-1/4 mr-2">
-        <img src="/static/img/temp-news.png">
+        <h2 class="text-6xl uppercase font-thin text-edsgreen">News</h2>
+        <div class="after:news relative max-w-full mt-0 mr-auto mb-5 ml-4">
+          {% for item in posts %}
+            <div class="relative px-12 py-2 border-gray-300 border-solid border-1">
+              <a class="{{'after:post-last' if loop.index0 == 0 else 'after:post'}}" href="/news/{{ item.slug }}">{{ item.title }}</a>
+              <p>
+                <span class="text-gray-400 text-sm">{{ item.published }}</span>
+              </p>
+            </div>
+          {% endfor %}
+        </div>
+        <a class="text-edsgreen uppercase" href="/news">See all news &rsaquo;</a>
       </div>
+      <!-- End of list of news -->
+
+      <!-- Latest news -->
       <div class="w-2/4 bg-gray-200 mx-2 p-8 text-gray-600">
         <div class="text-6xl uppercase">{{ posts[0].title }}</div>
         <hr>
         <div class="text-4xl">{{ posts[0].published }}</div>
-        <p>{{ posts[0].content }}</p>
+        <p>{{ posts[0].content | safe }}</p>
       </div>
-      <div class="w-1/4 ml-2  text-white  ">
+      <!-- End of latest news -->
+
+      <!-- Operational status -->
+      <div class="w-1/4 ml-2  text-white">
           <div class="inline-block bg-edsgreen p-8">
             <p> OPERATIONAL STATUS</p>
             <div class="flex mb-4">
@@ -132,8 +173,9 @@ Welcome - Home
             </div>
           </div>
       </div>
+      <!-- End of operational status -->
     </div>
-
+    <!-- End of section 3 -->
 
 
   <!--  {% for post in posts %}-->
