@@ -1,3 +1,129 @@
+.lds-roller {
+  display: inline-block;
+  position: relative;
+  padding-left: calc(50% - 32px);
+  padding-top: 135.25px;
+  width: 64px;
+  height: 64px;
+}
+
+.lds-roller div {
+  -webkit-animation: lds-roller 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+          animation: lds-roller 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  transform-origin: 32px 32px;
+}
+
+.lds-roller div:after {
+  content: " ";
+  display: block;
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #008A8B;
+  margin: -3px 0 0 -3px;
+}
+
+.lds-roller div:nth-child(1) {
+  -webkit-animation-delay: -0.036s;
+          animation-delay: -0.036s;
+}
+
+.lds-roller div:nth-child(1):after {
+  top: 50px;
+  left: 50px;
+}
+
+.lds-roller div:nth-child(2) {
+  -webkit-animation-delay: -0.072s;
+          animation-delay: -0.072s;
+}
+
+.lds-roller div:nth-child(2):after {
+  top: 54px;
+  left: 45px;
+}
+
+.lds-roller div:nth-child(3) {
+  -webkit-animation-delay: -0.108s;
+          animation-delay: -0.108s;
+}
+
+.lds-roller div:nth-child(3):after {
+  top: 57px;
+  left: 39px;
+}
+
+.lds-roller div:nth-child(4) {
+  -webkit-animation-delay: -0.144s;
+          animation-delay: -0.144s;
+}
+
+.lds-roller div:nth-child(4):after {
+  top: 58px;
+  left: 32px;
+}
+
+.lds-roller div:nth-child(5) {
+  -webkit-animation-delay: -0.18s;
+          animation-delay: -0.18s;
+}
+
+.lds-roller div:nth-child(5):after {
+  top: 57px;
+  left: 25px;
+}
+
+.lds-roller div:nth-child(6) {
+  -webkit-animation-delay: -0.216s;
+          animation-delay: -0.216s;
+}
+
+.lds-roller div:nth-child(6):after {
+  top: 54px;
+  left: 19px;
+}
+
+.lds-roller div:nth-child(7) {
+  -webkit-animation-delay: -0.252s;
+          animation-delay: -0.252s;
+}
+
+.lds-roller div:nth-child(7):after {
+  top: 50px;
+  left: 14px;
+}
+
+.lds-roller div:nth-child(8) {
+  -webkit-animation-delay: -0.288s;
+          animation-delay: -0.288s;
+}
+
+.lds-roller div:nth-child(8):after {
+  top: 45px;
+  left: 10px;
+}
+
+@-webkit-keyframes lds-roller {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes lds-roller {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
 /*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */
 
 /* Document
@@ -3757,6 +3883,10 @@ video {
 
 .h-3\/4 {
   height: 75%;
+}
+
+.h-1\/1 {
+  height: 100%;
 }
 
 .leading-none {
@@ -10792,6 +10922,10 @@ video {
     height: 75%;
   }
 
+  .sm\:h-1\/1 {
+    height: 100%;
+  }
+
   .sm\:leading-none {
     line-height: 1;
   }
@@ -17748,6 +17882,10 @@ video {
 
   .md\:h-3\/4 {
     height: 75%;
+  }
+
+  .md\:h-1\/1 {
+    height: 100%;
   }
 
   .md\:leading-none {
@@ -24708,6 +24846,10 @@ video {
     height: 75%;
   }
 
+  .lg\:h-1\/1 {
+    height: 100%;
+  }
+
   .lg\:leading-none {
     line-height: 1;
   }
@@ -31664,6 +31806,10 @@ video {
 
   .xl\:h-3\/4 {
     height: 75%;
+  }
+
+  .xl\:h-1\/1 {
+    height: 100%;
   }
 
   .xl\:leading-none {

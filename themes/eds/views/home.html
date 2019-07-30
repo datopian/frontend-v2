@@ -8,15 +8,17 @@ Welcome - Home
 <div class="text-sm font-hairline">
   <div class="bg-white">
     <div class="container flex justify-end">
-      <select onchange="languageSwitcher(this)" class="block appearance-none text-edsgreen pl-2 rounded leading-tight">
+      <i class="fa fa-globe text-edsgreen pt-2" aria-hidden="true"></i>
+      <select onchange="languageSwitcher(this)" class="block appearance-none text-edsgreen pl-2 rounded leading-tight bg-white">
         <option value="en" data-language="en" data-language-name="English"><a href="#">ENGLISH</a></option>
         <option value="da" data-language="da" data-language-name="Danish"><a href="#">DANISH</a></option>
       </select>
+      <i class="fa fa-angle-down text-edsgreen pt-2" aria-hidden="true"></i>
     </div>
   </div>
 
   <!-- Navbar -->
-  <div class="bg-edsgray p-5">
+  <div class="bg-edsgray p-10">
     <div class="container">
       <img class='w-24' src="/static/img/ckan-logo.png">
     </div>
@@ -73,28 +75,38 @@ Welcome - Home
 
     <!-- Section 2: quick facts charts and reports for download -->
     <div class="flex mb-4 my-20">
-      <div class="w-3/5 mr-2 h-full">
-        <div class="flex h-1/2 mb-2">
+      <div class="w-9/12 mr-6 h-full">
+        <div class="flex h-1/2 mb-1">
           <div class="w-2/3 pr-1">
-            <div class="react-me" id="quick-fact-0">Quick fact 0</div>
+            <div class="react-me bg-gray-200 h-1/1" id="quick-fact-0">
+              <div class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+            </div>
           </div>
           <div class="w-1/3">
-            <div class="react-me" id="quick-fact-1">Quick fact 1</div>
+            <div class="react-me bg-gray-200 h-1/1" id="quick-fact-1">
+              <div class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+            </div>
           </div>
         </div>
         <div class="flex h-1/2">
           <div class="w-1/3 pr-1">
-            <div class="react-me" id="quick-fact-2">Quick fact 2</div>
+            <div class="react-me bg-gray-200 h-1/1" id="quick-fact-2">
+              <div class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+            </div>
           </div>
           <div class="w-1/3 pr-1">
-            <div class="react-me" id="quick-fact-3">Quick fact 3</div>
+            <div class="react-me bg-gray-200 h-1/1" id="quick-fact-3">
+              <div class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+            </div>
           </div>
           <div class="w-1/3">
-            <div class="react-me" id="quick-fact-4">Quick fact 4</div>
+            <div class="react-me bg-gray-200 h-1/1" id="quick-fact-4">
+              <div class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+            </div>
           </div>
         </div>
       </div>
-      <div class="w-2/5 ml-2 text-edsgreen">
+      <div class="w-3/12 ml-8 text-edsgreen">
         <h2 class="text-6xl uppercase font-thin">Reports for download</h2>
         <p class="text-2xl uppercase">Energinet offers a range of services offering open datasets for free use by anyone. These are available for download.</p>
         <p class="text-2xl">Furthermore, you can see these shortcuts for easy access to the most popular datasets:</p>
@@ -156,7 +168,7 @@ Welcome - Home
       <!-- End of latest news -->
 
       <!-- Operational status -->
-      <div class="w-1/4 ml-2  text-white">
+      <div class="w-1/4 ml-4  text-white">
           <div class="inline-block bg-edsgreen p-8">
             <p> OPERATIONAL STATUS</p>
             <div class="flex mb-4">
@@ -176,19 +188,6 @@ Welcome - Home
       <!-- End of operational status -->
     </div>
     <!-- End of section 3 -->
-
-
-  <!--  {% for post in posts %}-->
-  <!--  <div class="info-item">-->
-  <!--    <p class="info-item-date">{{ post.published }}</p>-->
-  <!--    <h5 class="info-item-title">-->
-  <!--      <a href="/news/{{ post.slug }}">{{ post.title }}</a>-->
-  <!--      <span class="info-item-arrow">-->
-  <!--                                &gt;-->
-  <!--                            </span>-->
-  <!--    </h5>-->
-  <!--  </div>-->
-  <!--  {% endfor %}-->
 
 
   </div>
