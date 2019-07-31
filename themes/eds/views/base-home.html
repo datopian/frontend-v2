@@ -83,49 +83,55 @@
 
 <!-- Footer Sections -->
 <footer class="site-footer bg-edsgreen">
-  <div class="container">
-
-    <div class="row">
-      <div class="col-md-4">
-        <a href="http://energinet.dk/" target="blank"><img class="footer-logo" src="/static/img/energinet-logo.svg" width="160" height="40" alt="Energinet logo"></a>
-        <p>
-          {{__('Energinet has a lot of energy data and through Energi Data Service, we want to make these data available. The portal will be expanded regularly. We hope you will join us on the journey, and will contribute with advice and feedback.')}}
+  <div class="container py-20">
+    <div class="lg:flex">
+      <div class="lg:w-1/4 p-10">
+        <a href="http://energinet.dk/" target="blank"><img class="w-48 mb-20" src="/static/img/energinet-logo.svg" width="160" height="40" alt="Energinet logo"></a>
+        <p class="text-sm font-hairline">
+          {{__('Energi Data Portalen is a portal that collects all services and questions related to the open energy data that Energinet offers.')}}
         </p>
       </div>
-      <div class="col-md-4 footer-links footer-border">
-        <h4 class="footer-header">Info</h4>
-        <ul class="list-footer-no-bullets">
-          <li><a href="mailto:energidata@en%65rgi%6Eet.dk">energidata@energinet.dk</a></li>
-          <li>+45 70 10 22 44</li>
-          <li>ENERGINET</li>
-          <li>TONNE KJÆRSVEJ 65</li>
-          <li>7000 FREDERICIA</li>
-          <li>DANMARK</li>
-        </ul>
+
+      <div class="lg:w-1/4 p-10">
+        <div class="flex">
+          <div class="w-1/5 text-3xl">
+            <span>&#x24d8</span>
+          </div>
+          <div class="w-4/5 py-1 uppercase"><a href="/about">{{__('About')}}</a></div>
+        </div>
+        <div class="flex">
+          <div class="w-1/5 text-4xl">
+            <i class="fa fa-question-circle-o" aria-hidden="true"></i>
+          </div>
+          <div class="w-4/5 py-2 uppercase"><a href="/faq">{{__('FAQ')}}</a></div>
+        </div>
+        <div class="flex">
+          <div class="w-1/5 text-3xl">
+            <span>&#x24d8</span>
+          </div>
+          <div class="w-4/5 py-1 uppercase"><a href="/contact">{{__('Contact')}}</a></div>
+        </div>
       </div>
-      <div class="col-md-4 attribution">
-        <h4 class="footer-header">Powered by</h4>
-        <ul class="list-footer-no-bullets">
 
+      <div class="lg:w-1/4 p-10">
+        <p>Info:</p>
+        <p><a href="mailto:energidata@en%65rgi%6Eet.dk">energidata@energinet.dk</a></p>
+        <p>+45 70 10 22 44</p>
+        <p>ENERGINET</p>
+        <p>TONNE KJÆRSVEJ 65</p>
+        <p>7000 FREDERICIA</p>
+        <p>DANMARK</p>
+      </div>
 
-          <li><a class="hide-text ckan-footer-logo" target="blank" href="http://ckan.org">CKAN</a></li>
-
-          <li>
-            <a href="http://www.opendefinition.org/okd/" target="blank"><img src="/static/img/od_80x15_blue.png"></a>
-          </li>
-
-          <li>
-            <img class="eds-icon-x2" src="/static/img/svg/gitlab-logo.svg">
-            <span><a href="https://gitlab.com/energinet/eds" target="blank">Git Repository</a></span>
-          </li>
-
-        </ul>
+      <div class="lg:w-1/4 p-10">
+        <p>{{__('Powered by')}}</p>
+        <div class="py-5"><a href="https://ckan.org"><img class="w-24" src="/static/img/ckan-logo.svg"></a></div>
+        <div class="py-5"><a href="https://git-scm.com/"><img class="w-24" src="/static/img/git-logo.png"></a></div>
+        </u>
       </div>
     </div>
 
   </div>
-
-
 </footer>
 <!-- end of footer -->
 
