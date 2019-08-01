@@ -1,6 +1,6 @@
 'use strict'
 
-const config = require('../config')
+const config = require('../../config')
 
 const wpcom = require('wpcom')(config.get('WP_TOKEN'))
 

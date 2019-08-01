@@ -10,7 +10,6 @@ const i18n = require("i18n")
 
 const config = require('./config')
 const dmsRoutes = require('./routes/dms')
-const cmsRoutes = require('./routes/cms')
 const {loadTheme, loadPlugins} = require('./utils')
 
 module.exports.makeApp = function () {
@@ -67,7 +66,6 @@ module.exports.makeApp = function () {
 
   // Controllers
   app.use([
-    cmsRoutes(),
     dmsRoutes()
   ])
 
