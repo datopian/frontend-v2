@@ -25,6 +25,7 @@ nconf.defaults({
   NODE_MODULES_PATH: process.env.NODE_MODULES_PATH || 'node_modules',
   PLUGINS: process.env.FE_PLUGINS || '',
   PLUGIN_DIR: process.env.PLUGIN_DIR || 'plugins',
+  CKAN_PAGES_URL: process.env.CKAN_PAGES_URL || api_url,
 })
 
 module.exports = {
