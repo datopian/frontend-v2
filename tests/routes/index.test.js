@@ -69,6 +69,8 @@ test('Missing plugin load is caught and app still loads', async t => {
 
 // CMS
 test('About page works', async t => {
+  config.set('PLUGINS', "wp")
+  const app = require('../../index').makeApp()
   t.plan(2)
 
   const res = await request(app)
@@ -80,6 +82,9 @@ test('About page works', async t => {
 
 
 test('News home page works', async t => {
+  config.set('PLUGINS', "wp")
+  const app = require('../../index').makeApp()
+
   t.plan(2)
 
   const res = await request(app)
@@ -91,6 +96,9 @@ test('News home page works', async t => {
 
 
 test('Single post page works', async t => {
+  config.set('PLUGINS', "wp")
+  const app = require('../../index').makeApp()
+
   t.plan(2)
 
   const res = await request(app)
