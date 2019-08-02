@@ -13,7 +13,7 @@ class CmsModel {
    const url = `${this.api}ckanext_pages_show?page=${slug}`
    const res = await fetch(url)
    const post = await res.json()
-   console.log("POST!", post)
+   
    return post.result
   }
 
@@ -24,7 +24,7 @@ class CmsModel {
     const url = `${this.api}ckanext_pages_list`
     const res = await fetch(url)
     const posts = await res.json()
-    console.log('RES', posts)
+    
     return posts.result
   }
 }
