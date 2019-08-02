@@ -6,14 +6,12 @@ const bytes = require('bytes')
 
 const config = require('../config')
 const dms = require('../lib/dms')
-const cms = require('../lib/cms')
 const utils = require('../utils')
 
 
 module.exports = function () {
   const router = express.Router()
   const Model = new dms.DmsModel(config)
-  const CmsModel = new cms.CmsModel()
 
   // -----------------------------------------------
   // Redirects
@@ -36,22 +34,10 @@ module.exports = function () {
   // -----------------------------------------------
 
   router.get('/', async (req, res) => {
-    // Get latest 3 blog posts and pass it to home template
-    const size = 3
-    let posts = await CmsModel.getListOfPosts(size)
-    posts = posts.map(post => {
-      return {
-        slug: post.slug,
-        title: post.title,
-        content: post.content,
-        published: moment(post.date).format('MMMM Do, YYYY'),
-        modified: moment(post.modified).format('MMMM Do, YYYY'),
-        image: post.featured_image
-      }
-    })
+    // If no CMS is enabled, show home page without posts
     res.render('home.html', {
       title: 'Home',
-      posts
+      posts: []
     })
   })
 

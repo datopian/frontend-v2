@@ -3,16 +3,35 @@
 const express = require('express')
 const moment = require('moment')
 
-const cms = require('../lib/cms')
+const cms = require('./cms')
 
 
-module.exports = function () {
-  const router = express.Router()
+module.exports = function (app) {
   const Model = new cms.CmsModel()
 
-  router.get('/news', listStaticPages)
-  router.get('/news/:page', showPostPage)
-  router.get(['/:page', '/:parent/:page'], showStaticPage)
+  app.get('/', async (req, res) => {
+    // Get latest 3 blog posts and pass it to home template
+    const size = 3
+    let posts = await Model.getListOfPosts(size)
+    posts = posts.map(post => {
+      return {
+        slug: post.slug,
+        title: post.title,
+        content: post.content,
+        published: moment(post.date).format('MMMM Do, YYYY'),
+        modified: moment(post.modified).format('MMMM Do, YYYY'),
+        image: post.featured_image
+      }
+    })
+    res.render('home.html', {
+      title: 'Home',
+      posts
+    })
+  })
+
+  app.get('/news', listStaticPages)
+  app.get('/news/:page', showPostPage)
+  app.get(['/:page', '/:parent/:page'], showStaticPage)
 
   async function listStaticPages(req, res) {
     // Get latest 10 blog posts
@@ -63,6 +82,7 @@ module.exports = function () {
       slug += `-${locale}`
     }
     try {
+      console.log('get post')
       const post = await Model.getPost(slug)
       res.render('static.html', {
         slug: post.slug,
@@ -82,6 +102,4 @@ module.exports = function () {
       }
     }
   }
-
-  return router
 }

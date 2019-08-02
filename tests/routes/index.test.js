@@ -24,7 +24,7 @@ test('Theme defined route does NOT exists when THEME is not set', async t => {
   config.set('THEME', 'opendk')
   const app = require('../../index').makeApp()
   const res = await request(app)
-    .get('/foo')
+    .get('/absolutely-not-a-chance')
   
   t.is(res.statusCode, 500)
 })
@@ -69,6 +69,8 @@ test('Missing plugin load is caught and app still loads', async t => {
 
 // CMS
 test('About page works', async t => {
+  config.set('PLUGINS', "wp")
+  const app = require('../../index').makeApp()
   t.plan(2)
 
   const res = await request(app)
@@ -80,6 +82,9 @@ test('About page works', async t => {
 
 
 test('News home page works', async t => {
+  config.set('PLUGINS', "wp")
+  const app = require('../../index').makeApp()
+
   t.plan(2)
 
   const res = await request(app)
@@ -91,6 +96,9 @@ test('News home page works', async t => {
 
 
 test('Single post page works', async t => {
+  config.set('PLUGINS', "wp")
+  const app = require('../../index').makeApp()
+
   t.plan(2)
 
   const res = await request(app)

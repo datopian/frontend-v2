@@ -37,6 +37,18 @@ export API_URL=https://demo.ckan.org/api/3/action/
 
 ### CMS
 
+To use a CMS plugin, enable the plugin in your environment.
+
+Example:
+
+in `.env`:
+```
+PLUGINS="wp"
+```
+
+#### Wordpress
+The wordpress plugin (`/plugins/wp`) ships with frontend-v2.
+
 Use `WP_URL` environment variable to point to your WordPress instance. For example, we have test wordpress blog here https://edscms.home.blog/ so it would be:
 
 ```
