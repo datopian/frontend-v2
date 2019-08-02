@@ -39,12 +39,7 @@ export API_URL=https://demo.ckan.org/api/3/action/
 
 To use a CMS plugin, enable the plugin in your environment.
 
-Example:
-
-in `.env`:
-```
-PLUGINS="wp"
-```
+In your environment add `PLUGINS="wp"`
 
 #### Wordpress
 
@@ -63,14 +58,8 @@ If your blog is private, you can set up `WP_TOKEN` environment variable to pass 
 For more info about enabling and using CKAN Pages:
 https://github.com/ckan/ckanext-pages
 
-By default, the frontend plugin will use the CKAN Pages extension of your enabled CKAN API (as defined by `API_URL` in `.env`).
-
-If you want to use a different CKAN instance, configure as follows:
-
-`.env`
-```
-CKAN_PAGES_URL=https://yourckan.com/api/3/action
-```
+When enabled, CKAN Pages plugin will use the CKAN `API_URL` environment variable by default.
+To configure a different URL for your CKAN Pages backend add `CKAN_PAGES_URL=https://yourckan.com/api/3/action` to your environment.
 
 ## API
 
