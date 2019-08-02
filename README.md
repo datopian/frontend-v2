@@ -47,6 +47,7 @@ PLUGINS="wp"
 ```
 
 #### Wordpress
+
 The wordpress plugin (`/plugins/wp`) ships with frontend-v2.
 
 Use `WP_URL` environment variable to point to your WordPress instance. For example, we have test wordpress blog here https://edscms.home.blog/ so it would be:
@@ -56,6 +57,20 @@ export WP_URL=https://edscms.home.blog/
 ```
 
 If your blog is private, you can set up `WP_TOKEN` environment variable to pass your access token. To get access token for private WP blog, check out this - https://developer.wordpress.com/docs/oauth2/.
+
+#### CKAN Pages
+
+For more info about enabling and using CKAN Pages:
+https://github.com/ckan/ckanext-pages
+
+By default, the frontend plugin will use the CKAN Pages extension of your enabled CKAN API (as defined by `API_URL` in `.env`).
+
+If you want to use a different CKAN instance, configure as follows:
+
+`.env`
+```
+CKAN_PAGES_URL=https://yourckan.com/api/3/action
+```
 
 ## API
 
