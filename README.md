@@ -38,7 +38,6 @@ export API_URL=https://demo.ckan.org/api/3/action/
 ### CMS
 
 You can use one of built-in CMS plugins - check it out below.
-In your environment add `PLUGINS="wp"`
 
 #### Wordpress
 
