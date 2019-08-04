@@ -67,7 +67,17 @@ test('Missing plugin load is caught and app still loads', async t => {
 
 
 
-// CMS
+// CMS -- WP
+test('Home page works with WP enable', async t => {
+  config.set('PLUGINS', "wp")
+  const app = require('../../index').makeApp()
+
+  const res = await request(app)
+    .get('/')
+
+  t.is(res.statusCode, 200)
+})
+
 test('About page works', async t => {
   config.set('PLUGINS', "wp")
   const app = require('../../index').makeApp()
@@ -106,6 +116,31 @@ test('Single post page works', async t => {
 
   t.is(res.statusCode, 200)
   t.true(res.text.includes('Welcome to test news page'))
+})
+
+
+// CMS -- CKAN Pages
+
+test('Home page works with CKAN Pages enabled', async t => {
+  config.set('PLUGINS', "ckan_pages")
+  const app = require('../../index').makeApp()
+
+  const res = await request(app)
+    .get('/')
+
+  t.is(res.statusCode, 200)
+})
+
+test('Test page works with CKAN Pages enabled', async t => {
+  config.set('PLUGINS', "ckan_pages")
+  const app = require('../../index').makeApp()
+  t.plan(2)
+
+  const res = await request(app)
+    .get('/test-page')
+
+  t.is(res.statusCode, 200)
+  t.true(res.text.includes('CKAN Pages Test Page'))
 })
 
 
