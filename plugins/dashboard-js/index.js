@@ -12,7 +12,6 @@ module.exports = function (app) {
     console.log("URL", url)
     const response = await fetch(url)
     const data = await response.text()
-    console.log(data)
     
     res.render(path.join(__dirname, '/views/dash.html'), {
       title: req.params.name,
