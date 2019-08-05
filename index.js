@@ -83,11 +83,11 @@ module.exports.makeApp = function () {
   })
 
   // look for views template folder and in plugins folders
-  let views = [app.get('views'), path.join(__dirname, `/plugins`)]
-  
+  const views = [path.join(__dirname, `/plugins`), app.get('views')]
+
   // also look for view templates in enabled theme directory
   if (themeName) {
-    views.push(path.join(__dirname, `/${themeDir}/${themeName}/views`))
+    views.unshift(path.join(__dirname, `/${themeDir}/${themeName}/views`))
   }
 
   const env = nunjucks.configure(views, {
