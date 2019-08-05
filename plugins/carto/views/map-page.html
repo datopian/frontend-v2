@@ -18,29 +18,39 @@
 	</style>
 
     <!-- Your map will go here -->
-	<div class="container">
+	<dv class="container">
 	  <div id="map"></div>
     </div> 
 
 <script>
-  const map = new mapboxgl.Map({
-    container: 'map',
-    style: carto.basemaps.positron,
-    center: [-73.5673, 45.5017],
-    zoom: 12
-  })
+  const config = {{ config | safe }}
+  console.log("CONF", config)
+  const map = new mapboxgl.Map(config.map)
 
   carto.setDefaultAuth({
     username: 'paulwalker-datopian',
     apiKey: 'Mef_QoqGyQRspq9AumGvbg'
   })
+  
+  config.layers.forEach(l => {
+    console.log(l)
+    const s = carto.expressions
+    const source = new carto.source.Dataset(l.source)
+    // works - js syntax
+    /* const viz = new carto.Viz({
+      color: s.ramp(s.buckets(s.prop('nb_victimes_total'), [0, 1, 2, 3, 4, 5, 10, 100]), s.palettes.PRISM)
+    }) */
 
-const viz = new carto.Viz();
-const source = new carto.source.Dataset('accidents_2012_2017',
-)
-const layer = new carto.Layer('layer', source, viz);
-layer.addTo(map);
+    // works - string syntax
+    /* const viz = new carto.Viz(`
+      color: ramp(buckets(prop($nb_victimes_total), [1, 1, 2, 3, 4, 5, 10, 100]), Prism)
+    `) */
+    console.log(l.viz)
+    const viz = new carto.Viz(l.viz)
 
+    const layer = new carto.Layer('layer', source, viz)
+    layer.addTo(map)
+  })
 </script>
 
 {% endblock %}
