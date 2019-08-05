@@ -30,7 +30,7 @@ module.exports = function (app) {
       return res.render(path.join(__dirname, 'views/dashboard.html'), {
         title: req.params.name,
         htmlSnippet,
-        configJson
+        config: JSON.stringify(configJson).replace(/'/g, "&#x27;")
       })
     } catch(e) {
       next(e)

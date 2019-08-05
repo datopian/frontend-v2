@@ -167,6 +167,21 @@ module.exports = function () {
     })
   })
 
+  router.get('/:owner/:name/datapackage.json', async (req, res, next) => {
+    let datapackage = null
+
+    try {
+      datapackage = await Model.getPackage(req.params.name)
+    } catch (err) {
+      next(err)
+      return
+    }
+
+    res.setHeader('Content-Type', 'application/json')
+    res.status(200)
+    res.end(JSON.stringify(datapackage))
+  })
+
   router.get('/organization', async (req, res, next) => {
     try {
       const collections = await Model.getOrganizations()

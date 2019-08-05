@@ -5,14 +5,13 @@
 {% endblock %}
 
 {% block content %}
-<h1>Load dashboard page here</h1>
 {{ htmlSnippet | safe }}
 {% endblock %}
 
 {% block scripts %}
 <script type="text/javascript">
-  var config = JSON.parse('{{ configJson | safe }}');
+  window.config = JSON.parse('{{ config | safe }}'.replace(/&#x27;/g, "'"));
 </script>
 
-<script type="text/javascript" src="https://raw.githack.com/datopian/dashboard-js/master/build/static/js/main.j"></script>
+<script type="text/javascript" src="https://raw.githack.com/datopian/dashboard-js/master/build/static/js/main.js"></script>
 {% endblock %}
