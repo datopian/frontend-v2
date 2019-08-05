@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}
+{{ title }} - Dashboard
+{% endblock %}
+
+{% block content %}
+{{ htmlSnippet | safe }}
+{% endblock %}
+
+{% block scripts %}
+<script type="text/javascript">
+  window.config = JSON.parse('{{ config | safe }}'.replace(/&#x27;/g, "'"));
+</script>
+
+<script type="text/javascript" src="https://raw.githack.com/datopian/dashboard-js/master/build/static/js/main.js"></script>
+{% endblock %}
