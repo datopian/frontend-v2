@@ -78,6 +78,39 @@
 </div>
 {% endif %}
 
+<div class="text-sm font-hairline">
+  <div class="bg-white">
+    <div class="container flex justify-end relative">
+      <img class='w-6 inline' src="/static/img/svg/globe-icon.svg">
+      <select onchange="languageSwitcher(this)" class="block appearance-none text-edsgreen pl-2 rounded leading-tight bg-white">
+        <option value="en" data-language="en" data-language-name="English"><a href="#">ENGLISH</a></option>
+        <option value="da" data-language="da" data-language-name="Danish"><a href="#">DANISH</a></option>
+      </select>
+      <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center py-3 px-4 text-edsgreen">
+        <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+      </div>
+    </div>
+  </div>
+
+  <!-- Navbar -->
+  <div class="bg-edsgray p-8">
+    <div class="container">
+      <div class="flex justify-between">
+        <div class="flex content-center">
+          <img class='w-24 inline' src="/static/img/svg/edp-logo-cube.svg">
+          <img class='w-64 inline px-8' src="/static/img/svg/edp-logo-text.svg">
+        </div>
+        {% if title!="Home" %}
+        <div class="text-edsgreen flex flex-wrap content-center">
+          <div class="text-3xl"><i class="fa fa-home"></i></div>
+          <a class="p-2" href="/">GO TO FRONTPAGE</a>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  <!-- End of navbar -->
+</div>
 {% block content %}{{content}}{% endblock %}
 
 
@@ -135,19 +168,15 @@
 </footer>
 <!-- end of footer -->
 
-
-
 {% block scripts %}{% endblock %}
 
 <script>
-    // Switch languages:
-    function languageSwitcher(el) {
-        if (el.className != 'active') {
-            var language = el.value;
-            document.cookie = 'defaultLocale=' + language;
-            location.reload();
-        }
-    }
+  // Switch languages:
+  function languageSwitcher(el) {
+    var language = el.value;
+    document.cookie = 'defaultLocale=' + language;
+    location.reload();
+  }
 </script>
 
 </body>
