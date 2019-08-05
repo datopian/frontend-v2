@@ -236,6 +236,16 @@ test('Collection page works', async t => {
 })
 
 
+test('Datapackage.json API works', async t => {
+  const res = await request(app)
+    .get('/test_org_00/co2emis/datapackage.json')
+
+  const descriptor = JSON.parse(res.text)
+  t.is(descriptor.name, 'co2emis')
+  t.is(descriptor.resources.length, 1)
+})
+
+
 // Not found tests
 test('If a page is not found in neither CMS or DMS, it returns 404 page', async t => {
   const agent = request(app)
