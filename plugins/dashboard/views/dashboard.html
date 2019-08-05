@@ -11,8 +11,8 @@
 
 {% block scripts %}
 <script type="text/javascript">
-  var config = JSON.parse('{{ configJson | safe }}');
+  var config = JSON.parse('{{ config | safe }}');
 </script>
 
-<script type="text/javascript" src="https://raw.githack.com/datopian/dashboard-js/master/build/static/js/main.j"></script>
+<script type="text/javascript" src="https://raw.githack.com/datopian/dashboard-js/master/build/static/js/main.js"></script>
 {% endblock %}
