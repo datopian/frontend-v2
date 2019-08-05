@@ -4,7 +4,6 @@ module.exports = function (app) {
   const fetch = require('node-fetch')
   const config = require('../../config')
 
-
   app.get('/dashboard/:name', async (req, res) => {
     const base = config.get('GITHUB_BASEURL')
     const username = config.get('GITHUB_USERNAME')
@@ -13,8 +12,9 @@ module.exports = function (app) {
     console.log("URL", url)
     const response = await fetch(url)
     const data = await response.text()
+    console.log(data)
     
-    res.render(__dirname + '/views/dashboard-page.html', {
+    res.render(path.join(__dirname, '/views/dash.html'), {
       title: req.params.name,
       dashData: data
     })

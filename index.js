@@ -82,11 +82,15 @@ module.exports.makeApp = function () {
     }
   })
 
-  let views = app.get('views')
+  let views = [app.get('views')]
+  
   if (themeName) {
     const themeViews = path.join(__dirname, `/${themeDir}/${themeName}/views`)
-    views = [themeViews, views, __dirname]
+    views = [themeViews, views, pluginsRoot]
   }
+
+  views.push(path.join(__dirname, `/plugins`))
+
   const env = nunjucks.configure(views, {
     autoescape: true,
     express: app

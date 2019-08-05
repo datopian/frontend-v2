@@ -856,4 +856,15 @@ module.exports.initMocks = function() {
   nock('https://public-api.wordpress.com:443', {"encodedQueryParams":true})
     .get('/rest/v1.1/sites/http%3A%2F%2F127.0.0.1%3A6000/posts/slug:nonexistent-org/nonexistent-dataset')
     .reply(404)
+
+  // CKAN PAGES mocks:
+  nock('http://127.0.0.1:5000', {"encodedQueryParams":true})
+    .persist()
+    .get('/api/3/action/ckanext_pages_list')
+    .reply(200, {"help":"https://localhost:5000/api/3/action/help_show?name=ckanext_pages_list","success":true,"result":[{"user_id":"a1710ffa-ed3e-4e66-9deb-f093f5c3d636","name":"post-name-0","title":"Test Post 0","image":"https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/SNice.svg/440px-SNice.svg.png","content":"Test content","publish_date":"2018-09-18T00:00:00","page_type":"page","group_id":null},{"user_id":"a1710ffa-ed3e-4e66-9deb-f093f5c3d636","name":"post-name-1","title":"Test Post 1","image":"https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/SNice.svg/440px-SNice.svg.png","content":"Test content","publish_date":"2018-09-18T00:00:00","page_type":"page","group_id":null},{"user_id":"a1710ffa-ed3e-4e66-9deb-f093f5c3d636","name":"post-name-2","title":"Test Post 2","image":"https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/SNice.svg/440px-SNice.svg.png","content":"Test content","publish_date":"2018-09-18T00:00:00","page_type":"page","group_id":null}]} )
+
+  nock('http://127.0.0.1:5000', {"encodedQueryParams":true})
+    .persist()
+    .get('/api/3/action/ckanext_pages_show?page=test-page')
+    .reply(200, {"help":"https://localhost/api/3/action/help_show?name=ckanext_pages_show","success":true,"result":{"lang":"","user_id":"a1710ffa-ed3e-4e66-9deb-f093f5c3d636","name":"test-page","title":"CKAN Pages Test Page","created":"2018-09-18T10:26:15.480257","modified":"2018-09-18T10:31:08.357095","private":false,"id":"eba47ac4-1714-438f-9766-e83d297658"}} )
 }

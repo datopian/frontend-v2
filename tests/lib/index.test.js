@@ -1,33 +1,11 @@
 const test = require('ava')
-
-const wp = require('../../plugins/wp/cms')
 const dms = require('../../lib/dms')
 const config = require('../../config')
 const mocks = require('../../fixtures')
 
 mocks.initMocks()
 
-const WPModel = new wp.CmsModel()
 const DmsModel = new dms.DmsModel(config)
-
-
-test('getPost api works', async t => {
-  t.plan(1)
-
-  const slug = 'about'
-  const result = await WPModel.getPost(slug)
-
-  t.is(result.title, 'Welcome to Data Service!')
-})
-
-
-test('getListOfPosts api works', async t => {
-  t.plan(1)
-
-  const result = await WPModel.getListOfPosts()
-
-  t.is(result.length, 2)
-})
 
 
 test('Search api works - simple case', async t => {

@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>{{title}}</h1>
+<div id="testWidget"></div>
+{% endblock %}
+<script>
+    window.config={{ dashData | safe }}
+    window.foo = 'bar'
+</script>
+<script type="text/javascript" src="https://combinatronics.com/datopian/dashboard-js/master/build/static/js/main.js"></script>
+
