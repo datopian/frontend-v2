@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title%}Carto VL Map Page{% endblock %}
+
+
+{% block content %}
+
+    <script src="https://libs.cartocdn.com/carto-vl/v1.2.4/carto-vl.min.js"></script>
+    <!-- Load Mapbox GL -->
+    <script src="https://api.tiles.mapbox.com/mapbox-gl-js/v0.52.0/mapbox-gl.js"></script>
+    <link href="https://api.tiles.mapbox.com/mapbox-gl-js/v0.52.0/mapbox-gl.css" rel="stylesheet">
+	<style>
+	  #map {
+		width: 80%;
+        height: 80%;
+        position: absolute;
+	  }
+	</style>
+
+    <!-- Your map will go here -->
+	<div class="container">
+	  <div id="map"></div>
+    </div> 
+
+<script>
+  const map = new mapboxgl.Map({
+    container: 'map',
+    style: carto.basemaps.positron,
+    center: [-73.5673, 45.5017],
+    zoom: 12
+  })
+
+  carto.setDefaultAuth({
+    username: 'paulwalker-datopian',
+    apiKey: 'Mef_QoqGyQRspq9AumGvbg'
+  })
+
+const viz = new carto.Viz();
+const source = new carto.source.Dataset('accidents_2012_2017',
+)
+const layer = new carto.Layer('layer', source, viz);
+layer.addTo(map);
+
+</script>
+
+{% endblock %}
+
+<!-- wax footer -->
+{% block footer %}{% endblock %}
