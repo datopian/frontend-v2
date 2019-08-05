@@ -26,6 +26,7 @@ nconf.defaults({
   PLUGINS: process.env.FE_PLUGINS || '',
   PLUGIN_DIR: process.env.PLUGIN_DIR || 'plugins',
   CKAN_PAGES_URL: process.env.CKAN_PAGES_URL || api_url,
+  GITHUB_BASEURL: process.env.GITHUB_BASEURL || 'https://raw.githubusercontent.com'
 })
 
 module.exports = {
