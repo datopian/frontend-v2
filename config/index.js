@@ -28,7 +28,11 @@ nconf.defaults({
   // CKAN pages PLUGIN
   CKAN_PAGES_URL: process.env.CKAN_PAGES_URL || api_url,
   // dashboard and maps PLUGIN
-  GIT_BASE_URL: process.env.GIT_BASE_URL || 'https://raw.githubusercontent.com'
+  GIT_BASE_URL: process.env.GIT_BASE_URL || 'https://raw.githubusercontent.com',
+  // carto plugin
+  CARTO_USER: process.env.CARTO_USER || '',
+  CARTO_APIKEY: process.env.CARTO_APIKEY || 'default_public'
+
 })
 
 module.exports = {

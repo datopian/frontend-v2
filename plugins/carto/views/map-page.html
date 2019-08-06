@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title%}Carto VL Map Page{% endblock %}
+{% block title%}{{title}}{% endblock %}
 
 
 {% block content %}
@@ -15,40 +15,43 @@
         height: 80%;
         position: absolute;
 	  }
+      #legend {
+        position: fixed;
+        right: 2em;
+        bottom: 2em;
+      }
 	</style>
 
     <!-- Your map will go here -->
-	<dv class="container">
-	  <div id="map"></div>
+	<div class="container">
+	  <div>{{ readme | safe }}</div>
+      <div id="map"></div>
+      <div id="legend" >{{ legend | safe }}</div>
     </div> 
 
 <script>
   const config = {{ config | safe }}
-  console.log("CONF", config)
   const map = new mapboxgl.Map(config.map)
 
   carto.setDefaultAuth({
     username: 'paulwalker-datopian',
-    apiKey: 'Mef_QoqGyQRspq9AumGvbg'
+    apiKey: 'default_public'
   })
-  
+
   config.layers.forEach(l => {
-    console.log(l)
-    const s = carto.expressions
     const source = new carto.source.Dataset(l.source)
-    // works - js syntax
-    /* const viz = new carto.Viz({
-      color: s.ramp(s.buckets(s.prop('nb_victimes_total'), [0, 1, 2, 3, 4, 5, 10, 100]), s.palettes.PRISM)
-    }) */
-
-    // works - string syntax
-    /* const viz = new carto.Viz(`
-      color: ramp(buckets(prop($nb_victimes_total), [1, 1, 2, 3, 4, 5, 10, 100]), Prism)
-    `) */
     console.log(l.viz)
+    const v = Object.assign({}, l.viz, {resolution:100})
     const viz = new carto.Viz(l.viz)
-
     const layer = new carto.Layer('layer', source, viz)
+    const interactivity = new carto.Interactivity(layer);
+    
+    interactivity.on('featureHover', e => {
+      e.features.forEach(f => {
+        console.log(f.variables.streetname.value)
+      })
+    });
+
     layer.addTo(map)
   })
 </script>
