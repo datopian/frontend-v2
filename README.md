@@ -222,22 +222,19 @@ PLUGINS="... google-analytics ..."
 GA_ID=UA-000000000-0
 ```
 
-#### Mailing plugin
+#### Mailer plugin
 
-We also support the option to send email from the application.
-That option can be added by setting some additional environment variables.
-
-For this feature we use [Nodemailer.](https://nodemailer.com/about/)
-
-Services that can be used: https://nodemailer.com/smtp/well-known/.
+To enable mailer plugin, you need to add next couple of lines to `.env` 
 
 ```bash
-PLUGINS="... mailing ..."
+PLUGINS="... mailer ..."
 EMAIL_SERVICE=gmail
-EMAIL_FROM_ADDRESS=from@this.address
-EMAIL_FROM_PASSWORD=*****
-EMAIL_TO_ADDRESS=to@this.address
+EMAIL_FROM=from@this.address
+EMAIL_PASSWORD=*****
+EMAIL_TO=to@this.address
 ```
+
+Services that can be used can be found here: [Supported services.](https://nodemailer.com/smtp/well-known/#supported-services.)
 
 ## Tests
 

@@ -195,20 +195,6 @@ module.exports = function () {
     }
   });
 
-  router.get('/contact', async (req, res, next) => {
-    try {
-      res.render('contact.html', {
-        title: 'How might we help?',
-        description: 'CKAN Organizations are used to create, manage and publish collections of datasets. Users can have different roles within an Organization, depending on their level of authorisation to create, edit and publish.',
-        slug: 'contact'
-      })
-    } catch (err) {
-      next(err)
-    }
-  });
-
-
-
   // MUST come last in order to catch all the publisher pages
   router.get('/:owner', async (req, res, next) => {
     try {

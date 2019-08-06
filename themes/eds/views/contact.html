@@ -9,15 +9,13 @@ Contact
 
   <div id="error_message" class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mt-10" role="alert" hidden>
     <strong class="font-bold">Error!</strong>
-    <span class="block sm:inline">Message was not sent</span>
-    <span class="absolute top-0 bottom-0 right-0 px-4 py-3">
+    <span id="error_message_body" class="block sm:inline">Message was not sent</span>
   </span>
   </div>
 
   <div id="success_message" class="bg-teal-100 border border-teal-400 text-teal-900 px-4 py-3 rounded relative mt-10" role="alert" hidden>
     <strong class="font-bold">Success!</strong>
-    <span class="block sm:inline">Message sent successfully</span>
-    <span class="absolute top-0 bottom-0 right-0 px-4 py-3">
+    <span id="success_message_body" class="block sm:inline">Message sent successfully</span>
   </span>
   </div>
 
@@ -80,6 +78,10 @@ Contact
 <script>
 
   $('#send_mail').click(function() {
+
+    $('#error_message').attr('hidden',true);
+    $('#success_message').attr('hidden',true);
+
     if (!validateFields()) return;
 
     let sentData = {
@@ -91,7 +93,7 @@ Contact
     };
 
     $.ajax({
-      url: "/send_mail",
+      url: "/contact",
       type: "POST",
       dataType: "json",
       data: JSON.stringify(sentData),
@@ -101,6 +103,9 @@ Contact
         if(data.status === 200) {
           $('#success_message').attr('hidden',false);
         } else {
+          if (data.message) {
+            $('#error_message_body').html(data.message);
+          }
           $('#error_message').attr('hidden',false);
         }
         window.scrollTo(0,0);
