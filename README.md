@@ -241,10 +241,23 @@ To add Google Analytics tracking code to page templates,
 enable the plugin in your `.env` file:
 
 ```bash
-PLUGINS=google-analytics
+PLUGINS="... google-analytics ..."
 GA_ID=UA-000000000-0
 ```
 
+#### Mailer plugin
+
+To enable mailer plugin, you need to add next couple of lines to `.env` 
+
+```bash
+PLUGINS="... mailer ..."
+EMAIL_SERVICE=gmail
+EMAIL_FROM=from@this.address
+EMAIL_PASSWORD=*****
+EMAIL_TO=to@this.address
+```
+
+Services that can be used can be found here: [Supported services.](https://nodemailer.com/smtp/well-known/#supported-services.)
 
 ## Tests
 
