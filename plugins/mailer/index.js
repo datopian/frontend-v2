@@ -18,27 +18,30 @@ module.exports = function(app) {
 
   app.post('/contact', express.json({type: '*/*'}), async (req, res, next) => {
     try {
-      if (!config.get('EMAIL_SERVICE')    ||
+      if ((!config.get('SMTP_SERVICE')    &&
+          (!config.get('SMTP_HOST')       ||
+            !config.get('SMTP_PORT')))    ||
           !config.get('EMAIL_FROM')       ||
           !config.get('EMAIL_PASSWORD')   ||
           !config.get('EMAIL_TO')) {
-
-        res.send({ status: 500, message: "Environment variables not set" })
+        next({status: 500, message: 'One of the environment variables are not set for mailer plugin.'})
         return
       }
 
       let transporter = nodemailer.createTransport({
-        service: config.get('EMAIL_SERVICE'),
+        service: config.get('SMTP_SERVICE'),
+        host: config.get('SMTP_HOST'),
+        port: config.get('SMTP_PORT'),
         auth: {
           user: config.get('EMAIL_FROM'),
           pass: config.get('EMAIL_PASSWORD')
         }
       })
 
-      let mailSubject = 'Contacting EDS about: ' + req.body.topic
+      let mailSubject = 'Contacting about: ' + req.body.topic
       let mailBody = 'Name: ' + req.body.name + '\n'
       mailBody += 'Email: ' + req.body.email + '\n\n'
-      mailBody += 'Short message: ' + req.body.short_message
+      mailBody += 'Message: ' + req.body.short_message
 
       let mailOptions = {
         from: config.get('EMAIL_FROM'),
@@ -49,15 +52,14 @@ module.exports = function(app) {
 
       transporter.sendMail(mailOptions, function(err, data) {
         if (err) {
-          res.send({ status: 500 })
+          next({status: 500, message: err})
+          return
         } else {
-          res.send({ status: 200 })
+          res.send({status: 200})
         }
       })
-
-      res.send({ status: 200 })
     } catch (err) {
-      res.send({ status: 500 })
+      next({ status: 500, message: err })
     }
   })
 }
