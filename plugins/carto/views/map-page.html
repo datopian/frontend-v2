@@ -28,6 +28,11 @@
         width: 25%;
         z-index: 100;
       }
+      .iframe {
+        width: 100%;
+        height: 100%;
+        border: none;
+      }
 	</style>
 
     <!-- Your map will go here -->
@@ -35,19 +40,24 @@
 	  <div>{{ readme | safe }}</div>
 	  <div id="info"></div>
       <div id="filters">{{ filters | safe }}</div>
-      <div id="map"></div>
+      <div id="map">
+        {% if type == "iframe" %}
+          <iframe class="iframe" src="{{ iframeUrl }}" />
+        {% endif %}
+      </div>
       <div id="legend" >{{ legend | safe }}</div>
     </div> 
 
 <script>
-  const config = {{ config | safe }}
+const config = {{ config | safe }}
+if (config.type === 'cartoVL') {
   const map = new mapboxgl.Map(config.map)
 
   carto.setDefaultAuth({
     username: 'paulwalker-datopian',
     apiKey: 'default_public'
   })
-
+  
   config.layers.forEach(l => {
     const source = new carto.source.Dataset(l.source)
     console.log(l.viz)
@@ -82,6 +92,7 @@
 
     document.getElementById('info').innerHTML = content
   }
+}
 </script>
 
 {% endblock %}
