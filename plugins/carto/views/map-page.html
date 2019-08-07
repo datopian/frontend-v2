@@ -34,6 +34,7 @@
 	<div class="container">
 	  <div>{{ readme | safe }}</div>
 	  <div id="info"></div>
+      <div id="filters">{{ filters | safe }}</div>
       <div id="map"></div>
       <div id="legend" >{{ legend | safe }}</div>
     </div> 
@@ -51,7 +52,7 @@
     const source = new carto.source.Dataset(l.source)
     console.log(l.viz)
     const v = Object.assign({}, l.viz, {resolution:100})
-    const viz = new carto.Viz(l.viz)
+    const viz = new carto.Viz(l.viz + ` \n filter: eq($an, 2016)`)
     const layer = new carto.Layer('layer', source, viz)
 	const variables = l.variables || []
     const interactivity = new carto.Interactivity(layer)
