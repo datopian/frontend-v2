@@ -247,7 +247,7 @@ GA_ID=UA-000000000-0
 
 #### Mailer plugin
 
-To enable mailer plugin, you need to add next couple of lines to `.env` 
+To enable mailer plugin, you need to update your `.env` as following:
 
 ```bash
 PLUGINS="... mailer ..."
@@ -256,6 +256,8 @@ EMAIL_FROM=from@this.address
 EMAIL_PASSWORD=*****
 EMAIL_TO=to@this.address
 ```
+
+Then you need to implement `contact.html` template in your theme so that a contact form can be rendered at `/contact`.
 
 Services that can be used can be found here: [Supported services.](https://nodemailer.com/smtp/well-known/#supported-services.)
 
