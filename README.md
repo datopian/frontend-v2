@@ -37,13 +37,36 @@ export API_URL=https://demo.ckan.org/api/3/action/
 
 ### CMS
 
+You can use one of built-in CMS plugins - check it out below.
+
+#### Wordpress
+
+The wordpress plugin (`/plugins/wp`) ships with frontend-v2. To enable it via `.env` file:
+
+```
+PLUGINS=wp
+```
+
 Use `WP_URL` environment variable to point to your WordPress instance. For example, we have test wordpress blog here https://edscms.home.blog/ so it would be:
 
 ```
-export WP_URL=https://edscms.home.blog/
+WP_URL=https://edscms.home.blog/
 ```
 
 If your blog is private, you can set up `WP_TOKEN` environment variable to pass your access token. To get access token for private WP blog, check out this - https://developer.wordpress.com/docs/oauth2/.
+
+#### CKAN Pages
+
+To use CKAN Pages as your CMS backend, add it to your list of `PLUGINS` in `.env` file:
+
+```
+PLUGINS=ckan_pages
+```
+
+When enabled, CKAN Pages plugin will use the CKAN `API_URL` environment variable by default.
+To configure a different URL for your CKAN Pages backend add `CKAN_PAGES_URL=https://yourckan.com/api/3/action/` to your environment.
+
+For more info about enabling and using CKAN Pages - https://github.com/ckan/ckanext-pages
 
 ## API
 
@@ -214,14 +237,31 @@ For more on express middleware: https://expressjs.com/en/guide/using-middleware.
 
 #### Google analytics plugin
 
-To add Google Analytics tracking code to page templates, 
+To add Google Analytics tracking code to page templates,
 enable the plugin in your `.env` file:
 
 ```bash
-PLUGINS=google-analytics
+PLUGINS="... google-analytics ..."
 GA_ID=UA-000000000-0
 ```
 
+#### Mailer plugin
+
+To enable mailer plugin, you need to update your `.env` as following:
+
+```
+PLUGINS="... mailer ..."
+SMTP_SERVICE=gmail (optional if you have host and port details)
+SMTP_HOST=smtp.example.com (optional if you set 'SMTP_SERVICE')
+SMTP_PORT=587 (optional if you set 'SMTP_SERVICE')
+EMAIL_FROM=from@example.com
+EMAIL_PASSWORD=*****
+EMAIL_TO=to@example.com
+```
+
+Here is the list of well-known services that can be used without setting host and port of your SMTP server: [Supported services](https://nodemailer.com/smtp/well-known/#supported-services).
+
+Then you need to implement `contact.html` template in your theme so that a contact form can be rendered at `/contact`.
 
 ## Tests
 

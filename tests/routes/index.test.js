@@ -24,7 +24,7 @@ test('Theme defined route does NOT exists when THEME is not set', async t => {
   config.set('THEME', 'opendk')
   const app = require('../../index').makeApp()
   const res = await request(app)
-    .get('/foo')
+    .get('/absolutely-not-a-chance')
   
   t.is(res.statusCode, 500)
 })
@@ -67,8 +67,20 @@ test('Missing plugin load is caught and app still loads', async t => {
 
 
 
-// CMS
+// CMS -- WP
+test('Home page works with WP enable', async t => {
+  config.set('PLUGINS', "wp")
+  const app = require('../../index').makeApp()
+
+  const res = await request(app)
+    .get('/')
+
+  t.is(res.statusCode, 200)
+})
+
 test('About page works', async t => {
+  config.set('PLUGINS', "wp")
+  const app = require('../../index').makeApp()
   t.plan(2)
 
   const res = await request(app)
@@ -80,6 +92,9 @@ test('About page works', async t => {
 
 
 test('News home page works', async t => {
+  config.set('PLUGINS', "wp")
+  const app = require('../../index').makeApp()
+
   t.plan(2)
 
   const res = await request(app)
@@ -91,6 +106,9 @@ test('News home page works', async t => {
 
 
 test('Single post page works', async t => {
+  config.set('PLUGINS', "wp")
+  const app = require('../../index').makeApp()
+
   t.plan(2)
 
   const res = await request(app)
@@ -98,6 +116,31 @@ test('Single post page works', async t => {
 
   t.is(res.statusCode, 200)
   t.true(res.text.includes('Welcome to test news page'))
+})
+
+
+// CMS -- CKAN Pages
+
+test('Home page works with CKAN Pages enabled', async t => {
+  config.set('PLUGINS', "ckan_pages")
+  const app = require('../../index').makeApp()
+
+  const res = await request(app)
+    .get('/')
+
+  t.is(res.statusCode, 200)
+})
+
+test('Test page works with CKAN Pages enabled', async t => {
+  config.set('PLUGINS', "ckan_pages")
+  const app = require('../../index').makeApp()
+  t.plan(2)
+
+  const res = await request(app)
+    .get('/test-page')
+
+  t.is(res.statusCode, 200)
+  t.true(res.text.includes('CKAN Pages Test Page'))
 })
 
 
@@ -190,6 +233,16 @@ test('Collection page works', async t => {
     .get('/collections/test-group')
 
   t.true(res.text.includes('<!-- collection page test placeholder -->'))
+})
+
+
+test('Datapackage.json API works', async t => {
+  const res = await request(app)
+    .get('/test_org_00/co2emis/datapackage.json')
+
+  const descriptor = JSON.parse(res.text)
+  t.is(descriptor.name, 'co2emis')
+  t.is(descriptor.resources.length, 1)
 })
 
 
