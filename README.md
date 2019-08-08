@@ -13,12 +13,20 @@ Clone the repo, install dependencies using yarn (or npm) and run the server:
 yarn
 yarn start
 ```
+or
+```bash
+npm install
+npm start
+```
 
-To run and watch HTML:
+You can also run the app in development mode which automatically loads your changes to JS files and templates:
 
 ```bash
-# note the -e which means we watch for changes in templates too
-nodemon -e "js html" index.js
+yarn dev
+```
+or
+```bash
+npm run dev
 ```
 
 ## Set up your own backend
