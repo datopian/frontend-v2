@@ -13,7 +13,6 @@ module.exports = function (app) {
     // Get latest 3 blog posts and pass it to home template
     const size = 3
     let posts = await Model.getListOfPosts(size)
-    console.log(posts)
     posts = posts.map(post => {
       return {
         slug: post.slug,
@@ -83,7 +82,6 @@ module.exports = function (app) {
       slug += `-${locale}`
     }
     try {
-      console.log('get post')
       const post = await Model.getPost(slug)
       res.render('static.html', {
         slug: post.slug,

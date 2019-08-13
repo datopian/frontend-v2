@@ -41,6 +41,7 @@
     "supertest": "^4.0.2"
   },
   "dependencies": {
+    "body-parser": "^1.19.0",
     "bytes": "^3.1.0",
     "ckan_ng_montreal_theme": "^1.0.1",
     "connect-flash": "^0.1.1",
@@ -54,6 +55,7 @@
     "moment": "^2.24.0",
     "nconf": "^0.10.0",
     "node-fetch": "^2.6.0",
+    "nodemailer": "^6.3.0",
     "nunjucks": "^3.2.0",
     "wpcom": "^5.4.2"
   }

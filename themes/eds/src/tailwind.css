@@ -44,4 +44,9 @@
     padding: 2px 0 0 7px;
     content: '';
   }
+
 }
+
+#contact-short-message {
+   resize:none;
+ }

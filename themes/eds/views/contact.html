@@ -1,0 +1,199 @@
+{% extends "base-eds.html" %}
+
+{% block title %}
+Contact us
+{% endblock %}
+
+{% block content %}
+<div class="container text-sm font-hairline text-edsgreen">
+
+  <div id="error_message" class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mt-10" role="alert" hidden>
+    <strong class="font-bold">Error!</strong>
+    <span id="error_message_body" class="block sm:inline">Message was not sent</span>
+  </span>
+  </div>
+
+  <div id="success_message" class="bg-teal-100 border border-teal-400 text-teal-900 px-4 py-3 rounded relative mt-10" role="alert" hidden>
+    <strong class="font-bold">Success!</strong>
+    <span id="success_message_body" class="block sm:inline">Message sent successfully</span>
+  </span>
+  </div>
+
+  <div class="w-1/2 py-20">
+
+    <div class="text-6xl uppercase">{{ title }}</div>
+    <div>{{ description }}</div>
+
+      <div class="w-full">
+
+        <div class="relative py-5">
+          <select id="topic" class="block appearance-none w-full border border-edsgreen text-gray-700 py-3 px-4 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+            <option value="default" disabled selected> -- pick topic -- </option>
+            <option value="Errors">Errors</option>
+            <option value="Suggestions for new data">Suggestions for new data</option>
+            <option value="Public authorities">Public authorities</option>
+            <option value="Questions regarding existing data">Questions regarding existing data</option>
+            <option value="Suggestions for improvement">Suggestions for improvement</option>
+            <option value="Others">Others</option>
+          </select>
+          <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center py-3 px-4 text-edsgreen">
+            <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="relative py-5">
+        <div class="w-full">
+          <input id="name" class="appearance-none block w-full text-gray-700 border border-edsgreen py-3 px-4 leading-tight focus:outline-none focus:bg-white" type="text" placeholder="Name">
+        </div>
+      </div>
+
+
+      <div class="relative py-5">
+        <div class="w-full">
+          <input id="email" class="appearance-none block w-full text-gray-700 border border-edsgreen py-3 px-4 leading-tight focus:outline-none focus:bg-white" type="email" placeholder="Email">
+        </div>
+      </div>
+
+      <div class="relative py-5">
+        <div class="w-full">
+          <textarea id="short_message" class="appearance-none block w-full text-gray-700 border border-edsgreen py-3 px-4 leading-tight focus:outline-none focus:bg-white" type="email" placeholder="Write a short message" id="contact-short-message"></textarea>
+        </div>
+      </div>
+
+      <div class="relative py-5">
+        <div class="w-full flex flex-wrap justify-end">
+          <button id="send_mail" class="bg-edsgreen text-white py-2 px-10">Send</button>
+        </div>
+      </div>
+
+
+  </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+
+  $('#send_mail').click(function() {
+
+    $('#error_message').attr('hidden',true);
+    $('#success_message').attr('hidden',true);
+
+    if (!validateFields()) return;
+
+    let sentData = {
+      topic: $('#topic').val(),
+      name: $('#name').val(),
+      email: $('#email').val(),
+      short_message: $('#short_message').val()
+
+    };
+
+    $.ajax({
+      url: "/contact",
+      type: "POST",
+      dataType: "json",
+      data: JSON.stringify(sentData),
+      contentType: "application/json",
+
+      success: function(data) {
+        if(data.status === 200) {
+          $('#success_message').attr('hidden',false);
+        } else {
+          if (data.message) {
+            $('#error_message_body').html(data.message);
+          }
+          $('#error_message').attr('hidden',false);
+        }
+        window.scrollTo(0,0);
+      },
+      error: function(error) {
+        $('#error_message').attr('hidden',false);
+        window.scrollTo(0,0);
+      },
+    });
+  });
+
+  function validateFields() {
+    let topicField = $('#topic');
+    let nameField = $('#name');
+    let emailField = $('#email');
+    let shortMessage = $('#short_message');
+
+    let returnValue = true;
+
+    if (!topicField.val()) {
+      topicField.removeClass('border-edsgreen');
+      topicField.addClass('border-red-500');
+      returnValue = false;
+    } else {
+      topicField.removeClass('border-red-500');
+      topicField.addClass('border-edsgreen');
+    }
+
+    if (nameField.val() === "") {
+      nameField.removeClass('border-edsgreen');
+      nameField.addClass('border-red-500');
+      returnValue = false;
+    } else {
+      nameField.removeClass('border-red-500');
+      nameField.addClass('border-edsgreen');
+    }
+
+    if (emailField.val() === "" || !isEmail(emailField.val())) {
+      emailField.removeClass('border-edsgreen');
+      emailField.addClass('border-red-500');
+      returnValue = false;
+    } else {
+      emailField.removeClass('border-red-500');
+      emailField.addClass('border-edsgreen');
+    }
+
+    if (shortMessage.val() === "") {
+      shortMessage.removeClass('border-edsgreen');
+      shortMessage.addClass('border-red-500');
+      returnValue = false;
+    } else {
+      shortMessage.removeClass('border-red-500');
+      shortMessage.addClass('border-edsgreen');
+    }
+
+    return returnValue;
+
+  }
+
+  function isEmail(email) {
+    let regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+    return regex.test(email);
+  }
+
+
+  $(document).ready(function(){
+    // Add smooth scrolling to all links
+    $("a").on('click', function(event) {
+
+      // Make sure this.hash has a value before overriding default behavior
+      if (this.hash !== "") {
+        // Prevent default anchor click behavior
+        event.preventDefault();
+
+        // Store hash
+        var hash = this.hash;
+
+        // Using jQuery's animate() method to add smooth page scroll
+        // The optional number (800) specifies the number of milliseconds it takes to scroll to the specified area
+        $('html, body').animate({
+            scrollTop: $(hash).offset().top
+        }, 800, function(){
+
+          // Add hash (#) to URL when done scrolling (default click behavior)
+          window.location.hash = hash;
+        });
+      } // End if
+    });
+  });
+</script>
+{% endblock %}
