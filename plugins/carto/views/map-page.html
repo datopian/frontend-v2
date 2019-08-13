@@ -60,7 +60,6 @@ if (config.type === 'cartoVL') {
   
   config.layers.forEach(l => {
     const source = new carto.source.Dataset(l.source)
-    console.log(l.viz)
     const v = Object.assign({}, l.viz, {resolution:100})
     const viz = new carto.Viz(l.viz + ` \n filter: eq($an, 2016)`)
     const layer = new carto.Layer('layer', source, viz)
@@ -75,13 +74,11 @@ if (config.type === 'cartoVL') {
   })
 
   function showInfo(event) {
-    console.log(event.features)
     let content = '<div class="container">'
     
     if (!event.features) return
 
     for (let feature of event.features) {
-      console.log(feature)
       content = Object.keys(feature.variables).reduce((acc, cur) => {
         return acc + `
           <p><span class="">${cur}:</span><span>${feature.variables[cur].value}</span></p>

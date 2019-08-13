@@ -31,7 +31,6 @@ module.exports = function (app) {
       const header = headerResponse.ok ? await headerResponse.text() : ""
       const filters = filtersResponse.ok ? await filtersResponse.text() : ""
       const legend = legendResponse.ok ? await legendResponse.text() : ""
-      console.log(config)
 
       return res.render(path.join(__dirname, 'views/map-page.html'), {
         title: req.params.name,
