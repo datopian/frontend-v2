@@ -77,7 +77,7 @@
                 </div>
               </div>
               <!-- preview tables -->
-              <div id="datapackage-view-{{view.id}}" class="react-me tables"></div>
+              <div id="data-explorer" class="react-me tables"></div>
               <!-- End of div elements for React -->
               {% endfor %}
             </div>
@@ -284,13 +284,15 @@
       'downloaded data format': resourceFormat
     });
   }
+
+  var DP_ID = JSON.parse('{{ dpId | safe }}');
+
 </script>
 
-<!-- datastore-query-builder -->
-<script type="text/javascript" src="https://raw.githack.com/datopian/datastore-query-builder/master/dist/js/runtime~main.js"></script>
-<script type="text/javascript" src="https://raw.githack.com/datopian/datastore-query-builder/master/dist/js/2.js"></script>
-<script type="text/javascript" src="https://raw.githack.com/datopian/datastore-query-builder/master/dist/js/main.js"></script>
-<!-- datapackage-views-js -->
-<script type="text/javascript" src="https://raw.githack.com/datopian/datapackage-views-js/master/dist/js/main.js"></script>
+<script type="text/javascript" src="/static/js/runtime~main.a8a9905a.js"></script>
+<script type="text/javascript" src="/static/js/2.fdc9b210.chunk.js"></script>
+<script type="text/javascript" src="/static/js/main.5e1b92fa.chunk.js"></script>
+
+
 
 {% endblock %}
