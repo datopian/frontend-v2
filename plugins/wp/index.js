@@ -82,7 +82,6 @@ module.exports = function (app) {
       slug += `-${locale}`
     }
     try {
-      console.log('get post')
       const post = await Model.getPost(slug)
       res.render('static.html', {
         slug: post.slug,
