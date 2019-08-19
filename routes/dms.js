@@ -152,19 +152,24 @@ module.exports = function () {
       datapackage.views.push(view)
     })
 
-    const profile = await Model.getProfile(req.params.owner)
-    res.render('showcase.html', {
-      title: req.params.owner + ' | ' + req.params.name,
-      dataset: datapackage,
-      owner: {
-        name: profile.name,
-        title: profile.title,
-        description: utils.processMarkdown.render(profile.description),
-        avatar: profile.image_display_url || profile.image_url
-      },
-      thisPageFullUrl: req.protocol + '://' + req.get('host') + req.originalUrl,
-      dpId: JSON.stringify(datapackage).replace(/'/g, "&#x27;") // replace single quotes
-    })
+    try {
+      const profile = await Model.getProfile(req.params.owner)
+      res.render('showcase.html', {
+        title: req.params.owner + ' | ' + req.params.name,
+        dataset: datapackage,
+        owner: {
+          name: profile.name,
+          title: profile.title,
+          description: utils.processMarkdown.render(profile.description),
+          avatar: profile.image_display_url || profile.image_url
+        },
+        thisPageFullUrl: req.protocol + '://' + req.get('host') + req.originalUrl,
+        dpId: JSON.stringify(datapackage).replace(/'/g, "&#x27;") // replace single quotes
+      })
+    } catch (err) {
+      next(err)
+      return
+    }
   })
 
   router.get('/:owner/:name/datapackage.json', async (req, res, next) => {
