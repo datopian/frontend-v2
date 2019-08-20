@@ -4,10 +4,12 @@ const express = require('express')
 const moment = require('moment')
 
 const cms = require('./cms')
+const config = require('../../config')
 
 
 module.exports = function (app) {
   const Model = new cms.CmsModel()
+  const blogPath = config.get('WP_BLOG_PATH')
 
   app.get('/', async (req, res) => {
     // Get latest 3 blog posts and pass it to home template
@@ -29,8 +31,8 @@ module.exports = function (app) {
     })
   })
 
-  app.get('/news', listStaticPages)
-  app.get('/news/:page', showPostPage)
+  app.get(blogPath, listStaticPages)
+  app.get(`${blogPath}/:page`, showPostPage)
   app.get(['/:page', '/:parent/:page'], showStaticPage)
 
   async function listStaticPages(req, res) {
