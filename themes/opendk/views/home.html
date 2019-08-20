@@ -67,12 +67,12 @@ Welcome - Home
     {% for post in posts %}
     <!-- article-preview -->
     <article class="article-preview my-gutter pb-gutter md:w-1/3 md:mx-gutter">
-      <a class="article-preview_image" href="/news/{{post.slug}}">
+      <a class="article-preview_image" href="/blog/{{post.slug}}">
         <img class="article-preview_img" src="{{post.image or '/static/img/placeholder.svg'}}" />
       </a>
       <div class="article-preview_text">
         <h1 class="article-preview_heading">
-          <a class="article-preview_heading-link" href="/news/{{post.slug}}">{{ post.title }}</a>
+          <a class="article-preview_heading-link" href="/blog/{{post.slug}}">{{ post.title }}</a>
         </h1>
         <time class="article-preview_date">{{ post.modified }}</time>
         <p class="article-preview_content">
