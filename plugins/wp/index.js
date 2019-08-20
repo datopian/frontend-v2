@@ -79,8 +79,10 @@ module.exports = function (app) {
     // Locale of request, eg, 'en'
     const locale = req.getLocale()
     // To handle content in multiple languages, we create a page per language
-    // on WordPress with a suffix in a slug, e.g., if locale is 'da' => 'page-da'
-    if (locale !== 'en') {
+    // on WordPress with a suffix in a slug, e.g., if default locale is 'en':
+    // locale is 'en' > use 'page' slug when reading from WP
+    // locale is 'da' => use 'page-da' slug when reading from WP
+    if (locale !== config.get('SITE_LOCALE')) {
       slug += `-${locale}`
     }
     try {
