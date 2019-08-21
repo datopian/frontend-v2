@@ -267,6 +267,15 @@ EMAIL_PASSWORD=*****
 EMAIL_TO=to@example.com
 ```
 
+#### Applications showcase plugin
+
+To add applications showcase plugin to your application you need to
+enable the plugin in your `.env` file:
+
+```bash
+PLUGINS="... applications-showcase ..."
+```
+
 Here is the list of well-known services that can be used without setting host and port of your SMTP server: [Supported services](https://nodemailer.com/smtp/well-known/#supported-services).
 
 Then you need to implement `contact.html` template in your theme so that a contact form can be rendered at `/contact`.
