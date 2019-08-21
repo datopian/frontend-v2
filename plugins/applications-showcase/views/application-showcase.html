@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+
+{% block title %}
+{{ title }} - Dashboard
+{% endblock %}
+
+{% block content %}
+<div role="main">
+  <div id="content" class="container-fluid">
+    <div class="toolbar">
+      <ol class="breadcrumb">
+        <li class="home"><a href="/"><i class="fa fa-home"></i><span> Home</span></a></li>
+        <li><a href="/showcases">Showcases</a></li>
+        <li class="active"><a class=" active" href="{{ slug }}">{{ showcase.title }}</a></li>
+      </ol>
+    </div>
+    <div class="row wrapper">
+      <div class=" col-md-12 ">
+        <div class="flash-messages">
+        </div>
+      </div>
+      <div class="col-md-10 col-md-offset-1">
+      </div>
+      <aside class="col-md-3">
+        <div class="module module-narrow module-shallow">
+          <div class="module-content">
+            <h4>{{ showcase.title}}</h4>
+            <p>Submitted by</p>
+            <p class="text-2xl">{{ showcase.author }}</p>
+            <hr>
+            <a class="btn btn-primary" href="{{ showcase.url }}"><i class="fa fa-external-link"></i> Launch website</a>
+            <br><br>
+          </div>
+          <h2 class="module-heading">
+            <i class="fa fa-sitemap"></i>
+            {{__('Datasets in Showcase')}}
+          </h2>
+          <div class="module-content">
+            <nav>
+              <ul class="list-unstyled nav nav-simple nav-facet">
+                {% for dataset in datasets %}
+                <li class="nav-item">
+                  <a href="/{{ dataset.organization.name }}/{{ dataset.name }}" title="">
+                    <span>{{ dataset.title }}</span>
+                  </a>
+                </li>
+                {% endfor %}
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </aside>
+      <div class="col-md-9 ">
+        <article class="module">
+          <div class="module-content">
+            <h2>{{ showcase.title }}</h2>
+            <img src="{{ showcase.image_display_url }}" class="w-full">
+            <br>
+            <p class="text-3xl">{{ showcase.notes }}</p>
+            <br>
+            <a class="btn btn-primary" href="{{ showcase.url }}"><i class="fa fa-external-link"></i> Launch website</a>
+            <br>
+            {% for tag in showcase.tags %}
+                <span class="inline-block bg-gray-200 rounded-full px-3 py-1 font-semibold text-gray-700 mr-2 mt-10">
+                  <a href="/showcases">
+                    {{ tag.display_name }}
+                  </a>
+                </span>
+            {% endfor %}
+
+          </div>
+        </article>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
