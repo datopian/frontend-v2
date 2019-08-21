@@ -129,6 +129,11 @@ module.exports = function () {
     datapackage.resources.forEach((resource, index) => {
       // Convert bytes into human-readable format:
       resource.size = resource.size ? bytes(resource.size, {decimalPlaces: 0}) : resource.size
+      
+      const controls = {
+        showChartBuilder: false 
+      }
+
       const view = {
         id: index,
         title: resource.title || resource.name,
@@ -137,9 +142,12 @@ module.exports = function () {
         ],
         specType: null
       }
+
       resource.format = resource.format.toLowerCase()
+
       // Add 'table' views for each tabular resource:
       const tabularFormats = ['csv', 'tsv', 'dsv', 'xls', 'xlsx']
+      
       if (tabularFormats.includes(resource.format)) {
         view.specType = 'table'
       } else if (resource.format.includes('json')) {
@@ -148,8 +156,16 @@ module.exports = function () {
       } else if (resource.format === 'pdf') {
         view.specType = 'document'
       }
+      
+      // Determine when to show chart builder
+      const chartBuilderFormats = ['csv', 'tsv']
+      
+      if (chartBuilderFormats.includes(resource.format)) controls.showChartBuilder = true
 
-      datapackage.views.push(view)
+      // displayItem per resource
+      const displayItem = JSON.stringify({resources: [resource], views: [view], controls}).replace(/'/g, "&#x27;")
+      
+      datapackage.views.push(displayItem)
     })
 
     try {
@@ -164,7 +180,7 @@ module.exports = function () {
           avatar: profile.image_display_url || profile.image_url
         },
         thisPageFullUrl: req.protocol + '://' + req.get('host') + req.originalUrl,
-        dpId: JSON.stringify(datapackage).replace(/'/g, "&#x27;") // replace single quotes
+        dpId: JSON.stringify(datapackage).replace(/'/g, "&#x27;") // keep for backwards compat?
       })
     } catch (err) {
       next(err)
