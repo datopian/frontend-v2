@@ -135,8 +135,9 @@ module.exports = function () {
       // Convert bytes into human-readable format:
       resource.size = resource.size ? bytes(resource.size, {decimalPlaces: 0}) : resource.size
       
-      const controls = {
-        showChartBuilder: false 
+      let controls = {
+        showChartBuilder: false,
+        showMapBuilder: false
       }
 
       const view = {
@@ -152,8 +153,12 @@ module.exports = function () {
 
       // Add 'table' views for each tabular resource:
       const tabularFormats = ['csv', 'tsv', 'dsv', 'xls', 'xlsx']
+      let tabularMapView
       
       if (tabularFormats.includes(resource.format)) {
+        // DataExplorer needs a second view to render a map from tabular data
+        tabularMapView = Object.assign({}, view)
+        tabularMapView.specType = "tabularmap"
         view.specType = 'table'
       } else if (resource.format.includes('json')) {
         // Add 'map' views for each geo resource:
@@ -161,14 +166,17 @@ module.exports = function () {
       } else if (resource.format === 'pdf') {
         view.specType = 'document'
       }
+
       
       // Determine when to show chart builder
       const chartBuilderFormats = ['csv', 'tsv']
       
-      if (chartBuilderFormats.includes(resource.format)) controls.showChartBuilder = true
+      if (chartBuilderFormats.includes(resource.format)) controls = { showChartBuilder: true, showMapBuilder: true }
 
+      const dataExplorer = JSON.stringify({resources: [resource], views: [tabularMapView, view], controls}).replace(/'/g, "&#x27;")
+      
       // displayItem per resource
-      const dataExplorer = JSON.stringify({resources: [resource], views: [view], controls}).replace(/'/g, "&#x27;")
+      // // // // // // // // const dataExplorer = JSON.stringify({resources: [resource], views: [view], controls}).replace(/'/g, "&#x27;")
       
       datapackage.dataExplorers.push(dataExplorer)
       datapackage.views.push(view)
