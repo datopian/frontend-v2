@@ -1,4 +1,4 @@
-'use string'
+'use strict'
 const nock = require('nock')
 
 
