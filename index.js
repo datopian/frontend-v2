@@ -51,8 +51,8 @@ module.exports.makeApp = function () {
   app.use(session({ secret: 'keyboard cat', cookie: { maxAge: 60000 }}))
   app.use(flash())
   
-  loadPlugins(app)
   loadTheme(app)
+  loadPlugins(app)
 
   // Redirect x/y/ to x/y
   app.use((req, res, next) => {

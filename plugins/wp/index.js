@@ -4,10 +4,12 @@ const express = require('express')
 const moment = require('moment')
 
 const cms = require('./cms')
+const config = require('../../config')
 
 
 module.exports = function (app) {
   const Model = new cms.CmsModel()
+  const blogPath = config.get('WP_BLOG_PATH')
 
   app.get('/', async (req, res) => {
     // Get latest 3 blog posts and pass it to home template
@@ -29,8 +31,8 @@ module.exports = function (app) {
     })
   })
 
-  app.get('/news', listStaticPages)
-  app.get('/news/:page', showPostPage)
+  app.get(blogPath, listStaticPages)
+  app.get(`${blogPath}/:page`, showPostPage)
   app.get(['/:page', '/:parent/:page'], showStaticPage)
 
   async function listStaticPages(req, res) {
@@ -77,12 +79,13 @@ module.exports = function (app) {
     // Locale of request, eg, 'en'
     const locale = req.getLocale()
     // To handle content in multiple languages, we create a page per language
-    // on WordPress with a suffix in a slug, e.g., if locale is 'da' => 'page-da'
-    if (locale !== 'en') {
+    // on WordPress with a suffix in a slug, e.g., if default locale is 'en':
+    // locale is 'en' > use 'page' slug when reading from WP
+    // locale is 'da' => use 'page-da' slug when reading from WP
+    if (locale !== config.get('SITE_LOCALE')) {
       slug += `-${locale}`
     }
     try {
-      console.log('get post')
       const post = await Model.getPost(slug)
       res.render('static.html', {
         slug: post.slug,

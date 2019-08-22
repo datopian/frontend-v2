@@ -19,7 +19,9 @@ nconf.defaults({
   },
   API_URL: api_url,
   SITE_URL: process.env.SITE_URL || 'http://0.0.0.0:4000',
+  SITE_LOCALE: process.env.SITE_LOCALE || 'en',
   WP_URL: process.env.WP_URL || 'http://127.0.0.1:6000',
+  WP_BLOG_PATH: process.env.WP_BLOG_PATH || '/news',
   WP_TOKEN: process.env.WP_TOKEN || '',
   THEME_DIR: process.env.THEME_DIR || 'themes',
   NODE_MODULES_PATH: process.env.NODE_MODULES_PATH || 'node_modules',
@@ -27,8 +29,12 @@ nconf.defaults({
   PLUGIN_DIR: process.env.PLUGIN_DIR || 'plugins',
   // CKAN pages PLUGIN
   CKAN_PAGES_URL: process.env.CKAN_PAGES_URL || api_url,
-  // dashboard PLUGIN
-  GIT_BASE_URL: process.env.GIT_BASE_URL || 'https://raw.githubusercontent.com'
+  // dashboard and maps PLUGIN
+  GIT_BASE_URL: process.env.GIT_BASE_URL || 'https://raw.githubusercontent.com',
+  // carto plugin
+  CARTO_USER: process.env.CARTO_USER || '',
+  CARTO_APIKEY: process.env.CARTO_APIKEY || 'default_public'
+
 })
 
 module.exports = {

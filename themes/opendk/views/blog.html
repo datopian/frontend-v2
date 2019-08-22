@@ -12,7 +12,7 @@
         <a class="breadcrumb_link" href="/">Home</a>
       </li>
       <li class="breadcrumb_item">
-        <a class="breadcrumb_link" href="/news" aria-current="page">Blog</a>
+        <a class="breadcrumb_link" href="/blog" aria-current="page">Blog</a>
       </li>
     </ol>
   </nav>
@@ -29,12 +29,12 @@
     {% else %}
     <article class="article-preview mb-gutter pb-gutter lg:w-1/2 lg:pl-gutter">
     {% endif %}
-      <a class="article-preview_image" href="/news/{{post.slug}}">
+      <a class="article-preview_image" href="/blog/{{post.slug}}">
         <img class="article-preview_img" src="{{post.image or '/static/img/placeholder.svg'}}" />
       </a>
       <div class="article-preview_text">
         <h1 class="article-preview_heading">
-          <a class="article-preview_heading-link" href="/news/{{post.slug}}">{{post.title}}</a>
+          <a class="article-preview_heading-link" href="/blog/{{post.slug}}">{{post.title}}</a>
         </h1>
         <time class="article-preview_date">{{post.modified}}</time>
         <div class="article-preview_content">

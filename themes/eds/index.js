@@ -50,67 +50,9 @@ module.exports = function (app) {
       }
     ]
 
-    // Prep resource e.g., make an inline datapackage and pass to renderer lib
-    datapackage.resources[0].path = config.get('API_URL') + `datastore_search?resource_id=${datapackage.resources[0].id}`
-    const response = await fetch(datapackage.resources[0].path)
-    if (response.ok) {
-      const result = await response.json()
-      datapackage.resources[0].rows = result.result.total
-      datapackage.resources[0].data = result.result.records.map(record => {
-        delete record._id
-        delete record._full_text
-        return record
-      })
-    } else {
-      // Data is unavailable
-      datapackage.resources[0].unavailable = true
-    }
-    delete datapackage.resources[0].path
     // Resource format should be known tabular format for data previews to work
     // in EDS, all resources are in 'data' format which isn't valid for previewing
     datapackage.resources[0].format = 'csv'
-
-    // This is hardcoded schema for gasflow dataset for a demo:
-    if (datapackage.name === 'gasflow') {
-      datapackage.resources[0].name = 'gasflow'
-      const schema = {
-        fields: [
-          {
-            name: 'GasDay',
-            title: 'Gas Day',
-            type: 'date',
-            description: 'Gas Day is a period commencing at 06:00 CET on any day and ending at 06:00 CET on the following day. The Gas Day is reduced to 23 Hours at the transition to summer time and is increased to 25 Hours at the transition to winter time.',
-            example: '2017-12-24',
-            unit: 'Days'
-          },
-          {
-            name: 'KWhFromBiogas',
-            type: 'number'
-          },
-          {
-            name: 'KWhToDenmark',
-            type: 'number'
-          },
-          {
-            name: 'KWhFromNorthSea',
-            type: 'number'
-          },
-          {
-            name: 'KWhToOrFromStorage',
-            type: 'number'
-          },
-          {
-            name: 'KWhToOrFromGermany',
-            type: 'number'
-          },
-          {
-            name: 'KWhToSweden',
-            type: 'number'
-          }
-        ]
-      }
-      datapackage.resources[0].schema = schema
-    }
 
     // Since "datapackage-views-js" library renders views according to
     // descriptor's "views" property, we need to generate view objects:
@@ -153,7 +95,7 @@ module.exports = function (app) {
         avatar: profile.image_display_url || profile.image_url
       },
       thisPageFullUrl: req.protocol + '://' + req.get('host') + req.originalUrl,
-      dpId: JSON.stringify(datapackage).replace(/'/g, "&#x27;")
+      dpId: JSON.stringify(datapackage).replace(/\\/g, '\\\\').replace(/\'/g, "\\'")//.replace(/'/g, "&#x27;")
     })
   })
 }

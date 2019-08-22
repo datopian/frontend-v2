@@ -13,12 +13,20 @@ Clone the repo, install dependencies using yarn (or npm) and run the server:
 yarn
 yarn start
 ```
+or
+```bash
+npm install
+npm start
+```
 
-To run and watch HTML:
+You can also run the app in development mode which automatically loads your changes to JS files and templates:
 
 ```bash
-# note the -e which means we watch for changes in templates too
-nodemon -e "js html" index.js
+yarn dev
+```
+or
+```bash
+npm run dev
 ```
 
 ## Set up your own backend
@@ -41,19 +49,7 @@ You can use one of built-in CMS plugins - check it out below.
 
 #### Wordpress
 
-The wordpress plugin (`/plugins/wp`) ships with frontend-v2. To enable it via `.env` file:
-
-```
-PLUGINS=wp
-```
-
-Use `WP_URL` environment variable to point to your WordPress instance. For example, we have test wordpress blog here https://edscms.home.blog/ so it would be:
-
-```
-WP_URL=https://edscms.home.blog/
-```
-
-If your blog is private, you can set up `WP_TOKEN` environment variable to pass your access token. To get access token for private WP blog, check out this - https://developer.wordpress.com/docs/oauth2/.
+Read about WordPress plugin here: https://github.com/datopian/frontend-v2/blob/master/plugins/wp/README.md
 
 #### CKAN Pages
 
