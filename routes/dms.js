@@ -126,6 +126,11 @@ module.exports = function () {
     // Since "datapackage-views-js" library renders views according to
     // descriptor's "views" property, we need to generate view objects:
     datapackage.views = datapackage.views || []
+
+    // Data Explorer used a slightly different spec
+    datapackage.dataExplorers= []
+
+    // Create a visualization per resource as needed
     datapackage.resources.forEach((resource, index) => {
       // Convert bytes into human-readable format:
       resource.size = resource.size ? bytes(resource.size, {decimalPlaces: 0}) : resource.size
@@ -163,9 +168,10 @@ module.exports = function () {
       if (chartBuilderFormats.includes(resource.format)) controls.showChartBuilder = true
 
       // displayItem per resource
-      const displayItem = JSON.stringify({resources: [resource], views: [view], controls}).replace(/'/g, "&#x27;")
+      const dataExplorer = JSON.stringify({resources: [resource], views: [view], controls}).replace(/'/g, "&#x27;")
       
-      datapackage.views.push(displayItem)
+      datapackage.dataExplorers.push(dataExplorer)
+      datapackage.views.push(view)
     })
 
     try {
