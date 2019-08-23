@@ -175,9 +175,7 @@ module.exports = function () {
 
       const dataExplorer = JSON.stringify({resources: [resource], views: [tabularMapView, view], controls}).replace(/'/g, "&#x27;")
       
-      // displayItem per resource
-      // // // // // // // // const dataExplorer = JSON.stringify({resources: [resource], views: [view], controls}).replace(/'/g, "&#x27;")
-      
+      // Add Data Explorer item per resource
       datapackage.dataExplorers.push(dataExplorer)
       datapackage.views.push(view)
     })
