@@ -6,60 +6,29 @@
 
 {% block content %}
 
-<div role="main">
-  <div id="content" class="container-fluid">
-    <div class="toolbar">
-      <ol class="breadcrumb">
-        <li class="home"><a href="/"><i class="fa fa-home"></i><span> Home</span></a></li>
-        <li class="active"><a class=" active" href="{{ slug }}">{{__(title)}}</a></li>
-      </ol>
-    </div>
-    <div class="row wrapper">
-      <div class=" col-md-12 ">
-        <div class="flash-messages">
-        </div>
-      </div>
-      <div class="col-md-10 col-md-offset-1">
-      </div>
-      <aside class="col-md-3">
-        <div class="module module-narrow module-shallow">
-          <h2 class="module-heading">
-            <i class="fa fa-info-circle"></i>
-            {{__('What are '+title+'?')}}
-          </h2>
-          <div class="module-content">
-            <p>
-              {{ description }}
-            </p>
-          </div>
-        </div>
-      </aside>
-      <div class="col-md-9 ">
-        <article class="module">
-          <div class="module-content">
-            <h1 class="hide-heading">{{ title }}</h1>
-            <div class="row">
-              <div class="col-md-7">
-                <h3>{{ showcases|length }} showcase{{ "s" if showcases|length != 1 else ""}} found</h3>
-              </div>
-            </div>
-            <ul class="media-grid" data-module="media-grid">
-              {% for showcase in showcases %}
-              <li class="media-item">
-                <img class="content-center" src="{{ imageRoot + showcase.extras[0].value if showcase.extras[0].value else 'static/img/placeholder-organization.png'}}" alt="{{ showcase.name }}" class="media-image">
-                <h3 class="media-heading">{{ showcase.title }}</h3>
-                <a href="/{{ slug }}/single/{{ showcase.id }}" title="{{ showcase.title }}" class="media-view">
-                  <span>View {{ showcase.title }}</span>
-                </a>
-                <p class="content-start">{{ showcase.notes|truncate(100) }}</p>
-              </li>
-              {% endfor %}
-              <li class="clearfix js-hide"></li>
-            </ul>
-          </div>
-        </article>
-      </div>
-    </div>
+<div id="content" class="container p-10">
+  <nav class="bg-grey-light rounded font-sans w-full pb-10">
+    <ol class="list-reset flex text-grey-dark">
+      <li><a href="/" class="text-gray-500">Accueil</a></li>
+      <li><span class="mx-2">/</span></li>
+      <li><a href="/showcases" class="font-bold">Showcases</a></li>
+    </ol>
+  </nav>
+  <div class="container">
+    <p class="text-4xl text-gray-500 font-bold">{{ title }}</p>
+    <ul class="media-grid" data-module="media-grid">
+      {% for showcase in showcases %}
+      <li class="media-item">
+        <img class="content-center" src="{{ imageRoot + showcase.extras[0].value if showcase.extras[0].value else 'static/img/placeholder-organization.png'}}" alt="{{ showcase.name }}" class="media-image">
+        <h3 class="media-heading">{{ showcase.title }}</h3>
+        <a href="/{{ slug }}/single/{{ showcase.id }}" title="{{ showcase.title }}" class="media-view">
+          <span>View {{ showcase.title }}</span>
+        </a>
+        <p class="content-start">{{ showcase.notes|truncate(100) }}</p>
+      </li>
+      {% endfor %}
+      <li class="clearfix js-hide"></li>
+    </ul>
   </div>
 </div>
 
