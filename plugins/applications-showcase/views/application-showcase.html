@@ -7,70 +7,66 @@
 {% block content %}
 <div role="main">
   <div id="content" class="container-fluid">
-    <div class="toolbar">
-      <ol class="breadcrumb">
-        <li class="home"><a href="/"><i class="fa fa-home"></i><span> Home</span></a></li>
-        <li><a href="/showcases">Showcases</a></li>
-        <li class="active"><a class=" active" href="{{ slug }}">{{ showcase.title }}</a></li>
-      </ol>
+    <div class="container mx-auto p-gutter">
+      <nav class="breadcrumb" aria-label="breadcrumb">
+        <ol>
+          <li class="breadcrumb_item">
+            <a class="breadcrumb_link" href="/">{{__('Accueil')}}</a>
+          </li>
+          <li class="breadcrumb_item">
+            <a class="breadcrumb_link" href="/showcases">{{__('Showcases')}}</a>
+          </li>
+          <li class="breadcrumb_item">
+            <a class="breadcrumb_link" href="/showcases/single/{{ showcase.id }}" aria-current="page">{{ showcase.title|truncate(50) }}</a>
+          </li>
+        </ol>
+      </nav>
     </div>
-    <div class="row wrapper">
-      <div class=" col-md-12 ">
-        <div class="flash-messages">
+    <div class="container mx-auto md:flex p-gutter">
+      <div class="md:w-1/3 md:mr-gutter">
+        <div class="mb-gutter md:mr-10 md:pb-2">
+          <h2 class="text-primary text-xl font-semibold">{{ showcase.title }}</h2>
+          <p class="py-2 text-sm">{{__('Submitted by')}}</p>
+          <p class="py-2 text-lg">{{ showcase.author }}</p>
+          <a href="{{ showcase.url }}">
+            {{__('Launch website')}}
+          </a>
+        </div>
+        <div class="search-filters">
+          <section class="mb-6 md:pr-10">
+            <h2 class="bg-gray-200 px-4 py-3 border-t border-gray-200 font-bold">
+              {{__('Datasets in Showcase')}}
+            </h2>
+            <ul>
+              {% for dataset in datasets %}
+            <li class="border-t border-gray-200">
+              <a href="/{{ dataset.organization.name }}/{{ dataset.name }}" class="filter-button">
+                {{ dataset.title }}
+              </a>
+            </li>
+              {% endfor %}
+            </ul>
+          </section>
         </div>
       </div>
-      <div class="col-md-10 col-md-offset-1">
-      </div>
-      <aside class="col-md-3">
-        <div class="module module-narrow module-shallow">
-          <div class="module-content">
-            <h4>{{ showcase.title}}</h4>
-            <p>Submitted by</p>
-            <p class="text-2xl">{{ showcase.author }}</p>
-            <hr>
-            <a class="btn btn-primary" href="{{ showcase.url }}"><i class="fa fa-external-link"></i> Launch website</a>
-            <br><br>
-          </div>
-          <h2 class="module-heading">
-            <i class="fa fa-sitemap"></i>
-            {{__('Datasets in Showcase')}}
-          </h2>
-          <div class="module-content">
-            <nav>
-              <ul class="list-unstyled nav nav-simple nav-facet">
-                {% for dataset in datasets %}
-                <li class="nav-item">
-                  <a href="/{{ dataset.organization.name }}/{{ dataset.name }}" title="">
-                    <span>{{ dataset.title }}</span>
-                  </a>
-                </li>
-                {% endfor %}
-              </ul>
-            </nav>
-          </div>
-        </div>
-      </aside>
-      <div class="col-md-9 ">
-        <article class="module">
-          <div class="module-content">
-            <h2>{{ showcase.title }}</h2>
-            <img src="{{ showcase.image_display_url }}" class="w-full">
-            <br>
-            <p class="text-3xl">{{ showcase.notes }}</p>
-            <br>
-            <a class="btn btn-primary" href="{{ showcase.url }}"><i class="fa fa-external-link"></i> Launch website</a>
-            <br>
-            {% for tag in showcase.tags %}
-                <span class="inline-block bg-gray-200 rounded-full px-3 py-1 font-semibold text-gray-700 mr-2 mt-10">
-                  <a href="/showcases">
-                    {{ tag.display_name }}
-                  </a>
-                </span>
-            {% endfor %}
-
-          </div>
-        </article>
-      </div>
+      <main class="md:w-2/3">
+          <h2 class="text-primary text-3xl font-semibold">{{ showcase.title }}</h2>
+          <img src="{{ showcase.image_display_url }}" class="w-full">
+        <br>
+        <p class="text-lg">{{ showcase.notes }}</p>
+        <br>
+        <a href="{{ showcase.url }}">
+          {{__('Launch website')}}
+        </a>
+        <br>
+        {% for tag in showcase.tags %}
+          <span class="inline-block bg-gray-200 rounded-full px-3 py-1 font-semibold text-gray-700 mr-2 mt-10">
+            <a href="/showcases">
+              {{ tag.display_name }}
+            </a>
+          </span>
+        {% endfor %}
+      </main>
     </div>
   </div>
 </div>
