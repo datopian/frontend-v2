@@ -21,13 +21,10 @@ module.exports = function (app) {
 
       let showcases = await response.json();
 
-      let imageRoot = configApiUrl.substring(0,configApiUrl.indexOf('/api/3/action/')) + '/uploads/showcase/';
-
       return res.render(path.join(__dirname, 'views/application-showcases.html'), {
         title: 'Showcases',
         description: 'Showcases are any app, article or report that relate to the published dataset. For example, an annual report that contains aggregated information relating to the dataset or a website where there is further background information on the dataset or a link to an app that has been created utilising some or all of the dataset.',
         slug: 'showcases',
-        imageRoot: imageRoot,
         showcases: showcases.result
       })
     } catch(e) {

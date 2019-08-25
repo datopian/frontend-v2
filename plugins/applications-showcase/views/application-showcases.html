@@ -16,18 +16,22 @@
   </nav>
   <div class="container">
     <p class="text-4xl text-gray-500 font-bold">{{ title }}</p>
-    <ul class="media-grid" data-module="media-grid">
+    <p class="text-lg text-gray-500">{{ description }}</p>
+    <ul class="sm:flex flex-wrap sm:-mx-4 mt-gutter">
+      <!-- group -->
       {% for showcase in showcases %}
-      <li class="media-item">
-        <img class="content-center" src="{{ imageRoot + showcase.extras[0].value if showcase.extras[0].value else 'static/img/placeholder-organization.png'}}" alt="{{ showcase.name }}" class="media-image">
-        <h3 class="media-heading">{{ showcase.title }}</h3>
-        <a href="/{{ slug }}/single/{{ showcase.id }}" title="{{ showcase.title }}" class="media-view">
-          <span>View {{ showcase.title }}</span>
+      <li class="sm:w-1/2 lg:w-1/3">
+        <a class="flex bg-gray-200 p-4 text-primary my-4 sm:mx-4" href="/showcases/single/{{ showcase.id }}">
+          <div class="w-24 h-24 mr-4 p-4 flex-shrink-0 flex justify-center bg-secondary">
+            <img class="w-full" src="{{ showcase.extras[0].value }}">
+          </div>
+          <div class="flex flex-col justify-center overflow-hidden">
+            <h2 class="font-semibold text-lg">{{ showcase.title }}</h2>
+            <p>{{ showcase.notes|truncate(100) }}</p>
+          </div>
         </a>
-        <p class="content-start">{{ showcase.notes|truncate(100) }}</p>
       </li>
       {% endfor %}
-      <li class="clearfix js-hide"></li>
     </ul>
   </div>
 </div>
