@@ -56,7 +56,6 @@ module.exports = function (app) {
         headers: { 'Content-Type': 'application/json' }
       })
 
-
       if (datasetsResponse.status !== 200) {
         throw datasetsResponse
       }
