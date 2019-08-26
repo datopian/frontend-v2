@@ -23,7 +23,6 @@ module.exports = function (app) {
         showcases: showcases.result
       })
     } catch(e) {
-      console.warn('Error loading applications showcase list', e)
       next(e)
     }
   })
@@ -57,7 +56,6 @@ module.exports = function (app) {
         headers: { 'Content-Type': 'application/json' }
       })
 
-      console.log(apiUrl, JSON.stringify(datasetsResponse))
 
       if (datasetsResponse.status !== 200) {
         throw datasetsResponse
@@ -70,7 +68,6 @@ module.exports = function (app) {
         datasets: datasets.result
       })
     } catch(e) {
-      console.warn('Error loading applications showcase page', e)
       next(e)
     }
   })
