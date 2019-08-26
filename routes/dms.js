@@ -126,9 +126,20 @@ module.exports = function () {
     // Since "datapackage-views-js" library renders views according to
     // descriptor's "views" property, we need to generate view objects:
     datapackage.views = datapackage.views || []
+
+    // Data Explorer used a slightly different spec
+    datapackage.dataExplorers= []
+
+    // Create a visualization per resource as needed
     datapackage.resources.forEach((resource, index) => {
       // Convert bytes into human-readable format:
       resource.size = resource.size ? bytes(resource.size, {decimalPlaces: 0}) : resource.size
+      
+      let controls = {
+        showChartBuilder: false,
+        showMapBuilder: false
+      }
+
       const view = {
         id: index,
         title: resource.title || resource.name,
@@ -137,10 +148,17 @@ module.exports = function () {
         ],
         specType: null
       }
+
       resource.format = resource.format.toLowerCase()
+
       // Add 'table' views for each tabular resource:
       const tabularFormats = ['csv', 'tsv', 'dsv', 'xls', 'xlsx']
+      let tabularMapView
+      
       if (tabularFormats.includes(resource.format)) {
+        // DataExplorer needs a second view to render a map from tabular data
+        tabularMapView = Object.assign({}, view)
+        tabularMapView.specType = "tabularmap"
         view.specType = 'table'
       } else if (resource.format.includes('json')) {
         // Add 'map' views for each geo resource:
@@ -149,6 +167,16 @@ module.exports = function () {
         view.specType = 'document'
       }
 
+      
+      // Determine when to show chart builder
+      const chartBuilderFormats = ['csv', 'tsv']
+      
+      if (chartBuilderFormats.includes(resource.format)) controls = { showChartBuilder: true, showMapBuilder: true }
+
+      const dataExplorer = JSON.stringify({resources: [resource], views: [tabularMapView, view], controls}).replace(/'/g, "&#x27;")
+      
+      // Add Data Explorer item per resource
+      datapackage.dataExplorers.push(dataExplorer)
       datapackage.views.push(view)
     })
 
@@ -164,7 +192,7 @@ module.exports = function () {
           avatar: profile.image_display_url || profile.image_url
         },
         thisPageFullUrl: req.protocol + '://' + req.get('host') + req.originalUrl,
-        dpId: JSON.stringify(datapackage).replace(/'/g, "&#x27;") // replace single quotes
+        dpId: JSON.stringify(datapackage).replace(/'/g, "&#x27;") // keep for backwards compat?
       })
     } catch (err) {
       next(err)
