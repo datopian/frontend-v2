@@ -134,7 +134,8 @@ module.exports.convertToCkanSearchQuery = (query) => {
     start: '',
     sort: '',
     'facet.field': ['organization', 'groups', 'tags', 'res_format', 'license_id'],
-    'facet.limit': 5
+    'facet.limit': 5,
+    'facet.mincount': 0
   }
 
   ckanQuery.q = query.q
@@ -164,6 +165,7 @@ module.exports.convertToCkanSearchQuery = (query) => {
   // Facets
   ckanQuery['facet.field'] = query['facet.field'] || ckanQuery['facet.field']
   ckanQuery['facet.limit'] = query['facet.limit'] || ckanQuery['facet.limit']
+  ckanQuery['facet.mincount'] = query['facet.mincount'] || ckanQuery['facet.mincount']
 
   // Remove attributes with empty string, null or undefined values
   Object.keys(ckanQuery).forEach((key) => (!ckanQuery[key]) && delete ckanQuery[key])
@@ -240,7 +242,7 @@ function loadExtension(extension, extensionsPath) {
  **/
 module.exports.loadTheme = function (app) {
   console.log('Loading configured theme...')
-  
+
   try {
     const theme = config.get('THEME')
     const themePath = config.get('THEME_DIR')
@@ -258,12 +260,12 @@ module.exports.loadTheme = function (app) {
  **/
 module.exports.loadPlugins = function (app) {
   console.log('Loading configured plugins...')
-  
+
   try {
     const plugins = config.get('PLUGINS')
     const pluginPath = config.get('PLUGIN_DIR')
-    
-    if (!plugins) return 
+
+    if (!plugins) return
 
     // try to load each resource
     return plugins.split(' ').forEach(plugin => {
@@ -274,4 +276,4 @@ module.exports.loadPlugins = function (app) {
     console.warn('WARNING: Failed to load configured plugins', plugins, e)
     return []
   }
-} 
+}
