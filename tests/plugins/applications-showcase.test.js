@@ -27,3 +27,14 @@ test('get showcase item works', async t => {
   t.is(res.statusCode, 200)
   t.true(res.text.includes('Arbres Montréal'))
 })
+
+test('get showcase fails for missing resource', async t => {
+  t.plan(1)
+  config.set('PLUGINS', 'applications-showcase')
+  const app = require('../../index').makeApp() 
+  const res = await request(app)
+    .get('/showcases/single/xxxxx-2e34-4526-9e41-e099095bbf12')
+
+
+  t.is(res.statusCode, 500)
+})
