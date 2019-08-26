@@ -1,25 +1,20 @@
-const fs = require('fs');
-const path = require('path');
-const fetch = require('node-fetch');
-const config = require('../../config');
-
-//let tempApi = 'https://www.opendatani.gov.uk/api/3/action/'; // this one works
-let configApiUrl = config.get("API_URL");
-
+const fs = require('fs')
+const path = require('path')
+const fetch = require('node-fetch')
+const config = require('../../config')
+let configApiUrl = config.get("API_URL")
 
 module.exports = function (app) {
   app.get('/showcases', async (req, res, next) => {
     try {
-      //const apiUrl = config.get("API_URL") + 'ckanext_showcase_list'; // FIND REAL API ENDPOINT
-      const apiUrl = configApiUrl + 'ckanext_showcase_list';
-      //let showcaseItems = await fetch(apiUrl);
+      const apiUrl = configApiUrl + 'ckanext_showcase_list'
 
-      let response = await fetch(apiUrl);
+      let response = await fetch(apiUrl)
       if (response.status !== 200) {
         throw response
       }
 
-      let showcases = await response.json();
+      let showcases = await response.json()
 
       return res.render(path.join(__dirname, 'views/application-showcases.html'), {
         title: 'Showcases',
@@ -28,28 +23,30 @@ module.exports = function (app) {
         showcases: showcases.result
       })
     } catch(e) {
+      console.warn('Error loading applications showcase list', e)
       next(e)
     }
-  });
+  })
 
   app.get('/showcases/single/:showcaseId', async (req, res, next) => {
     try {
-      const id = req.params.showcaseId;
+      const id = req.params.showcaseId
+      const apiUrl = configApiUrl + 'ckanext_showcase_show'
 
       // retrieving showcase
-      let showcaseResponse = await fetch(configApiUrl + 'ckanext_showcase_show', {
+      let showcaseResponse = await fetch(apiUrl, {
         method: 'POST',
         body: JSON.stringify({
           id: id
         }),
         headers: { 'Content-Type': 'application/json' }
-      });
+      })
 
       if (showcaseResponse.status !== 200) {
         throw showcaseResponse
       }
 
-      let showcase = await showcaseResponse.json();
+      let showcase = await showcaseResponse.json()
 
       // retrieving datasets
       let datasetsResponse = await fetch(configApiUrl + 'ckanext_showcase_package_list', {
@@ -58,20 +55,23 @@ module.exports = function (app) {
           showcase_id: id
         }),
         headers: { 'Content-Type': 'application/json' }
-      });
+      })
+
+      console.log(apiUrl, JSON.stringify(datasetsResponse))
 
       if (datasetsResponse.status !== 200) {
         throw datasetsResponse
       }
 
-      let datasets = await datasetsResponse.json();
+      let datasets = await datasetsResponse.json()
 
       return res.render(path.join(__dirname, 'views/application-showcase.html'), {
         showcase: showcase.result,
         datasets: datasets.result
       })
     } catch(e) {
+      console.warn('Error loading applications showcase page', e)
       next(e)
     }
   })
-};
+}
