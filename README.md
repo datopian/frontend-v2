@@ -271,10 +271,10 @@ Then you need to implement `contact.html` template in your theme so that a conta
 ## Tests
 
 Set `.env` to hit mocked services:
+    - This basically means that you unset the API_URL environment variable.
 
 ```bash
-API_URL=http://127.0.0.1:5000/api/3/action/
-WP_URL=http://127.0.0.1:6000
+unset API_URL
 ```
 
 Run tests:
