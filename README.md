@@ -268,6 +268,16 @@ Here is the list of well-known services that can be used without setting host an
 
 Then you need to implement `contact.html` template in your theme so that a contact form can be rendered at `/contact`.
 
+#### Disqus plugin
+
+Disqus plugin is so far only  implemented for Montreal and you need to
+enable the plugin in your `.env` file:
+
+```bash
+PLUGINS="... disqus ..."
+PLUGINS="/collections,/collections/politiques-sociales"
+```
+
 ## Tests
 
 Set `.env` to hit mocked services:
