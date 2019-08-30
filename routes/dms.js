@@ -113,6 +113,73 @@ module.exports = function () {
     }
   })
 
+  function getResourceDataExplorer(view, resource) {
+    let chartView, tabularMapView
+    let controls = {
+      showChartBuilder: false,
+      showMapBuilder: false
+    }
+    
+    if (config.get('CHART_BUILDER_FORMATS').includes(view.format)) controls = { showChartBuilder: true, showMapBuilder: true }
+
+    if (config.get('TABULAR_FORMATS').includes(view.format)) {
+      // DataExplorer specific view to render a chart from tabular data
+      chartView = Object.assign({}, view)
+      chartView.specType = 'simple'
+      // DataExplorer specific view to render a map from tabular data
+      tabularMapView = Object.assign({}, view)
+      tabularMapView.specType = 'tabularmap'
+    }
+    
+    const views =  (tabularMapView) ? [view, chartView, tabularMapView] : [view]
+    const dataExplorer = JSON.stringify({resources: [resource], views, controls}).replace(/'/g, "&#x27;")
+    return dataExplorer
+  }
+  
+  function getResourceView(resource) {
+    const view = {
+      id: resource.index,
+      title: resource.title || resource.name,
+      format: resource.format,
+      resources: [
+         resource.name
+      ],
+      specType: null
+    }
+
+    // Add 'table' views for each tabular resource:
+    let chartView, tabularMapView
+    
+    if (config.get('TABULAR_FORMATS').includes(resource.format)) {
+      // Default table view
+      view.specType = 'table'
+    } else if (resource.format.includes('json')) {
+      // Add 'map' views for each geo resource:
+      view.specType = 'map'
+    } else if (resource.format === 'pdf') {
+      view.specType = 'document'
+    }
+
+    return view
+  }
+
+  // Prepare resource for rendering
+  function prepResource(resource) {
+    // Convert bytes into human-readable format:
+    resource.size = resource.size ? bytes(resource.size, {decimalPlaces: 0}) : resource.size
+    resource.format = resource.format.toLowerCase()
+
+    return resource
+  }
+
+    /*
+    // Share
+    const shareUrl = `${config.get('SITE_URL')}/${req.params.owner}/${req.params.name}/${resource.id}`
+    resource.shareLink = shareUrl
+    resource.iframeText = `<iframe src="${shareUrl} width="100%" height="475px" frameborder="0"></iframe>`
+    */
+
+
   router.get('/:owner/:name', async (req, res, next) => {
     let datapackage = null
 
@@ -132,57 +199,12 @@ module.exports = function () {
 
     // Create a visualization per resource as needed
     datapackage.resources.forEach((resource, index) => {
-      // Convert bytes into human-readable format:
-      resource.size = resource.size ? bytes(resource.size, {decimalPlaces: 0}) : resource.size
-      
-      let controls = {
-        showChartBuilder: false,
-        showMapBuilder: false
-      }
-
-      const view = {
-        id: index,
-        title: resource.title || resource.name,
-        resources: [
-           resource.name
-        ],
-        specType: null
-      }
-
-      resource.format = resource.format.toLowerCase()
-
-      // Add 'table' views for each tabular resource:
-      const tabularFormats = ['csv', 'tsv', 'dsv', 'xls', 'xlsx']
-      let chartView, tabularMapView
-      
-      if (tabularFormats.includes(resource.format)) {
-        // Default table view
-        view.specType = 'table'
-        // DataExplorer specific view to render a chart from tabular data
-        chartView = Object.assign({}, view)
-        chartView.specType = 'simple'
-        // DataExplorer specific view to render a map from tabular data
-        tabularMapView = Object.assign({}, view)
-        tabularMapView.specType = 'tabularmap'
-      } else if (resource.format.includes('json')) {
-        // Add 'map' views for each geo resource:
-        view.specType = 'map'
-      } else if (resource.format === 'pdf') {
-        view.specType = 'document'
-      }
-
-      
-      // Determine when to show chart builder
-      const chartBuilderFormats = ['csv', 'tsv']
-      
-      if (chartBuilderFormats.includes(resource.format)) controls = { showChartBuilder: true, showMapBuilder: true }
-
-      const views =  (tabularMapView) ? [view, chartView, tabularMapView] : [view]
-      const dataExplorer = JSON.stringify({resources: [resource], views, controls}).replace(/'/g, "&#x27;")
-      
-      // Add Data Explorer item per resource
-      datapackage.dataExplorers.push(dataExplorer)
+      resource.index = index
+      const preppedResource = prepResource(resource)
+      const view = getResourceView(preppedResource)
+      const dataExplorer = getResourceDataExplorer(view, preppedResource)
       datapackage.views.push(view)
+      datapackage.dataExplorers.push(dataExplorer)
     })
 
     try {
@@ -203,6 +225,23 @@ module.exports = function () {
       next(err)
       return
     }
+  })
+
+  router.get('/:owner/:name/:resource_id', async (req, res, next) => {
+    let datapackage = null
+
+    try {
+      datapackage = await Model.getPackage(req.params.name)
+    } catch (err) {
+      next(err)
+      return
+    }
+
+    const resource = datapackage.resources.filter(r => r.id === req.params.resource_id)
+    const view = getResourceView(prepResource(resource))
+    const dataExplorer = getResourceDataExplorer(view)
+
+    res.send(dataExplorer)
   })
 
   router.get('/:owner/:name/datapackage.json', async (req, res, next) => {

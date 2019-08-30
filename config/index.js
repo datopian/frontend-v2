@@ -33,8 +33,9 @@ nconf.defaults({
   GIT_BASE_URL: process.env.GIT_BASE_URL || 'https://raw.githubusercontent.com',
   // carto plugin
   CARTO_USER: process.env.CARTO_USER || '',
-  CARTO_APIKEY: process.env.CARTO_APIKEY || 'default_public'
-
+  CARTO_APIKEY: process.env.CARTO_APIKEY || 'default_public',
+  TABULAR_FORMATS: process.env.TABULAR_FORMATS || ['csv', 'tsv', 'dsv', 'xls', 'xlsx'],
+  CHART_BUILDER_FORMATS: process.env.CHART_BUILDER_FORMATS ||  ['csv', 'tsv']
 })
 
 module.exports = {
