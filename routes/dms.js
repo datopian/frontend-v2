@@ -167,16 +167,12 @@ module.exports = function () {
   function prepResource(resource) {
     // Convert bytes into human-readable format:
     resource.size = resource.size ? bytes(resource.size, {decimalPlaces: 0}) : resource.size
-    resource.format = resource.format.toLowerCase()
+    resource.format = resource.format && resource.format.toLowerCase()
 
     return resource
   }
 
     /*
-    // Share
-    const shareUrl = `${config.get('SITE_URL')}/${req.params.owner}/${req.params.name}/${resource.id}`
-    resource.shareLink = shareUrl
-    resource.iframeText = `<iframe src="${shareUrl} width="100%" height="475px" frameborder="0"></iframe>`
     */
 
 
@@ -199,10 +195,18 @@ module.exports = function () {
 
     // Create a visualization per resource as needed
     datapackage.resources.forEach((resource, index) => {
+      
+      // Create share links
+      const shareUrl = `${config.get('SITE_URL')}/${req.params.owner}/${req.params.name}/${resource.id}`
+      resource.shareLink = shareUrl
+      resource.iframeText = `<iframe src="${shareUrl}" width="100%" height="475px" frameborder="0"></iframe>`
       resource.index = index
+
       const preppedResource = prepResource(resource)
       const view = getResourceView(preppedResource)
       const dataExplorer = getResourceDataExplorer(view, preppedResource)
+
+      
       datapackage.views.push(view)
       datapackage.dataExplorers.push(dataExplorer)
     })
@@ -228,20 +232,20 @@ module.exports = function () {
   })
 
   router.get('/:owner/:name/:resource_id', async (req, res, next) => {
-    let datapackage = null
+    let datapackage,resource
 
     try {
       datapackage = await Model.getPackage(req.params.name)
+      resource = datapackage.resources.filter(r => r.id === req.params.resource_id)[0]
     } catch (err) {
       next(err)
       return
     }
 
-    const resource = datapackage.resources.filter(r => r.id === req.params.resource_id)
     const view = getResourceView(prepResource(resource))
-    const dataExplorer = getResourceDataExplorer(view)
+    const dataExplorer = getResourceDataExplorer(view, resource)
 
-    res.send(dataExplorer)
+    res.render("resource-bare.html", {dataExplorer})
   })
 
   router.get('/:owner/:name/datapackage.json', async (req, res, next) => {
