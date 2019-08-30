@@ -153,13 +153,17 @@ module.exports = function () {
 
       // Add 'table' views for each tabular resource:
       const tabularFormats = ['csv', 'tsv', 'dsv', 'xls', 'xlsx']
-      let tabularMapView
+      let chartView, tabularMapView
       
       if (tabularFormats.includes(resource.format)) {
-        // DataExplorer needs a second view to render a map from tabular data
-        tabularMapView = Object.assign({}, view)
-        tabularMapView.specType = "tabularmap"
+        // Default table view
         view.specType = 'table'
+        // DataExplorer specific view to render a chart from tabular data
+        chartView = Object.assign({}, view)
+        chartView.specType = 'simple'
+        // DataExplorer specific view to render a map from tabular data
+        tabularMapView = Object.assign({}, view)
+        tabularMapView.specType = 'tabularmap'
       } else if (resource.format.includes('json')) {
         // Add 'map' views for each geo resource:
         view.specType = 'map'
@@ -173,7 +177,7 @@ module.exports = function () {
       
       if (chartBuilderFormats.includes(resource.format)) controls = { showChartBuilder: true, showMapBuilder: true }
 
-      const views =  (tabularMapView) ? [tabularMapView, view] : [view]
+      const views =  (tabularMapView) ? [view, chartView, tabularMapView] : [view]
       const dataExplorer = JSON.stringify({resources: [resource], views, controls}).replace(/'/g, "&#x27;")
       
       // Add Data Explorer item per resource
