@@ -228,20 +228,19 @@ module.exports = function () {
   })
 
   router.get('/:owner/:name/:resource_id', async (req, res, next) => {
-    let datapackage = null
-
+    let datapackage, resource
     try {
       datapackage = await Model.getPackage(req.params.name)
+      resource = datapackage.resources.filter(r => r.id === req.params.resource_id)[0]
     } catch (err) {
       next(err)
       return
     }
 
-    const resource = datapackage.resources.filter(r => r.id === req.params.resource_id)
     const view = getResourceView(prepResource(resource))
-    const dataExplorer = getResourceDataExplorer(view)
+    const dataExplorer = getResourceDataExplorer(view, resource)
 
-    res.send(dataExplorer)
+    res.render("resource-bare.html", {dataExplorer})
   })
 
   router.get('/:owner/:name/datapackage.json', async (req, res, next) => {
