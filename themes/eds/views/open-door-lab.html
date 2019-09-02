@@ -10,8 +10,8 @@
   <div class="w-full pr-0 mb-8 md:w-1/2 md:pr-16 ">
     <h2 class="text-9xl uppercase text-edsgreen font-hairline mb-16">Welcome to the lab</h2>
     <p class="text-4xl text-gray-600">Open Door Lab is an ideaacelator,which test and demonstrates the value of the data
-      and digital business model in the electricty markets</p>
-    <p class="text-4xl text-gray-600"> your purpose your idea for the use of data and we test it together</p>
+      and digital business model in the electricty markets.</p>
+    <p class="text-4xl text-gray-600"> your purpose your idea for the use of data and we test it together!</p>
   </div>
   <div class="w-full  md:w-1/2 ">
 
@@ -201,18 +201,19 @@
   $('#attach').change(function() {
     var file_name = $(this).val().toLowerCase(),
       regex = new RegExp('(.*?)\.(docx|doc|pdf)$');
-    var file_size = $(this)[0].files[0];
+    var file_size = $(this)[0].files[0]['size'];
 
     if (!(regex.test(file_name)) || file_size.size > 3000000) {
       $('#attach-msg').
         html('Invalid Attachment. Upload docx/doc/pdf - UP TO 3 MB').
         removeClass('text-edsgreen').
-        addClass('text-red-500');
+        addClass('text-red-600 ');
       $('#send_mail').attr('disabled', true).removeClass('bg-edsdarkgreen').addClass('bg-gray-500');
     } else {
+      console.log(formatFileSize(file_size,3))
       $('#attach-msg').
-        html(file_name.split('\\').pop() + '').
-        removeClass('text-red-500').
+        html(file_name.split('\\').pop() + ' <strong>'+ formatFileSize(file_size)+ '<strong>').
+        removeClass('text-red-600').
         addClass('text-edsgreen');
       $('#send_mail').attr('disabled', false).removeClass('bg-gray-500').addClass('bg-edsdarkgreen');
     }
@@ -225,8 +226,8 @@
 
     if (!validateFields()) {
       $('#error_message_body').html('Please enter the valid input.');
-      $('#error_message').attr('hidden', false);
-
+      $('#error_message').attr('hidden', false)
+      window.scrollTo(0, 0);
       return
     };
 
@@ -296,6 +297,16 @@
     return returnValue;
 
   }
+
+  function formatFileSize(bytes,decimalPoint) {
+    if(bytes == 0) return '0 Bytes';
+    var k = 1000,
+      dm = decimalPoint || 2,
+      sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
+      i = Math.floor(Math.log(bytes) / Math.log(k));
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+  }
+
 
   $(document).ready(function() {
     // Add smooth scrolling to all links
