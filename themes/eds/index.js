@@ -98,4 +98,13 @@ module.exports = function (app) {
       dpId: JSON.stringify(datapackage).replace(/\\/g, '\\\\').replace(/\'/g, "\\'")//.replace(/'/g, "&#x27;")
     })
   })
+  app.get('/open-door-lab', async (req, res, next) => {
+    try {
+      res.render('open-door-lab.html', {
+        title: 'Open Door Lab',
+      })
+    } catch (err) {
+      next(err)
+    }
+  })
 }
