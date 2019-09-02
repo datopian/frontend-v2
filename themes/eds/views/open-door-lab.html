@@ -5,6 +5,7 @@
 {% endblock %}
 
 {% block content %}
+<!-- Section 1: Form and Info -->
 <div class="container flex flex-wrap mx-auto px-gutter bg-white my-20 font-hairline">
   <div class="w-full pr-0 mb-8 md:w-1/2 md:pr-16 ">
     <h2 class="text-9xl uppercase text-edsgreen font-hairline mb-16">Welcome to the lab</h2>
@@ -13,6 +14,28 @@
     <p class="text-4xl text-gray-600"> your purpose your idea for the use of data and we test it together</p>
   </div>
   <div class="w-full  md:w-1/2 ">
+
+    <div id="error_message" class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-10"
+         role="alert" hidden>
+      <strong class="font-bold">Error !</strong>
+      <span id="error_message_body" class="block sm:inline">Message was not sent</span>
+      </span>
+    </div>
+
+    <div id="status_message" class="bg-red-200 border border-red-200 text-red-700 px-4 py-3 rounded relative mb-10"
+         role="alert" hidden>
+      <strong class="font-bold">In Process!</strong>
+      <span id="status_message_body" class="block sm:inline">Please wait...</span>
+      </span>
+    </div>
+
+    <div id="success_message" class="bg-teal-100 border border-teal-400 text-teal-900 px-4 py-3 rounded relative mb-10"
+         role="alert" hidden>
+      <strong class="font-bold">Success!</strong>
+      <span id="success_message_body" class="block sm:inline">Thank you for your submission. It has been sent.</span>
+      </span>
+    </div>
+
     <div class="relative py-3">
       <div class="w-full">
         <label class="block text-edsgreen font-hairline text-2xl uppercase mb-2 cursor-default">Username/Email </label>
@@ -41,7 +64,7 @@
     <div class="relative py-5">
       <div class="w-full ">
         <label id="attach-msg" class="block text-right text-edsgreen font-hairline text-xl ">Accept docx/doc/pdf - UP TO
-          9.9MB </label>
+          3MB </label>
         <label id="attach-trigger" class="block text-right text-edsgreen font-hairline text-2xl uppercase"><i
           class="fa fa-paperclip" aria-hidden="true"></i> Attach File</label>
         <input id="attach" type="file" class="hidden">
@@ -55,7 +78,8 @@
     </div>
   </div>
 </div>
-
+<!-- Section End -->
+<!-- Section 1: Idea collection -->
 <div class="container mx-auto px-gutter bg-white my-20  ">
   <div class="flex flex-wrap justify-start w-full h-1/1 ">
     <div class="w-full lg:w-1/4 lg:px-2 mb-2  mt-2">
@@ -95,12 +119,13 @@
     </div>
   </div>
 </div>
-
+<!-- Section End -->
+<!-- Section 1: Grid Info -->
 <div class="container flex flex-wrap mx-auto px-gutter bg-white my-20 font-hairline ">
   <div class="w-full md:w-3/6">
     <div class="flex w-full mb-16 ">
       <div class="mr-6 w-24 flex-no-shrink">
-        <i class="fa fa-address-book-o fa-3x text-edsyellow"></i>
+        <i class="fa fa-heart-o fa-3x text-edsyellow"></i>
       </div>
       <div>
         <h4 class="mt-0 mb-16 font-light text-5xl mb-2 text-edsgreen md:w-4/5">HVAD ER FORMALET MED HVORDAN
@@ -115,7 +140,7 @@
     </div>
     <div class="flex w-full mb-16 ">
       <div class="mr-6 w-24 flex-no-shrink">
-        <i class="fa fa-address-book-o fa-3x text-edsyellow"></i>
+        <i class="fa fa-check-square-o fa-3x text-edsyellow"></i>
       </div>
       <div>
         <h4 class="mt-0 mb-16 font-light text-5xl mb-2 text-edsgreen md:w-4/5">HVAD ER FORMALET MED HVORDAN
@@ -134,7 +159,7 @@
   <div class="w-full md:w-3/6">
     <div class="flex w-full mb-16 ">
       <div class="mr-6 w-24 flex-no-shrink">
-        <i class="fa fa-address-book-o fa-3x text-edsyellow"></i>
+        <i class="fa fa-cog fa-3x text-edsyellow"></i>
       </div>
       <div>
         <h4 class="mt-0 mb-16 font-light text-5xl mb-2 text-edsgreen md:w-4/5">HVAD ER FORMALET MED HVORDAN
@@ -149,7 +174,7 @@
     </div>
     <div class="flex w-full mb-16 ">
       <div class="mr-6 w-24 flex-no-shrink">
-        <i class="fa fa-address-book-o fa-3x text-edsyellow"></i>
+        <i class="fa fa-envelope-o fa-3x text-edsyellow"></i>
       </div>
       <div>
         <h4 class="mt-0 mb-16 font-light text-5xl mb-2 text-edsgreen md:w-4/5">HVAD ER FORMALET MED HVORDAN
@@ -164,8 +189,7 @@
     </div>
   </div>
 </div>
-
-
+<!-- Section End -->
 {% endblock %}
 
 {% block scripts %}
@@ -199,16 +223,21 @@
     $('#error_message').attr('hidden', true);
     $('#success_message').attr('hidden', true);
 
-    if (!validateFields()) return;
+    if (!validateFields()) {
+      $('#error_message_body').html('Please enter the valid input.');
+      $('#error_message').attr('hidden', false);
+
+      return
+    };
+
     let file_data = $('#attach').prop('files')[0];
     let form_data = new FormData();
     form_data.append('username', $('#username').val());
     form_data.append('subject', $('#subject').val());
     form_data.append('ideaDetail', $('#idea_detail').val());
     form_data.append('attachment', file_data);
-    for (var pair of form_data.entries()) {
-      console.log(pair[0] + ', ' + pair[1]);
-    }
+    $('#status_message').attr('hidden', false);
+    $('#send_mail').attr('disabled', true).removeClass('bg-edsdarkgreen').addClass('bg-gray-500');
 
     $.ajax({
       url: '/open-door-lab',
@@ -217,16 +246,18 @@
       data: form_data,
       processData: false,
       contentType: false,
-
       success: function(data) {
         if (data.status === 200) {
+          $('#status_message').attr('hidden', true);
           $('#success_message').attr('hidden', false);
         } else {
           if (data.message) {
             $('#error_message_body').html(data.message);
           }
+          $('#status_message').attr('hidden', true);
           $('#error_message').attr('hidden', false);
         }
+        $('#send_mail').attr('disabled', false).removeClass('bg-gray-500').addClass('bg-edsdarkgreen');
         window.scrollTo(0, 0);
       },
       error: function(error) {
