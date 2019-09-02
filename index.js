@@ -48,7 +48,12 @@ module.exports.makeApp = function () {
   app.use(cors())
   app.use(cookieParser())
   app.use(i18n.init)
-  app.use(session({ secret: 'keyboard cat', cookie: { maxAge: 60000 }}))
+  app.use(session({
+    secret: config.get('SESSION_SECRET'),
+    cookie: {
+      maxAge: config.get("SESSION_COOKIE_MAX_AGE")
+    }
+  }))
   app.use(flash())
   
   loadTheme(app)
