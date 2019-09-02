@@ -1,4 +1,5 @@
 node_modules/
+sessions/
 
 # yarn
 yarn-error.log

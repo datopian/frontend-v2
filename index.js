@@ -5,6 +5,7 @@ const nunjucks = require('nunjucks')
 const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser')
 const session = require('express-session')
+const FileStore = require('session-file-store')(session)
 const flash = require('connect-flash')
 const i18n = require("i18n")
 
@@ -49,7 +50,10 @@ module.exports.makeApp = function () {
   app.use(cookieParser())
   app.use(i18n.init)
   app.use(session({
+    saveUninitialized: false,
+    resave: false,
     secret: config.get('SESSION_SECRET'),
+    store: new FileStore({}),
     cookie: {
       maxAge: config.get("SESSION_COOKIE_MAX_AGE")
     }
