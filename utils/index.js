@@ -130,6 +130,7 @@ module.exports.convertToStandardCollection = (descriptor) => {
 module.exports.convertToCkanSearchQuery = (query) => {
   const ckanQuery = {
     q: '',
+    fq: '',
     rows: '',
     start: '',
     sort: '',
@@ -139,6 +140,7 @@ module.exports.convertToCkanSearchQuery = (query) => {
   }
 
   ckanQuery.q = query.q
+  ckanQuery.fq = query.fq
 
   // standard 'size' => ckan 'rows'
   ckanQuery.rows = query.size || ''
@@ -166,6 +168,7 @@ module.exports.convertToCkanSearchQuery = (query) => {
   ckanQuery['facet.field'] = query['facet.field'] || ckanQuery['facet.field']
   ckanQuery['facet.limit'] = query['facet.limit'] || ckanQuery['facet.limit']
   ckanQuery['facet.mincount'] = query['facet.mincount'] || ckanQuery['facet.mincount']
+  ckanQuery['facet.field'] = query['facet.field'] || ckanQuery['facet.field']
 
   // Remove attributes with empty string, null or undefined values
   Object.keys(ckanQuery).forEach((key) => (!ckanQuery[key]) && delete ckanQuery[key])
