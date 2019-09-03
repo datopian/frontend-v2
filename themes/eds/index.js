@@ -103,13 +103,9 @@ module.exports = function (app) {
     })
   })
   app.get('/open-door-lab', async (req, res, next) => {
-    try {
       res.render('open-door-lab.html', {
         title: 'Open Door Lab',
-      })
-    } catch (err) {
-      next(err)
-    }
+    })
   })
 
   app.post('/open-door-lab',upload.single('attachment'), async (req, res, next) => {
