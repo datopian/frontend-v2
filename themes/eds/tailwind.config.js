@@ -4,7 +4,13 @@ module.exports = {
       colors: {
         edsgreen: '#008A8B',
         edsdarkgreen: '#08505D',
-        edsgray: '#F0EFEF'
+        edsgray: '#F0EFEF',
+        edsyellow: '#fbd236'
+
+      },
+      fontSize: {
+        '7xl': '5.5rem',
+        '9xl': '7rem'
       }
     },
     height: {
