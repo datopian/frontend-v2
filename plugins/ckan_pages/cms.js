@@ -26,10 +26,8 @@ class CmsModel {
   }
 
   // returns promise
-  // TODO get first 10 posts as per WP implementation
   async getListOfPosts(size) {
-    //const url = `${this.baseUrl}/api/3/action/ckanext_pages_list?page_type=blog`
-    const url = `${this.api}ckanext_pages_list`
+    const url = `${this.api}ckanext_pages_list?page_type=blog`
     const res = await fetch(url)
     if (res.ok) {
       const posts = await res.json()

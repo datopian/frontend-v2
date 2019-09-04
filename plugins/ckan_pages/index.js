@@ -1,4 +1,4 @@
-'use strict'
+'stuse strict'
 
 const express = require('express')
 const moment = require('moment')
@@ -15,7 +15,7 @@ module.exports = function (app) {
     let posts = await Model.getListOfPosts(size)
     posts = posts.map(post => {
       return {
-        slug: post.slug,
+        slug: post.name,
         title: post.title,
         content: post.content,
         published: moment(post.date).format('MMMM Do, YYYY'),
@@ -39,7 +39,7 @@ module.exports = function (app) {
     let posts = await Model.getListOfPosts(size)
     posts = posts.map(post => {
       return {
-        slug: post.slug,
+        slug: post.name,
         title: post.title,
         content: post.content,
         published: moment(post.date).format('MMMM Do, YYYY'),
