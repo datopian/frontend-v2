@@ -178,7 +178,7 @@ module.exports = function () {
       if (chartBuilderFormats.includes(resource.format)) controls = { showChartBuilder: true, showMapBuilder: true }
 
       const views =  (tabularMapView) ? [view, chartView, tabularMapView] : [view]
-      const dataExplorer = JSON.stringify({resources: [resource], views, controls}).replace(/'/g, "&#x27;")
+      const dataExplorer = JSON.stringify({datapackage: {resources: [resource], views, controls}}).replace(/'/g, "&#x27;")
       
       // Add Data Explorer item per resource
       datapackage.dataExplorers.push(dataExplorer)
