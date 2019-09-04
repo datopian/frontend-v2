@@ -1,55 +1,42 @@
 {% extends "base.html" %}
 
-{% block title%}{{title}}{% endblock %}
-
+{% block title%}
+  Show map
+{% endblock %}
 
 {% block content %}
+  <script src="https://libs.cartocdn.com/carto-vl/v1.2.4/carto-vl.min.js"></script>
 
-    <script src="https://libs.cartocdn.com/carto-vl/v1.2.4/carto-vl.min.js"></script>
-    <!-- Load Mapbox GL -->
-    <script src="https://api.tiles.mapbox.com/mapbox-gl-js/v0.52.0/mapbox-gl.js"></script>
-    <link href="https://api.tiles.mapbox.com/mapbox-gl-js/v0.52.0/mapbox-gl.css" rel="stylesheet">
-	<style>
-	  #map {
-		width: 80%;
-        height: 80%;
-        position: absolute;
-	  }
-      #legend {
-        position: fixed;
-        right: 2em;
-        bottom: 2em;
-      }
-      #info {
-        position: fixed;
-        top: 20%;
-        right: 2em;
-        background: rgba(255,255,255,.70);
-        width: 25%;
-        z-index: 100;
-      }
-      .iframe {
-        width: 100%;
-        height: 100%;
-        border: none;
-      }
-	</style>
+  <!-- Load Mapbox GL -->
+  <script src="https://api.tiles.mapbox.com/mapbox-gl-js/v0.52.0/mapbox-gl.js"></script>
+  <link href="https://api.tiles.mapbox.com/mapbox-gl-js/v0.52.0/mapbox-gl.css" rel="stylesheet">
 
-    <!-- Your map will go here -->
-	<div class="container">
+  <!-- Your map will go here -->
+  <div id="content" class="container mx-auto p-gutter">
+    <nav class="breadcrumb" aria-label="breadcrumb">
+      <ol>
+        <li class="breadcrumb_item">
+          <a class="breadcrumb_link" href="/">{{__('Home')}}</a>
+        </li>
+        <li class="breadcrumb_item">
+          <a class="breadcrumb_link" href="/maps/{{ title }}" aria-current="page">{{__('Show map')}}</a>
+        </li>
+      </ol>
+    </nav>
 	  <div>{{ readme | safe }}</div>
 	  <div id="info"></div>
-      <div id="filters">{{ filters | safe }}</div>
-      <div id="map">
-        {% if type == "iframe" %}
-          <iframe class="iframe" src="{{ iframeUrl }}" />
-        {% endif %}
-      </div>
-      <div id="legend" >{{ legend | safe }}</div>
-    </div> 
+    <div id="filters">{{ filters | safe }}</div>
+    <br>
+    <div id="map">
+      {% if type == "iframe" %}
+        <iframe class="iframe" src="{{ iframeUrl }}"></iframe>
+      {% endif %}
+    </div>
+    <div id="legend" >{{ legend | safe }}</div>
+  </div>
 
 <script>
-const config = {{ config | safe }}
+const config = {{ config | safe }};
 if (config.type === 'cartoVL') {
   const map = new mapboxgl.Map(config.map)
 
@@ -57,15 +44,15 @@ if (config.type === 'cartoVL') {
     username: 'paulwalker-datopian',
     apiKey: 'default_public'
   })
-  
+
   config.layers.forEach(l => {
     const source = new carto.source.Dataset(l.source)
     const v = Object.assign({}, l.viz, {resolution:100})
     const viz = new carto.Viz(l.viz + ` \n filter: eq($an, 2016)`)
     const layer = new carto.Layer('layer', source, viz)
-	const variables = l.variables || []
+	  const variables = l.variables || []
     const interactivity = new carto.Interactivity(layer)
-    
+
     interactivity.on('featureHover', e => {
 	  showInfo(e)
     });
@@ -74,16 +61,14 @@ if (config.type === 'cartoVL') {
   })
 
   function showInfo(event) {
-    let content = '<div class="container">'
-    
-    if (!event.features) return
+    let content = '<div class="container">';
+
+    if (!event.features) return;
 
     for (let feature of event.features) {
       content = Object.keys(feature.variables).reduce((acc, cur) => {
-        return acc + `
-          <p><span class="">${cur}:</span><span>${feature.variables[cur].value}</span></p>
-        `
-	  }, content)
+        return acc + `<p><span class="">${cur}:</span><span>${feature.variables[cur].value}</span></p>`
+	  }, content);
       content += `<hr/>`
     }
 
@@ -93,6 +78,3 @@ if (config.type === 'cartoVL') {
 </script>
 
 {% endblock %}
-
-<!-- wax footer -->
-{% block footer %}{% endblock %}
