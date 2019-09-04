@@ -148,8 +148,6 @@ module.exports = function () {
     }
 
     // Add 'table' views for each tabular resource:
-    let chartView, tabularMapView
-    
     if (config.get('TABULAR_FORMATS').includes(resource.format)) {
       // Default table view
       view.specType = 'table'
