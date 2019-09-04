@@ -3,6 +3,10 @@ const moment = require('moment')
 const config = require('../../config')
 const dms = require('../../lib/dms')
 const utils = require('../../utils')
+const multer  = require('multer')
+const nodemailer = require('nodemailer')
+var storage = multer.memoryStorage()
+var upload = multer({ storage: storage })
 
 
 module.exports = function (app) {
@@ -98,4 +102,66 @@ module.exports = function (app) {
       dpId: JSON.stringify(datapackage).replace(/\\/g, '\\\\').replace(/\'/g, "\\'")//.replace(/'/g, "&#x27;")
     })
   })
+  app.get('/open-door-lab', async (req, res, next) => {
+      res.render('open-door-lab.html', {
+        title: 'Open Door Lab',
+    })
+  })
+
+  app.post('/open-door-lab',upload.single('attachment'), async (req, res, next) => {
+    try {
+      if ((!config.get('SMTP_SERVICE')    &&
+        (!config.get('SMTP_HOST')       ||
+          !config.get('SMTP_PORT')))    ||
+        !config.get('EMAIL_FROM')       ||
+        !config.get('EMAIL_PASSWORD')   ||
+        !config.get('EMAIL_TO')) {
+        next({status: 500, message: 'One of the environment variables are not set for mailer plugin.'})
+        return
+      }
+
+      let transporter = nodemailer.createTransport({
+        service: config.get('SMTP_SERVICE'),
+        host: config.get('SMTP_HOST'),
+        port: config.get('SMTP_PORT'),
+        auth: {
+          user: config.get('EMAIL_FROM'),
+          pass: config.get('EMAIL_PASSWORD')
+        }
+      })
+
+      let mailSubject = 'Open Door Lab'
+      let mailBody = 'Name: ' + req.body.username + '\n'
+      mailBody += 'subject: ' + req.body.subject + '\n'
+      mailBody += 'Idea: ' + req.body.ideaDetail + '\n'
+
+      let mailOptions = {
+        from: config.get('EMAIL_FROM'),
+        to: config.get('EMAIL_TO'),
+        subject: mailSubject,
+        text: mailBody,
+        attachments: [
+          {
+            filename: req.file.originalname,
+            content: req.file.buffer.toString('base64'),
+            encoding: 'base64'
+          },
+        ]
+      }
+
+      transporter.sendMail(mailOptions, function(err, data) {
+        if (err) {
+          next({status: 500, message: err})
+          return
+        } else {
+          res.send({status: 200})
+        }
+      })
+    } catch (err) {
+      next({ status: 500, message: err })
+    }
+
+
+  })
+
 }

@@ -1,0 +1,338 @@
+{% extends "base-eds.html" %}
+
+{% block title %}
+{{title}}
+{% endblock %}
+
+{% block content %}
+<div class="container">
+<!-- Section 1: Form and Info -->
+<div class="flex flex-wrap mx-auto px-gutter bg-white my-20 font-hairline">
+  <div class="w-full pr-0 mb-8 md:w-1/2 md:pr-16 ">
+    <h2 class="text-9xl uppercase text-edsgreen font-hairline mb-16">Welcome to the lab</h2>
+    <p class="text-4xl text-gray-600">Open Door Lab is an ideaacelator,which test and demonstrates the value of the data
+      and digital business model in the electricty markets.</p>
+    <p class="text-4xl text-gray-600"> your purpose your idea for the use of data and we test it together!</p>
+  </div>
+  <div class="w-full  md:w-1/2 ">
+
+    <div id="error_message" class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-10"
+         role="alert" hidden>
+      <strong class="font-bold">Error !</strong>
+      <span id="error_message_body" class="block sm:inline">Message was not sent</span>
+      </span>
+    </div>
+
+    <div id="status_message" class="bg-red-200 border border-red-200 text-red-700 px-4 py-3 rounded relative mb-10"
+         role="alert" hidden>
+      <strong class="font-bold">In Process!</strong>
+      <span id="status_message_body" class="block sm:inline">Please wait...</span>
+      </span>
+    </div>
+
+    <div id="success_message" class="bg-teal-100 border border-teal-400 text-teal-900 px-4 py-3 rounded relative mb-10"
+         role="alert" hidden>
+      <strong class="font-bold">Success!</strong>
+      <span id="success_message_body" class="block sm:inline">Thank you for your submission. It has been sent.</span>
+      </span>
+    </div>
+
+    <div class="relative py-3">
+      <div class="w-full">
+        <label class="block text-edsgreen font-hairline text-2xl uppercase mb-2 cursor-default">Username/Email </label>
+        <input id="username"
+               class="text-2xl appearance-none block w-full text-gray-700 bg-edsgray py-5 px-4 leading-tight focus:outline-none"
+               type="text">
+      </div>
+    </div>
+    <div class="relative py-3">
+      <div class="w-full">
+        <label class="block text-edsgreen font-hairline text-2xl uppercase mb-2 cursor-default">Subject</label>
+        <input id="subject"
+               class="text-2xl appearance-none block w-full text-gray-700 bg-edsgray py-5 px-4 leading-tight focus:outline-none"
+               type="email">
+      </div>
+    </div>
+    <div class="relative py-3">
+      <div class="w-full">
+        <label class="block text-edsgreen font-hairline text-2xl uppercase mb-2 cursor-default">Put your idea in
+          writing</label>
+        <textarea id="idea_detail"
+                  class="block text-2xl appearance-none block w-full text-gray-700 bg-edsgray py-5 px-4 leading-tight focus:outline-none"
+                  type="email" id="contact-short-message"></textarea>
+      </div>
+    </div>
+    <div class="relative py-5">
+      <div class="w-full ">
+        <label id="attach-msg" class="block text-right text-edsgreen font-hairline text-xl ">Accept docx/doc/pdf - UP TO
+          3MB </label>
+        <label id="attach-trigger" class="block text-right text-edsgreen font-hairline text-2xl uppercase"><i
+          class="fa fa-paperclip" aria-hidden="true"></i> Attach File</label>
+        <input id="attach" type="file" class="hidden">
+      </div>
+    </div>
+
+    <div class="relative py-5">
+      <div class="w-full flex  justify-end">
+        <button id="send_mail" class="w-full text-2xl font-hairline bg-edsdarkgreen text-white py-6 px-10">Send</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Section End -->
+<!-- Section 1: Idea collection -->
+<div class="mx-auto px-gutter bg-white my-20  ">
+  <div class="flex flex-wrap justify-start w-full h-1/1 ">
+    <div class="w-full lg:w-1/4 lg:px-2 mb-2  mt-2">
+      <div class="flex react-me bg-gray-200 h-1/1">
+        <div class="m-auto"><p>PlACE HOLDER</p></div>
+      </div>
+    </div>
+    <div class="w-full lg:w-1/4 lg:px-2 mb-2  mt-2">
+      <div class="flex react-me bg-gray-200 h-1/1">
+        <div class="m-auto"><p>PlACE HOLDER</p></div>
+      </div>
+    </div>
+    <div class="order-first flex flex-col w-full mb-2 lg:w-1/2 lg:px-2 lg:order-none ">
+      <div class="flex react-me h-1/1 mb-2">
+        <p class="text-7xl uppercase text-edsgreen font-hairline pl-3 pb-3">Some of the things we've
+          tested and tried</p>
+      </div>
+      <div class="flex react-me bg-gray-200 h-1/2">
+        <p class="m-auto py-56">PlACE HOLDER</p>
+      </div>
+    </div>
+
+    <div class="w-full lg:w-1/2 lg:px-2 mb-2 mt-2">
+      <div class="flex react-me bg-gray-200 h-1/1">
+        <div class="m-auto"><p>PlACE HOLDER</p></div>
+      </div>
+    </div>
+    <div class="w-full lg:w-1/4 lg:px-2 mb-2 mt-2">
+      <div class="flex react-me bg-gray-200 h-1/1">
+        <div class="m-auto"><p>PlACE HOLDER</p></div>
+      </div>
+    </div>
+    <div class="w-full lg:w-1/4 lg:px-2 mb-2 mt-2">
+      <div class="flex react-me bg-gray-200 h-1/1">
+        <div class="m-auto"><p class="py-56">PlACE HOLDER</p></div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Section End -->
+<!-- Section 1: Grid Info -->
+<div class="flex flex-wrap mx-auto px-gutter bg-white my-20 font-hairline ">
+  <div class="w-full md:w-3/6">
+    <div class="flex w-full mb-16 ">
+      <div class="mr-6 w-24 flex-no-shrink">
+        <i class="fa fa-heart-o fa-3x text-edsyellow"></i>
+      </div>
+      <div>
+        <h4 class="mt-0 mb-16 font-light text-5xl mb-2 text-edsgreen md:w-4/5">HVAD ER FORMALET MED HVORDAN
+          FUNGERER</h4>
+        <div class="leading-normal font-light text-2xl text-gray-600">
+          Gennem Open Door Lab haber Energinet pa at kunne inspirere og blive Du henvender dig med din idé til Open
+          Door Lab, og safremt idéen liggerinspireret i arbejdet med at bringe data i anvendelse og szette skub i den
+          indenfor Open Doors Labs omrade, afpraver vi mulighederne i feellesskab.digitale, granne omstilling af
+          elsystemet. Hvis ikke det falder ind under Open Door Lab, hjzelper vi dig videre
+        </div>
+      </div>
+    </div>
+    <div class="flex w-full mb-16 ">
+      <div class="mr-6 w-24 flex-no-shrink">
+        <i class="fa fa-check-square-o fa-3x text-edsyellow"></i>
+      </div>
+      <div>
+        <h4 class="mt-0 mb-16 font-light text-5xl mb-2 text-edsgreen md:w-4/5">HVAD ER FORMALET MED HVORDAN
+          FUNGERER</h4>
+        <div class="leading-normal font-light text-2xl text-gray-600">
+          Gennem Open Door Lab haber Energinet pa at kunne inspirere og blive Du henvender dig med din idé til Open
+          Door Lab, og safremt idéen liggerinspireret i arbejdet med at bringe data i anvendelse og szette skub i den
+          indenfor Open Doors Labs omrade, afpraver vi mulighederne i feellesskab.digitale, granne omstilling af
+          elsystemet. Hvis ikke det falder ind under Open Door Lab, hjzelper vi dig videre
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="w-full md:w-3/6">
+    <div class="flex w-full mb-16 ">
+      <div class="mr-6 w-24 flex-no-shrink">
+        <i class="fa fa-cog fa-3x text-edsyellow"></i>
+      </div>
+      <div>
+        <h4 class="mt-0 mb-16 font-light text-5xl mb-2 text-edsgreen md:w-4/5">HVAD ER FORMALET MED HVORDAN
+          FUNGERER</h4>
+        <div class="leading-normal font-light text-2xl text-gray-600">
+          Gennem Open Door Lab haber Energinet pa at kunne inspirere og blive Du henvender dig med din idé til Open
+          Door Lab, og safremt idéen liggerinspireret i arbejdet med at bringe data i anvendelse og szette skub i den
+          indenfor Open Doors Labs omrade, afpraver vi mulighederne i feellesskab.digitale, granne omstilling af
+          elsystemet. Hvis ikke det falder ind under Open Door Lab, hjzelper vi dig videre
+        </div>
+      </div>
+    </div>
+    <div class="flex w-full mb-16 ">
+      <div class="mr-6 w-24 flex-no-shrink">
+        <i class="fa fa-envelope-o fa-3x text-edsyellow"></i>
+      </div>
+      <div>
+        <h4 class="mt-0 mb-16 font-light text-5xl mb-2 text-edsgreen md:w-4/5">HVAD ER FORMALET MED HVORDAN
+          FUNGERER</h4>
+        <div class="leading-normal font-light text-2xl text-gray-600">
+          Gennem Open Door Lab haber Energinet pa at kunne inspirere og blive Du henvender dig med din idé til Open
+          Door Lab, og safremt idéen liggerinspireret i arbejdet med at bringe data i anvendelse og szette skub i den
+          indenfor Open Doors Labs omrade, afpraver vi mulighederne i feellesskab.digitale, granne omstilling af
+          elsystemet. Hvis ikke det falder ind under Open Door Lab, hjzelper vi dig videre
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Section End -->
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  $('#attach-trigger').click(function() {
+    $('#attach').click();
+  });
+
+  $('#attach').change(function() {
+    var file_name = $(this).val().toLowerCase(),
+      regex = new RegExp('(.*?)\.(docx|doc|pdf)$');
+    var file_size = $(this)[0].files[0]['size'];
+
+    if (!(regex.test(file_name)) || file_size.size > 3000000) {
+      $('#attach-msg').
+        html('Invalid Attachment. Upload docx/doc/pdf - UP TO 3 MB').
+        removeClass('text-edsgreen').
+        addClass('text-red-600 ');
+      $('#send_mail').attr('disabled', true).removeClass('bg-edsdarkgreen').addClass('bg-gray-500');
+    } else {
+      console.log(formatFileSize(file_size,3))
+      $('#attach-msg').
+        html(file_name.split('\\').pop() + ' <strong>'+ formatFileSize(file_size)+ '<strong>').
+        removeClass('text-red-600').
+        addClass('text-edsgreen');
+      $('#send_mail').attr('disabled', false).removeClass('bg-gray-500').addClass('bg-edsdarkgreen');
+    }
+  });
+
+  $('#send_mail').click(function() {
+
+    $('#error_message').attr('hidden', true);
+    $('#success_message').attr('hidden', true);
+
+    if (!validateFields()) {
+      $('#error_message_body').html('Please enter the valid input.');
+      $('#error_message').attr('hidden', false)
+      window.scrollTo(0, 0);
+      return
+    };
+
+    let file_data = $('#attach').prop('files')[0];
+    let form_data = new FormData();
+    form_data.append('username', $('#username').val());
+    form_data.append('subject', $('#subject').val());
+    form_data.append('ideaDetail', $('#idea_detail').val());
+    form_data.append('attachment', file_data);
+    $('#status_message').attr('hidden', false);
+    $('#send_mail').attr('disabled', true).removeClass('bg-edsdarkgreen').addClass('bg-gray-500');
+
+    $.ajax({
+      url: '/open-door-lab',
+      type: 'POST',
+      enctype: 'multipart/form-data',
+      data: form_data,
+      processData: false,
+      contentType: false,
+      success: function(data) {
+        if (data.status === 200) {
+          $('#status_message').attr('hidden', true);
+          $('#success_message').attr('hidden', false);
+        } else {
+          if (data.message) {
+            $('#error_message_body').html(data.message);
+          }
+          $('#status_message').attr('hidden', true);
+          $('#error_message').attr('hidden', false);
+        }
+        $('#send_mail').attr('disabled', false).removeClass('bg-gray-500').addClass('bg-edsdarkgreen');
+        window.scrollTo(0, 0);
+      },
+      error: function(error) {
+        $('#error_message').attr('hidden', false);
+        window.scrollTo(0, 0);
+      },
+    });
+  });
+
+  function validateFields() {
+    let username = $('#username');
+    let subject = $('#subject');
+    let ideaDetail = $('#idea_detail');
+    let returnValue = true;
+    if (username.val() === '') {
+      username.addClass('border border-red-500');
+      returnValue = false;
+    } else {
+      username.removeClass('border border-red-500');
+    }
+
+    if (subject.val() === '') {
+      subject.addClass('border border-red-500');
+      returnValue = false;
+    } else {
+      subject.removeClass('border border-red-500');
+    }
+
+    if (ideaDetail.val() === '') {
+      ideaDetail.addClass('border border-red-500');
+      returnValue = false;
+    } else {
+      ideaDetail.removeClass('border border-red-500');
+    }
+
+    return returnValue;
+
+  }
+
+  function formatFileSize(bytes,decimalPoint) {
+    if(bytes == 0) return '0 Bytes';
+    var k = 1000,
+      dm = decimalPoint || 2,
+      sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
+      i = Math.floor(Math.log(bytes) / Math.log(k));
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+  }
+
+
+  $(document).ready(function() {
+    // Add smooth scrolling to all links
+    $('a').on('click', function(event) {
+
+      // Make sure this.hash has a value before overriding default behavior
+      if (this.hash !== '') {
+        // Prevent default anchor click behavior
+        event.preventDefault();
+
+        // Store hash
+        var hash = this.hash;
+
+        // Using jQuery's animate() method to add smooth page scroll
+        // The optional number (800) specifies the number of milliseconds it takes to scroll to the specified area
+        $('html, body').animate({
+          scrollTop: $(hash).offset().top,
+        }, 800, function() {
+
+          // Add hash (#) to URL when done scrolling (default click behavior)
+          window.location.hash = hash;
+        });
+      } // End if
+    });
+  });
+</script>
+{% endblock %}
