@@ -13,3 +13,6 @@ sandbox/*
 
 # VIM swap files
 .*.sw*
+
+# themes
+themes/frontend-eds/*
