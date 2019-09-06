@@ -860,7 +860,7 @@ module.exports.initMocks = function() {
   // CKAN PAGES mocks:
   nock('http://127.0.0.1:5000', {"encodedQueryParams":true})
     .persist()
-    .get('/api/3/action/ckanext_pages_list')
+    .get('/api/3/action/ckanext_pages_list?page_type=blog')
     .reply(200, {"help":"https://localhost:5000/api/3/action/help_show?name=ckanext_pages_list","success":true,"result":[{"user_id":"a1710ffa-ed3e-4e66-9deb-f093f5c3d636","name":"post-name-0","title":"Test Post 0","image":"https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/SNice.svg/440px-SNice.svg.png","content":"Test content","publish_date":"2018-09-18T00:00:00","page_type":"page","group_id":null},{"user_id":"a1710ffa-ed3e-4e66-9deb-f093f5c3d636","name":"post-name-1","title":"Test Post 1","image":"https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/SNice.svg/440px-SNice.svg.png","content":"Test content","publish_date":"2018-09-18T00:00:00","page_type":"page","group_id":null},{"user_id":"a1710ffa-ed3e-4e66-9deb-f093f5c3d636","name":"post-name-2","title":"Test Post 2","image":"https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/SNice.svg/440px-SNice.svg.png","content":"Test content","publish_date":"2018-09-18T00:00:00","page_type":"page","group_id":null}]} )
 
   nock('http://127.0.0.1:5000', {"encodedQueryParams":true})
