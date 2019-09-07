@@ -133,6 +133,12 @@ module.exports = function () {
     // Create a visualization per resource as needed
     datapackage.resources.forEach((resource, index) => {
       resource.format = resource.format.toLowerCase()
+      // Handle datastore_active resources, e.g., 'path' property might point to
+      // some filestore (eg S3) but it is also stored in the datastore so we can
+      // query first N rows instead of trying to read entire file:
+      if (resource.datastore_active) {
+        resource.path = config.get('API_URL') + 'datastore_search?resource_id=' + resource.id
+      }
       // Use proxy path if datastore/filestore proxies are given:
       try {
         const resourceUrl = new URL(resource.path)
