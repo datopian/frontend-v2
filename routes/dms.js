@@ -137,10 +137,10 @@ module.exports = function () {
       try {
         const resourceUrl = new URL(resource.path)
         if (resourceUrl.host === config.get('PROXY_DATASTORE') && resource.format !== 'pdf') {
-          resource.path = req.protocol + '://' + req.get('host') + '/proxy/datastore' + resourceUrl.pathname + resourceUrl.search
+          resource.path = '//' + req.get('host') + '/proxy/datastore' + resourceUrl.pathname + resourceUrl.search
         }
         if (resourceUrl.host === config.get('PROXY_FILESTORE') && resource.format !== 'pdf') {
-          resource.path = req.protocol + '://' + req.get('host') + '/proxy/filestore' + resourceUrl.pathname + resourceUrl.search
+          resource.path = '//' + req.get('host') + '/proxy/filestore' + resourceUrl.pathname + resourceUrl.search
         }
       } catch (e) {
         console.warn(e)
@@ -207,7 +207,7 @@ module.exports = function () {
           description: utils.processMarkdown.render(profile.description),
           avatar: profile.image_display_url || profile.image_url
         },
-        thisPageFullUrl: req.protocol + '://' + req.get('host') + req.originalUrl,
+        thisPageFullUrl: '//' + req.get('host') + req.originalUrl,
         dpId: JSON.stringify(datapackage).replace(/'/g, "&#x27;") // keep for backwards compat?
       })
     } catch (err) {
