@@ -1,5 +1,5 @@
 'use strict'
-
+const { URL } = require('url')
 const express = require('express')
 const moment = require('moment')
 const bytes = require('bytes')
@@ -132,9 +132,22 @@ module.exports = function () {
 
     // Create a visualization per resource as needed
     datapackage.resources.forEach((resource, index) => {
+      resource.format = resource.format.toLowerCase()
+      // Use proxy path if datastore/filestore proxies are given:
+      try {
+        const resourceUrl = new URL(resource.path)
+        if (resourceUrl.host === config.get('PROXY_DATASTORE') && resource.format !== 'pdf') {
+          resource.path = req.protocol + '://' + req.get('host') + '/proxy/datastore' + resourceUrl.pathname + resourceUrl.search
+        }
+        if (resourceUrl.host === config.get('PROXY_FILESTORE') && resource.format !== 'pdf') {
+          resource.path = req.protocol + '://' + req.get('host') + '/proxy/filestore' + resourceUrl.pathname + resourceUrl.search
+        }
+      } catch (e) {
+        console.warn(e)
+      }
       // Convert bytes into human-readable format:
       resource.size = resource.size ? bytes(resource.size, {decimalPlaces: 0}) : resource.size
-      
+
       let controls = {
         showChartBuilder: false,
         showMapBuilder: false
@@ -149,12 +162,10 @@ module.exports = function () {
         specType: null
       }
 
-      resource.format = resource.format.toLowerCase()
-
       // Add 'table' views for each tabular resource:
       const tabularFormats = ['csv', 'tsv', 'dsv', 'xls', 'xlsx']
       let chartView, tabularMapView
-      
+
       if (tabularFormats.includes(resource.format)) {
         // Default table view
         view.specType = 'table'
