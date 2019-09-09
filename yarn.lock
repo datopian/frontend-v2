@@ -1571,7 +1571,7 @@ editions@^2.1.0, editions@^2.1.2:
     errlop "^1.1.1"
     semver "^5.6.0"
 
-"eds@git+https://gitlab.com/datopian/frontend-eds.git":
+"eds@git+https://git@gitlab.com/datopian/frontend-eds.git":
   version "1.0.0"
   resolved "git+https://gitlab.com/datopian/frontend-eds.git#c993b458d168161651e342c4349f656b67fef489"
   dependencies:
