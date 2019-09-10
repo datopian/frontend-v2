@@ -30,12 +30,31 @@
     </div>
 
     <ul class="mt-2">
+    {% set formats = [] %}{% set colors = {
+      CSV: '#ffca00',
+      XLSX:'#3CBC8D',
+      XLS:'#3CBC8D',
+      JSON:'blue',
+      GeoJSON:'#2CAAF9',
+      WFS:'#08389c',
+      PDF:'#ff1010',
+      SHP:'violet',
+      HTML:'#333',
+      KML:'gray',
+      ODS:'gray'
+    } %}
+ 
       {% for resource in package.resources %}
-      {% if resource.format %}
+      {% if resource.format not in formats %}
+         <span hidden>{{formats.push(resource.format)}}</span>
+        {% endif %} 
+      {% endfor %}
+      {% for format in formats %}
+      {%if format %}
       <li class="inline">
-        <a href="/{{ package.organization.name or 'dataset' }}/{{ package.name }}" data-format="{{ resource.format }}" class="bg-gray-200 text-sm text-gray-500 px-2 py-1">{{ resource.format }}</a>
+        <a href="/{{ package.organization.name or 'dataset' }}/{{ package.name }}" data-format="{{ format }}" class="bg-gray-600 text-sm text-gray-100 px-2 py-1" style="background:{{colors[format]}};" >{{ format }}</a>
       </li>
-      {% endif %}
+      {% endif %} 
       {% endfor %}
     </ul>
   </li>
