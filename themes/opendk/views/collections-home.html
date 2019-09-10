@@ -26,7 +26,7 @@
   </p>
 
   <ul class="sm:flex flex-wrap sm:-mx-4 mt-gutter">
-    {% for collection in collections %}
+    {% for collection in collections  | sort(attribute='title') %}
     <!-- group -->
     <li class="sm:w-1/2 lg:w-1/3">
       <a class="flex bg-gray-200 p-4 text-primary my-4 sm:mx-4" href="/{{ slug }}/{{ collection.name }}">
