@@ -124,13 +124,15 @@ Welcome - Home
   </section>
   <!-- end if -->
 
-  <section class="home_feed py-gutter">
-    <div class="inline-block bg-gray-900 text-white p-10 my-6">
+  <section id="tweets-container" class="md:flex flex-wrap md:-mx-gutter list-none">
+  <div class="my-gutter px-3 md:w-1/3 flex">
+    <li class="inline-block bg-gray-900 text-white p-10 ">
       <h3 class="font-semibold text-2xl">Hvad er Open Data DK</h3>
       <p class="leading-relaxed">
         Open Data DK er en forening for danske kommuner og regioner. Formålet med Open Data DK er at skabe transparens i den offentlige forvaltning og skabe grobund for datadreven vækst. Data gøres åbne og frit tilgængelige for at understøtte produktivitet og innovation ved en højere grad af udnyttelse af data.
       </p>
       <a class="font-semibold text-white" href="#">More</a>
+    </li>
     </div>
     <div id="tweets" class="twitter-feed"></div>
   </section>
@@ -150,18 +152,30 @@ Welcome - Home
     controls: false
   });
 
-
   // Twitter
   var configProfile = {
     "profile": {"screenName": 'OpenDataDK'},
     "domId": 'tweets',
-    "maxTweets": 8,
-    "showUser": false,
+    "maxTweets": 5,
+    "showUser": true,
     "showTime": false,
     "showImages": false, //https://github.com/jasonmayes/Twitter-Post-Fetcher/issues/182
     "showRetweet": false
   };
   twitterFetcher.fetch(configProfile);
+  
+window.onload =  async function(){
+  var tweetscontainer = document.getElementById('tweets-container');
+  var tweetslist = document.getElementById('tweets');
+  var innerblock = "";
+    for ( var i = 0; i < tweetslist.childNodes[0].childNodes.length; i++) {
+          tweetslist.childNodes[0].childNodes[i].className = "bg-gray-200 p-6";  
+          innerblock += '<div class=\"my-gutter px-4 md:w-1/3\  flex twitter-feed"> '+tweetslist.childNodes[0].childNodes[i].outerHTML+'</div>';
+
+    }
+    tweetscontainer.removeChild(tweetslist)
+    tweetscontainer.innerHTML+= innerblock
+}
 
 </script>
 {% endblock %}
