@@ -860,7 +860,7 @@ module.exports.initMocks = function() {
   // CKAN PAGES mocks:
   nock('http://127.0.0.1:5000', {"encodedQueryParams":true})
     .persist()
-    .get('/api/3/action/ckanext_pages_list')
+    .get('/api/3/action/ckanext_pages_list?page_type=blog')
     .reply(200, {"help":"https://localhost:5000/api/3/action/help_show?name=ckanext_pages_list","success":true,"result":[{"user_id":"a1710ffa-ed3e-4e66-9deb-f093f5c3d636","name":"post-name-0","title":"Test Post 0","image":"https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/SNice.svg/440px-SNice.svg.png","content":"Test content","publish_date":"2018-09-18T00:00:00","page_type":"page","group_id":null},{"user_id":"a1710ffa-ed3e-4e66-9deb-f093f5c3d636","name":"post-name-1","title":"Test Post 1","image":"https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/SNice.svg/440px-SNice.svg.png","content":"Test content","publish_date":"2018-09-18T00:00:00","page_type":"page","group_id":null},{"user_id":"a1710ffa-ed3e-4e66-9deb-f093f5c3d636","name":"post-name-2","title":"Test Post 2","image":"https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/SNice.svg/440px-SNice.svg.png","content":"Test content","publish_date":"2018-09-18T00:00:00","page_type":"page","group_id":null}]} )
 
   nock('http://127.0.0.1:5000', {"encodedQueryParams":true})
@@ -882,4 +882,13 @@ module.exports.initMocks = function() {
     .persist()
     .post('/api/3/action/ckanext_showcase_package_list', {"showcase_id": "25270967-2e34-4526-9e41-e099095bbf12"})
     .reply(200, {"size":0,"timeout":0})
+
+  // Mock for testing proxy
+  nock('http://127.0.0.1:5000', {"encodedQueryParams":true})
+    .get('/api/3/action/datastore_search')
+    .query({"resource_id":"gdp","limit":"5"})
+    .reply(200, {"help":"http://127.0.0.1:5000/api/3/action/help_show?name=datastore_search","success":true,"result":{"include_total":true,"resource_id":"42c7a4f1-f755-450f-9b5b-31b6085b9b19","fields":[{"type":"int","id":"_id"},{"type":"text","id":"Country Name"},{"type":"text","id":"Country Code"},{"type":"float8","id":"Year"},{"info":{"notes":"GDP in current USD"},"type":"float8","id":"Value"}],"records_format":"objects","records":[{"_id":1,"Country Name":"Arab World","Country Code":"ARB","Year":1968,"Value":25760683041.0857},{"_id":2,"Country Name":"Arab World","Country Code":"ARB","Year":1969,"Value":28434203615.4829},{"_id":3,"Country Name":"Arab World","Country Code":"ARB","Year":1970,"Value":31385499664.0672},{"_id":4,"Country Name":"Arab World","Country Code":"ARB","Year":1971,"Value":36426909888.3928},{"_id":5,"Country Name":"Arab World","Country Code":"ARB","Year":1972,"Value":43316056615.4562}],"limit":5,"_links":{"start":"/api/3/action/datastore_search?limit=5&resource_id=gdp","next":"/api/3/action/datastore_search?offset=5&limit=5&resource_id=gdp"},"total":11507}});
+  nock('http://127.0.0.1:5001', {"encodedQueryParams":true})
+    .get('/path/to/data.csv')
+    .reply(200, 'a,b,c\n1,2,3');
   }

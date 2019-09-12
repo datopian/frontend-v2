@@ -16,6 +16,8 @@ const {loadTheme, loadPlugins} = require('./utils')
 module.exports.makeApp = function () {
   const app = express()
   app.set('config', config)
+  app.set('dms', require('./lib/dms'))
+  app.set('utils', require('./utils/index'))
   app.set('port', config.get('app:port'))
   if (config.get('env') === 'development') {
     const mocks = require('./fixtures')
