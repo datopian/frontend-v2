@@ -7,6 +7,7 @@ const cookieParser = require('cookie-parser')
 const session = require('express-session')
 const flash = require('connect-flash')
 const i18n = require("i18n")
+const moment = require('moment')
 
 const config = require('./config')
 const dmsRoutes = require('./routes/dms')
@@ -98,6 +99,24 @@ module.exports.makeApp = function () {
   const env = nunjucks.configure(views, {
     autoescape: true,
     express: app
+  })
+
+  env.addFilter('formatDate', (date) => {
+    try {
+      return moment(date).format('YYYY[-]MM[-]DD')
+    } catch (e) {
+      console.warn('Failed to format date', e)
+      return date || '--'
+    }
+  })
+  
+  env.addFilter('formatDateFromNow', (date) => {
+    try {
+      return moment(date).fromNow()
+    } catch (e) {
+      console.warn('Failed to format date', e)
+      return date || '--'
+    }
   })
 
   return app
