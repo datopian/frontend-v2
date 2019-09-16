@@ -13,16 +13,16 @@
         <a class="breadcrumb_link" href="/">Home</a>
       </li>
       <li class="breadcrumb_item">
-        <a class="breadcrumb_link" href="/{{ slug }}" aria-current="page">{{ title }}</a>
+        <a class="breadcrumb_link" href="/{{ slug }}" aria-current="page">{{ __(title) }}</a>
       </li>
     </ol>
   </nav>
 </div>
 
 <div class="container mx-auto p-gutter">
-  <h1 class="font-semibold text-3xl mb-1">{{ title }}</h1>
+  <h1 class="font-semibold text-3xl mb-1">{{ __(title) }}</h1>
   <p class="leading-relaxed lg:w-2/3">
-    {{ description }}
+    {{ __(description) }}
   </p>
 
   <ul class="sm:flex flex-wrap sm:-mx-4 mt-gutter">
