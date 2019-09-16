@@ -129,6 +129,7 @@ module.exports = function () {
 
     // Data Explorer used a slightly different spec
     datapackage.dataExplorers= []
+
     // Create a visualization per resource as needed
     datapackage.resources.forEach((resource, index) => {
       resource.format = resource.format.toLowerCase()
