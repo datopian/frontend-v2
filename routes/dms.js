@@ -201,6 +201,10 @@ module.exports = function () {
       datapackage.dataExplorers.push(dataExplorer)
       datapackage.views.push(view)
     })
+    
+    if(datapackage.methodologie){
+      datapackage.methodologie = utils.processMarkdown.render(datapackage.methodologie);
+    }
 
     try {
       const profile = await Model.getProfile(req.params.owner)
