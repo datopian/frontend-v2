@@ -11,7 +11,7 @@ module.exports = function (app) {
   const Model = new cms.CmsModel()
   const blogPath = config.get('WP_BLOG_PATH')
 
-  app.get('/', async (req, res) => {
+  app.get('/', async (req, res,next) => {
     // Get latest 3 blog posts and pass it to home template
     const size = 3
     let posts = await Model.getListOfPosts(size)
@@ -25,10 +25,8 @@ module.exports = function (app) {
         image: post.featured_image
       }
     })
-    res.render('home.html', {
-      title: 'Home',
-      posts
-    })
+    res.locals.posts = posts
+    next()
   })
 
   app.get(blogPath, listStaticPages)
