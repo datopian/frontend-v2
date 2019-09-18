@@ -59,8 +59,8 @@ module.exports.makeApp = function () {
   }))
   app.use(flash())
   
-  loadTheme(app)
   loadPlugins(app)
+  loadTheme(app)
 
   // Redirect x/y/ to x/y
   app.use((req, res, next) => {
