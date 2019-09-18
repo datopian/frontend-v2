@@ -29,8 +29,6 @@ module.exports = function (app) {
     next()
   })
 
-
-
   app.get(blogPath, listStaticPages)
   app.get(`${blogPath}/:page`, showPostPage)
   app.get(['/:page', '/:parent/:page'], showStaticPage)
