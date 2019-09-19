@@ -28,6 +28,9 @@
 
     & a {
       @apply text-gray-500;
+      &:hover{
+        @apply text-secondary;
+      }
       margin-right: 1em;
     }
   }

@@ -12,7 +12,7 @@
   <ul>
     {% for item in value.items %}
     <li class="border-t border-gray-200">
-      <a href="/search?q={{ facetId }}:{{ item.name }} {{ query.q }}" class="filter-button" aria-label="{{ item.display_name }} ({{ item.count }} results)">
+      <a href="/search?q={{ facetId }}:{{ item.name }} {{ query.q }}" class="filter-button hover:text-secondary" aria-label="{{ item.display_name }} ({{ item.count }} results)">
         {{ item.display_name }}
         <span class="filter-button_count">{{ item.count }}</span>
       </a>

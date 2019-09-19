@@ -1,5 +1,9 @@
 .main-nav_link {
   @apply block py-2 px-gutter font-semibold text-primary border-white;
+  transition: 0.3s;
+  &:hover{
+    @apply text-secondary;
+  }
 
   &[aria-current] {
     @apply border-primary;
@@ -36,6 +40,7 @@
     transition: opacity 0.5s ease 0.2s;
     pointer-events: none;
     @apply bg-white shadow px-3 py-2;
+
   }
 
   .main-nav_item:hover > ul,
