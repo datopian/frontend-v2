@@ -14,12 +14,12 @@ Welcome - Home
 <div class="container mx-auto px-gutter">
   <header class="mb-gutter">
     <h1 class="home_h1">Velkommen til Open Data DK</h1>
-    
+
       <div class="lg:flex mt-gutter">
         <ul class="featured-groups">
           {% for collection in  collections.slice(0, 4) %}
             <li class="featured-groups_item">
-              <a href="/collections/{{ collections.name }}" class="featured-groups_link">
+              <a href="/collections/{{ collection.name }}" class="featured-groups_link">
                 <span class="featured-groups_icon">
                   <img src="{{ collection.image }}" class="featured-groups_img" />
                 </span>
