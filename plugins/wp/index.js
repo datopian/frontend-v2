@@ -29,15 +29,32 @@ module.exports = function (app) {
     next()
   })
 
-  app.get(blogPath, listStaticPages)
-  app.get(`${blogPath}/:page`, showPostPage)
-  app.get(['/:page', '/:parent/:page'], showStaticPage)
+  app.get(blogPath, listStaticPages);
+  app.get(`${blogPath}/:page`, showPostPage);
+  app.get(['/:page', '/:parent/:page'], showStaticPage);
 
   async function listStaticPages(req, res) {
+    let selectedCategories = req.query.categories;
+    selectedCategories = ((selectedCategories) ? selectedCategories.split(',') : '');
+    let categories = getCategories(selectedCategories);
+
     // Get latest 10 blog posts
-    const size = 10
-    let posts = await Model.getListOfPosts(size)
-    posts = posts.map(post => {
+    const size = 10;
+    let posts = await Model.getListOfPosts(size);
+    posts = posts
+      .filter(post => {
+        if (!selectedCategories) return true;
+
+        let i;
+        for (i = 0; i < selectedCategories.length; i++) {
+          if (post.categories.hasOwnProperty(selectedCategories[i])) {
+            return true;
+          }
+        }
+
+        return false;
+      })
+      .map(post => {
       return {
         slug: post.slug,
         title: post.title,
@@ -46,10 +63,33 @@ module.exports = function (app) {
         modified: moment(post.modified).format('MMMM Do, YYYY'),
         image: post.featured_image
       }
-    })
+    });
+
     res.render('blog.html', {
-      posts
+      posts,
+      categories
     })
+  }
+
+  function getCategories(selectedCategories) {
+    let categories = [
+      { name: "operational-status", title: "Operational status", checked: false },
+      { name: "new-datasets", title: "New datasets", checked: false },
+      { name: "new-publications/declarations", title: "New publications/declarations", checked: false },
+      { name: "market-data-updates", title: "Market data updates", checked: false },
+      { name: "general-news-and-inspiration", title: "General news and inspiration", checked: false }
+    ];
+
+    categories = categories
+      .map(category => {
+        return {
+          name: category.name,
+          title: category.title,
+          checked: selectedCategories.includes(category.name)
+        }
+      });
+
+    return categories
   }
 
   async function showPostPage(req, res, next) {
