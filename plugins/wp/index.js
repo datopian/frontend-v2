@@ -34,28 +34,13 @@ module.exports = function (app) {
   app.get(`${blogPath}/:page`, showPostPage);
   app.get(['/:page', '/:parent/:page'], showStaticPage);
 
-  async function listStaticPages(req, res) {
-    let selectedCategories = req.query.categories;
-    selectedCategories = ((selectedCategories) ? selectedCategories.split(',') : '');
-    let categories = getCategories(selectedCategories);
-
+  async function listStaticPages(req, res, next) {
     // Get latest 10 blog posts
     const size = 10;
-    let posts = await Model.getListOfPosts(size);
-    posts = posts
-      .filter(post => {
-        if (!selectedCategories) return true;
-
-        let i;
-        for (i = 0; i < selectedCategories.length; i++) {
-          if (post.categories.hasOwnProperty(selectedCategories[i])) {
-            return true;
-          }
-        }
-
-        return false;
-      })
-      .map(post => {
+    res.locals.posts = (await Model.getListOfPosts({
+      number: size,
+      fields: 'slug,title,content,date,modified,featured_image'
+    })).map(post => {
       return {
         slug: post.slug,
         title: post.title,
@@ -64,12 +49,8 @@ module.exports = function (app) {
         modified: moment(post.modified).format('MMMM Do, YYYY'),
         image: post.featured_image
       }
-    });
-
-    res.render('blog.html', {
-      posts,
-      categories
     })
+    next()
   }
 
   function getCategories(selectedCategories) {
