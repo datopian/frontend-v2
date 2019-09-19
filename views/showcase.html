@@ -123,7 +123,7 @@
                   {{ resource.modified }}
                 </td>
                 <td class="download truncate col-xs-4">
-                  <a href="{{ resource.path }}" onclick="sendGAEvent('{{ dataset.name }}', '{{ resource.name }}', '{{ resource.format }}')">
+                  <a href="{{ resource.downloadPath }}" onclick="sendGAEvent('{{ dataset.name }}', '{{ resource.name }}', '{{ resource.format }}')">
                     {{ resource.format or 'Data file' }} {% if resource.size %}({{resource.size}}){% endif %}
                   </a>
                   {% for alt in resource.otherFormats %}

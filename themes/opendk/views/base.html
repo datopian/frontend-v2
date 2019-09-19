@@ -39,7 +39,7 @@
                   <a class="main-nav_link" href="/knowledge">Viden om</a>
                 </li>
                 <li class="main-nav_item lg:mx-3">
-                  <a class="main-nav_link" href="/search">Data <svg class="hidden w-3 h-3 text-secondary fill-current ml-1 lg:block"><use xlink:href="#dropdown" /></svg></a>
+                  <a class="main-nav_link" href="/search">Datasæt<svg class="hidden w-3 h-3 text-secondary fill-current ml-1 lg:block"><use xlink:href="#dropdown" /></svg></a>
                   <ul class="main-nav_subnav" aria-label="submenu">
                     <li>
                       <a class="main-nav_link" href="/organization">Organisationer</a>
@@ -161,6 +161,7 @@
 
     <script>
       // nav
+      document.cookie = 'defaultLocale=' + 'dk';
       var navToggle = document.getElementById("nav-toggle");
       var navTarget = navToggle.nextElementSibling;
 

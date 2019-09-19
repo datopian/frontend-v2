@@ -34,10 +34,11 @@ module.exports = function () {
   // -----------------------------------------------
 
   router.get('/', async (req, res) => {
+    let posts = res.locals.posts || []
     // If no CMS is enabled, show home page without posts
     res.render('home.html', {
       title: 'Home',
-      posts: []
+      posts
     })
   })
 
@@ -136,7 +137,9 @@ module.exports = function () {
       // Handle datastore_active resources, e.g., 'path' property might point to
       // some filestore (eg S3) but it is also stored in the datastore so we can
       // query first N rows instead of trying to read entire file:
+      resource.downloadPath = resource.path
       if (resource.datastore_active) {
+        resource.downloadPath = resource.path
         resource.path = config.get('API_URL') + 'datastore_search?resource_id=' + resource.id
       }
       // Use proxy path if datastore/filestore proxies are given:
