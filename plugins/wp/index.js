@@ -8,6 +8,7 @@ const config = require('../../config')
 
 
 module.exports = function (app) {
+  app.set('cms', cms)
   const Model = new cms.CmsModel()
   const blogPath = config.get('WP_BLOG_PATH')
 
