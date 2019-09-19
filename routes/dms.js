@@ -42,6 +42,12 @@ module.exports = function () {
     })
   })
 
+  router.get(config.get('WP_BLOG_PATH'), async (req, res) => {
+    res.render('blog.html', {
+      title: 'Home'
+    })
+  })
+
   router.get('/search', async (req, res, next) => {
     try {
       const result = await Model.search(req.query)
