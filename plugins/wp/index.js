@@ -14,8 +14,10 @@ module.exports = function (app) {
 
   app.get('/', async (req, res,next) => {
     // Get latest 3 blog posts and pass it to home template
-    const size = 3
-    let posts = await Model.getListOfPosts(size)
+    let posts = await Model.getListOfPosts({
+      number: 3,
+      fields: 'slug,title,content,date,modified,featured_image'
+    })
     posts = posts.map(post => {
       return {
         slug: post.slug,
