@@ -37,7 +37,7 @@ module.exports = function () {
     // If no CMS is enabled, show home page without posts
     res.render('home.html', {
       title: 'Home'
-      })
+    })
   })
 
   router.get(config.get('WP_BLOG_PATH'), async (req, res) => {
