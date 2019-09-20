@@ -15,41 +15,19 @@ Welcome - Home
   <header class="mb-gutter">
     <h1 class="home_h1">Velkommen til Open Data DK</h1>
 
-    <div class="lg:flex mt-gutter">
-      <ul class="featured-groups">
-        <li class="featured-groups_item">
-          <a href="/collections/gron-omstilling-og-open-data" class="featured-groups_link">
-            <span class="featured-groups_icon">
-              <img src="/static/img/groups/climate.svg" class="featured-groups_img" />
-            </span>
-            <span class="featured-groups_name">Se Energi og klima</span>
-          </a>
-        </li>
-        <li class="featured-groups_item">
-          <a href="/collections/kultur" class="featured-groups_link">
-            <span class="featured-groups_icon">
-              <img src="/static/img/groups/culture.svg" class="featured-groups_img" />
-            </span>
-            <span class="featured-groups_name">Kultur</span>
-          </a>
-        </li>
-        <li class="featured-groups_item">
-          <a href="/collections/mobilitet" class="featured-groups_link">
-            <span class="featured-groups_icon">
-              <img src="/static/img/groups/mobility.svg" class="featured-groups_img" />
-            </span>
-            <span class="featured-groups_name">Mobilitet</span>
-          </a>
-        </li>
-        <li class="featured-groups_item">
-          <a href="/collections/turisme" class="featured-groups_link">
-            <span class="featured-groups_icon">
-              <img src="/static/img/groups/tourism.svg" class="featured-groups_img" />
-            </span>
-            <span class="featured-groups_name">Turisme</span>
-          </a>
-        </li>
-      </ul>
+      <div class="lg:flex mt-gutter">
+        <ul class="featured-groups">
+          {% for collection in  collections.slice(0, 4) %}
+            <li class="featured-groups_item">
+              <a href="/collections/{{ collection.name }}" class="featured-groups_link">
+                <span class="featured-groups_icon">
+                  <img src="{{ collection.image }}" class="featured-groups_img" />
+                </span>
+                <span class="featured-groups_name">{{collection.title  }}</span>
+              </a>
+            </li>
+          {% endfor %}
+        </ul>
       <!-- searchbox -->
       <form class="lg:w-1/3 text-white" action="/search" method="GET">
         <div class="home_search">
