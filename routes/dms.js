@@ -34,11 +34,9 @@ module.exports = function () {
   // -----------------------------------------------
 
   router.get('/', async (req, res) => {
-    let posts = res.locals.posts || []
     // If no CMS is enabled, show home page without posts
     res.render('home.html', {
-      title: 'Home',
-      posts
+      title: 'Home'
     })
   })
 
