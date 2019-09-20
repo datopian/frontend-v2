@@ -1,7 +1,7 @@
 'use strict'
 
 const nconf = require('nconf')
-require('dotenv').config()
+require('dotenv').config({path: process.env.DOTENV_PATH || '.env'})
 
 nconf.argv()
   .env()
