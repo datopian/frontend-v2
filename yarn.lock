@@ -1573,7 +1573,7 @@ editions@^2.1.0, editions@^2.1.2:
 
 "eds@git+https://git@gitlab.com/datopian/frontend-eds.git":
   version "1.0.0"
-  resolved "git+https://git@gitlab.com/datopian/frontend-eds.git#badbc42bccbe7b299075ba8458d459da3620bb0e"
+  resolved "git+https://git@gitlab.com/datopian/frontend-eds.git#9d503fdb041df619321cd38b00fca817a2b15fb3"
   dependencies:
     moment "^2.24.0"
     multer "^1.4.2"
