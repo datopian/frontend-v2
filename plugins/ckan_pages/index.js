@@ -9,7 +9,7 @@ const cms = require('./cms')
 module.exports = function (app) {
   const Model = new cms.CmsModel()
 
-  app.get('/', async (req, res,next) => {
+  app.get('/', async (req, res, next) => {
     // Get latest 3 blog posts and pass it to home template
     const size = 3
     let posts = await Model.getListOfPosts(size)
@@ -23,7 +23,7 @@ module.exports = function (app) {
         image: post.featured_image
       }
     })
-    res.locals.post= posts
+    res.locals.post = posts
     next()
   })
 
