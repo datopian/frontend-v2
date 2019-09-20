@@ -1,6 +1,5 @@
 'use strict'
 
-const express = require('express')
 const moment = require('moment')
 
 const cms = require('./cms')
@@ -53,27 +52,6 @@ module.exports = function (app) {
       }
     })
     next()
-  }
-
-  function getCategories(selectedCategories) {
-    let categories = [
-      { name: "operational-status", title: "Operational status", checked: false },
-      { name: "new-datasets", title: "New datasets", checked: false },
-      { name: "new-publications/declarations", title: "New publications/declarations", checked: false },
-      { name: "market-data-updates", title: "Market data updates", checked: false },
-      { name: "general-news-and-inspiration", title: "General news and inspiration", checked: false }
-    ];
-
-    categories = categories
-      .map(category => {
-        return {
-          name: category.name,
-          title: category.title,
-          checked: selectedCategories.includes(category.name)
-        }
-      });
-
-    return categories
   }
 
   async function showPostPage(req, res, next) {
