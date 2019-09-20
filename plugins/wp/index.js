@@ -1,6 +1,5 @@
 'use strict'
 
-const express = require('express')
 const moment = require('moment')
 
 const cms = require('./cms')
@@ -8,13 +7,16 @@ const config = require('../../config')
 
 
 module.exports = function (app) {
+  app.set('cms', cms)
   const Model = new cms.CmsModel()
   const blogPath = config.get('WP_BLOG_PATH')
 
   app.get('/', async (req, res,next) => {
     // Get latest 3 blog posts and pass it to home template
-    const size = 3
-    let posts = await Model.getListOfPosts(size)
+    let posts = await Model.getListOfPosts({
+      number: 3,
+      fields: 'slug,title,content,date,modified,featured_image'
+    })
     posts = posts.map(post => {
       return {
         slug: post.slug,
@@ -29,15 +31,17 @@ module.exports = function (app) {
     next()
   })
 
-  app.get(blogPath, listStaticPages)
-  app.get(`${blogPath}/:page`, showPostPage)
-  app.get(['/:page', '/:parent/:page'], showStaticPage)
+  app.get(blogPath, listStaticPages);
+  app.get(`${blogPath}/:page`, showPostPage);
+  app.get(['/:page', '/:parent/:page'], showStaticPage);
 
-  async function listStaticPages(req, res) {
+  async function listStaticPages(req, res, next) {
     // Get latest 10 blog posts
-    const size = 10
-    let posts = await Model.getListOfPosts(size)
-    posts = posts.map(post => {
+    const size = 10;
+    res.locals.posts = (await Model.getListOfPosts({
+      number: size,
+      fields: 'slug,title,content,date,modified,featured_image'
+    })).map(post => {
       return {
         slug: post.slug,
         title: post.title,
@@ -47,9 +51,7 @@ module.exports = function (app) {
         image: post.featured_image
       }
     })
-    res.render('blog.html', {
-      posts
-    })
+    next()
   }
 
   async function showPostPage(req, res, next) {

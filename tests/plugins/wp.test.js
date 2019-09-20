@@ -20,7 +20,10 @@ test('getPost api works', async t => {
 test('getListOfPosts api works', async t => {
   t.plan(1)
 
-  const result = await WPModel.getListOfPosts()
+  const result = await WPModel.getListOfPosts({
+    "number": "10",
+    "fields": "slug,title,content,date,modified,featured_image"
+  })
 
   t.is(result.length, 2)
 })
@@ -29,7 +32,10 @@ test('getListOfPosts api works', async t => {
 test('getListOfPosts api works for Pages', async t => {
   t.plan(1)
 
-  const result = await WPModel.getListOfPosts()
+  const result = await WPModel.getListOfPosts({
+    "number": "10",
+    "fields": "slug,title,content,date,modified,featured_image"
+  })
 
   t.is(result.length, 2)
 })
