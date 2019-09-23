@@ -66,36 +66,21 @@ Welcome - Home
   <section class="home_events lg:w-2/3 my-gutter">
     <div class="overflow-hidden">
       <ul class="slider">
-        <!-- event --> <!-- TODO hard-coded -->
+        {% for event in events %}
         <li>
-          <a class="flex">
+          <a class="flex" href="/blog/{{ event.slug }}">
             <time class="flex flex-col justify-center bg-secondary text-white text-center px-6 py-4">
-              <span class="font-semibold text-3xl leading-none">17</span> <span class="leading-none">jun</span>
+              <span class="font-semibold text-3xl leading-none">{{ event.day }}</span> <span class="leading-none">{{ event.month }}</span>
             </time>
             <div class="px-6">
-              <h3 class="font-semibold text-2xl text-primary">Sleep in the City - Kunst baseret på åbne data</h3>
+              <h3 class="font-semibold text-2xl text-primary">{{ event.title }}</h3>
               <p class="text-gray-500">
-                I kunstværket Sleep in the City kombineres åbne data fra sensorer i Aarhus’ City Lab med søvndata og videokunst. Sensorerne i Aarhus måler luftkvalitet, trafik...
+                {{ event.excerpt | safe | truncate(120) or event.content | safe | truncate(120) }}
               </p>
             </div>
           </a>
         </li>
-        <!-- event end -->
-        <!-- event -->
-        <li>
-          <a class="flex">
-            <time class="flex flex-col justify-center bg-secondary text-white text-center px-6 py-4">
-              <span class="font-semibold text-3xl leading-none">17</span> <span class="leading-none">jun</span>
-            </time>
-            <div class="px-6">
-              <h3 class="font-semibold text-2xl text-primary">Sleep in the City - Kunst baseret på åbne data</h3>
-              <p class="text-gray-500">
-                I kunstværket Sleep in the City kombineres åbne data fra sensorer i Aarhus’ City Lab med søvndata og videokunst. Sensorerne i Aarhus måler luftkvalitet, trafik...
-              </p>
-            </div>
-          </a>
-        </li>
-        <!-- event end -->
+        {% endfor %}
       </ul>
     </div>
 

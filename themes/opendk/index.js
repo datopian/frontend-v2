@@ -36,6 +36,28 @@ module.exports = function (app) {
     // Get sub-array of first n elements after shuffled
     const randomFour = shuffled.slice(0, 4)
     res.locals.collections = randomFour
+
+    // Get events
+    res.locals.events = (await CmsModel.getListOfPosts(
+      {
+        category: 'Calendar',
+        number: 5
+      }
+    )).map(post => {
+      const eventDate = post.content.match(/\d{2}([\/.-])\d{2}\1\d{4}/g)
+      if (eventDate) {
+        const day = eventDate[0].substring(0, 2)
+        const month = eventDate[0].substring(3, 5)
+        const year = eventDate[0].substring(6, 10)
+        const date = new Date(`${year}-${month}-${day}`)
+        post.day = date.getDate()
+        const monthNames = ["jan", "feb", "mar", "apr", "maj", "jun", "jul",
+          "aug", "sep", "okt", "nov", "dec"
+        ]
+        post.month = monthNames[date.getMonth()]
+      }
+      return post
+    })
     next()
   })
 
