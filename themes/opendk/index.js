@@ -1,4 +1,5 @@
 module.exports = function (app) {
+  const utils = app.get('utils')
   const dms = app.get('dms')
   const cms = app.get('cms')
   const config = app.get('config')
@@ -36,5 +37,36 @@ module.exports = function (app) {
     const randomFour = shuffled.slice(0, 4)
     res.locals.collections = randomFour
     next()
+  })
+
+  app.get('/search/content', async (req, res, next) => {
+    try {
+      const result = await CmsModel.getListOfPostsWithMeta(
+        {
+          type: 'any',
+          search: req.query.q,
+          number: 10,
+          offset: req.query.from || 0
+        }
+      )
+      // Pagination
+      const from = req.query.from || 0
+      const size = 10
+      const total = result.found
+      const totalPages = Math.ceil(total / size)
+      const currentPage = parseInt(from, 10) / size + 1
+      const pages = utils.pagination(currentPage, totalPages)
+
+      res.render('search.html', {
+        title: 'Search content',
+        result,
+        query: req.query,
+        totalPages,
+        pages,
+        currentPage
+      })
+    } catch (e) {
+      next(e)
+    }
   })
 }

@@ -9,18 +9,20 @@
   </div>
 
   <div class="lg:flex items-center justify-between">
-    <h1 class="text-4xl font-semibold text-primary">{{ result.count }} datasets found</h1>
+    <h1 class="text-4xl font-semibold text-primary">{{ result.count or result.found }} results found</h1>
 
-    <div>
-      <label for="field-order-by">Order by:</label>
-      <select class="bg-white" id="field-order-by" name="sort">
-        <option value="score:desc" {% if query.sort == "score:desc" %}selected="selected"{% endif %}>Relevance</option>
-        <option value="title_string:asc" {% if query.sort == "title_string:asc" %}selected="selected"{% endif %}>Name Ascending</option>
-        <option value="title_string:desc" {% if query.sort == "title_string:desc" %}selected="selected"{% endif %}>Name Descending</option>
-        <option value="metadata_modified:desc" {% if query.sort == "metadata_modified:desc" %}selected="selected"{% endif %}>Last Modified</option>
-        <option value="views_recent:desc" {% if query.sort == "views_recent:desc" %}selected="selected"{% endif %}>Popular</option>
-      </select>
-    </div>
+    {% if result.results %}
+      <div>
+        <label for="field-order-by">Order by:</label>
+        <select class="bg-white" id="field-order-by" name="sort">
+          <option value="score:desc" {% if query.sort == "score:desc" %}selected="selected"{% endif %}>Relevance</option>
+          <option value="title_string:asc" {% if query.sort == "title_string:asc" %}selected="selected"{% endif %}>Name Ascending</option>
+          <option value="title_string:desc" {% if query.sort == "title_string:desc" %}selected="selected"{% endif %}>Name Descending</option>
+          <option value="metadata_modified:desc" {% if query.sort == "metadata_modified:desc" %}selected="selected"{% endif %}>Last Modified</option>
+          <option value="views_recent:desc" {% if query.sort == "views_recent:desc" %}selected="selected"{% endif %}>Popular</option>
+        </select>
+      </div>
+    {% endif %}
   </div>
 
 </form>
