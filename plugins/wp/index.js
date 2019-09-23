@@ -1,6 +1,7 @@
 'use strict'
 
 const moment = require('moment')
+const i18n = require('i18n')
 
 const cms = require('./cms')
 const config = require('../../config')
@@ -82,7 +83,7 @@ module.exports = function (app) {
     // on WordPress with a suffix in a slug, e.g., if default locale is 'en':
     // locale is 'en' > use 'page' slug when reading from WP
     // locale is 'da' => use 'page-da' slug when reading from WP
-    if (locale !== config.get('SITE_LOCALE')) {
+    if (locale !== config.get('SITE_LOCALE') && i18n.getLocales().includes(locale)) {
       slug += `-${locale}`
     }
     try {

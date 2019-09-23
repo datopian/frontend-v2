@@ -52,23 +52,18 @@
                 <li class="main-nav_item lg:ml-3">
                   <a class="main-nav_link" href="/about">Om <svg class="hidden w-3 h-3 text-secondary fill-current ml-1 lg:block"><use xlink:href="#dropdown" /></svg></a>
                   <ul class="main-nav_subnav" aria-label="submenu">
+                    {% for item in aboutPages %}
                     <li>
-                      <a class="main-nav_link" href="#">Hvad er Open Data DK</a>
+                      <a class="main-nav_link" href="/{{ item.slug }}">{{ item.title }}</a>
                     </li>
-                    <li>
-                      <a class="main-nav_link" href="#">Bestyrelsen</a>
-                    </li>
-                    <li>
-                      <a class="main-nav_link" href="#">Regionale ambassadører</a>
-                    </li>
-
+                    {% endfor %}
                   </ul>
                 </li>
                 <li class="flex items-center text-primary lg:ml-6">
                   <a id="search-link" href="/search">
                     <span class="main-nav_link hidden">Søg</span>
-                    <svg class="main-nav_search-toggle-icon w-8 h-8" data-toggle="show"><use xlink:href="#search" /></svg>
-                    <svg class="main-nav_search-toggle-icon w-8 h-6" data-toggle="hide"><use xlink:href="#cross" /></svg>
+                    <svg class="main-nav_search-toggle-icon w-8 h-8 hover:fill-secondary outline-none" data-toggle="show"><use xlink:href="#search" /></svg>
+                    <svg class="main-nav_search-toggle-icon w-8 h-6 hover:fill-secondary outline-none" data-toggle="hide"><use xlink:href="#cross" /></svg>
                   </a>
                   <form action="/search" method="GET" class="main-nav_search w-full px-6 py-2 lg:p-0 lg:absolute lg:left-0 lg:right-0 lg:pr-12 lg:pointer-events-none" id="header-search">
                     <input name="q" type="text" class="border-2 border-solid border-gray-200 px-3 py-2 lg:px-4 lg:py-3 lg:text-xl outline-none focus:border-secondary w-full pointer-events-auto" placeholder="Søg" id="header-search-input">
