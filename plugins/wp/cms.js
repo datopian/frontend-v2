@@ -28,6 +28,11 @@ class CmsModel {
     const result = await this.blog.postsList(query)
     return result.posts
   }
+
+
+  async getListOfPostsWithMeta(query) {
+    return await this.blog.postsList(query)
+  }
 }
 
 module.exports.CmsModel = CmsModel
