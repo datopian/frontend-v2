@@ -1,13 +1,22 @@
 module.exports = function (app) {
   const dms = app.get('dms')
+  const cms = app.get('cms')
   const config = app.get('config')
-  const Model = new dms.DmsModel(config)
+  const DmsModel = new dms.DmsModel(config)
+  const CmsModel = new cms.CmsModel()
+
+  app.use(async (req, res, next) => {
+    // Get links for the navbar from CMS (WP)
+    res.locals.aboutPages = (await CmsModel.getListOfPosts({type: 'page'}))
+      .filter(page => page.parent && page.parent.ID === 11)
+    next()
+  })
 
   app.get('/', async (req, res, next) => {
     // Set up main heading text from config var:
     res.locals.home_heading = config.get('HOME_HEADING') || ''
     // Get collections with extras
-    const collections = await Model.getCollections({
+    const collections = await DmsModel.getCollections({
       all_fields: true,
       include_extras: true,
       include_dataset_count: false
