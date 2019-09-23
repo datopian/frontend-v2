@@ -3,7 +3,9 @@ module.exports = function (app) {
   const config = app.get('config')
   const Model = new dms.DmsModel(config)
 
-  app.get('/', async (req, res,next) => {
+  app.get('/', async (req, res, next) => {
+    // Set up main heading text from config var:
+    res.locals.home_heading = config.get('HOME_HEADING') || ''
     // Get collections with extras
     const collections = await Model.getCollections({
       all_fields: true,

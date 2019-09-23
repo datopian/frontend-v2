@@ -20,5 +20,6 @@
 	"CKAN Organizations are used to create, manage and publish collections of datasets. Users can have different roles within an Organization, depending on their level of authorisation to create, edit and publish.": "CKAN Organisationer bruges til at oprette, håndtere og publicere samlinger af datasæt. Brugere kan have forskellige roller inden for en Organisation, afhængigt af deres autorisation til at oprette, redigere og publicere.",
 	"Catalogue of datasets for a particular project or team, or on a particular theme, or as a very simple way to help people find and search your own published datasets.": "Du kan bruge CKAN Grupper til at oprette og håndtere samlinger af datasæt. Dette kan være datasæt for et givent projekt eller team, efter et bestemt tema eller som en meget simpel måde at hjælpe folk med at finde og søge efter dine egne publicerede datasæt",
 	"Organizations": "Organisationer",
-	"title": "title"
+	"title": "titel",
+	"Search ...": "Søg ..."
 }
