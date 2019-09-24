@@ -33,7 +33,7 @@
             <nav class="main-nav mt-4 py-2 lg:my-2 bg-white right-0 z-10 lg:relative">
               <ul class="lg:flex md:text-xl lg:text-2xl">
                 <li class="main-nav_item lg:mx-3">
-                  <a class="main-nav_link" href="/blog">Blog</a>
+                  <a class="main-nav_link" href="/blog">{{__('Blog')}}</a>
                 </li>
                 <li class="main-nav_item lg:mx-3">
                   <a class="main-nav_link" href="/knowledge">Viden om</a>
@@ -61,7 +61,7 @@
                 </li>
                 <li class="flex items-center text-primary lg:ml-6">
                   <a id="search-link" href="/search">
-                    <span class="main-nav_link hidden">Søg</span>
+                    <span class="main-nav_link hidden">Søg datasæt</span>
                     <svg class="main-nav_search-toggle-icon w-8 h-8 hover:fill-secondary outline-none" data-toggle="show"><use xlink:href="#search" /></svg>
                     <svg class="main-nav_search-toggle-icon w-8 h-6 hover:fill-secondary outline-none" data-toggle="hide"><use xlink:href="#cross" /></svg>
                   </a>
@@ -128,9 +128,9 @@
               <a href="mailto:teknik@opendata.dk" class="site-footer_link">teknik@opendata.dk</a>
             </p>
             <div>
-              <p>Open Data DK | <a href="mailto:info@opendata.dk" class="site-footer_link">info@opendata.dk</a> | Hack Kampmanns Plads 2 | 8000 Aarhus C 
+              <p>Open Data DK | <a href="mailto:info@opendata.dk" class="site-footer_link">info@opendata.dk</a> | Hack Kampmanns Plads 2 | 8000 Aarhus C
             </div>
-         
+
             <ul class="flex">
               <li>
                 <a target="_blank" href="https://www.linkedin.com/company/open-data-dk" class="site-footer_link"><svg viewbox="0 0 512 512" style="height: 40px;">
@@ -155,8 +155,8 @@
     </div>
 
     <script>
+      document.cookie = 'defaultLocale=' + 'da';
       // nav
-      document.cookie = 'defaultLocale=' + 'dk';
       var navToggle = document.getElementById("nav-toggle");
       var navTarget = navToggle.nextElementSibling;
 

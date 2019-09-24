@@ -6,6 +6,11 @@ module.exports = function (app) {
   const DmsModel = new dms.DmsModel(config)
   const CmsModel = new cms.CmsModel()
 
+  app.use((req, res, next) => {
+    req.setLocale('da')
+    next()
+  })
+
   app.use(async (req, res, next) => {
     // Get links for the navbar from CMS (WP)
     res.locals.aboutPages = (await CmsModel.getListOfPosts({type: 'page'}))

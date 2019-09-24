@@ -3,7 +3,7 @@
 {% import '_instructions.html' as instructions %}
 
 {% block title %}
-{{dataset.title or dataset.name}} - Dataset
+{{dataset.title or dataset.name}} - {{__('Dataset')}}
 {% endblock %}
 
 {% block content %}
@@ -12,10 +12,10 @@
   <nav class="breadcrumb" aria-label="breadcrumb">
     <ol>
       <li class="breadcrumb_item">
-        <a class="breadcrumb_link" href="/">Home</a>
+        <a class="breadcrumb_link" href="/">{{__('Home')}}</a>
       </li>
       <li class="breadcrumb_item">
-        <a class="breadcrumb_link" href="/search">Data</a>
+        <a class="breadcrumb_link" href="/search">{{__('Data')}}</a>
       </li>
       <li class="breadcrumb_item">
         <a class="breadcrumb_link" href="/search/{{ dataset.name }}" aria-current="page">{{ dataset.title or dataset.name }}</a>
@@ -58,7 +58,7 @@
           <a class="data-file-type" href="{{ resource.path }}">
             <dl class="data-file-type_inner">
               <dt class="data-file-type_term">
-                Download {% if resource.format %}({{ resource.format }}){% endif %}
+                {{__('Download')}} {% if resource.format %}({{ resource.format }}){% endif %}
               </dt>
               {% if resource.size %}
               <dd class="data-file-type_size">
@@ -90,7 +90,7 @@
   <!-- meta -->
   <div class="lg:w-1/3 lg:ml-gutter lg:pl-10">
     <div class="">
-      <h2 class="bg-gray-200 px-4 py-3 font-bold mb-4">Organization</h2>
+      <h2 class="bg-gray-200 px-4 py-3 font-bold mb-4">{{__('Organization')}}</h2>
       <img src="{{ owner.avatar or '/static/img/org.svg'}}" class="m-4 h-24" />
 
       <a class="px-4 text-primary text-xl font-semibold" href="/{{ owner.name }}">{{ owner.title }}</a>
@@ -100,7 +100,7 @@
       </p>
 
       <!-- Metadata -->
-      <h2 class="bg-gray-200 px-4 py-3 font-bold mt-4 mb-1">Metadata</h2>
+      <h2 class="bg-gray-200 px-4 py-3 font-bold mt-4 mb-1">{{__('Metadata')}}</h2>
       <div class="px-4 py-2 text-sm">
         <dl class="info-list">
           {% if dataset.sources %}
@@ -147,7 +147,7 @@
       <!-- Metadata -->
 
       <!-- share links -->
-      <h2 class="bg-gray-200 px-4 py-3 font-bold mt-4 mb-1">Del</h2>
+      <h2 class="bg-gray-200 px-4 py-3 font-bold mt-4 mb-1">{{__('Share')}}</h2>
       <ul class="text-sm">
         <li class="border-b-2 border-gray-200">
           <a class="block px-4 py-3 text-primary hover:text-secondary" href="https://twitter.com/intent/tweet?url={{thisPageFullUrl}}&text={{dataset.title or dataset.name}}" target="_blank">Twitter</a>
@@ -180,18 +180,18 @@
       <div id="datapackage-view-{{view.id}}" class="react-me text-sm"></div>
       <!-- End of div elements for React -->
       <p class="text-sm my-4">
-        This is a preview version. There might be more data in the original version.
+        Dette er en eksempelversion. Der er muligvis flere data i den originale version.
       </p>
 
       {% if view.resources[0].schema %}
-       <h3 class="text-lg font-semibold mt-gutter mb-2">Field information</h3>
+       <h3 class="text-lg font-semibold mt-gutter mb-2">{{__('Field information')}}</h3>
        <table class="w-full">
          <thead>
            <tr>
-             <th class="text-left text-sm py-1">Field Name</th>
-             <th class="text-left text-sm py-1">Order</th>
-             <th class="text-left text-sm py-1">Type (Format)</th>
-             <th class="text-left text-sm py-1">Description</th>
+             <th class="text-left text-sm py-1">{{__('Field Name')}}</th>
+             <th class="text-left text-sm py-1">{{__('Order')}}</th>
+             <th class="text-left text-sm py-1">{{__('Type (Format)')}}</th>
+             <th class="text-left text-sm py-1">{{__('Description')}}</th>
            </tr>
          </thead>
          <tbody>
