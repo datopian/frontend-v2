@@ -32,18 +32,13 @@
       {{ dataset.title or dataset.name }}
     </h1>
 
-    <!-- short readme -->
-    {% if dataset.readmeSnippet %}
-      <div class="leading-relaxed">{{dataset.readmeSnippet}} <a href="#readme" onclick="scrollDown(this)" class="text-primary font-bold">Læs mere</a></div>
-    {% elif dataset.readmeHtml %}
+    <!-- full readme -->
+    {% if dataset.readmeHtml %}
       <div class="leading-relaxed">{{dataset.readmeHtml|safe}}</div>
     {% elif dataset.description %}
-      {% if dataset.description|length > 250 %}
-        <div class="leading-relaxed">{{dataset.description|truncate(200)}} <a href="#readme" onclick="scrollDown(this)" class="text-primary font-bold">Læs mere</a></div>
-      {% else %}
-        <div class="leading-relaxed">{{dataset.description}}</div>
-      {% endif %}
+      <div class="leading-relaxed">{{dataset.description}}</div>
     {% endif %}
+    <!-- end of full readme -->
 
 
     <h2 class="text-2xl font-semibold mt-gutter mb-4">{{ dataset.resources | length }} data file{% if dataset.resources | length > 1 %}s{% endif %}</h2>
@@ -54,7 +49,7 @@
       <!-- data file -->
       <li class="mb-6">
         <h3 class="text-2xl font-semibold">
-          <a href="#resource-{{resource.name}}">{{resource.title or resource.name}}</a>
+          <a href="#resource-{{resource.name}}" class="text-secondary">{{resource.title or resource.name}}</a>
         </h3>
         <p>
           {{ resource.description or resource.title }}
@@ -104,8 +99,55 @@
         {{ owner.description | safe | truncate(200) | replace("<a", "")  }} <a href="/{{ owner.name }}" class="text-primary font-bold">Læs mere</a>
       </p>
 
+      <!-- Metadata -->
+      <h2 class="bg-gray-200 px-4 py-3 font-bold mt-4 mb-1">Metadata</h2>
+      <div class="px-4 py-2 text-sm">
+        <dl class="info-list">
+          {% if dataset.sources %}
+          <dt class="info-list_title">Forfatter</dt>
+          <dd class="info-list_description">
+            {{snippets.listify(dataset.sources)}}
+          </dd>
+          {% endif %}
+          <dt class="info-list_title">Opdateret</dt>
+          <dd class="info-list_description">
+            {{ dataset.metadata_modified | formatDateFromNow }}
+          </dd>
+          <dt class="info-list_title">Oprettet</dt>
+          <dd class="info-list_description">
+            {{ dataset.metadata_created | formatDate}}
+          </dd>
+          <!-- Show extras -->
+          {% for item in dataset.extras %}
+            {% if item.key === 'data_quality' %}
+              {% set fieldName = 'Datakvalitet' %}
+            {% elif item.key === 'office' %}
+              {% set fieldName = 'Kontor' %}
+            {% elif item.key === 'office_email' %}
+              {% set fieldName = 'Kontor email' %}
+            {% elif item.key === 'quality_note' %}
+              {% set fieldName = 'Kvalitetsnote' %}
+            {% elif item.key === 'update_frequency' %}
+              {% set fieldName = 'Opdater frekvens' %}
+            {% endif %}
+            <dt class="info-list_title">{{fieldName or item.key}}</dt>
+            <dd class="info-list_description">
+              {{item.value}}
+            </dd>
+          {% endfor %}
+          <!-- End of extras -->
+          {% if dataset.license %}
+          <dt class="info-list_title">Licens</dt>
+          <dd class="info-list_description">
+            {{snippets.listify([dataset.license])}}
+          </dd>
+          {% endif %}
+        </dl>
+      </div>
+      <!-- Metadata -->
+
       <!-- share links -->
-      <h2 class="bg-gray-200 px-4 py-3 font-bold mt-4 mb-1">Share</h2>
+      <h2 class="bg-gray-200 px-4 py-3 font-bold mt-4 mb-1">Del</h2>
       <ul class="text-sm">
         <li class="border-b-2 border-gray-200">
           <a class="block px-4 py-3 text-primary hover:text-secondary" href="https://twitter.com/intent/tweet?url={{thisPageFullUrl}}&text={{dataset.title or dataset.name}}" target="_blank">Twitter</a>
@@ -115,13 +157,6 @@
         </li>
       </ul>
       <!-- share links end -->
-
-      {% if dataset.license %}
-      <h2 class="bg-gray-200 px-4 py-3 font-bold mt-4 mb-1">License</h2>
-      <a class="text-sm block px-4 py-3 text-primary" target="_blank">
-        {{snippets.listify([dataset.license])}}
-      </a>
-      {% endif %}
 
     </div>
   </div>
@@ -177,68 +212,6 @@
 </div>
 <!-- resource end -->
 {% endfor %}
-
-
-<div class="container mx-auto p-gutter">
-  <div class="lg:flex justify-between">
-    <!-- readme section -->
-    {% if dataset.readmeSnippet or dataset.readmeHtml %}
-    <div class="lg:w-2/3 lg:mr-gutter lg:pr-10">
-      <div class="">
-        <h2 id="readme" class="text-2xl font-semibold mt-gutter mb-2">Read me</h2>
-        <div class="leading-relaxed">{{dataset.readmeHtml|safe}}</div>
-      </div>
-    </div>
-    {% elif dataset.description %}
-    <div class="lg:w-2/3 lg:mr-gutter lg:pr-10">
-      <div class="">
-        <h2 id="readme" class="text-2xl font-semibold mt-gutter mb-2">Read me</h2>
-        <div class="leading-relaxed">{{dataset.description}}</div>
-      </div>
-    </div>
-    {% endif %}<!-- end of readme section -->
-
-    <!-- Additional info -->
-    <div class="">
-      <h2 class="text-2xl font-semibold mt-gutter mb-2">Additional information</h2>
-      <dl class="info-list">
-        <dt class="info-list_title">
-          Size
-        </dt>
-        <dd class="info-list_description">
-          {{ size or 'N\A' }}
-        </dd>
-        <dt class="info-list_title">
-          Format
-        </dt>
-        <dd class="info-list_description">
-          {% for format in dataset.formats %}
-            {{ format }}
-          {% endfor %}
-        </dd>
-        <dt class="info-list_title">
-          Created
-        </dt>
-        <dd class="info-list_description">
-          {{ dataset.created }}
-        </dd>
-        <dt class="info-list_title">Updated</dt>
-        <dd class="info-list_description">
-          {{ dataset.modified }}
-        </dd>
-        {% if dataset.sources %}
-        <dt class="info-list_title">Source</dt>
-        <dd class="info-list_description">
-          {{snippets.listify(dataset.sources)}}
-        </dd>
-        {% endif %}
-      </dl>
-    </div>
-
-    <!-- Additional info end -->
-  </div>
-
-</div>
 
 <div class="react-me-datapackage-views" data-datapackage-json='{{ dpId | safe }}'></div>
 {% endblock %}
