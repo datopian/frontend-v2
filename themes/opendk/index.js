@@ -66,6 +66,48 @@ module.exports = function (app) {
     next()
   })
 
+  app.get('/search', async (req, res, next) => {
+    try {
+      let facetNameToShowAll
+      for (let [key, value] of Object.entries(req.query)) {
+        if (key.includes('facet.limit.')) {
+          facetNameToShowAll = key.split('.')[2]
+          req.query['facet.limit'] = value
+        }
+      }
+      const result = await DmsModel.search(req.query)
+      if (facetNameToShowAll) {
+        for (let [key, value] of Object.entries(result.search_facets)) {
+          // Sort facets by count
+          result.search_facets[key].items = result.search_facets[key].items
+            .sort((a, b) => b.count - a.count)
+          if (key !== facetNameToShowAll) {
+            result.search_facets[key].items = result.search_facets[key].items
+              .slice(0, 5)
+          }
+        }
+      }
+      // Pagination
+      const from = req.query.from || 0
+      const size = req.query.size || 10
+      const total = result.count
+      const totalPages = Math.ceil(total / size)
+      const currentPage = parseInt(from, 10) / size + 1
+      const pages = utils.pagination(currentPage, totalPages)
+
+      res.render('search.html', {
+        title: 'Search',
+        result,
+        query: req.query,
+        totalPages,
+        pages,
+        currentPage
+      })
+    } catch (e) {
+      next(e)
+    }
+  })
+
   app.get('/search/content', async (req, res, next) => {
     try {
       const result = await CmsModel.getListOfPostsWithMeta(

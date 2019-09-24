@@ -18,6 +18,14 @@
       </a>
     </li>
     {% endfor %}
+    {# Link for showing more items from this face #}
+    {% if value.items | length > 4 %}
+    <li class="border-t border-gray-200">
+      <a href="/search?facet.limit.{{facetId}}=-1&q={{ query.q }}" class="filter-button text-secondary hover:underline">
+        {{__('Show more')}}
+      </a>
+    </li>
+    {% endif %}
   </ul>
 </section>
 {% endfor %}
