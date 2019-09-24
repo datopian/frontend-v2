@@ -36,7 +36,7 @@
     {% if dataset.readmeHtml %}
       <div class="leading-relaxed">{{dataset.readmeHtml|safe}}</div>
     {% elif dataset.description %}
-      <div class="leading-relaxed">{{dataset.description}}</div>
+      <div class="leading-relaxed">{{dataset.descriptionHtml or dataset.description}}</div>
     {% endif %}
     <!-- end of full readme -->
 
@@ -45,17 +45,17 @@
 
     <!-- data files (downloads) -->
     <ul>
-      {% for resource in dataset.downloads or dataset.resources %}
+      {% for resource in dataset.resources %}
       <!-- data file -->
       <li class="mb-6">
         <h3 class="text-2xl font-semibold">
           <a href="#resource-{{resource.name}}" class="text-secondary">{{resource.title or resource.name}}</a>
         </h3>
         <p>
-          {{ resource.description or resource.title }}
+          {{ resource.descriptionHtml|safe or resource.title }}
         </p>
         <nav>
-          <a class="data-file-type" href="{{ resource.path }}">
+          <a class="data-file-type" href="{{ resource.downloadPath }}">
             <dl class="data-file-type_inner">
               <dt class="data-file-type_term">
                 {{__('Download')}} {% if resource.format %}({{ resource.format }}){% endif %}

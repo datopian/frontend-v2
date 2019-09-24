@@ -137,6 +137,11 @@ module.exports = function () {
 
     // Create a visualization per resource as needed
     datapackage.resources.forEach((resource, index) => {
+      // Process markdown content (resource descriptions)
+      resource.descriptionHtml = resource.description
+        ? utils.processMarkdown.render(resource.description)
+        : ''
+      // Normalize format
       resource.format = resource.format.toLowerCase()
       // Handle datastore_active resources, e.g., 'path' property might point to
       // some filestore (eg S3) but it is also stored in the datastore so we can
