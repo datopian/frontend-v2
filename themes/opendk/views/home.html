@@ -29,16 +29,40 @@ Welcome - Home
           {% endfor %}
         </ul>
       <!-- searchbox -->
-      <form class="lg:w-1/3 text-white" action="/search" method="GET">
-        <div class="home_search">
-          <input type="text" class="bg-secondary pl-4 pr-12 py-3 text-lg w-full outline-none" placeholder="{{__('Søg ...')}}" name="q" required />
-          <button class="absolute inset-y-0 right-0 px-3 outline-none" type="submit">
-            <svg class="w-6 h-6 fill-white" aria-label="Search Datasets"><use xlink:href="#search" /></svg>
-          </button>
+        <div class="dropdown">
+          <div class="relative">
+            <input id="searchInput" autocomplete="off" onkeyup="onKeyUp()" type="text" class="bg-secondary pl-4 pr-12 py-3 text-lg w-full outline-none" placeholder="{{__('Søg ...')}}" name="q" required />
+            <button class="absolute inset-y-0 right-0 px-3 outline-none" type="submit">
+              <svg class="w-6 h-6 fill-white" aria-label="Search Datasets"><use xlink:href="#search" /></svg>
+            </button>
+          </div>
+          <div id="searchSelect">
+            <div id="searchSelect1Div" class="relative border-t-2 border-b-2" onclick="selectedInput1()">
+              <input id="searchSelect1" readonly type="text" class="cursor-pointer bg-secondary hover:bg-gray-500 pl-10 pr-48 py-3 text-lg w-full outline-none" />
+              <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center px-2 text-gray-700">
+                <svg class="w-6 h-6 fill-white" aria-label="Search Datasets"><use xlink:href="#search" /></svg>
+              </div>
+              <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                <button class="flex-shrink-0 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 text-sm border-4 text-white py-1 px-2 rounded" type="button">
+                  Datasæt
+                </button>
+              </div>
+            </div>
+
+            <div id="searchSelect2Div" class="relative" onclick="selectedInput2()">
+              <input id="searchSelect2" readonly type="text" class="cursor-pointer bg-secondary hover:bg-gray-500 pl-10 pr-48 py-3 text-lg w-full outline-none" />
+              <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center px-2 text-gray-700">
+                <svg class="w-6 h-6 fill-white" aria-label="Search content"><use xlink:href="#search" /></svg>
+              </div>
+              <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                <button class="flex-shrink-0 text-sm border-4 text-white py-1 px-2 rounded" type="button">
+                  Blog
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
-      </form>
-      <!-- search box ended -->
-    </div>
+      </div>
   </header>
 
   <section class="md:flex md:-mx-gutter">
@@ -104,6 +128,7 @@ Welcome - Home
 {% endblock %}
 
 {% block scripts %}
+
 <script src="//cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.1/min/tiny-slider.js"></script>
 
 <script src="/static/js/twitterFetcher_min.js"></script>
@@ -128,6 +153,8 @@ Welcome - Home
   twitterFetcher.fetch(configProfile);
   
 window.onload =  async function(){
+  document.getElementById("searchSelect").style.display = "none";
+
   var tweetscontainer = document.getElementById('tweets-container');
   var tweetslist = document.getElementById('tweets');
   var innerblock = "";
@@ -138,6 +165,33 @@ window.onload =  async function(){
     }
     tweetscontainer.removeChild(tweetslist)
     tweetscontainer.innerHTML+= innerblock
+};
+
+document.getElementById("searchSelect").style.display = "none";
+
+function onKeyUp() {
+  let searchFieldValue = document.getElementById("searchInput").value;
+  document.getElementById("searchSelect1").value = searchFieldValue;
+  document.getElementById("searchSelect2").value = searchFieldValue;
+  if (searchFieldValue !== "") {
+    document.getElementById("searchSelect").style.display = "block";
+  } else {
+    document.getElementById("searchSelect").style.display = "none";
+  }
+}
+
+function selectedInput1() {
+  window.location.href = window.location.origin + "/search?q=" + document.getElementById("searchSelect1").value;
+}
+
+function selectedInput2() {
+  window.location.href = window.location.origin + "/search/content?q=" + document.getElementById("searchSelect1").value;
+}
+
+function mouseOver(number) {
+  if (number===1) {
+    document.getElementById("searchSelect1").classList.add("bg-red-500");
+  }
 }
 
 </script>
