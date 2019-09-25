@@ -160,6 +160,10 @@ module.exports = function () {
         if (resourceUrl.host === config.get('PROXY_FILESTORE') && resource.format !== 'pdf') {
           resource.path = '//' + req.get('host') + '/proxy/filestore' + resourceUrl.pathname + resourceUrl.search
         }
+        // Store a CKAN Classic proxy path
+        // https://github.com/ckan/ckan/blob/master/ckanext/resourceproxy/plugin.py#L59
+        const apiUrlObject = new URL(config.get('API_URL'))
+        resource.cc_proxy = apiUrlObject.origin + `/dataset/${datapackage.id}/resource/${resource.id}/proxy`
       } catch (e) {
         console.warn(e)
       }
