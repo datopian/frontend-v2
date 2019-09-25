@@ -18,6 +18,17 @@ module.exports = function (app) {
     next()
   })
 
+  // Need to do this again for routes in WP CMS plugin as it never hits `.use` middleware
+  // TODO: fix WP CMS plugin so it doesn't send back the response before theme
+  // controller is executed.
+  app.param('page', async (req, res, next) => {
+    if (!res.locals.aboutPages) {
+      res.locals.aboutPages = (await CmsModel.getListOfPosts({type: 'page'}))
+        .filter(page => page.parent && page.parent.ID === 11)
+    }
+    next()
+  })
+
   app.get('/', async (req, res, next) => {
     // Set up main heading text from config var:
     res.locals.home_heading = config.get('HOME_HEADING') || ''

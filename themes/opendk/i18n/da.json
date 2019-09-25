@@ -7,6 +7,7 @@
 	"Format": "Formater",
 	"Data": "Data",
 	"About": "Om",
+	"about": "Om",
 	"Search": "Søg",
 	"Search ...": "Søg ...",
 	"Search Datasets": "Søg datasæt",
@@ -44,5 +45,7 @@
 	"Organization": "Organization",
 	"Metadata": "Metadata",
 	"Show more": "Vis mere",
-	"Conflict": "Conflict"
+	"Conflict": "Conflict",
+	"knowledge": "Viden om",
+	"hvad-er-open-data-dk": "hvad-er-open-data-dk"
 }
