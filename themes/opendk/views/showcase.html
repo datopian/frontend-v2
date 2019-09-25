@@ -109,6 +109,12 @@
             {{snippets.listify(dataset.sources)}}
           </dd>
           {% endif %}
+          {% if dataset.author %}
+          <dt class="info-list_title">Vedligeholdes af</dt>
+          <dd class="info-list_description">
+            {{snippets.listify([dataset.author])}}
+          </dd>
+          {% endif %}
           <dt class="info-list_title">Opdateret</dt>
           <dd class="info-list_description">
             {{ dataset.metadata_modified | formatDateFromNow }}
