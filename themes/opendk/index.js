@@ -1,3 +1,5 @@
+const moment = require('moment')
+
 module.exports = function (app) {
   const utils = app.get('utils')
   const dms = app.get('dms')
@@ -26,6 +28,22 @@ module.exports = function (app) {
       res.locals.aboutPages = (await CmsModel.getListOfPosts({type: 'page'}))
         .filter(page => page.parent && page.parent.ID === 11)
     }
+    // Add featured posts
+    res.locals.featuredPosts = (await CmsModel.getListOfPosts(
+      {
+        tag: 'featured',
+        number: 5
+      }
+    )).map(post => {
+      return {
+        slug: post.slug,
+        title: post.title,
+        content: post.content,
+        published: moment(post.date).format('MMMM Do, YYYY'),
+        modified: moment(post.modified).format('MMMM Do, YYYY'),
+        image: post.featured_image
+      }
+    })
     next()
   })
 
@@ -73,6 +91,26 @@ module.exports = function (app) {
         post.month = monthNames[date.getMonth()]
       }
       return post
+    })
+    next()
+  })
+
+  app.get('/blog', async (req, res, next) => {
+    // Add featured posts
+    res.locals.featuredPosts = (await CmsModel.getListOfPosts(
+      {
+        tag: 'featured',
+        number: 5
+      }
+    )).map(post => {
+      return {
+        slug: post.slug,
+        title: post.title,
+        content: post.content,
+        published: moment(post.date).format('MMMM Do, YYYY'),
+        modified: moment(post.modified).format('MMMM Do, YYYY'),
+        image: post.featured_image
+      }
     })
     next()
   })
