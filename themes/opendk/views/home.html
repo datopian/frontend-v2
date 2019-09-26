@@ -31,7 +31,7 @@ Welcome - Home
       <!-- searchbox -->
         <div class="dropdown">
           <div class="relative">
-            <input id="searchInput" autocomplete="off" type="text" class="bg-secondary pl-4 pr-12 py-3 text-lg w-full outline-none" placeholder="{{__('Søg ...')}}" name="q" required />
+            <input id="searchInput" autocomplete="off" type="text" class="bg-secondary pl-4 pr-12 py-3 text-lg w-full outline-none" placeholder="{{__('Search ...')}}" name="q" required />
             <button class="absolute inset-y-0 right-0 px-3 outline-none" type="submit">
               <svg class="w-6 h-6 fill-white" aria-label="Search Datasets"><use xlink:href="#search" /></svg>
             </button>
@@ -44,7 +44,7 @@ Welcome - Home
               </div>
               <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
                 <button class="flex-shrink-0 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 text-sm border-4 text-white py-1 px-2 rounded" type="button">
-                  Datasæt
+                  {{__('Search datasets')}}
                 </button>
               </div>
             </div>
@@ -56,7 +56,7 @@ Welcome - Home
               </div>
               <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
                 <button class="flex-shrink-0 text-sm border-4 text-white py-1 px-2 rounded" type="button">
-                  Blog
+                  {{__('Search website')}}
                 </button>
               </div>
             </div>
