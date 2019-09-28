@@ -31,14 +31,14 @@ Welcome - Home
       <!-- searchbox -->
         <div class="dropdown">
           <div class="relative">
-            <input id="searchInput" autocomplete="off" type="text" class="bg-secondary pl-4 pr-12 py-3 text-lg w-full outline-none" placeholder="{{__('Search ...')}}" name="q" required />
+            <input id="searchInputHome" autocomplete="off" type="text" class="searchInput bg-secondary pl-4 pr-12 py-3 text-lg w-full outline-none" placeholder="{{__('Search ...')}}" name="q" required />
             <button class="absolute inset-y-0 right-0 px-3 outline-none" type="submit">
               <svg class="w-6 h-6 fill-white" aria-label="Search Datasets"><use xlink:href="#search" /></svg>
             </button>
           </div>
-          <div id="searchSelect">
-            <div id="searchSelect1Div" class="relative border-t-2 border-b-2" onclick="selectedInput1()">
-              <input id="searchSelect1" readonly type="text" class="cursor-pointer bg-secondary hover:bg-gray-500 focus:bg-gray-500 pl-10 pr-48 py-3 text-lg w-full outline-none" />
+          <div id="searchSelectHome" class="searchSelect">
+            <div id="searchSelect1DivHome" class="searchSelect1Div relative border-t-2 border-b-2">
+              <input id="searchSelect1Home" readonly type="text" class="searchSelect1 cursor-pointer bg-secondary hover:bg-gray-500 focus:bg-gray-500 pl-10 pr-48 py-3 text-lg w-full outline-none" />
               <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center px-2 text-gray-700">
                 <svg class="w-6 h-6 fill-white" aria-label="Search Datasets"><use xlink:href="#search" /></svg>
               </div>
@@ -49,8 +49,8 @@ Welcome - Home
               </div>
             </div>
 
-            <div id="searchSelect2Div" class="relative" onclick="selectedInput2()">
-              <input id="searchSelect2" readonly type="text" class="cursor-pointer bg-secondary hover:bg-gray-500 focus:bg-gray-500 pl-10 pr-48 py-3 text-lg w-full outline-none" />
+            <div id="searchSelect2DivHome" class="searchSelect2Div relative">
+              <input id="searchSelect2Home" readonly type="text" class="searchSelect2 cursor-pointer bg-secondary hover:bg-gray-500 focus:bg-gray-500 pl-10 pr-48 py-3 text-lg w-full outline-none" />
               <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center px-2 text-gray-700">
                 <svg class="w-6 h-6 fill-white" aria-label="Search content"><use xlink:href="#search" /></svg>
               </div>
@@ -164,70 +164,5 @@ Welcome - Home
       tweetscontainer.removeChild(tweetslist)
       tweetscontainer.innerHTML+= innerblock
   };
-
-  document.getElementById("searchSelect").style.display = "none";
-
-  document.getElementById("searchInput").addEventListener('keyup', function (e) {
-    let searchFieldValue = document.getElementById("searchInput").value;
-    document.getElementById("searchSelect1").value = searchFieldValue;
-    document.getElementById("searchSelect2").value = searchFieldValue;
-    if (searchFieldValue !== "") {
-      document.getElementById("searchSelect").style.display = "block";
-    } else {
-      document.getElementById("searchSelect").style.display = "none";
-    }
-
-    if (e.code === "ArrowUp") {
-      document.getElementById(e.target.id).blur();
-      document.getElementById("searchSelect2").focus();
-    } else if (e.code === "ArrowDown") {
-      document.getElementById(e.target.id).blur();
-      document.getElementById("searchSelect1").focus();
-    }
-  });
-
-  document.getElementById("searchSelect1").addEventListener('keyup', function (e) {
-    document.getElementById(e.target.id).blur();
-    if (e.code === "ArrowUp") {
-      document.getElementById("searchInput").focus();
-    } else if (e.code === "ArrowDown") {
-      document.getElementById("searchSelect2").focus();
-    } else if (e.code.includes("Enter")) {
-        selectedInput2();
-    } else {
-      document.getElementById("searchInput").focus();
-      document.getElementById("searchInput").value = document.getElementById("searchInput").value + e.key
-    }
-
-  });
-
-  document.getElementById("searchSelect2").addEventListener('keyup', function (e) {
-    document.getElementById(e.target.id).blur();
-    if (e.code === "ArrowUp") {
-      document.getElementById("searchSelect1").focus();
-    } else if (e.code === "ArrowDown") {
-      document.getElementById("searchInput").focus();
-    } else if (e.code.includes("Enter")) {
-      selectedInput2();
-    } else {
-      document.getElementById("searchInput").focus();
-      document.getElementById("searchInput").value = document.getElementById("searchInput").value + e.key
-    }
-  });
-
-function selectedInput1() {
-  window.location.href = window.location.origin + "/search?q=" + document.getElementById("searchInput").value;
-}
-
-function selectedInput2() {
-  window.location.href = window.location.origin + "/search/content?q=" + document.getElementById("searchInput").value;
-}
-
-function mouseOver(number) {
-  if (number===1) {
-    document.getElementById("searchSelect1").classList.add("bg-red-500");
-  }
-}
-
 </script>
 {% endblock %}
