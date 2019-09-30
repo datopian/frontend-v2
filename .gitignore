@@ -8,7 +8,7 @@ yarn-error.log
 
 # misc
 sandbox/*
-*.env
+
 .nyc_output/*
 
 # VIM swap files
