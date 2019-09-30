@@ -3,8 +3,12 @@
 {% macro listify(list_) -%}
   {% for item in list_ or [] %}
     {% if item.path or item.url or item.web %}
-    <a href="{{item.path or item.url or item.web}}" title="{{item.title or item.email}}" target="_blank">
+    <a href="{{item.path or item.url or item.web}}" class="text-secondary" title="{{item.title or item.email}}" target="_blank">
       {{item.type or item.title or item.name}}
+    </a>
+    {% elif item.email %}
+    <a href="mailto:{{item.email}}" class="text-secondary" title="{{item.title or item.email}}" target="_blank">
+      {{item.title or item.name or item.email}}
     </a>
     {% else %}
     <span title="{{item.type or item.email}}">{{item.title or item.name}}</span>

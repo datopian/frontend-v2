@@ -9,13 +9,13 @@
   <nav class="breadcrumb" aria-label="breadcrumb">
     <ol>
       <li class="breadcrumb_item">
-        <a class="breadcrumb_link" href="/">Home</a>
+        <a class="breadcrumb_link" href="/">{{__('Home')}}</a>
       </li>
       <li class="breadcrumb_item">
-        <a class="breadcrumb_link" href="/blog">Blog</a>
+        <a class="breadcrumb_link" href="/blog">{{__('Blog')}}</a>
       </li>
       <li class="breadcrumb_item">
-        <a class="breadcrumb_link" href="/blog" aria-current="page">{{slug}}</a>
+        <a class="breadcrumb_link" href="/blog/{{slug}}" aria-current="page">{{title}}</a>
       </li>
     </ol>
   </nav>
@@ -43,7 +43,7 @@
 
   <div class="lg:w-1/3 lg:pl-gutter">
     <!-- share links -->
-    <h2 class="bg-gray-200 px-4 py-3 font-bold mb-1">Share</h2>
+    <h2 class="bg-gray-200 px-4 py-3 font-bold mb-1">{{__('Share')}}</h2>
     <ul class="text-sm">
       <li class="border-b-2 border-gray-200">
         <a class="block px-4 py-3 text-primary" href="https://twitter.com/intent/tweet?url={{thisPageFullUrl}}&text={{title}}" target="_blank">Twitter</a>
@@ -54,29 +54,16 @@
     </ul>
     <!-- share links end -->
 
-    <!-- TODO hard-coded -->
-    <h2 class="bg-gray-200 px-4 py-3 font-bold mb-2 mt-gutter">Mest populære blogindlæg</h2>
+    <h2 class="bg-gray-200 px-4 py-3 font-bold mb-2 mt-gutter">Fremhævede blogindlæg</h2>
     <ul>
+      {% for post in featuredPosts %}
       <li class="border-b-2 border-gray-200">
         <article class="px-4 py-3">
-          <h1><a class="text-primary font-semibold">Åbne data afslører valgfejl: Ja- og nej-stemmer blev byttet om</a></h1>
-          <time class="text-sm">29/05/2015</time>
+          <h1><a href="/blog/{{post.slug}}" class="text-primary font-semibold hover:underline">{{post.title}}</a></h1>
+          <time class="text-sm">{{post.published}}</time>
         </article>
       </li>
-
-      <li class="border-b-2 border-gray-200">
-        <article class="px-4 py-3">
-          <h1><a class="text-primary font-semibold">Åbne data afslører valgfejl: Ja- og nej-stemmer blev byttet om</a></h1>
-          <time class="text-sm">29/05/2015</time>
-        </article>
-      </li>
-
-      <li>
-        <article class="px-4 py-3">
-          <h1><a class="text-primary font-semibold">Åbne data afslører valgfejl: Ja- og nej-stemmer blev byttet om</a></h1>
-          <time class="text-sm">29/05/2015</time>
-        </article>
-      </li>
+      {% endfor %}
     </ul>
 
   </div>

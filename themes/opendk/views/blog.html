@@ -9,10 +9,10 @@
   <nav class="breadcrumb" aria-label="breadcrumb">
     <ol>
       <li class="breadcrumb_item">
-        <a class="breadcrumb_link" href="/">Home</a>
+        <a class="breadcrumb_link" href="/">{{__('Home')}}</a>
       </li>
       <li class="breadcrumb_item">
-        <a class="breadcrumb_link" href="/blog" aria-current="page">Blog</a>
+        <a class="breadcrumb_link" href="/blog" aria-current="page">{{__('Blog')}}</a>
       </li>
     </ol>
   </nav>
@@ -20,15 +20,15 @@
 
 <div class="container mx-auto md:flex p-gutter">
 
-  <main class="md:w-2/3 md:mr-gutter lg:flex flex-wrap">
+  <div class="md:w-2/3 md:mr-gutter lg:flex flex-wrap">
     <!-- posts -->
-    {% set postCycler = cycler("odd", "even") %}
     {% for post in posts %}
-    {% if postCycler.next() == "odd" %}
-    <article class="article-preview mb-gutter pb-gutter lg:w-1/2 lg:pr-gutter">
+    {% if loop.index0 % 2 == 0 %}
+      {% set cls = "article-preview mb-gutter pb-gutter lg:w-1/2 lg:pr-gutter" %}
     {% else %}
-    <article class="article-preview mb-gutter pb-gutter lg:w-1/2 lg:pl-gutter">
+      {% set cls = "article-preview mb-gutter pb-gutter lg:w-1/2 lg:pl-gutter" %}
     {% endif %}
+    <div class="{{cls}}">
       <a class="article-preview_image" href="/blog/{{post.slug}}">
         <img class="article-preview_img" src="{{post.image or '/static/img/placeholder.svg'}}" />
       </a>
@@ -36,38 +36,28 @@
         <h1 class="article-preview_heading">
           <a class="article-preview_heading-link" href="/blog/{{post.slug}}">{{post.title}}</a>
         </h1>
-        <time class="article-preview_date">{{post.modified}}</time>
+        <time class="article-preview_date">{{post.published}}</time>
         <div class="article-preview_content">
-          {{post.content | safe | truncate(200)}}
+          {{ post.excerpt }}
+          <a class="text-secondary hover:underline" href="/blog/{{post.slug}}">Læse hele artiklen</a>
         </div>
       </div>
-    </article>
+    </div>
+
     {% endfor %}
-  </main>
+  </div>
 
   <div class="md:w-1/3 md:pl-gutter">
-    <h2 class="bg-gray-200 px-4 py-3 font-bold mb-2">Mest populære blogindlæg</h2>
+    <h2 class="bg-gray-200 px-4 py-3 font-bold mb-2">Fremhævede blogindlæg</h2>
     <ul>
+      {% for post in featuredPosts %}
       <li class="border-b-2 border-gray-200">
         <article class="px-4 py-3">
-          <h1><a class="text-primary font-semibold">Åbne data afslører valgfejl: Ja- og nej-stemmer blev byttet om</a></h1>
-          <time class="text-sm">29/05/2015</time>
+          <h1><a href="/blog/{{post.slug}}" class="text-primary font-semibold hover:underline">{{post.title}}</a></h1>
+          <time class="text-sm">{{post.published}}</time>
         </article>
       </li>
-
-      <li class="border-b-2 border-gray-200">
-        <article class="px-4 py-3">
-          <h1><a class="text-primary font-semibold">Åbne data afslører valgfejl: Ja- og nej-stemmer blev byttet om</a></h1>
-          <time class="text-sm">29/05/2015</time>
-        </article>
-      </li>
-
-      <li>
-        <article class="px-4 py-3">
-          <h1><a class="text-primary font-semibold">Åbne data afslører valgfejl: Ja- og nej-stemmer blev byttet om</a></h1>
-          <time class="text-sm">29/05/2015</time>
-        </article>
-      </li>
+      {% endfor %}
     </ul>
 
   </div>

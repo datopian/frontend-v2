@@ -14,8 +14,8 @@
         {% else %}
           {% set from = (currentPage - 2) * 10 %}
         {% endif %}
-        <a class="block px-3 py-2 hover:text-white hover:bg-secondary" href="{{path}}?q={{ query.q }}&from={{ from }}" aria-label="Previous">
-          <span class="">Previous</span>
+        <a class="block px-3 py-2 hover:text-white hover:bg-secondary" href="{{path}}?q={{ query.q }}&from={{ from }}" aria-label="{{__('Previous')}}">
+          <span class="">{{__('Previous')}}</span>
         </a>
       </li>
       {% for page in pages %}
@@ -30,8 +30,8 @@
         {% endif %}
       {% endfor %}
       <li class="border border-gray-200">
-        <a class="block px-3 py-2 hover:text-white hover:bg-secondary" href="{{path}}?q={{ query.q }}&from={{ currentPage * 10 }}" aria-label="Next">
-          <span class="">Next</span>
+        <a class="block px-3 py-2 hover:text-white hover:bg-secondary" href="{{path}}?q={{ query.q }}&from={{ currentPage * 10 }}" aria-label="{{__('Next')}}">
+          <span class="">{{__('Next')}}</span>
         </a>
       </li>
     </ul>

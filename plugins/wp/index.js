@@ -12,6 +12,12 @@ module.exports = function (app) {
   const Model = new cms.CmsModel()
   const blogPath = config.get('WP_BLOG_PATH')
 
+  app.use((req, res, next) => {
+    // Set moment's locale
+    moment.locale(req.getLocale())
+    next()
+  })
+
   app.get('/', async (req, res,next) => {
     // Get latest 3 blog posts and pass it to home template
     let posts = await Model.getListOfPosts({

@@ -15,6 +15,9 @@ module.exports = function(app) {
 
   if (filestore) {
     app.use(`/proxy/filestore`, proxy(filestore, {
+      // Without following option when requesting a JSON file, it doesn't work.
+      // https://github.com/villadora/express-http-proxy/issues/412
+      parseReqBody: false,
       filter: function(req, res) {
        return req.method == 'GET'
       }

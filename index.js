@@ -11,7 +11,7 @@ const moment = require('moment')
 
 const config = require('./config')
 const dmsRoutes = require('./routes/dms')
-const {loadTheme, loadPlugins} = require('./utils')
+const {loadTheme, loadPlugins, processMarkdown} = require('./utils')
 
 module.exports.makeApp = function () {
   const app = express()
@@ -22,6 +22,7 @@ module.exports.makeApp = function () {
   if (config.get('env') === 'development') {
     const mocks = require('./fixtures')
     mocks.initMocks()
+    console.warn('You are activated the mocks.')
   }
   // Explicitely set views location - this is needed for Zeit to work
   app.set('views', path.join(__dirname, '/views'))
@@ -121,6 +122,14 @@ module.exports.makeApp = function () {
     }
   })
 
+  env.addFilter('processMarkdown', (str) => {
+    try {
+      return processMarkdown.render(str)
+    } catch (e) {
+      console.warn('Failed to format markdown', e)
+    }
+  })
+  
   return app
 }
 

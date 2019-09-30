@@ -13,6 +13,7 @@
       <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.3/leaflet.css">
     {% endif %}
     {% block styles %}{% endblock %}
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
   </head>
   <body class="{% block bodyclass %}{{bodyclass}}{% endblock %}">
     <div id="page" class="flex flex-col justify-between min-h-screen">
@@ -33,7 +34,7 @@
             <nav class="main-nav mt-4 py-2 lg:my-2 bg-white right-0 z-10 lg:relative">
               <ul class="lg:flex md:text-xl lg:text-2xl">
                 <li class="main-nav_item lg:mx-3">
-                  <a class="main-nav_link" href="/blog">Blog</a>
+                  <a class="main-nav_link" href="/blog">{{__('Blog')}}</a>
                 </li>
                 <li class="main-nav_item lg:mx-3">
                   <a class="main-nav_link" href="/knowledge">Viden om</a>
@@ -59,15 +60,49 @@
                     {% endfor %}
                   </ul>
                 </li>
-                <li class="flex items-center text-primary lg:ml-6">
+                <li class="flex text-primary lg:ml-6">
                   <a id="search-link" href="/search">
-                    <span class="main-nav_link hidden">Søg</span>
+                    <span class="main-nav_link hidden">Søg datasæt</span>
                     <svg class="main-nav_search-toggle-icon w-8 h-8 hover:fill-secondary outline-none" data-toggle="show"><use xlink:href="#search" /></svg>
                     <svg class="main-nav_search-toggle-icon w-8 h-6 hover:fill-secondary outline-none" data-toggle="hide"><use xlink:href="#cross" /></svg>
                   </a>
-                  <form action="/search" method="GET" class="main-nav_search w-full px-6 py-2 lg:p-0 lg:absolute lg:left-0 lg:right-0 lg:pr-12 lg:pointer-events-none" id="header-search">
-                    <input name="q" type="text" class="border-2 border-solid border-gray-200 px-3 py-2 lg:px-4 lg:py-3 lg:text-xl outline-none focus:border-secondary w-full pointer-events-auto" placeholder="Søg" id="header-search-input">
-                  </form>
+                  <div class="main-nav_search w-full px-6 py-2 lg:p-0 lg:absolute lg:left-0 lg:right-0 lg:pr-12 lg:pointer-events-none" id="header-search">
+<!--                    <input id="searchInput" name="q" type="text" class="searchInput border-2 border-solid px-3 py-2 lg:px-4 lg:py-3 lg:text-xl outline-none border-secondary w-full pointer-events-auto" placeholder="Søg datasæt">-->
+                    <div class="dropdown">
+                      <div class="relative">
+                        <input id="searchInput" autocomplete="off" type="text" class="searchInput border-2 border-solid px-3 py-2 lg:px-4 lg:py-3 lg:text-xl outline-none border-secondary w-full pointer-events-auto" placeholder="{{__('Search ...')}}" name="q" required />
+                        <button class="absolute inset-y-0 right-0 px-3 outline-none" type="submit">
+                          <svg class="w-6 h-6 fill-white" aria-label="Search Datasets"><use xlink:href="#search" /></svg>
+                        </button>
+                      </div>
+
+                      <div id="searchSelect" class="searchSelect">
+                        <div id="searchSelect1Div" class="searchSelect1Div relative">
+                          <input id="searchSelect1" readonly type="text" class="searchSelect1 cursor-pointer hover:bg-secondary focus:bg-secondary border-2 border-solid pl-10 pr-48 py-3 lg:text-xl border-secondary w-full pointer-events-auto" />
+                          <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center px-2 text-gray-700">
+                            <svg class="w-6 h-6 fill-primary" aria-label="Search Datasets"><use xlink:href="#search" /></svg>
+                          </div>
+                          <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                            <button class="flex-shrink-0 bg-teal-500 hover:bg-teal-700 border-teal-500 text-sm border-4 text-primary py-1 px-2 rounded" type="button">
+                              {{__('Search datasets')}}
+                            </button>
+                          </div>
+                        </div>
+
+                        <div id="searchSelect2Div" class="searchSelect2Div relative">
+                          <input id="searchSelect2" readonly type="text" class="searchSelect2 cursor-pointer hover:bg-secondary focus:bg-secondary border-2 border-solid pl-10 pr-48 py-3 lg:text-xl border-secondary w-full pointer-events-auto" />
+                          <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center px-2 text-gray-700">
+                            <svg class="w-6 h-6 fill-primary" aria-label="Search content"><use xlink:href="#search" /></svg>
+                          </div>
+                          <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                            <button class="flex-shrink-0 text-sm border-4 text-primary py-1 px-2 rounded" type="button">
+                              {{__('Search website')}}
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
 
                 </li>
               </ul>
@@ -128,9 +163,9 @@
               <a href="mailto:teknik@opendata.dk" class="site-footer_link">teknik@opendata.dk</a>
             </p>
             <div>
-              <p>Open Data DK | <a href="mailto:info@opendata.dk" class="site-footer_link">info@opendata.dk</a> | Hack Kampmanns Plads 2 | 8000 Aarhus C 
+              <p>Open Data DK | <a href="mailto:info@opendata.dk" class="site-footer_link">info@opendata.dk</a> | Hack Kampmanns Plads 2 | 8000 Aarhus C
             </div>
-         
+
             <ul class="flex">
               <li>
                 <a target="_blank" href="https://www.linkedin.com/company/open-data-dk" class="site-footer_link"><svg viewbox="0 0 512 512" style="height: 40px;">
@@ -155,8 +190,8 @@
     </div>
 
     <script>
+      document.cookie = 'defaultLocale=' + 'da';
       // nav
-      document.cookie = 'defaultLocale=' + 'dk';
       var navToggle = document.getElementById("nav-toggle");
       var navTarget = navToggle.nextElementSibling;
 
@@ -195,8 +230,104 @@
         searchForm.setAttribute("data-expanded", !expanded);
 
         if (!expanded) {
-          document.getElementById("header-search-input").focus();
+          document.getElementById("searchInput").focus();
         }
+      };
+
+      $(".searchSelect").css("display", "none");
+
+      $(document).on('click', function (event) {
+        if (!event.target.id.includes('searchInput')) {
+          $(".searchSelect").css("display", "none");
+        }
+      });
+
+      $(".searchInput").on('focus', function(event) {
+        let homeSeachFlag = $(this).attr('id').includes("Home") ? "Home" : "";
+
+        let searchFieldValue = $(this).val();
+        let searchSelect = $("#searchSelect" + homeSeachFlag);
+
+        if (searchFieldValue !== "") {
+          searchSelect.css('display','block');
+        }
+      });
+
+      $(".searchInput").on('keyup', function (event) {
+        let homeSeachFlag = $(this).attr('id').includes("Home") ? "Home" : "";
+
+        let searchSelect = $("#searchSelect" + homeSeachFlag);
+        let searchSelect1 = $("#searchSelect1" + homeSeachFlag);
+        let searchSelect2 = $("#searchSelect2" + homeSeachFlag);
+
+        searchSelect1.val($(this).val());
+        searchSelect2.val($(this).val());
+
+        if ($(this).val() !== "") {
+          searchSelect.css('display','block');
+        } else {
+          searchSelect.css('display','none');
+        }
+
+        if (event.originalEvent.code === "ArrowUp") {
+          $(this).blur();
+          searchSelect2.focus();
+        } else if (event.originalEvent.code === "ArrowDown") {
+          $(this).blur();
+          searchSelect1.focus();
+        }
+      });
+
+      $(".searchSelect1").on('keyup', function (event) {
+        let homeSeachFlag = $(this).attr('id').includes("Home") ? "Home" : "";
+
+        let searchInput = $("#searchInput" + homeSeachFlag);
+        let searchSelect2 = $("#searchSelect2" + homeSeachFlag);
+
+        $(this).blur();
+        if (event.originalEvent.code === "ArrowUp") {
+          searchInput.focus();
+        } else if (event.originalEvent.code === "ArrowDown") {
+          searchSelect2.focus();
+        } else if (event.originalEvent.code.includes("Enter")) {
+          selectedInput1($(this).val());
+        } else {
+          searchInput.val(searchInput.val() + event.key).focus();
+        }
+      });
+
+      $(".searchSelect2").on('keyup', function (event) {
+        let homeSeachFlag = $(this).attr('id').includes("Home") ? "Home" : "";
+
+        let searchInput = $("#searchInput" + homeSeachFlag);
+        let searchSelect1 = $("#searchSelect1" + homeSeachFlag);
+
+        $(this).blur();
+        if (event.originalEvent.code === "ArrowUp") {
+          searchSelect1.focus();
+        } else if (event.originalEvent.code === "ArrowDown") {
+          searchInput.focus();
+        } else if (event.originalEvent.code.includes("Enter")) {
+          selectedInput2($(this).val());
+        } else {
+          searchInput.val(searchInput.val() + event.key).focus();
+        }
+      });
+
+      $(".searchSelect1").on('click', (function (event) {
+        selectedInput1($(this).val())
+      }));
+
+      $(".searchSelect2").on('click', function (event) {
+        selectedInput2($(this).val())
+      });
+
+      function selectedInput1(value) {
+        window.location.href = window.location.origin + "/search?q=" + value;
+      }
+
+      function selectedInput2(value) {
+        window.location.href = window.location.origin + "/search/content?q=" + value
       }
 
     </script>
