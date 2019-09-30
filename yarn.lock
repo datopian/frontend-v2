@@ -241,6 +241,14 @@
   dependencies:
     arrify "^1.0.1"
 
+"@datopian/eds@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@datopian/eds/-/eds-1.0.0.tgz#5eeb5d4d37fa908191aabcc413940a0e9f852755"
+  dependencies:
+    moment "^2.24.0"
+    multer "^1.4.2"
+    nodemailer "^6.3.0"
+
 "@mrmlnc/readdir-enhanced@^2.2.1":
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/@mrmlnc/readdir-enhanced/-/readdir-enhanced-2.2.1.tgz#524af240d1a360527b730475ecfa1344aa540dde"
@@ -1570,14 +1578,6 @@ editions@^2.1.0, editions@^2.1.2:
   dependencies:
     errlop "^1.1.1"
     semver "^5.6.0"
-
-"eds@git+https://git@gitlab.com/datopian/frontend-eds.git":
-  version "1.0.0"
-  resolved "git+https://git@gitlab.com/datopian/frontend-eds.git#0b0df1fa55773dbe662d59b1d4ae959a70acf43f"
-  dependencies:
-    moment "^2.24.0"
-    multer "^1.4.2"
-    nodemailer "^6.3.0"
 
 ee-first@1.1.1:
   version "1.1.1"
