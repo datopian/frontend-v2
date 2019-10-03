@@ -1,13 +1,24 @@
 .twitter-feed {
   & li {
-    display: inline-flex;
-    flex-direction: column;
-    @apply bg-gray-200 p-10 my-6;
+    @apply p-10 ;
     overflow-wrap: break-word;
     word-wrap: break-word;
     word-break: break-all;
     width: 100%; /* fixes IE11 layout issue */
   }
+  
+  & .user{
+    @apply flex content-center items-center pb-2 mb-2 border-b border-gray-500;
+     & img {
+      @apply rounded-full p-1 mr-2 bg-white h-10;
+      
+     }
+
+    & [data-scribe|="element:screen_name"] { 
+      @apply hidden
+    } 
+  }
+
 
   & .interact {
     @apply mt-4;
@@ -17,6 +28,9 @@
 
     & a {
       @apply text-gray-500;
+      &:hover{
+        @apply text-secondary;
+      }
       margin-right: 1em;
     }
   }

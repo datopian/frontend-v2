@@ -24,11 +24,14 @@ class CmsModel {
   }
 
 
-  async getListOfPosts(size) {
-    // Return latest 10 blog posts by default
-    size = size || 10
-    const result = await this.blog.postsList({number: size})
+  async getListOfPosts(query) {
+    const result = await this.blog.postsList(query)
     return result.posts
+  }
+
+
+  async getListOfPostsWithMeta(query) {
+    return await this.blog.postsList(query)
   }
 }
 

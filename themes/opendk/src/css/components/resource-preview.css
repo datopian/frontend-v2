@@ -18,3 +18,7 @@
     @apply border border-gray-500 px-2 py-1 mx-3;
   }
 }
+
+.downloadables {
+  display: none;
+}

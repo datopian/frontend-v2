@@ -1,4 +1,4 @@
-'use strict'
+'stuse strict'
 
 const express = require('express')
 const moment = require('moment')
@@ -9,14 +9,13 @@ const cms = require('./cms')
 module.exports = function (app) {
   const Model = new cms.CmsModel()
 
-  app.get('/', async (req, res) => {
+  app.get('/', async (req, res, next) => {
     // Get latest 3 blog posts and pass it to home template
     const size = 3
     let posts = await Model.getListOfPosts(size)
-    console.log(posts)
     posts = posts.map(post => {
       return {
-        slug: post.slug,
+        slug: post.name,
         title: post.title,
         content: post.content,
         published: moment(post.date).format('MMMM Do, YYYY'),
@@ -24,11 +23,10 @@ module.exports = function (app) {
         image: post.featured_image
       }
     })
-    res.render('home.html', {
-      title: 'Home',
-      posts
-    })
+    res.locals.post = posts
+    next()
   })
+
 
   app.get('/news', listStaticPages)
   app.get('/news/:page', showPostPage)
@@ -40,7 +38,7 @@ module.exports = function (app) {
     let posts = await Model.getListOfPosts(size)
     posts = posts.map(post => {
       return {
-        slug: post.slug,
+        slug: post.name,
         title: post.title,
         content: post.content,
         published: moment(post.date).format('MMMM Do, YYYY'),
@@ -83,7 +81,6 @@ module.exports = function (app) {
       slug += `-${locale}`
     }
     try {
-      console.log('get post')
       const post = await Model.getPost(slug)
       res.render('static.html', {
         slug: post.slug,

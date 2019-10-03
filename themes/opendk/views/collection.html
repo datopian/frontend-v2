@@ -13,10 +13,10 @@
   <nav class="breadcrumb" aria-label="breadcrumb">
     <ol>
       <li class="breadcrumb_item">
-        <a class="breadcrumb_link" href="/">Home</a>
+        <a class="breadcrumb_link" href="/">{{__('Home')}}</a>
       </li>
       <li class="breadcrumb_item">
-        <a class="breadcrumb_link" href="/collections">Collections</a>
+        <a class="breadcrumb_link" href="/collections">{{__('Collections')}}</a>
       </li>
       <li class="breadcrumb_item">
         <a class="breadcrumb_link" href="/collections/{{ item.name }}" aria-current="page">{{ item.name }}</a>
@@ -32,9 +32,9 @@
       <div class="w-24 h-24 bg-primary p-4 mb-4 flex justify-center">
         <img src="{{ item.image }}" />
       </div>
-      <h2 class="text-primary text-xl font-semibold">{{ item.title }}</h2>
+      <h2 class="text-primary text-xl font-semibold">{{ __(item.title) }}</h2>
       <p class="py-2 text-sm">
-        {{ item.summary }}
+        {{ __(item.summary) }}
       </p>
 
     </div>

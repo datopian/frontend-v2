@@ -12,20 +12,30 @@ class CmsModel {
   async getPost(slug) {
    const url = `${this.api}ckanext_pages_show?page=${slug}`
    const res = await fetch(url)
-   const post = await res.json()
-   
-   return post.result
+   if (res.ok) {
+     const post = await res.json()
+     if (post.result) {
+       return post.result
+     } else {
+       throw {statusCode: 404}
+     }
+   } else {
+     const message = await res.text()
+     throw {statusCode: res.status, message}
+   }
   }
 
   // returns promise
-  // TODO get first 10 posts as per WP implementation
   async getListOfPosts(size) {
-    //const url = `${this.baseUrl}/api/3/action/ckanext_pages_list?page_type=blog`
-    const url = `${this.api}ckanext_pages_list`
+    const url = `${this.api}ckanext_pages_list?page_type=blog`
     const res = await fetch(url)
-    const posts = await res.json()
-    
-    return posts.result
+    if (res.ok) {
+      const posts = await res.json()
+      return posts.result
+    } else {
+      const message = await res.text()
+      throw {statusCode: res.status, message}
+    }
   }
 }
 

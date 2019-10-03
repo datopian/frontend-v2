@@ -7,18 +7,22 @@ const cookieParser = require('cookie-parser')
 const session = require('express-session')
 const flash = require('connect-flash')
 const i18n = require("i18n")
+const moment = require('moment')
 
 const config = require('./config')
 const dmsRoutes = require('./routes/dms')
-const {loadTheme, loadPlugins} = require('./utils')
+const {loadTheme, loadPlugins, processMarkdown} = require('./utils')
 
 module.exports.makeApp = function () {
   const app = express()
   app.set('config', config)
+  app.set('dms', require('./lib/dms'))
+  app.set('utils', require('./utils/index'))
   app.set('port', config.get('app:port'))
   if (config.get('env') === 'development') {
     const mocks = require('./fixtures')
     mocks.initMocks()
+    console.warn('You are activated the mocks.')
   }
   // Explicitely set views location - this is needed for Zeit to work
   app.set('views', path.join(__dirname, '/views'))
@@ -48,7 +52,12 @@ module.exports.makeApp = function () {
   app.use(cors())
   app.use(cookieParser())
   app.use(i18n.init)
-  app.use(session({ secret: 'keyboard cat', cookie: { maxAge: 60000 }}))
+  app.use(session({
+    secret: config.get('SESSION_SECRET'),
+    cookie: {
+      maxAge: config.get("SESSION_COOKIE_MAX_AGE")
+    }
+  }))
   app.use(flash())
   
   loadPlugins(app)
@@ -95,6 +104,32 @@ module.exports.makeApp = function () {
     express: app
   })
 
+  env.addFilter('formatDate', (date) => {
+    try {
+      return moment(date).format('YYYY[-]MM[-]DD')
+    } catch (e) {
+      console.warn('Failed to format date', e)
+      return date || '--'
+    }
+  })
+  
+  env.addFilter('formatDateFromNow', (date) => {
+    try {
+      return moment(date).fromNow()
+    } catch (e) {
+      console.warn('Failed to format date', e)
+      return date || '--'
+    }
+  })
+
+  env.addFilter('processMarkdown', (str) => {
+    try {
+      return processMarkdown.render(str)
+    } catch (e) {
+      console.warn('Failed to format markdown', e)
+    }
+  })
+  
   return app
 }
 

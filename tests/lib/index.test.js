@@ -108,7 +108,8 @@ test('getCollection api works', async t => {
     title: 'Economic Data',
     summary: 'A collection of economic indicators available on DataHub.',
     image: 'https://datahub.io/static/img/awesome-data/economic-data.png',
-    count: 2
+    count: 2,
+    extras: []
   }
 
   t.deepEqual(result, expected)

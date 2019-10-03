@@ -10,23 +10,23 @@
   <nav class="breadcrumb" aria-label="breadcrumb">
     <ol>
       <li class="breadcrumb_item">
-        <a class="breadcrumb_link" href="/">Home</a>
+        <a class="breadcrumb_link" href="/">{{__('Home')}}</a>
       </li>
       <li class="breadcrumb_item">
-        <a class="breadcrumb_link" href="/{{ slug }}" aria-current="page">{{ title }}</a>
+        <a class="breadcrumb_link" href="/{{ slug }}" aria-current="page">{{ __(title) }}</a>
       </li>
     </ol>
   </nav>
 </div>
 
 <div class="container mx-auto p-gutter">
-  <h1 class="font-semibold text-3xl mb-1">{{ title }}</h1>
+  <h1 class="font-semibold text-3xl mb-1">{{ __(title) }}</h1>
   <p class="leading-relaxed lg:w-2/3">
-    {{ description }}
+    {{ __(description) }}
   </p>
 
   <ul class="sm:flex flex-wrap sm:-mx-4 mt-gutter">
-    {% for collection in collections %}
+    {% for collection in collections  | sort(attribute='title') %}
     <!-- group -->
     <li class="sm:w-1/2 lg:w-1/3">
       <a class="flex bg-gray-200 p-4 text-primary my-4 sm:mx-4" href="/{{ slug }}/{{ collection.name }}">

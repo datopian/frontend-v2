@@ -1,1 +1,28 @@
-{}
+{
+	"Accueil": "Accueil",
+	"Showcases": "Showcases",
+	"Submitted by": "Submitted by",
+	"Launch website": "Launch website",
+	"Datasets in Showcase": "Datasets in Showcase",
+	"Home": "Home",
+	"News": "News",
+	"Dashboard": "Dashboard",
+	"Collections": "Collections",
+	"Data": "Data",
+	"About": "About",
+	"Montreal Open Data": "Montreal Open Data",
+	"Search Datasets": "Search Datasets",
+	"Our data": "Our data",
+	"Un capital numérique générateur d’innovation": "Un capital numérique générateur d’innovation",
+	"Un capital numérique générateur d’innovation En ouvrant ses données à tous, la Ville de\n                Montréal permet qu’elles soient réutilisées à différentes fins, incluant des fins commerciales.\n                Les résultats de cette réutilisation peuvent ensuite être partagés dans la communauté, ce qui\n                crée un effet démultiplicateur. Les données libérées et réutilisées génèrent ainsi des bénéfices\n                à la fois dans les sphères économiques, culturelles, sociales et technologiques.": "Un capital numérique générateur d’innovation En ouvrant ses données à tous, la Ville de\n                Montréal permet qu’elles soient réutilisées à différentes fins, incluant des fins commerciales.\n                Les résultats de cette réutilisation peuvent ensuite être partagés dans la communauté, ce qui\n                crée un effet démultiplicateur. Les données libérées et réutilisées génèrent ainsi des bénéfices\n                à la fois dans les sphères économiques, culturelles, sociales et technologiques.",
+	"Toutes les actualités": "Toutes les actualités",
+	"Events": "Events",
+	"History of data": "History of data",
+	"Follow us": "Follow us",
+	"Recently Added or updated datasets": "Recently Added or updated datasets",
+	"Mise en garde": "Mise en garde",
+	"License": "License",
+	"Dataset": "Dataset",
+	"data file": "data file",
+	"Download": "Download"
+}

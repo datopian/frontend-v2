@@ -12,10 +12,10 @@
   <nav class="breadcrumb" aria-label="breadcrumb">
     <ol>
       <li class="breadcrumb_item">
-        <a class="breadcrumb_link" href="/">Home</a>
+        <a class="breadcrumb_link" href="/">{{__('Home')}}</a>
       </li>
       <li class="breadcrumb_item">
-        <a class="breadcrumb_link" href="">Organizations</a> <!-- TODO missing path -->
+        <a class="breadcrumb_link" href="/organization">{{__('Organizations')}}</a>
       </li>
       <li class="breadcrumb_item">
         <a class="breadcrumb_link" href="/{{owner.name}}" aria-current="page">{{ owner.title }}</a>
@@ -48,10 +48,10 @@
 
     <ul class="tabs mb-10" data-tabs>
     	<li class="tabs_item">
-        <a class="tabs_link" data-tabby-default href="#datasets">Datasets</a>
+        <a class="tabs_link outline-none" data-tabby-default href="#datasets">{{__('Datasets')}}</a>
       </li>
     	<li class="tabs_item">
-        <a class="tabs_link" href="#about">About</a>
+        <a class="tabs_link outline-none" href="#about">{{__('About')}}</a>
       </li>
     </ul>
 

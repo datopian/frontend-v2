@@ -55,8 +55,8 @@
                     {{ format }}
                   {% endfor %}
                 </td>
-                <td class="col-xs-2">{{ dataset.created }}</td>
-                <td class="col-xs-2">{{ dataset.modified }}</td>
+                <td class="col-xs-2">{{ dataset.created | formatDate }}</td>
+                <td class="col-xs-2">{{ dataset.modified | formatDateFromNow }}</td>
                 <td class="col-xs-2">
                   {% if dataset.license %}
                     <i class="fas fa-gavel"></i> {{snippets.listify([dataset.license])}}
@@ -123,7 +123,7 @@
                   {{ resource.modified }}
                 </td>
                 <td class="download truncate col-xs-4">
-                  <a href="{{ resource.path }}" onclick="sendGAEvent('{{ dataset.name }}', '{{ resource.name }}', '{{ resource.format }}')">
+                  <a href="{{ resource.downloadPath }}" onclick="sendGAEvent('{{ dataset.name }}', '{{ resource.name }}', '{{ resource.format }}')">
                     {{ resource.format or 'Data file' }} {% if resource.size %}({{resource.size}}){% endif %}
                   </a>
                   {% for alt in resource.otherFormats %}
@@ -350,6 +350,6 @@
   }
 </script>
 
-<script type="text/javascript" src="https://raw.githack.com/datopian/datapackage-views-js/master/dist/js/main.js"></script>
+<script type="text/javascript" src="https://rawcdn.githack.com/datopian/datapackage-views-js/681e1ff21a0daee03e8e81ad0ddc7c8bf682aee9/dist/js/main.js"></script>
 
 {% endblock %}

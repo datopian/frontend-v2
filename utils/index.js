@@ -121,7 +121,8 @@ module.exports.convertToStandardCollection = (descriptor) => {
   standard.title = descriptor.title || descriptor.display_name
   standard.summary = descriptor.description ? descriptor.description.substring(0, 100) : ''
   standard.image = descriptor.image_display_url || descriptor.image_url
-  standard.count = descriptor.package_count || ''
+  standard.count = descriptor.package_count || 0
+  standard.extras = descriptor.extras || []
 
   return standard
 }
@@ -130,14 +131,17 @@ module.exports.convertToStandardCollection = (descriptor) => {
 module.exports.convertToCkanSearchQuery = (query) => {
   const ckanQuery = {
     q: '',
+    fq: '',
     rows: '',
     start: '',
     sort: '',
     'facet.field': ['organization', 'groups', 'tags', 'res_format', 'license_id'],
-    'facet.limit': 5
+    'facet.limit': 5,
+    'facet.mincount': 0
   }
 
   ckanQuery.q = query.q
+  ckanQuery.fq = query.fq
 
   // standard 'size' => ckan 'rows'
   ckanQuery.rows = query.size || ''
@@ -164,6 +168,8 @@ module.exports.convertToCkanSearchQuery = (query) => {
   // Facets
   ckanQuery['facet.field'] = query['facet.field'] || ckanQuery['facet.field']
   ckanQuery['facet.limit'] = query['facet.limit'] || ckanQuery['facet.limit']
+  ckanQuery['facet.mincount'] = query['facet.mincount'] || ckanQuery['facet.mincount']
+  ckanQuery['facet.field'] = query['facet.field'] || ckanQuery['facet.field']
 
   // Remove attributes with empty string, null or undefined values
   Object.keys(ckanQuery).forEach((key) => (!ckanQuery[key]) && delete ckanQuery[key])
@@ -240,7 +246,7 @@ function loadExtension(extension, extensionsPath) {
  **/
 module.exports.loadTheme = function (app) {
   console.log('Loading configured theme...')
-  
+
   try {
     const theme = config.get('THEME')
     const themePath = config.get('THEME_DIR')
@@ -248,7 +254,7 @@ module.exports.loadTheme = function (app) {
     loadExtension(theme, themePath, 'theme')(app)
   } catch (e) {
     const theme = config.get('THEME')
-    console.warn(`WARNING: Failed to load theme -- ${theme}`)
+    console.warn('WARNING: Failed to load theme', theme, e)
   }
 }
 
@@ -258,12 +264,12 @@ module.exports.loadTheme = function (app) {
  **/
 module.exports.loadPlugins = function (app) {
   console.log('Loading configured plugins...')
-  
+
   try {
     const plugins = config.get('PLUGINS')
     const pluginPath = config.get('PLUGIN_DIR')
-    
-    if (!plugins) return 
+
+    if (!plugins) return
 
     // try to load each resource
     return plugins.split(' ').forEach(plugin => {
@@ -274,4 +280,4 @@ module.exports.loadPlugins = function (app) {
     console.warn('WARNING: Failed to load configured plugins', plugins, e)
     return []
   }
-} 
+}
