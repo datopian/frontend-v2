@@ -31,14 +31,14 @@ Welcome - Home
       <!-- searchbox -->
         <div class="dropdown">
           <div class="relative">
-            <input id="searchInputHome" autocomplete="off" type="text" class="searchInput bg-secondary pl-4 pr-12 py-3 text-lg w-full outline-none" placeholder="{{__('Search ...')}}" name="q" required />
+            <input id="searchInputHome" autocomplete="off" type="text" class="searchInput bg-secondary pl-4 pr-12 py-3 text-lg text-white w-full outline-none" placeholder="{{__('Search ...')}}" name="q" required />
             <button class="absolute inset-y-0 right-0 px-3 outline-none" type="submit">
               <svg class="w-6 h-6 fill-white" aria-label="Search Datasets"><use xlink:href="#search" /></svg>
             </button>
           </div>
           <div id="searchSelectHome" class="searchSelect">
             <div id="searchSelect1DivHome" class="searchSelect1Div relative border-t-2 border-b-2">
-              <input id="searchSelect1Home" readonly type="text" class="searchSelect1 cursor-pointer bg-secondary hover:bg-gray-500 focus:bg-gray-500 pl-10 pr-48 py-3 text-lg w-full outline-none" />
+              <input id="searchSelect1Home" readonly type="text" class="searchSelect1 cursor-pointer bg-secondary hover:bg-gray-500 focus:bg-gray-500 pl-10 pr-48 py-3 text-lg text-white w-full outline-none" />
               <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center px-2 text-gray-700">
                 <svg class="w-6 h-6 fill-white" aria-label="Search Datasets"><use xlink:href="#search" /></svg>
               </div>
@@ -50,7 +50,7 @@ Welcome - Home
             </div>
 
             <div id="searchSelect2DivHome" class="searchSelect2Div relative">
-              <input id="searchSelect2Home" readonly type="text" class="searchSelect2 cursor-pointer bg-secondary hover:bg-gray-500 focus:bg-gray-500 pl-10 pr-48 py-3 text-lg w-full outline-none" />
+              <input id="searchSelect2Home" readonly type="text" class="searchSelect2 cursor-pointer bg-secondary hover:bg-gray-500 focus:bg-gray-500 pl-10 pr-48 py-3 text-lg text-white w-full outline-none" />
               <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center px-2 text-gray-700">
                 <svg class="w-6 h-6 fill-white" aria-label="Search content"><use xlink:href="#search" /></svg>
               </div>
@@ -85,6 +85,14 @@ Welcome - Home
     <!-- article-preview end -->
     {% endfor %}
   </section>
+
+  <!-- Link to all news -->
+  <section class="flex justify-center px-24">
+    <a class="text-center w-1/4 block px-3 py-2 hover:text-white hover:bg-secondary border border-secondary" href="/blog" aria-label="{{__('View all news')}}">
+      <span class="">{{__('View all news')}}</span>
+    </a>
+  </section>
+  <!-- End of link to all news -->
 
   <!-- if future events -->
   <section class="home_events lg:w-2/3 my-gutter">
