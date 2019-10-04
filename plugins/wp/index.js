@@ -44,20 +44,18 @@ module.exports = function (app) {
   app.get(['/:page', '/:parent/:page'], showStaticPage);
 
   async function listStaticPages(req, res, next) {
-    // Get latest 10 blog posts
-    const size = 10
-    // Pagination. Default is 1 as WP.COM API is 1-indexed.
-    const page = req.query.page || 1
-    const response = (await Model.getListOfPostsWithMeta({
-      number: size,
-      page,
+    const defaultQuery = {
+      number: 10,
+      page: 1,
       fields: 'slug,title,content,date,modified,featured_image'
-    }))
+    }
+    const actualQuery = Object.assign(defaultQuery, req.query)
+    const response = (await Model.getListOfPostsWithMeta(actualQuery))
 
     res.locals.found = response.found
-    res.locals.currentPage = page
-    const totalPages = Math.ceil(response.found / size)
-    res.locals.pages = utils.pagination(page, totalPages)
+    res.locals.currentPage = actualQuery.page
+    const totalPages = Math.ceil(response.found / actualQuery.number)
+    res.locals.pages = utils.pagination(actualQuery.page, totalPages)
 
     res.locals.posts = response.posts.map(post => {
       return {
