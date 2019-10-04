@@ -96,7 +96,7 @@
       <a class="px-4 text-primary text-xl font-semibold" href="/{{ owner.name }}">{{ owner.title }}</a>
 
       <p class="px-4 py-2 text-sm">
-        {{ owner.description | safe | truncate(200) | replace("<a", "")  }} <a href="/{{ owner.name }}" class="text-primary font-bold">Læs mere</a>
+        {{ owner.description | replace(r/<\/*a.*?>/g, '') | safe | truncate(200) }} <a href="/{{ owner.name }}" class="text-primary font-bold">Læs mere</a>
       </p>
 
       <!-- Metadata -->
