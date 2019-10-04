@@ -5,6 +5,7 @@ const i18n = require('i18n')
 
 const cms = require('./cms')
 const config = require('../../config')
+const utils = require('../../utils')
 
 
 module.exports = function (app) {
@@ -44,11 +45,21 @@ module.exports = function (app) {
 
   async function listStaticPages(req, res, next) {
     // Get latest 10 blog posts
-    const size = 10;
-    res.locals.posts = (await Model.getListOfPosts({
+    const size = 10
+    // Pagination. Default is 1 as WP.COM API is 1-indexed.
+    const page = req.query.page || 1
+    const response = (await Model.getListOfPostsWithMeta({
       number: size,
+      page,
       fields: 'slug,title,content,date,modified,featured_image'
-    })).map(post => {
+    }))
+
+    res.locals.found = response.found
+    res.locals.currentPage = page
+    const totalPages = Math.ceil(response.found / size)
+    res.locals.pages = utils.pagination(page, totalPages)
+
+    res.locals.posts = response.posts.map(post => {
       return {
         slug: post.slug,
         title: post.title,
