@@ -115,14 +115,6 @@
             {{snippets.listify([dataset.author])}}
           </dd>
           {% endif %}
-          <dt class="info-list_title">Opdateret</dt>
-          <dd class="info-list_description">
-            {{ dataset.metadata_modified | formatDateFromNow }}
-          </dd>
-          <dt class="info-list_title">Oprettet</dt>
-          <dd class="info-list_description">
-            {{ dataset.metadata_created | formatDate}}
-          </dd>
           <!-- Show extras -->
           {% for item in dataset.extras %}
             {% if item.key === 'data_quality' %}
