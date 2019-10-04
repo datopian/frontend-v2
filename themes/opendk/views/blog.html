@@ -45,6 +45,36 @@
     </div>
 
     {% endfor %}
+
+    <nav aria-label="Datasets" class="mt-gutter pt-gutter text-sm">
+      <ul class="inline-flex border border-gray-200">
+        <li class="border border-gray-200">
+          {% if currentPage > 1 %}
+          <a class="block px-3 py-2 hover:text-white hover:bg-secondary" href="/blog?page={{ currentPage - 1 }}" aria-label="{{__('Previous')}}">
+            <span class="">{{__('Previous')}}</span>
+          </a>
+          {% else %}
+          <span class="block px-3 py-2">{{__('Previous')}}</span>
+          {% endif %}
+        </li>
+        {% for page in pages %}
+          {% if page == '...' %}
+          <li class="border border-gray-200">
+            <span class="block px-3 py-2">{{page}}</span>
+          </li>
+          {% else %}
+          <li class="border border-gray-200">
+            <a class="block px-3 py-2 {{ 'text-white bg-secondary secondary-nav_link' if currentPage == page }}" href="/blog?page={{ page }}">{{page}}</a>
+          </li>
+          {% endif %}
+        {% endfor %}
+        <li class="border border-gray-200">
+          <a class="block px-3 py-2 hover:text-white hover:bg-secondary" href="/blog?page={{ currentPage + 1 }}" aria-label="{{__('Next')}}">
+            <span class="">{{__('Next')}}</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
   </div>
 
   <div class="md:w-1/3 md:pl-gutter">
