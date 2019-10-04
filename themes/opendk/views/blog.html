@@ -34,7 +34,7 @@
       </a>
       <div class="article-preview_text">
         <h1 class="article-preview_heading">
-          <a class="article-preview_heading-link" href="/blog/{{post.slug}}">{{post.title}}</a>
+          <a class="article-preview_heading-link" href="/blog/{{post.slug}}">{{post.title | safe}}</a>
         </h1>
         <time class="article-preview_date">{{post.published}}</time>
         <div class="article-preview_content">
@@ -101,7 +101,7 @@
       {% for post in featuredPosts %}
       <li class="border-b-2 border-gray-200">
         <article class="px-4 py-3">
-          <h1><a href="/blog/{{post.slug}}" class="text-primary font-semibold hover:underline">{{post.title}}</a></h1>
+          <h1><a href="/blog/{{post.slug}}" class="text-primary font-semibold hover:underline">{{post.title | safe}}</a></h1>
           <time class="text-sm">{{post.published}}</time>
         </article>
       </li>

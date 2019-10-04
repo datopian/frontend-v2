@@ -74,7 +74,7 @@ Welcome - Home
       </a>
       <div class="article-preview_text">
         <h1 class="article-preview_heading">
-          <a class="article-preview_heading-link" href="/blog/{{post.slug}}">{{ post.title }}</a>
+          <a class="article-preview_heading-link" href="/blog/{{post.slug}}">{{ post.title | safe }}</a>
         </h1>
         <time class="article-preview_date">{{ post.modified }}</time>
         <p class="article-preview_content">
@@ -105,7 +105,7 @@ Welcome - Home
               <span class="font-semibold text-3xl leading-none">{{ event.day }}</span> <span class="leading-none">{{ event.month }}</span>
             </time>
             <div class="px-6">
-              <h3 class="font-semibold text-2xl text-primary">{{ event.title }}</h3>
+              <h3 class="font-semibold text-2xl text-primary">{{ event.title | safe }}</h3>
               <p class="text-gray-500">
                 {{ event.excerpt | safe | truncate(120) or event.content | safe | truncate(120) }}
               </p>
