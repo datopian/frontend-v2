@@ -17,7 +17,7 @@
 	"Recently Added or updated datasets": "For nylig tilføjede eller opdaterede datasæt",
 	"Mise en garde": "Mise en garde",
 	"License": "Licenser",
-	"Dataset": "datasæt",
+	"Dataset": "Datasæt",
 	"data file": "data fil",
 	"Download": "Download",
 	"Dataset Collections": "Grupper",
@@ -47,5 +47,11 @@
 	"Show more": "Vis mere",
 	"Conflict": "Conflict",
 	"knowledge": "Viden om",
-	"hvad-er-open-data-dk": "hvad-er-open-data-dk"
+	"hvad-er-open-data-dk": "hvad-er-open-data-dk",
+	"Search website": "Søg på websted",
+	"Datasets": "Datasæt",
+	"Groups": "Grupper",
+	"Internationale spørgsmål": "Internationale spørgsmål",
+	"": "",
+	"This is a preview version. There might be more data in the original version.": "Dette er eksempeldata. Klik på linket ovenfor for at hente alle."
 }
