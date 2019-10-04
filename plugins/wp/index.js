@@ -55,7 +55,9 @@ module.exports = function (app) {
     res.locals.found = response.found
     res.locals.currentPage = actualQuery.page
     const totalPages = Math.ceil(response.found / actualQuery.number)
+    res.locals.totalPages = totalPages
     res.locals.pages = utils.pagination(actualQuery.page, totalPages)
+    res.locals.originalUrl = req.originalUrl
 
     res.locals.posts = response.posts.map(post => {
       return {
