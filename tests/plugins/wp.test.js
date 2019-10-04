@@ -22,18 +22,7 @@ test('getListOfPosts api works', async t => {
 
   const result = await WPModel.getListOfPosts({
     "number": "10",
-    "fields": "slug,title,content,date,modified,featured_image"
-  })
-
-  t.is(result.length, 2)
-})
-
-
-test('getListOfPosts api works for Pages', async t => {
-  t.plan(1)
-
-  const result = await WPModel.getListOfPosts({
-    "number": "10",
+    "page": 1,
     "fields": "slug,title,content,date,modified,featured_image"
   })
 
