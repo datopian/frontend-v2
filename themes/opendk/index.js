@@ -96,6 +96,11 @@ module.exports = function (app) {
   })
 
   app.get('/blog', async (req, res, next) => {
+    // Get list of categories
+    const {found, categories} = await CmsModel.getCategories()
+    res.locals.categories = categories
+    res.locals.selectedCategory = req.query.category
+
     // Add featured posts
     res.locals.featuredPosts = (await CmsModel.getListOfPosts(
       {

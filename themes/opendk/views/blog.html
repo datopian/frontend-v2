@@ -86,7 +86,17 @@
   </div>
 
   <div class="md:w-1/3 md:pl-gutter">
-    <h2 class="bg-gray-200 px-4 py-3 font-bold mb-2">Fremhævede blogindlæg</h2>
+    <!-- Filter by category -->
+    <div class="mb-4">
+      {% for category in categories %}
+      <a class="mb-2 text-center block px-3 py-2 hover:text-white hover:bg-secondary border {{ 'border-primary text-primary' if selectedCategory == category.slug else 'border-secondary' }}" href="/blog?category={{category.slug}}" aria-label="{{__(category.name)}}">
+        <span class="">{{__(category.name)}}</span>
+      </a>
+      {% endfor %}
+    </div>
+
+    <!-- Featured posts -->
+    <h2 class="bg-gray-200 px-4 py-3 font-bold mb-2">{{__('Featured blog posts')}}</h2>
     <ul>
       {% for post in featuredPosts %}
       <li class="border-b-2 border-gray-200">
