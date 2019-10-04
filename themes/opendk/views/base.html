@@ -37,21 +37,21 @@
                   <a class="main-nav_link" href="/blog">{{__('Blog')}}</a>
                 </li>
                 <li class="main-nav_item lg:mx-3">
-                  <a class="main-nav_link" href="/knowledge">Viden om</a>
-                </li>
-                <li class="main-nav_item lg:mx-3">
-                  <a class="main-nav_link" href="/search">Datasæt<svg class="hidden w-3 h-3 text-secondary fill-current ml-1 lg:block"><use xlink:href="#dropdown" /></svg></a>
+                  <a class="main-nav_link" href="#">{{__('Data')}}<svg class="hidden w-3 h-3 text-secondary fill-current ml-1 lg:block"><use xlink:href="#dropdown" /></svg></a>
                   <ul class="main-nav_subnav" aria-label="submenu">
                     <li>
-                      <a class="main-nav_link" href="/organization">Organisationer</a>
+                      <a class="main-nav_link" href="/search">{{__('Datasets')}}</a>
                     </li>
                     <li>
-                      <a class="main-nav_link" href="/collections">Grupper</a>
+                      <a class="main-nav_link" href="/organization">{{__('Organizations')}}</a>
+                    </li>
+                    <li>
+                      <a class="main-nav_link" href="/collections">{{__('Groups')}}</a>
                     </li>
                   </ul>
                 </li>
                 <li class="main-nav_item lg:ml-3">
-                  <a class="main-nav_link" href="/about">Om <svg class="hidden w-3 h-3 text-secondary fill-current ml-1 lg:block"><use xlink:href="#dropdown" /></svg></a>
+                  <a class="main-nav_link" href="/about">Foreningen <svg class="hidden w-3 h-3 text-secondary fill-current ml-1 lg:block"><use xlink:href="#dropdown" /></svg></a>
                   <ul class="main-nav_subnav" aria-label="submenu">
                     {% for item in aboutPages %}
                     <li>
