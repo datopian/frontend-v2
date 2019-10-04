@@ -129,7 +129,7 @@
               {% set fieldName = 'Opdater frekvens' %}
             {% endif %}
             <dt class="info-list_title">{{fieldName or item.key}}</dt>
-            <dd class="info-list_description">
+            <dd class="info-list_description truncate" title="{{item.value}}">
               {{item.value}}
             </dd>
           {% endfor %}
