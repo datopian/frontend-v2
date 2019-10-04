@@ -33,6 +33,10 @@ class CmsModel {
   async getListOfPostsWithMeta(query) {
     return await this.blog.postsList(query)
   }
+
+  async getCategories() {
+    return await this.blog.categoriesList()
+  }
 }
 
 module.exports.CmsModel = CmsModel
