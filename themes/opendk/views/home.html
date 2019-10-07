@@ -94,19 +94,19 @@ Welcome - Home
   </section>
   <!-- End of link to all news -->
 
-  <!-- if future events -->
+  <!-- if events -->
   <section class="home_events lg:w-2/3 my-gutter">
     <div class="overflow-hidden">
       <ul class="slider">
         {% for event in events %}
         <li>
           <a class="flex" href="/blog/{{ event.slug }}">
-            <time class="flex flex-col justify-center bg-secondary text-white text-center px-6 py-4">
+            <time class="flex flex-col justify-center text-white text-center px-6 py-4 {{'bg-primary' if event.completed else 'bg-secondary'}}">
               <span class="font-semibold text-3xl leading-none">{{ event.day }}</span> <span class="leading-none">{{ event.month }}</span>
             </time>
             <div class="px-6">
               <h3 class="font-semibold text-2xl text-primary">{{ event.title | safe }}</h3>
-              <p class="text-gray-500">
+              <p>
                 {{ event.excerpt | safe | truncate(120) or event.content | safe | truncate(120) }}
               </p>
             </div>
