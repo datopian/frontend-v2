@@ -148,6 +148,18 @@
 
           </div>
         </div>
+        <div class="popup-cookie px-4 py-4 fixed bg-secondary inset-x-0 bottom-0" role="alert">
+          <div class="w-4/5 m-auto justify-center md:flex">
+            <div class="md:w-full text-sm text-white">
+              <p>{{__('På opendata.dk bruger vi cookies til at samle statistik og forbedre hjemmesiden.')}}</p>
+              <p>{{__('Du accepterer cookies ved at klikke videre.')}}</p>
+            </div>
+            <div class="md:w-full py-4 md:text-right">
+              <button id="cookie-accept-button" class=" text-white border border-solid border-white px-2 py-1 mr-4 outline-none">ok!</button>
+              <a href="http://www.opendata.dk/cookiepolitik" target="_blank" class="text-white">Læs vores cookiepolitik</a> 
+            </div>
+          </div>  
+        </div>
       </footer>
       <!-- end of footer -->
     </div>
@@ -158,6 +170,27 @@
 
     <script>
       document.cookie = 'defaultLocale=' + 'da';
+      //cookie acceptance 
+      if(readCookie('cookie-agreed')){
+        $( ".popup-cookie" ).addClass( "hidden" );
+      }
+      $(document).on('click','#cookie-accept-button',function(){
+        document.cookie = 'cookie-agreed=' + 1;
+        $( ".popup-cookie " ).slideUp( "slow");
+      });
+
+      //cookie reader
+      function readCookie(name) {
+      var cookieName = name + '=';
+      var ca = document.cookie.split(';');
+      for (var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+        if (c.indexOf(cookieName) == 0) return c.substring(cookieName.length, c.length);
+        }
+        return null;
+      }
+
       // nav
       var navToggle = document.getElementById("nav-toggle");
       var navTarget = navToggle.nextElementSibling;
