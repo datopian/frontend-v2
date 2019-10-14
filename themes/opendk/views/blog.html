@@ -49,10 +49,11 @@
     {% if found > 10 %}
     <nav aria-label="Datasets" class="mt-gutter pt-gutter text-sm">
       <ul class="inline-flex border border-gray-200">
+        {% set regExp = r/\?/ %}
         <li class="border border-gray-200">
           {% if currentPage > 1 %}
           {% set previousPage = currentPage | int - 1 %}
-          <a class="block px-3 py-2 hover:text-white hover:bg-secondary" href="{{ originalUrl | replace(r/&{0,1}page=\d*/, '') }}&page={{previousPage}}" aria-label="{{__('Previous')}}">
+          <a class="block px-3 py-2 hover:text-white hover:bg-secondary" href="{{ originalUrl | replace(r/&{0,1}page=\d*/, '') }}{{ '&' if regExp.test(originalUrl) else '?' }}page={{previousPage}}" aria-label="{{__('Previous')}}">
             <span class="">{{__('Previous')}}</span>
           </a>
           {% else %}
@@ -66,7 +67,7 @@
           </li>
           {% else %}
           <li class="border border-gray-200">
-            <a class="block px-3 py-2 {{ 'text-white bg-secondary secondary-nav_link' if currentPage == page }}" href="{{ originalUrl | replace(r/&{0,1}page=\d*/, '') }}&page={{page}}">{{page}}</a>
+            <a class="block px-3 py-2 {{ 'text-white bg-secondary secondary-nav_link' if currentPage == page }}" href="{{ originalUrl | replace(r/&{0,1}page=\d*/, '') }}{{ '&' if regExp.test(originalUrl) else '?' }}page={{page}}">{{page}}</a>
           </li>
           {% endif %}
         {% endfor %}
@@ -75,7 +76,7 @@
           <span class="block px-3 py-2">{{__('Next')}}</span>
           {% else %}
           {% set nextPage = currentPage | int + 1 %}
-          <a class="block px-3 py-2 hover:text-white hover:bg-secondary" href="{{ originalUrl | replace(r/&{0,1}page=\d*/, '') }}&page={{nextPage}}" aria-label="{{__('Next')}}">
+          <a class="block px-3 py-2 hover:text-white hover:bg-secondary" href="{{ originalUrl | replace(r/&{0,1}page=\d*/, '') }}{{ '&' if regExp.test(originalUrl) else '?' }}page={{nextPage}}" aria-label="{{__('Next')}}">
             <span class="">{{__('Next')}}</span>
           </a>
           {% endif %}
