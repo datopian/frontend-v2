@@ -30,12 +30,12 @@
 	"Page Not Found": "Siden blev ikke fundet",
 	"Not Found": "Ikke fundet",
 	"results found": "fundne resultater",
-	"Order by:": "Bestil efter:",
+	"Order by:": "Sortér efter:",
 	"Relevance": "Relevans",
 	"Name Ascending": "Navn stigende",
 	"Name Descending": "Navn faldende",
-	"Last Modified": "Sidst ændret",
-	"Popular": "Populær",
+	"Last Modified": "Sidst modificeret",
+	"Popular": "Populære",
 	"Previous": "Tidligere",
 	"Next": "Næste",
 	"Collections": "Grupper",
@@ -58,5 +58,7 @@
 	"Featured blog posts": "Fremhævede blogindlæg",
 	"Calendar": "Calendar",
 	"Uncategorized": "Uncategorized",
-	"Use-case": "Use-case"
+	"Use-case": "Use-case",
+	"Nyheder": "Nyheder",
+	"Use-cases": "Use-cases"
 }
