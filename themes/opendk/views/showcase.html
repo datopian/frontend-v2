@@ -40,6 +40,18 @@
     {% endif %}
     <!-- end of full readme -->
 
+    <!-- Keywords section -->
+      {% if dataset.keywords %}
+        <div class="container">
+          <h2 class="text-3xl font-semibold mt-gutter mb-2 text-gray-900 mb-6">{{__('Keywords')}}</h2>
+          <div class="flex flex-wrap ">
+          {% for t in dataset.keywords %}
+            <a href="/search?q=tags:{{t | safe}}" class="px-4 py-2 text-primary font-medium border-2 rounded-full border-primary mr-3 mb-3 lowercase">{{t | safe}}</a>
+          {% endfor %}
+          </div>
+        </div>
+      {% endif %}
+    <!-- end Keywords section -->
 
     <h2 class="text-2xl font-semibold mt-gutter mb-4">{{ dataset.resources | length }} data file{% if dataset.resources | length > 1 %}s{% endif %}</h2>
 
