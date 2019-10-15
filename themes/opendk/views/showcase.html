@@ -60,7 +60,7 @@
       <!-- data file -->
       <li class="mb-6">
         <h3 class="text-xl font-semibold">
-          <a href="#resource-{{resource.name}}" class="text-secondary">{{resource.title or resource.name}}</a>
+          <a href="#resource-{{resource.name | replace(".", "_")}}" class="text-secondary">{{resource.title or resource.name}}</a>
         </h3>
         <p>
           {{ resource.descriptionHtml|safe or resource.title }}
@@ -78,7 +78,6 @@
               {% endif %}
             </dl>
           </a>
-          <a id= "preview" class="data-file-type"  href="#resource-{{resource.name | replace(".", "_") }}">{{__('Preview')}}<a>
           {% for alt in resource.otherFormats %}
           <a class="data-file-type" href="/{{ owner.name }}/{{ dataset.name }}/r/{{ resource.name }}.{{ alt.format }}{{ '?v='+revisionId if revisionId }}">
             <dl class="data-file-type_inner">
@@ -91,6 +90,13 @@
             </dl>
           </a>
           {% endfor %}
+          <a class="data-file-type"  href="#resource-{{ resource.name | replace(".", "_") }}">
+            <dl class="data-file-type_inner">
+              <dt class="data-file-type_term">
+                {{__('Preview')}}
+              </dt>
+            </dl>
+          <a>
         </nav>
       </li>
       <!-- data file end -->
