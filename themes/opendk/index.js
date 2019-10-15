@@ -94,14 +94,14 @@ module.exports = function (app) {
         const date = new Date(`${year}-${month}-${day}`)
         post.day = date.getDate()
         post.month = monthNames[date.getMonth()]
+        // Check if event is completed:
+        post.completed = date < new Date() ? true : false
       } else {
         // If no 'dato' tag is found, use current date:
         const now = new Date()
         post.day = now.getUTCDate()
         post.month = monthNames[now.getUTCMonth()]
       }
-      // Check if event is completed:
-      post.completed = post.content.match(/AFHOLDT\./g)
       return post
     })
     next()
