@@ -108,8 +108,9 @@
       <a class="px-4 text-primary text-xl font-semibold" href="/{{ owner.name }}">{{ owner.title }}</a>
 
       <p class="px-4 py-2 text-sm">
-        {{ owner.description | replace(r/<\/*a.*?>/g, '') | safe | truncate(200) }} <a href="/{{ owner.name }}" class="text-primary font-bold">Læs mere</a>
+        {{ owner.description | safe | truncate(200) }}
       </p>
+      <a href="/{{ owner.name }}" class="text-primary font-bold">Læs mere</a>
 
       <!-- Metadata -->
       <h2 class="bg-gray-200 px-4 py-3 font-bold mt-4 mb-1">{{__('Metadata')}}</h2>
@@ -236,7 +237,7 @@
   }
 </script>
 
-<link rel="stylesheet" media="screen" href="https://raw.githack.com/datopian/datapackage-views-js/v0.1.0/dist/css/main.css">
-<script type="text/javascript" src="https://rawcdn.githack.com/datopian/datapackage-views-js/v0.1.1/dist/js/main.js"></script>
+<link rel="stylesheet" media="screen" href="https://raw.githack.com/datopian/datapackage-views-js/v0.1.2/dist/css/main.css">
+<script type="text/javascript" src="https://rawcdn.githack.com/datopian/datapackage-views-js/v0.1.2/dist/js/main.js"></script>
 
 {% endblock %}
