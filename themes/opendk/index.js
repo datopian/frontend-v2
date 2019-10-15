@@ -74,7 +74,7 @@ module.exports = function (app) {
     // Get events
     res.locals.events = (await CmsModel.getListOfPosts(
       {
-        category: 'Calendar',
+        category: 'Events',
         number: 5
       }
     )).map(post => {
