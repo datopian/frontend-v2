@@ -56,30 +56,48 @@
 
     <!-- data files (downloads) -->
     <ul>
+      {% set formats = [] %}
+      {% set colors = {
+        CSV: '#ffca00',
+        XLSX:'#3CBC8D',
+        XLS:'#3CBC8D',
+        JSON:'blue',
+        GeoJSON:'#2CAAF9',
+        WFS:'#08389c',
+        PDF:'#ff1010',
+        SHP:'violet',
+        HTML:'#333',
+        KML:'gray',
+        ODS:'gray'
+      } %}
       {% for resource in dataset.resources %}
       <!-- data file -->
       <li class="mb-6">
         <h3 class="text-xl font-semibold">
           <a href="#resource-{{resource.name | replace(".", "_")}}" class="text-secondary">{{resource.title or resource.name}}</a>
         </h3>
-        <p>
-          {{ resource.descriptionHtml|safe or resource.title }}
+        <div class="mt-2">
+          {% if resource.format %}
+          <span title="file format" class="bg-gray-600 rounded text-sm text-gray-100 px-2 py-1" style="background:{{colors[resource.format|upper]}};">{{resource.format or 'N/A'}}</span>
+          {% endif %}
+          {% if resource.size %}
+          <span title="file size" class="bg-gray-600 rounded text-sm text-gray-100 px-2 py-1">{{ resource.size }}</span>
+          {% endif %}
+        </div>
+        <p class="mt-2">
+          {{ resource.descriptionHtml | safe }}
+          {{ 'This is a placeholder description for demo. <a href="#">This is a link</a>.' | safe}}
         </p>
         <nav>
-          <a class="data-file-type" href="{{ resource.downloadPath }}">
+          <a class="data-file-type mr-1" href="{{ resource.downloadPath }}">
             <dl class="data-file-type_inner">
               <dt class="data-file-type_term">
-                {{__('Download')}} {% if resource.format %}({{ resource.format }}){% endif %}
+                {{__('Download')}}
               </dt>
-              {% if resource.size %}
-              <dd class="data-file-type_size">
-                [{{resource.size}}]
-              </dd>
-              {% endif %}
             </dl>
           </a>
           {% for alt in resource.otherFormats %}
-          <a class="data-file-type" href="/{{ owner.name }}/{{ dataset.name }}/r/{{ resource.name }}.{{ alt.format }}{{ '?v='+revisionId if revisionId }}">
+          <a class="data-file-type mr-1" href="/{{ owner.name }}/{{ dataset.name }}/r/{{ resource.name }}.{{ alt.format }}{{ '?v='+revisionId if revisionId }}">
             <dl class="data-file-type_inner">
               <dt class="data-file-type_term">
                 {{alt.format}}
@@ -90,7 +108,7 @@
             </dl>
           </a>
           {% endfor %}
-          <a class="data-file-type"  href="#resource-{{ resource.name | replace(".", "_") }}">
+          <a class="data-file-type mr-1"  href="#resource-{{ resource.name | replace(".", "_") }}">
             <dl class="data-file-type_inner">
               <dt class="data-file-type_term">
                 {{__('Preview')}}
