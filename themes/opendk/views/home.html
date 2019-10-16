@@ -87,7 +87,7 @@ Welcome - Home
         </div>
         <time class="article-preview_date">{{ post.modified }}</time>
         <p class="article-preview_content">
-          {{post.content | safe | truncate(200)}}
+          {{post.content | striptags | safe | truncate(200)}}
         </p>
       </div>
     </article>
@@ -116,7 +116,7 @@ Welcome - Home
             <div class="px-6">
               <h3 class="font-semibold text-2xl text-primary">{{ event.title | safe }}</h3>
               <p>
-                {{ event.excerpt | safe | truncate(120) or event.content | safe | truncate(120) }}
+                {{ event.excerpt | striptags | safe | truncate(120) or event.content | striptags | safe | truncate(120) }}
               </p>
             </div>
           </a>
