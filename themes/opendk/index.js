@@ -39,8 +39,8 @@ module.exports = function (app) {
         slug: post.slug,
         title: post.title,
         content: post.content,
-        published: moment(post.date).format('MMMM Do, YYYY'),
-        modified: moment(post.modified).format('MMMM Do, YYYY'),
+        published: moment(post.date).format('Do MMMM YYYY'),
+        modified: moment(post.modified).format('Do MMMM YYYY'),
         image: post.featured_image
       }
     })
@@ -124,8 +124,8 @@ module.exports = function (app) {
         slug: post.slug,
         title: post.title,
         content: post.content,
-        published: moment(post.date).format('MMMM Do, YYYY'),
-        modified: moment(post.modified).format('MMMM Do, YYYY'),
+        published: moment(post.date).format('Do MMMM YYYY'),
+        modified: moment(post.modified).format('Do MMMM YYYY'),
         image: post.featured_image
       }
     })
