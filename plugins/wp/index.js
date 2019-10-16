@@ -23,7 +23,7 @@ module.exports = function (app) {
     // Get latest 3 blog posts and pass it to home template
     let posts = await Model.getListOfPosts({
       number: 3,
-      fields: 'slug,title,content,date,modified,featured_image'
+      fields: 'slug,title,content,date,modified,featured_image,categories'
     })
     posts = posts.map(post => {
       return {
@@ -32,7 +32,8 @@ module.exports = function (app) {
         content: post.content,
         published: moment(post.date).format('MMMM Do, YYYY'),
         modified: moment(post.modified).format('MMMM Do, YYYY'),
-        image: post.featured_image
+        image: post.featured_image,
+        categories: post.categories ? Object.keys(post.categories) : []
       }
     })
     res.locals.posts = posts
@@ -47,7 +48,7 @@ module.exports = function (app) {
     const defaultQuery = {
       number: 10,
       page: 1,
-      fields: 'slug,title,content,date,modified,featured_image'
+      fields: 'slug,title,content,date,modified,featured_image,categories'
     }
     const actualQuery = Object.assign(defaultQuery, req.query)
     const response = (await Model.getListOfPostsWithMeta(actualQuery))
@@ -66,7 +67,8 @@ module.exports = function (app) {
         content: post.content,
         published: moment(post.date).format('MMMM Do, YYYY'),
         modified: moment(post.modified).format('MMMM Do, YYYY'),
-        image: post.featured_image
+        image: post.featured_image,
+        categories: post.categories ? Object.keys(post.categories) : []
       }
     })
     next()
@@ -83,7 +85,8 @@ module.exports = function (app) {
         published: moment(post.date).format('MMMM Do, YYYY'),
         modified: moment(post.modified).format('MMMM Do, YYYY'),
         image: post.featured_image,
-        thisPageFullUrl: req.protocol + '://' + req.get('host') + req.originalUrl
+        thisPageFullUrl: req.protocol + '://' + req.get('host') + req.originalUrl,
+        categories: post.categories ? Object.keys(post.categories) : []
       })
     } catch (err) {
       next(err)
