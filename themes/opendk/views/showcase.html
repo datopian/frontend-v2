@@ -78,7 +78,7 @@
         </h3>
         <div class="mt-2">
           {% if resource.format %}
-          <span title="file format" class="bg-gray-600 rounded text-sm text-gray-100 px-2 py-1" style="background:{{colors[resource.format|upper]}};">{{resource.format or 'N/A'}}</span>
+          <span title="file format" class="bg-gray-600 rounded text-sm text-gray-100 px-2 py-1" style="background:{{colors[resource.format|upper]}};">{{resource.format}}</span>
           {% endif %}
           {% if resource.size %}
           <span title="file size" class="bg-gray-600 rounded text-sm text-gray-100 px-2 py-1">{{ resource.size }}</span>
@@ -86,7 +86,6 @@
         </div>
         <p class="mt-2">
           {{ resource.descriptionHtml | safe }}
-          {{ 'This is a placeholder description for demo. <a href="#">This is a link</a>.' | safe}}
         </p>
         <nav>
           <a class="data-file-type mr-1" href="{{ resource.downloadPath }}">
