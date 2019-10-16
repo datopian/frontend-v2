@@ -104,6 +104,11 @@ module.exports = function (app) {
       }
       return post
     })
+
+    // Get title and content of about page to display it on front page:
+    const aboutPage = await CmsModel.getPost('about')
+    res.locals.aboutTitle = aboutPage.title
+    res.locals.aboutText = aboutPage.content
     next()
   })
 

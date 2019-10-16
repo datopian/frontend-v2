@@ -131,9 +131,9 @@ Welcome - Home
   <section id="tweets-container" class="md:flex flex-wrap md:-mx-gutter list-none">
   <div class="my-gutter px-3 md:w-1/3 flex">
     <li class="inline-block bg-gray-900 text-white p-10 ">
-      <h3 class="font-semibold text-2xl">Hvad er Open Data DK</h3>
+      <h3 class="font-semibold text-2xl">{{ aboutTitle | safe }}</h3>
       <p class="leading-relaxed">
-        Open Data DK er en forening for danske kommuner og regioner. Formålet med Open Data DK er at skabe transparens i den offentlige forvaltning og skabe grobund for datadreven vækst. Data gøres åbne og frit tilgængelige for at understøtte produktivitet og innovation ved en højere grad af udnyttelse af data.
+        {{ aboutText | safe | truncate(300) }}
       </p>
       <a class="font-semibold text-white" href="/about">{{__('More')}}</a>
     </li>
