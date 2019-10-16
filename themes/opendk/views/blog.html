@@ -47,8 +47,8 @@
         </div>
         <time class="article-preview_date">{{post.published}}</time>
         <div class="article-preview_content">
-          {{ post.excerpt }}
-          <a class="text-secondary hover:underline" href="/blog/{{post.slug}}">{{ __('Read full article') }}</a>
+          {{ post.content | striptags | truncate(200) | safe }}
+          <p><a class="text-secondary hover:underline" href="/blog/{{post.slug}}">{{ __('Read full article') }}</a><p>
         </div>
       </div>
     </div>
