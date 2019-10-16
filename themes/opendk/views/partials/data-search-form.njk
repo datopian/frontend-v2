@@ -14,7 +14,7 @@
     {% if result.results %}
       <div>
         <label for="field-order-by">{{__('Order by:')}}</label>
-        <select class="bg-white" id="field-order-by" name="sort">
+        <select onchange="this.form.submit()" class="bg-white" id="field-order-by" name="sort">
           <option value="score:desc" {% if query.sort == "score:desc" %}selected="selected"{% endif %}>{{__('Relevance')}}</option>
           <option value="title_string:asc" {% if query.sort == "title_string:asc" %}selected="selected"{% endif %}>{{__('Name Ascending')}}</option>
           <option value="title_string:desc" {% if query.sort == "title_string:desc" %}selected="selected"{% endif %}>{{__('Name Descending')}}</option>

@@ -34,26 +34,84 @@
       </a>
       <div class="article-preview_text">
         <h1 class="article-preview_heading">
-          <a class="article-preview_heading-link" href="/blog/{{post.slug}}">{{post.title}}</a>
+          <a class="article-preview_heading-link" href="/blog/{{post.slug}}">{{post.title | safe}}</a>
         </h1>
+        <div class="mb-3">
+          <ul>
+            {% for category in post.categories %}
+              <li class="inline px-3 py-1 text-xs text-white rounded mr-3 mb-3 bg-secondary" title="category">
+                {{ category }}
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
         <time class="article-preview_date">{{post.published}}</time>
         <div class="article-preview_content">
           {{ post.excerpt }}
-          <a class="text-secondary hover:underline" href="/blog/{{post.slug}}">Læse hele artiklen</a>
+          <a class="text-secondary hover:underline" href="/blog/{{post.slug}}">{{ __('Read full article') }}</a>
         </div>
       </div>
     </div>
 
     {% endfor %}
+
+    {% if found > 10 %}
+    <nav aria-label="Datasets" class="mt-gutter pt-gutter text-sm">
+      <ul class="inline-flex border border-gray-200">
+        {% set regExp = r/\?/ %}
+        <li class="border border-gray-200">
+          {% if currentPage > 1 %}
+          {% set previousPage = currentPage | int - 1 %}
+          <a class="block px-3 py-2 hover:text-white hover:bg-secondary" href="{{ originalUrl | replace(r/&{0,1}page=\d*/, '') }}{{ '&' if regExp.test(originalUrl) else '?' }}page={{previousPage}}" aria-label="{{__('Previous')}}">
+            <span class="">{{__('Previous')}}</span>
+          </a>
+          {% else %}
+          <span class="block px-3 py-2">{{__('Previous')}}</span>
+          {% endif %}
+        </li>
+        {% for page in pages %}
+          {% if page == '...' %}
+          <li class="border border-gray-200">
+            <span class="block px-3 py-2">{{page}}</span>
+          </li>
+          {% else %}
+          <li class="border border-gray-200">
+            <a class="block px-3 py-2 {{ 'text-white bg-secondary secondary-nav_link' if currentPage == page }}" href="{{ originalUrl | replace(r/&{0,1}page=\d*/, '') }}{{ '&' if regExp.test(originalUrl) else '?' }}page={{page}}">{{page}}</a>
+          </li>
+          {% endif %}
+        {% endfor %}
+        <li class="border border-gray-200">
+          {% if currentPage == totalPages %}
+          <span class="block px-3 py-2">{{__('Next')}}</span>
+          {% else %}
+          {% set nextPage = currentPage | int + 1 %}
+          <a class="block px-3 py-2 hover:text-white hover:bg-secondary" href="{{ originalUrl | replace(r/&{0,1}page=\d*/, '') }}{{ '&' if regExp.test(originalUrl) else '?' }}page={{nextPage}}" aria-label="{{__('Next')}}">
+            <span class="">{{__('Next')}}</span>
+          </a>
+          {% endif %}
+        </li>
+      </ul>
+    </nav>
+    {% endif %}
   </div>
 
   <div class="md:w-1/3 md:pl-gutter">
-    <h2 class="bg-gray-200 px-4 py-3 font-bold mb-2">Fremhævede blogindlæg</h2>
+    <!-- Filter by category -->
+    <div class="mb-4">
+      {% for category in categories %}
+      <a class="mb-2 text-center block px-3 py-2 hover:text-white hover:bg-secondary border {{ 'border-primary text-primary' if selectedCategory == category.slug else 'border-secondary' }}" href="/blog?category={{category.slug}}" aria-label="{{__(category.name)}}">
+        <span class="">{{__(category.name)}}</span>
+      </a>
+      {% endfor %}
+    </div>
+
+    <!-- Featured posts -->
+    <h2 class="bg-gray-200 px-4 py-3 font-bold mb-2">{{__('Featured blog posts')}}</h2>
     <ul>
       {% for post in featuredPosts %}
       <li class="border-b-2 border-gray-200">
         <article class="px-4 py-3">
-          <h1><a href="/blog/{{post.slug}}" class="text-primary font-semibold hover:underline">{{post.title}}</a></h1>
+          <h1><a href="/blog/{{post.slug}}" class="text-primary font-semibold hover:underline">{{post.title | safe}}</a></h1>
           <time class="text-sm">{{post.published}}</time>
         </article>
       </li>

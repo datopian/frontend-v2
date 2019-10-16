@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title%}{{title}}{% endblock %}
+{% block title%}{{title | safe}}{% endblock %}
 
 {% block bodyclass %}blog{% endblock %}
 
@@ -15,7 +15,7 @@
         <a class="breadcrumb_link" href="/blog">{{__('Blog')}}</a>
       </li>
       <li class="breadcrumb_item">
-        <a class="breadcrumb_link" href="/blog/{{slug}}" aria-current="page">{{title}}</a>
+        <a class="breadcrumb_link" href="/blog/{{slug}}" aria-current="page">{{title | safe}}</a>
       </li>
     </ol>
   </nav>
@@ -27,8 +27,16 @@
     <!-- featured image -->
     <img class="w-full" src="{{image or '/static/img/placeholder.svg'}}" />
 
-    <h1 class="text-4xl font-semibold">{{title}}</h1>
-
+    <h1 class="text-4xl font-semibold">{{title | safe}}</h1>
+    <div class="mb-3">
+      <ul>
+        {% for category in categories %}
+          <li class="inline px-3 py-1 text-xs text-white rounded mr-3 mb-3 bg-secondary" title="category">
+            {{ category }}
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
     {% if published %}
     <time class="text-gray-500">{{published}}</time>
     {% endif %}
@@ -54,12 +62,12 @@
     </ul>
     <!-- share links end -->
 
-    <h2 class="bg-gray-200 px-4 py-3 font-bold mb-2 mt-gutter">Fremhævede blogindlæg</h2>
+    <h2 class="bg-gray-200 px-4 py-3 font-bold mb-2 mt-gutter">{{__('Featured blog posts')}}</h2>
     <ul>
       {% for post in featuredPosts %}
       <li class="border-b-2 border-gray-200">
         <article class="px-4 py-3">
-          <h1><a href="/blog/{{post.slug}}" class="text-primary font-semibold hover:underline">{{post.title}}</a></h1>
+          <h1><a href="/blog/{{post.slug}}" class="text-primary font-semibold hover:underline">{{post.title | safe}}</a></h1>
           <time class="text-sm">{{post.published}}</time>
         </article>
       </li>

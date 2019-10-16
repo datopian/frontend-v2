@@ -36,39 +36,68 @@
     {% if dataset.readmeHtml %}
       <div class="leading-relaxed">{{dataset.readmeHtml|safe}}</div>
     {% elif dataset.description %}
-      <div class="leading-relaxed">{{dataset.descriptionHtml or dataset.description}}</div>
+      <div class="leading-relaxed">{{dataset.descriptionHtml or dataset.description | processMarkdown | safe }}</div>
     {% endif %}
     <!-- end of full readme -->
 
+    <!-- Keywords section -->
+      {% if dataset.keywords and dataset.keywords.length !== 0 %}
+        <div class="container">
+          <div class="flex flex-wrap ">
+          {% for t in dataset.keywords %}
+            <a href="/search?q=tags:{{t | safe}}" class="px-4 py-2 text-primary font-sm border-2 rounded-full border-primary mr-3 mb-3 mt-6 lowercase hover:bg-secondary">{{t | safe}}</a>
+          {% endfor %}
+          </div>
+        </div>
+      {% endif %}
+    <!-- end Keywords section -->
 
     <h2 class="text-2xl font-semibold mt-gutter mb-4">{{ dataset.resources | length }} data file{% if dataset.resources | length > 1 %}s{% endif %}</h2>
 
     <!-- data files (downloads) -->
     <ul>
+      {% set formats = [] %}
+      {% set colors = {
+        CSV: '#ffca00',
+        XLSX:'#3CBC8D',
+        XLS:'#3CBC8D',
+        JSON:'blue',
+        GeoJSON:'#2CAAF9',
+        WFS:'#08389c',
+        PDF:'#ff1010',
+        SHP:'violet',
+        HTML:'#333',
+        KML:'gray',
+        ODS:'gray'
+      } %}
       {% for resource in dataset.resources %}
       <!-- data file -->
       <li class="mb-6">
-        <h3 class="text-2xl font-semibold">
-          <a href="#resource-{{resource.name}}" class="text-secondary">{{resource.title or resource.name}}</a>
+        <h3 class="text-xl font-semibold">
+          <a href="#resource-{{resource.name | replace(".", "_")}}" class="text-secondary">{{resource.title or resource.name}}</a>
         </h3>
-        <p>
-          {{ resource.descriptionHtml|safe or resource.title }}
+        <div class="mt-2">
+          {% if resource.format %}
+          <span title="file format" class="bg-gray-600 rounded text-sm text-gray-100 px-2 py-1" style="background:{{colors[resource.format|upper]}};">{{resource.format or 'N/A'}}</span>
+          {% endif %}
+          {% if resource.size %}
+          <span title="file size" class="bg-gray-600 rounded text-sm text-gray-100 px-2 py-1">{{ resource.size }}</span>
+          {% endif %}
+        </div>
+        <p class="mt-2">
+          {{ resource.descriptionHtml | safe }}
+          {{ 'This is a placeholder description for demo. <a href="#">This is a link</a>.' | safe}}
         </p>
         <nav>
-          <a class="data-file-type" href="{{ resource.downloadPath }}">
+          <a class="data-file-type mr-1" href="{{ resource.downloadPath }}">
             <dl class="data-file-type_inner">
               <dt class="data-file-type_term">
-                {{__('Download')}} {% if resource.format %}({{ resource.format }}){% endif %}
+                {{__('Download')}}
               </dt>
-              {% if resource.size %}
-              <dd class="data-file-type_size">
-                [{{resource.size}}]
-              </dd>
-              {% endif %}
             </dl>
           </a>
           {% for alt in resource.otherFormats %}
-          <a class="data-file-type" href="/{{ owner.name }}/{{ dataset.name }}/r/{{ resource.name }}.{{ alt.format }}{{ '?v='+revisionId if revisionId }}">
+          <a class="data-file-type mr-1" href="/{{ owner.name }}/{{ dataset.name }}/r/{{ resource.name }}.{{ alt.format }}{{ '?v='+revisionId if revisionId }}">
             <dl class="data-file-type_inner">
               <dt class="data-file-type_term">
                 {{alt.format}}
@@ -79,6 +108,13 @@
             </dl>
           </a>
           {% endfor %}
+          <a class="data-file-type mr-1"  href="#resource-{{ resource.name | replace(".", "_") }}">
+            <dl class="data-file-type_inner">
+              <dt class="data-file-type_term">
+                {{__('Preview')}}
+              </dt>
+            </dl>
+          <a>
         </nav>
       </li>
       <!-- data file end -->
@@ -96,8 +132,9 @@
       <a class="px-4 text-primary text-xl font-semibold" href="/{{ owner.name }}">{{ owner.title }}</a>
 
       <p class="px-4 py-2 text-sm">
-        {{ owner.description | safe | truncate(200) | replace("<a", "")  }} <a href="/{{ owner.name }}" class="text-primary font-bold">Læs mere</a>
+        {{ owner.description | safe | truncate(200) }}
       </p>
+      <a href="/{{ owner.name }}" class="text-primary font-bold">Læs mere</a>
 
       <!-- Metadata -->
       <h2 class="bg-gray-200 px-4 py-3 font-bold mt-4 mb-1">{{__('Metadata')}}</h2>
@@ -115,14 +152,6 @@
             {{snippets.listify([dataset.author])}}
           </dd>
           {% endif %}
-          <dt class="info-list_title">Opdateret</dt>
-          <dd class="info-list_description">
-            {{ dataset.metadata_modified | formatDateFromNow }}
-          </dd>
-          <dt class="info-list_title">Oprettet</dt>
-          <dd class="info-list_description">
-            {{ dataset.metadata_created | formatDate}}
-          </dd>
           <!-- Show extras -->
           {% for item in dataset.extras %}
             {% if item.key === 'data_quality' %}
@@ -137,7 +166,7 @@
               {% set fieldName = 'Opdater frekvens' %}
             {% endif %}
             <dt class="info-list_title">{{fieldName or item.key}}</dt>
-            <dd class="info-list_description">
+            <dd class="info-list_description truncate" title="{{item.value}}">
               {{item.value}}
             </dd>
           {% endfor %}
@@ -178,7 +207,7 @@
   <div class="container mx-auto p-gutter">
     <div class="">
       <!-- Heading for each view -->
-      <h2 id="resource-{{viewName}}" class="text-2xl font-semibold mb-6">
+      <h2 id="resource-{{viewName | replace(".", "_")}}" class="text-2xl font-semibold mb-6">
         {{view.title}}
       </h2>
 
@@ -186,7 +215,7 @@
       <div id="datapackage-view-{{view.id}}" class="react-me text-sm"></div>
       <!-- End of div elements for React -->
       <p class="text-sm my-4">
-        Dette er en eksempelversion. Der er muligvis flere data i den originale version.
+        {{__('This is a preview version. There might be more data in the original version.')}}
       </p>
 
       {% if view.resources[0].schema %}
@@ -230,9 +259,20 @@
     var query = document.getElementById('search-input').value;
     window.location.href = '/search?q=' + query;
   }
+  //scroll for preview
+  $("#preview").click(function(e) {
+    e.preventDefault();
+    console.log($(this).attr("href"))
+    var position = $($(this).attr("href")).offset().top
+    console.log(position)
+    $("body, html").animate({
+      scrollTop: position
+    }) 
+  });
+
 </script>
 
-<link rel="stylesheet" media="screen" href="https://raw.githack.com/datopian/datapackage-views-js/v0.1.0/dist/css/main.css">
-<script type="text/javascript" src="https://rawcdn.githack.com/datopian/datapackage-views-js/v0.1.1/dist/js/main.js"></script>
+<link rel="stylesheet" media="screen" href="https://raw.githack.com/datopian/datapackage-views-js/v0.1.2/dist/css/main.css">
+<script type="text/javascript" src="https://rawcdn.githack.com/datopian/datapackage-views-js/v0.1.2/dist/js/main.js"></script>
 
 {% endblock %}

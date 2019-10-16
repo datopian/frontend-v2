@@ -22,7 +22,15 @@
 <div class="container mx-auto p-gutter">
   <h1 class="font-semibold text-3xl mb-1">{{ __(title) }}</h1>
   <p class="leading-relaxed lg:w-2/3">
-    {{ __(description) }}
+    {% if slug == 'organization' %}
+      {{__('Her er en oversigt over de kommuner, regioner og andre organisationer, der udstiller data på Open Data DK portalen. Under hver organisation kan du finde alle de datasæt, organisationen udstiller.')}}
+      <br />
+      {{__('Som dataejer i en organisation kan du oprette, redigere og publicere data afhængigt af din autorisation. Dette foregår via administrationsmodulet. Hvis I er medlem af Open Data DK, har I modtaget et link til administrationsmodulet.')}}
+    {% else %}
+      {{__('Alle datasæt på Open Data DK portalen er grupperet for at skabe overblik. De er opdelt efter de samme kategorier som på European Data Portal.')}}
+      <br />
+      {{__('Dataejere har ikke mulighed for selv at kategorisere datasæt. Du er derimod velkommen til at kontakte <a href="mailto:info@opendata.dk">info@opendata.dk</a> med forslag til kategorisering af dine datasæt i de eksisterende grupper.') | safe}}
+    {% endif %}
   </p>
 
   <ul class="sm:flex flex-wrap sm:-mx-4 mt-gutter">
@@ -31,7 +39,7 @@
     <li class="sm:w-1/2 lg:w-1/3">
       <a class="flex bg-gray-200 p-4 text-primary my-4 sm:mx-4" href="/{{ slug }}/{{ collection.name }}">
         <div class="w-24 h-24 mr-4 p-4 flex-shrink-0 flex justify-center {%if slug == 'organization' %}bg-white{% else %}bg-secondary{% endif %}">
-          <img class="w-full" src="{{ collection.image }}">
+          <img class="w-full object-contain" src="{{ collection.image }}">
         </div>
         <div class="flex flex-col justify-center overflow-hidden">
           <h2 class="font-semibold text-lg">{{ collection.title }}</h2>

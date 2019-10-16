@@ -31,14 +31,14 @@ Welcome - Home
       <!-- searchbox -->
         <div class="dropdown">
           <div class="relative">
-            <input id="searchInputHome" autocomplete="off" type="text" class="searchInput bg-secondary pl-4 pr-12 py-3 text-lg w-full outline-none" placeholder="{{__('Search ...')}}" name="q" required />
+            <input id="searchInputHome" autocomplete="off" type="text" class="searchInput bg-secondary pl-4 pr-12 py-3 text-lg text-white w-full outline-none" placeholder="{{__('Search ...')}}" name="q" required />
             <button class="absolute inset-y-0 right-0 px-3 outline-none" type="submit">
               <svg class="w-6 h-6 fill-white" aria-label="Search Datasets"><use xlink:href="#search" /></svg>
             </button>
           </div>
           <div id="searchSelectHome" class="searchSelect">
             <div id="searchSelect1DivHome" class="searchSelect1Div relative border-t-2 border-b-2">
-              <input id="searchSelect1Home" readonly type="text" class="searchSelect1 cursor-pointer bg-secondary hover:bg-gray-500 focus:bg-gray-500 pl-10 pr-48 py-3 text-lg w-full outline-none" />
+              <input id="searchSelect1Home" readonly type="text" class="searchSelect1 cursor-pointer bg-secondary hover:bg-gray-500 focus:bg-gray-500 pl-10 pr-48 py-3 text-lg text-white w-full outline-none" />
               <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center px-2 text-gray-700">
                 <svg class="w-6 h-6 fill-white" aria-label="Search Datasets"><use xlink:href="#search" /></svg>
               </div>
@@ -50,7 +50,7 @@ Welcome - Home
             </div>
 
             <div id="searchSelect2DivHome" class="searchSelect2Div relative">
-              <input id="searchSelect2Home" readonly type="text" class="searchSelect2 cursor-pointer bg-secondary hover:bg-gray-500 focus:bg-gray-500 pl-10 pr-48 py-3 text-lg w-full outline-none" />
+              <input id="searchSelect2Home" readonly type="text" class="searchSelect2 cursor-pointer bg-secondary hover:bg-gray-500 focus:bg-gray-500 pl-10 pr-48 py-3 text-lg text-white w-full outline-none" />
               <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center px-2 text-gray-700">
                 <svg class="w-6 h-6 fill-white" aria-label="Search content"><use xlink:href="#search" /></svg>
               </div>
@@ -74,8 +74,17 @@ Welcome - Home
       </a>
       <div class="article-preview_text">
         <h1 class="article-preview_heading">
-          <a class="article-preview_heading-link" href="/blog/{{post.slug}}">{{ post.title }}</a>
+          <a class="article-preview_heading-link" href="/blog/{{post.slug}}">{{ post.title | safe }}</a>
         </h1>
+        <div class="mb-3">
+          <ul>
+            {% for category in post.categories %}
+              <li class="inline px-3 py-1 text-xs text-white rounded mr-3 mb-3 bg-secondary" title="category">
+                {{ category }}
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
         <time class="article-preview_date">{{ post.modified }}</time>
         <p class="article-preview_content">
           {{post.content | safe | truncate(200)}}
@@ -86,19 +95,27 @@ Welcome - Home
     {% endfor %}
   </section>
 
-  <!-- if future events -->
+  <!-- Link to all news -->
+  <section class="flex justify-center px-24">
+    <a class="text-center w-1/4 block px-3 py-2 hover:text-white hover:bg-secondary border border-secondary" href="/blog" aria-label="{{__('View all news')}}">
+      <span class="">{{__('View all news')}}</span>
+    </a>
+  </section>
+  <!-- End of link to all news -->
+
+  <!-- if events -->
   <section class="home_events lg:w-2/3 my-gutter">
     <div class="overflow-hidden">
       <ul class="slider">
         {% for event in events %}
         <li>
           <a class="flex" href="/blog/{{ event.slug }}">
-            <time class="flex flex-col justify-center bg-secondary text-white text-center px-6 py-4">
+            <time class="flex flex-col justify-center text-white text-center px-6 py-4 {{'bg-primary' if event.completed else 'bg-secondary'}}">
               <span class="font-semibold text-3xl leading-none">{{ event.day }}</span> <span class="leading-none">{{ event.month }}</span>
             </time>
             <div class="px-6">
-              <h3 class="font-semibold text-2xl text-primary">{{ event.title }}</h3>
-              <p class="text-gray-500">
+              <h3 class="font-semibold text-2xl text-primary">{{ event.title | safe }}</h3>
+              <p>
                 {{ event.excerpt | safe | truncate(120) or event.content | safe | truncate(120) }}
               </p>
             </div>
@@ -114,9 +131,9 @@ Welcome - Home
   <section id="tweets-container" class="md:flex flex-wrap md:-mx-gutter list-none">
   <div class="my-gutter px-3 md:w-1/3 flex">
     <li class="inline-block bg-gray-900 text-white p-10 ">
-      <h3 class="font-semibold text-2xl">Hvad er Open Data DK</h3>
+      <h3 class="font-semibold text-2xl">{{ aboutTitle | safe }}</h3>
       <p class="leading-relaxed">
-        Open Data DK er en forening for danske kommuner og regioner. Formålet med Open Data DK er at skabe transparens i den offentlige forvaltning og skabe grobund for datadreven vækst. Data gøres åbne og frit tilgængelige for at understøtte produktivitet og innovation ved en højere grad af udnyttelse af data.
+        {{ aboutText | safe | truncate(300) }}
       </p>
       <a class="font-semibold text-white" href="/about">{{__('More')}}</a>
     </li>

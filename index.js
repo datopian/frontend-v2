@@ -127,6 +127,7 @@ module.exports.makeApp = function () {
       return processMarkdown.render(str)
     } catch (e) {
       console.warn('Failed to format markdown', e)
+      return str
     }
   })
   

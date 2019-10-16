@@ -25,13 +25,17 @@ class CmsModel {
 
 
   async getListOfPosts(query) {
-    const result = await this.blog.postsList(query)
+    const result = await this.getListOfPostsWithMeta(query)
     return result.posts
   }
 
 
   async getListOfPostsWithMeta(query) {
     return await this.blog.postsList(query)
+  }
+
+  async getCategories() {
+    return await this.blog.categoriesList()
   }
 }
 

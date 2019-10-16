@@ -6,7 +6,7 @@
         <a class="text-primary" href="/{{ package.organization.name or 'dataset' }}/{{ package.name }}">{{ package.title or package.name }}</a>
       </h3>
       <a href="/{{ package.organization.name or 'dataset' }}" class="text-gray-500 block mt-1">
-        {{ package.organization.name or 'dataset' }}
+        {{ package.organization.title or package.organization.name or 'dataset' }}
       </a>
       <div class="leading-relaxed mt-2">
         {% if package.readmeSnippet %}
