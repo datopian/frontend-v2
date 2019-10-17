@@ -241,12 +241,14 @@
   dependencies:
     arrify "^1.0.1"
 
-"@datopian/eds@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@datopian/eds/-/eds-1.0.0.tgz#5eeb5d4d37fa908191aabcc413940a0e9f852755"
+"@datopian/eds@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@datopian/eds/-/eds-1.1.0.tgz#126ebc9c79b626af690bf76bd07d0e63e32e756a"
   dependencies:
     moment "^2.24.0"
     multer "^1.4.2"
+    node-cache "^4.2.1"
+    node-fetch "^2.6.0"
     nodemailer "^6.3.0"
 
 "@mrmlnc/readdir-enhanced@^2.2.1":
@@ -1088,6 +1090,10 @@ clone-response@^1.0.2:
   resolved "https://registry.yarnpkg.com/clone-response/-/clone-response-1.0.2.tgz#d1dc973920314df67fbeb94223b4ee350239e96b"
   dependencies:
     mimic-response "^1.0.0"
+
+clone@2.x:
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/clone/-/clone-2.1.2.tgz#1b7f4b9f591f1e8f83670401600345a02887435f"
 
 clone@^1.0.2:
   version "1.0.4"
@@ -2997,6 +3003,10 @@ lodash@^4.17.10, lodash@^4.17.11, lodash@^4.17.5:
   version "4.17.11"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.11.tgz#b39ea6229ef607ecd89e2c8df12536891cac9b8d"
 
+lodash@^4.17.15:
+  version "4.17.15"
+  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.15.tgz#b447f6670a0455bbfeedd11392eff330ea097548"
+
 log-driver@^1.2.7:
   version "1.2.7"
   resolved "https://registry.yarnpkg.com/log-driver/-/log-driver-1.2.7.tgz#63b95021f0702fedfa2c9bb0a24e7797d71871d8"
@@ -3382,6 +3392,13 @@ nock@^10.0.6:
     propagate "^1.0.0"
     qs "^6.5.1"
     semver "^5.5.0"
+
+node-cache@^4.2.1:
+  version "4.2.1"
+  resolved "https://registry.yarnpkg.com/node-cache/-/node-cache-4.2.1.tgz#efd8474dee4edec4138cdded580f5516500f7334"
+  dependencies:
+    clone "2.x"
+    lodash "^4.17.15"
 
 node-fetch@^2.6.0:
   version "2.6.0"
