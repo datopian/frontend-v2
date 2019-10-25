@@ -85,7 +85,7 @@ Welcome - Home
             {% endfor %}
           </ul>
         </div>
-        <time class="article-preview_date">{{ post.modified }}</time>
+        <time class="article-preview_date">{{ post.published }}</time>
         <p class="article-preview_content">
           {{post.content | striptags | safe | truncate(200)}}
         </p>
