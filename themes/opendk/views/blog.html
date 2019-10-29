@@ -106,8 +106,8 @@
     <div class="mb-4">
       {% for category in categories %}
       <a class="mb-2 text-center block px-3 py-2 hover:text-white hover:bg-secondary border {{ 'border-primary text-primary' if selectedCategory == category.slug else 'border-secondary' }}"
-        href="/blog?category={{category.slug}}" aria-label="{{__(category.name)}}">
-        <span class="">{{__(category.name)}}</span>
+        href="/blog?category={{category.slug}}" aria-label="{{category.name}}">
+        <span class="">{{category.name}}</span>
       </a>
       {% endfor %}
     </div>
