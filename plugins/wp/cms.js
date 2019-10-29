@@ -37,6 +37,10 @@ class CmsModel {
   async getCategories() {
     return await this.blog.categoriesList()
   }
+
+  async getSiteInfo() {
+    return await this.blog.get()
+  }
 }
 
 module.exports.CmsModel = CmsModel
