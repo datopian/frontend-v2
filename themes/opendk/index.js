@@ -48,8 +48,9 @@ module.exports = function (app) {
   })
 
   app.get('/', async (req, res, next) => {
-    // Set up main heading text from config var:
-    res.locals.home_heading = config.get('HOME_HEADING') || ''
+    // Set up main heading text from wp:
+    const siteInfo = await CmsModel.getSiteInfo()
+    res.locals.home_heading = siteInfo.description || ''
     // Get collections with extras
     const collections = await DmsModel.getCollections({
       all_fields: true,

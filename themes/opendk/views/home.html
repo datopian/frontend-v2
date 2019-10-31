@@ -13,7 +13,7 @@ Welcome - Home
 {% block content %}
 <div class="container mx-auto px-gutter">
   <header class="mb-gutter">
-    <h1 class="home_h1">{{ home_heading }}</h1>
+    <h1 class="home_h1">{{ home_heading | safe }}</h1>
 
       <div class="lg:flex mt-gutter">
         <ul class="featured-groups">
@@ -79,15 +79,17 @@ Welcome - Home
         <div class="mb-3">
           <ul>
             {% for category in post.categories %}
-              <li class="inline px-3 py-1 text-xs text-white rounded mr-3 mb-3 bg-secondary" title="category">
-                {{ category }}
+              <li>
+                <a href="/blog?category={{category}}" class="inline px-3 py-1 text-xs text-white rounded mr-3 mb-3 bg-secondary" title="category">
+                  {{ category }}
+                </a>
               </li>
             {% endfor %}
           </ul>
         </div>
-        <time class="article-preview_date">{{ post.modified }}</time>
+        <time class="article-preview_date">{{ post.published }}</time>
         <p class="article-preview_content">
-          {{post.content | safe | truncate(200)}}
+          {{post.content | striptags | safe | truncate(200)}}
         </p>
       </div>
     </article>
@@ -116,7 +118,7 @@ Welcome - Home
             <div class="px-6">
               <h3 class="font-semibold text-2xl text-primary">{{ event.title | safe }}</h3>
               <p>
-                {{ event.excerpt | safe | truncate(120) or event.content | safe | truncate(120) }}
+                {{ event.excerpt | striptags | safe | truncate(120) or event.content | striptags | safe | truncate(120) }}
               </p>
             </div>
           </a>

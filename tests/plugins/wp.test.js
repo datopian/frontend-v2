@@ -28,3 +28,11 @@ test('getListOfPosts api works', async t => {
 
   t.is(result.length, 2)
 })
+
+
+test('getSiteInfo api works', async t => {
+  
+  const result = await WPModel.getSiteInfo()
+
+  t.is(result.description, 'Åbne data til dig')
+})
