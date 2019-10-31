@@ -241,9 +241,9 @@
   dependencies:
     arrify "^1.0.1"
 
-"@datopian/eds@^1.2.1":
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/@datopian/eds/-/eds-1.2.1.tgz#cdf9d2f503b0d69f312aa47bb685ceda4a9b1ca3"
+"@datopian/eds@^1.2.2":
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/@datopian/eds/-/eds-1.2.2.tgz#9a21628e5856d68e1cf7177e1174edc0430c7fc1"
   dependencies:
     moment "^2.24.0"
     multer "^1.4.2"
@@ -2999,11 +2999,7 @@ lodash.merge@^4.6.1:
   version "4.6.2"
   resolved "https://registry.yarnpkg.com/lodash.merge/-/lodash.merge-4.6.2.tgz#558aa53b43b661e1925a0afdfa36a9a1085fe57a"
 
-lodash@^4.17.10, lodash@^4.17.11, lodash@^4.17.5:
-  version "4.17.15"
-  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.15.tgz#b447f6670a0455bbfeedd11392eff330ea097548"
-
-lodash@^4.17.15:
+lodash@^4.17.10, lodash@^4.17.11, lodash@^4.17.15, lodash@^4.17.5:
   version "4.17.15"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.15.tgz#b447f6670a0455bbfeedd11392eff330ea097548"
 
