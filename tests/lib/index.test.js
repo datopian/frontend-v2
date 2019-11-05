@@ -83,6 +83,7 @@ test('getResourceViews api works', async t => {
   const result = await DmsModel.getResourceViews('6ed8a2fb-f432-43ce-bae7-17684cf8a6bf')
 
   t.is(result[0].title, 'Data Explorer')
+  t.is(result[0].specType, 'dataExplorer')
 })
 
 

@@ -107,6 +107,37 @@ module.exports.ckanToDataPackage = function (descriptor) {
   return datapackage
 }
 
+/*
+  At the moment, we're considering only following examples of CKAN view:
+  1. recline_view => Data Explorer with Table view, Chart Builder, Map Builder
+    and Query Builder.
+  2. geojson_view => Leaflet map
+  3. pdf_view => our PDF viewer
+  4. recline_grid_view => our Table viewer
+  5. recline_graph_view => our Simple graph
+  6. recline_map_view => our Leaflet map
+  7. image_view => not supported at the moment
+  8. text_view => not supported at the moment
+  9. webpage_view => not supported at the moment
+*/
+module.exports.ckanViewToDataPackageView = (ckanView) => {
+  const viewTypeToSpecType = {
+    recline_view: 'dataExplorer',
+    geojson_view: 'map',
+    pdf_view: 'document',
+    recline_grid_view: 'table',
+    recline_graph_view: 'simple',
+    recline_map_view: 'map'
+  }
+  const dataPackageView = {
+    title: ckanView.title,
+    description: ckanView.description,
+    specType: viewTypeToSpecType[ckanView.view_type]
+  }
+
+  return dataPackageView
+}
+
 
 module.exports.convertToStandardCollection = (descriptor) => {
   const standard = {
