@@ -1,5 +1,6 @@
 'use strict'
 const { URL } = require('url')
+const querystring = require('querystring')
 const express = require('express')
 const moment = require('moment')
 const bytes = require('bytes')
@@ -15,6 +16,50 @@ module.exports = function () {
 
   // -----------------------------------------------
   // Redirects
+
+  router.get('/dataset', (req, res) => {
+    let destination = '/search'
+    const query = querystring.stringify(req.query)
+    if (query) {
+      destination += `?${query}`
+    }
+    res.redirect(301, destination)
+  })
+
+  router.get('/dataset/:name', async (req, res, next) => {
+    // Identify owner org name
+    let datapackage = null
+
+    try {
+      datapackage = await Model.getPackage(req.params.name)
+    } catch (err) {
+      next(err)
+      return
+    }
+
+    const destination = `/${datapackage.organization.name}/${datapackage.name}`
+    res.redirect(301, destination)
+  })
+
+  router.get('/dataset/:name/resource/:id', async (req, res, next) => {
+    // Identify owner org name
+    let datapackage = null
+
+    try {
+      datapackage = await Model.getPackage(req.params.name)
+    } catch (err) {
+      next(err)
+      return
+    }
+
+    const resourceName = datapackage.resources
+      .find(resource => resource.id === req.params.id)
+      .name
+
+    const destination = `/${datapackage.organization.name}/${datapackage.name}#resource-${resourceName.replace('.', '_')}`
+    console.log(destination)
+    res.redirect(301, destination)
+  })
 
   router.get('/organization/:owner', (req, res) => {
     const destination = '/' + req.params.owner
