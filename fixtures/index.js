@@ -8,6 +8,7 @@ module.exports.initMocks = function() {
 
 
   // Mocks for standalone version:
+  // package_search
   nock('http://127.0.0.1:5000', {"encodedQueryParams":true})
     .persist()
     .post('/api/3/action/package_search', {"facet.field":["organization","groups","tags","res_format","license_id"],"facet.limit":5})
@@ -358,7 +359,9 @@ module.exports.initMocks = function() {
     'application/json;charset=utf-8',
     'Content-Length',
     '5521' ])
+    // end of package_search
 
+  // package_search with sort option
   nock('http://127.0.0.1:5000', {"encodedQueryParams":true})
     .persist()
     .post('/api/3/action/package_search', {"q":"gdp","sort":"score desc","facet.field":["organization","groups","tags","res_format","license_id"],"facet.limit":5})
@@ -370,7 +373,9 @@ module.exports.initMocks = function() {
     'application/json;charset=utf-8',
     'Content-Length',
     '3078' ])
+    // end of package_search with sort option
 
+  // package_show gdp
   nock('http://127.0.0.1:5000', {"encodedQueryParams":true})
     .persist()
     .post('/api/3/action/package_show', {"name_or_id":"gdp"})
@@ -382,7 +387,15 @@ module.exports.initMocks = function() {
     'application/json;charset=utf-8',
     'Content-Length',
     '2576' ])
+    .post('/api/3/action/resource_view_list', {"id":"42c7a4f1-f755-450f-9b5b-31b6085b9b19"})
+    .reply(200, {
+      "help": "http://127.0.0.1:5000/api/3/action/help_show?name=resource_view_list",
+      "success": true,
+      "result": []
+    })
+    // end of package_show gdp
 
+  // package_show population
   nock('http://127.0.0.1:5000', {"encodedQueryParams":true})
     .persist()
     .post('/api/3/action/package_show', {"name_or_id":"population"})
@@ -394,7 +407,15 @@ module.exports.initMocks = function() {
     'application/json;charset=utf-8',
     'Content-Length',
     '2474' ])
+    .post('/api/3/action/resource_view_list', {"id":"bd9adb32-e96d-4002-8efb-688eae64b065"})
+    .reply(200, {
+      "help": "http://127.0.0.1:5000/api/3/action/help_show?name=resource_view_list",
+      "success": true,
+      "result": []
+    })
+    // end of package_show population
 
+  // package_show geojson
   nock('http://127.0.0.1:5000', {"encodedQueryParams":true})
     .persist()
     .post('/api/3/action/package_show', {"name_or_id":"geojson"})
@@ -480,7 +501,15 @@ module.exports.initMocks = function() {
     'application/json;charset=utf-8',
     'Content-Length',
     '2474' ])
+    .post('/api/3/action/resource_view_list', {"id":"fake-res-id"})
+    .reply(200, {
+      "help": "http://127.0.0.1:5000/api/3/action/help_show?name=resource_view_list",
+      "success": true,
+      "result": []
+    })
+    // end of package_show geojson
 
+  // package_show pdf
   nock('http://127.0.0.1:5000', {"encodedQueryParams":true})
     .persist()
     .post('/api/3/action/package_show', {"name_or_id":"pdf"})
@@ -565,8 +594,16 @@ module.exports.initMocks = function() {
     'application/json;charset=utf-8',
     'Content-Length',
     '2474' ])
+    .post('/api/3/action/resource_view_list', {"id":"fake-res-id"})
+    .reply(200, {
+      "help": "http://127.0.0.1:5000/api/3/action/help_show?name=resource_view_list",
+      "success": true,
+      "result": []
+    })
+    // end of package_show pdf
 
-  // CKAN API mocks:
+  // CKAN API mocks
+  // package_search
   nock('http://127.0.0.1:5000', {"encodedQueryParams":true})
     .persist()
     .post('/api/3/action/package_search', {"q":"co2","facet.field":["organization","groups","tags","res_format","license_id"],"facet.limit":5})
@@ -579,7 +616,7 @@ module.exports.initMocks = function() {
     'Content-Length',
     '2880' ])
 
-
+  // package_search with format CSV
   nock('http://127.0.0.1:5000', {"encodedQueryParams":true})
     .persist()
     .post('/api/3/action/package_search', {"q":"co2 res_format:CSV","rows":10,"start":10,"sort":"name asc","facet.field":["organization","groups","tags","res_format","license_id"],"facet.limit":5})
@@ -592,7 +629,7 @@ module.exports.initMocks = function() {
     'Content-Length',
     '509' ])
 
-
+  // package_search for specific group
   nock('http://127.0.0.1:5000', {"encodedQueryParams":true})
     .persist()
     .post('/api/3/action/package_search', {"q":"groups:test-group","facet.field":["organization","groups","tags","res_format","license_id"],"facet.limit":5})
@@ -605,7 +642,7 @@ module.exports.initMocks = function() {
     'Content-Length',
     '6197' ])
 
-
+  // package_search for specific org
   nock('http://127.0.0.1:5000', {"encodedQueryParams":true})
     .persist()
     .post('/api/3/action/package_search', {"q":"organization:test_org_00","facet.field":["organization","groups","tags","res_format","license_id"],"facet.limit":5})
@@ -618,6 +655,7 @@ module.exports.initMocks = function() {
     'Content-Length',
     '14576' ])
 
+  // package_show co2emis
   nock('http://127.0.0.1:5000', {"encodedQueryParams":true})
     .persist()
     .post('/api/3/action/package_show', {"name_or_id":"co2emis"})
@@ -629,6 +667,21 @@ module.exports.initMocks = function() {
     'application/json;charset=utf-8',
     'Content-Length',
     '2215' ])
+    .post('/api/3/action/resource_view_list', {"id":"6ed8a2fb-f432-43ce-bae7-17684cf8a6bf"})
+    .reply(200, {
+      "help": "http://127.0.0.1:5000/api/3/action/help_show?name=resource_view_list",
+      "success": true,
+      "result": [
+        {
+          "description": "This is a CKAN Classic view.",
+          "title": "Data Explorer",
+          "resource_id": "6ed8a2fb-f432-43ce-bae7-17684cf8a6bf",
+          "view_type": "recline_view",
+          "id": "b4eded84-7831-42cd-8b2b-2642b8168be3",
+          "package_id": "51906c35-5f1b-42c6-834d-47566424cc57"
+        }
+      ]
+    })
 
 
   nock('http://127.0.0.1:5000', {"encodedQueryParams":true})
