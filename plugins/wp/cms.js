@@ -11,15 +11,34 @@ class CmsModel {
   }
 
 
-  getPost(slug) {
-    return new Promise((resolve, reject) => {
-      this.blog.post({slug: slug}).getBySlug((err, data) => {
-        if (err) {
-          reject(err)
-        } else {
-          resolve(data)
+  async getPost(slug, parentSlug = "") {
+
+    return new Promise(async (resolve, reject) => {
+
+      // type any will request both pages and posts
+      let query = {type: 'any'}
+
+      if (parentSlug) {
+        try {
+          let parent = await (await this.blog.post({slug: parentSlug})).getBySlug()
+          query.parent_id = parent.ID
+          let posts = (await this.blog.postsList(query)).posts
+          let post = posts.find(post => post.slug == slug)
+          resolve(post)
+        } catch (e) {
+          reject(e)
         }
-      })
+
+      } else {
+        query.slug = slug
+        this.blog.post(query).getBySlug((err, data) => {
+          if (err) {
+            reject(err)
+          } else {
+            resolve(data)
+          }
+        })
+      }
     })
   }
 
