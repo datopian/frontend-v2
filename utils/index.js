@@ -122,17 +122,50 @@ module.exports.ckanToDataPackage = function (descriptor) {
 */
 module.exports.ckanViewToDataPackageView = (ckanView) => {
   const viewTypeToSpecType = {
-    recline_view: 'dataExplorer',
-    geojson_view: 'map',
-    pdf_view: 'document',
+    recline_view: 'dataExplorer', // from datastore data
     recline_grid_view: 'table',
     recline_graph_view: 'simple',
-    recline_map_view: 'map'
+    recline_map_view: 'tabularmap',
+    geojson_view: 'map',
+    pdf_view: 'document',
+    image_view: 'web',
+    webpage_view: 'web'
   }
-  const dataPackageView = {
-    title: ckanView.title,
-    description: ckanView.description,
-    specType: viewTypeToSpecType[ckanView.view_type]
+  const dataPackageView = JSON.parse(JSON.stringify(ckanView))
+  dataPackageView.specType = viewTypeToSpecType[ckanView.view_type] || 'unsupported'
+
+  if (dataPackageView.specType === 'dataExplorer') {
+    dataPackageView.spec = {
+      widgets: [
+        {specType: 'table'},
+        {specType: 'simple'},
+        {specType: 'tabularmap'}
+      ]
+    }
+  } else if (dataPackageView.specType === 'simple') {
+    const graphTypeConvert = {
+      lines: 'line',
+      'lines-and-points': 'lines-and-points',
+      points: 'points',
+      bars: 'horizontal-bar',
+      columns: 'bar'
+    }
+    dataPackageView.spec = {
+      group: ckanView.group,
+      series: Array.isArray(ckanView.series) ? ckanView.series : [ckanView.series],
+      type: graphTypeConvert[ckanView.graph_type] || 'line'
+    }
+  } else if (dataPackageView.specType === 'tabularmap') {
+    if (ckanView.map_field_type === 'geojson') {
+      dataPackageView.spec = {
+        geomField: ckanView.geojson_field
+      }
+    } else {
+      dataPackageView.spec = {
+        lonField: ckanView.longitude_field,
+        latField: ckanView.latitude_field
+      }
+    }
   }
 
   return dataPackageView
