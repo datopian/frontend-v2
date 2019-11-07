@@ -86,7 +86,7 @@ test('Theme defined route does NOT exists when THEME is not set', async t => {
   const app = require('../../index').makeApp()
   const res = await request(app)
     .get('/absolutely-not-a-chance')
-  
+
   t.is(res.statusCode, 500)
 })
 
@@ -236,6 +236,15 @@ test('Showcase page works', async t => {
 
   t.is(res.statusCode, 200)
   t.true(res.text.includes('<!-- showcase page test placeholder -->'))
+})
+
+
+test('Showcase page resource previews work', async t => {
+  const res = await request(app)
+    .get('/test_org_00/co2emis')
+
+  t.is(res.statusCode, 200)
+  t.true(res.text.includes('<!-- Placeholder div elements for React components: preview tables -->'))
 })
 
 
