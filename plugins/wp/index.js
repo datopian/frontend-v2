@@ -108,7 +108,7 @@ module.exports = function (app) {
       slug += `-${locale}`
     }
     try {
-      const post = await Model.getPost(slug)
+      const post = await Model.getPost(req.params.page, req.params.parent)
       res.render('static.html', {
         slug: post.slug,
         parentSlug: req.params.parent,
