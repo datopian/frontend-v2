@@ -404,7 +404,7 @@ module.exports.processDataPackage = function (datapackage) {
 module.exports.prepareResourcesForDisplay = function (datapackage) {
   const newDatapackage = JSON.parse(JSON.stringify(datapackage))
   newDatapackage.displayResources = []
-  newDatapackage.resources.forEach(resource => {
+  newDatapackage.resources.forEach((resource, index) => {
     const api = resource.datastore_active
       ? config.get('API_URL') + 'datastore_search?resource_id=' + resource.id
       : null
@@ -430,7 +430,7 @@ module.exports.prepareResourcesForDisplay = function (datapackage) {
       api, // URI for getting the resource via API, e.g., Datastore. Useful when you want to fetch only 100 rows or similar.
       proxy, // alternative for path in case there is CORS issue
       cc_proxy,
-      slug: slugify(resource.name) // Used for anchor links
+      slug: slugify(resource.name) + '-' + index // Used for anchor links
     }
     newDatapackage.displayResources.push(displayResource)
   })
@@ -464,25 +464,50 @@ module.exports.prepareViews = function (datapackage) {
  **/
 module.exports.prepareDataExplorers = function (datapackage) {
   const newDatapackage = JSON.parse(JSON.stringify(datapackage))
-  newDatapackage.dataExplorers = []
-  newDatapackage.resources.forEach(resource => {
-    resource.views.forEach(view => {
+  newDatapackage.displayResources.forEach((displayResource, idx) => {
+    newDatapackage.displayResources[idx].dataExplorers = []
+    displayResource.resource.views.forEach(view => {
+      const widgets = []
       if (view.specType === 'dataExplorer') {
-        view.resources = [resource.name]
-        const views = [view]
-        const controls = {
-          showChartBuilder: true,
-          showMapBuilder: true
-        }
-        const dataExplorer = JSON.stringify({
-          datapackage: {
-            resources: [resource],
-            views,
-            controls
+        view.spec.widgets.forEach((widget, index) => {
+          const widgetNames = {
+            table: 'Table',
+            simple: 'Chart',
+            tabularmap: 'Map'
           }
-        }).replace(/'/g, "&#x27;")
-        newDatapackage.dataExplorers.push(dataExplorer)
+          widget = {
+            name: widgetNames[widget.specType] || 'Widget-' + index,
+            active: index === 0 ? true : false,
+            datapackage: {
+              views: [
+                {
+                  id: view.id,
+                  specType: widget.specType
+                }
+              ]
+            }
+          }
+          widgets.push(widget)
+        })
+      } else {
+        const widget = {
+          name: view.title || '',
+          active: true,
+          datapackage: {
+            views: [view]
+          }
+        }
+        widgets.push(widget)
       }
+
+      displayResource.resource.api = displayResource.api
+      const dataExplorer = JSON.stringify({
+        widgets,
+        datapackage: {
+          resources: [displayResource.resource]
+        }
+      }).replace(/'/g, "&#x27;")
+      newDatapackage.displayResources[idx].dataExplorers.push(dataExplorer)
     })
   })
 
