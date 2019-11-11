@@ -1,7 +1,6 @@
 'use strict'
 const querystring = require('querystring')
 const express = require('express')
-const moment = require('moment')
 
 const config = require('../config')
 const dms = require('../lib/dms')
@@ -173,7 +172,7 @@ module.exports = function () {
 
     // Prepare datapackage for display, eg, process markdown, convert values to
     // human-readable format etc.:
-    datapackage = utils.prepareDataPackageForDisplay(datapackage)
+    datapackage = utils.processDataPackage(datapackage)
 
     // Prepare resources for display (preview):
     datapackage = utils.prepareResourcesForDisplay(datapackage)
@@ -218,7 +217,7 @@ module.exports = function () {
 
     // Prepare datapackage for display, eg, process markdown, convert values to
     // human-readable format etc.:
-    datapackage = utils.prepareDataPackageForDisplay(datapackage)
+    datapackage = utils.processDataPackage(datapackage)
 
     // Prepare resources for display (preview):
     datapackage = utils.prepareResourcesForDisplay(datapackage)

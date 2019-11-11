@@ -164,7 +164,7 @@ const datapackage = {
 
 
 test('Prepare data package for display', t => {
-  const result = utils.prepareDataPackageForDisplay(datapackage)
+  const result = utils.processDataPackage(datapackage)
   t.true(result.descriptionHtml.includes('<h1>Dataset</h1>'))
   t.true(result.readmeHtml.includes('<h1>Readme</h1>'))
   t.true(result.resources[0].descriptionHtml.includes('<h1>Resource</h1>'))

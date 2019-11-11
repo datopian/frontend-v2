@@ -1,0 +1,42 @@
+{% for item in dataset.displayResources %}
+
+<div class="resource-info part">
+  <!-- Heading for each resource -->
+  <h2 id="{{item.slug}}" class="section-title">
+    {{item.resource.title or item.resource.name}}
+  </h2>
+
+  <!-- Placeholder div elements for React components: preview tables -->
+  {% for view in item.resource.views %}
+    <div id="datapackage-view-{{view.id}}" class="react-me tables"></div>
+    <p class="notice">
+      This is a preview version. There might be more data in the original version.
+    </p>
+  {% endfor %}
+  <!-- End of div elements for React -->
+  {% if item.resource.schema %}
+   <h3 class="section-title">Field information</h3>
+   <table class="table table-bordered table-striped resource-summary">
+     <thead>
+       <tr>
+         <th>Field Name</th>
+         <th>Order</th>
+         <th>Type (Format)</th>
+         <th>Description</th>
+       </tr>
+     </thead>
+     <tbody>
+       {% for field in item.resource.schema.fields %}
+       <tr>
+         <th>{{field.name}}</th>
+         <td>{{loop.index}}</td>
+         <td class="type type-{{field.type}}">{{field.type}} {% if field.format %}({{field.format}}) {% endif %}</td>
+         <td>{{field.description}}</td>
+       </tr>
+       {% endfor %}
+     </tbody>
+   </table>
+ {% endif %}
+</div>
+
+{% endfor %}
