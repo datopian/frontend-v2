@@ -135,7 +135,9 @@ module.exports.ckanViewToDataPackageView = (ckanView) => {
     webpage_view: 'web'
   }
   const dataPackageView = JSON.parse(JSON.stringify(ckanView))
-  dataPackageView.specType = viewTypeToSpecType[ckanView.view_type] || 'unsupported'
+  dataPackageView.specType = viewTypeToSpecType[ckanView.view_type]
+    || dataPackageView.specType
+    || 'unsupported'
 
   if (dataPackageView.specType === 'dataExplorer') {
     dataPackageView.spec = {
@@ -356,7 +358,7 @@ module.exports.loadPlugins = function (app) {
  * Convert bytes to human readable format
  * etc.
  **/
-module.exports.prepareDataPackageForDisplay = function (datapackage) {
+module.exports.processDataPackage = function (datapackage) {
   const newDatapackage = JSON.parse(JSON.stringify(datapackage))
   if (newDatapackage.description) {
     newDatapackage.descriptionHtml = module.exports.processMarkdown
@@ -367,6 +369,8 @@ module.exports.prepareDataPackageForDisplay = function (datapackage) {
     newDatapackage.readmeHtml = module.exports.processMarkdown
       .render(newDatapackage.readme)
   }
+
+  newDatapackage.formats = newDatapackage.formats || []
   // Per each resource:
   newDatapackage.resources.forEach(resource => {
     if (resource.description) {
@@ -376,6 +380,7 @@ module.exports.prepareDataPackageForDisplay = function (datapackage) {
     // Normalize format (lowercase)
     if (resource.format) {
       resource.format = resource.format.toLowerCase()
+      newDatapackage.formats.push(resource.format)
     }
 
     // Convert bytes into human-readable format:
@@ -439,7 +444,7 @@ module.exports.prepareResourcesForDisplay = function (datapackage) {
  **/
 module.exports.prepareViews = function (datapackage) {
   const newDatapackage = JSON.parse(JSON.stringify(datapackage))
-  newDatapackage.views = []
+  newDatapackage.views = newDatapackage.views || []
   newDatapackage.resources.forEach(resource => {
     const resourceViews = resource.views.map(view => {
       view.resources = [resource.name]
