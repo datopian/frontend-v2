@@ -37,6 +37,19 @@ class CmsModel {
       throw {statusCode: res.status, message}
     }
   }
+
+  // returns promise
+  async getListOfPages(size) {
+    const url = `${this.api}ckanext_pages_list?page_type=page`
+    const res = await fetch(url)
+    if (res.ok) {
+      const pages = await res.json()
+      return pages.result
+    } else {
+      const message = await res.text()
+      throw {statusCode: res.status, message}
+    }
+  }
 }
 
 module.exports.CmsModel = CmsModel
