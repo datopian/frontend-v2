@@ -96,23 +96,24 @@ module.exports = function () {
       const result = await Model.search(req.query)
       
       // Prevent duplication of applied facets
-      const q = req.query.q || ""
-      const appliedFacets = q
+      const q = req.query.q
+      const appliedFacets = q && q
         .split(' ')
         .map(pair => pair.split(':'))
         .reduce((acc, cur) => {
-          const [key, val] = cur;
-          acc[key] = acc[key] || [];
-          acc[key].push(val);
-          return acc;
-        }, {});
+          const [key, val] = cur
+          acc[key] = acc[key] || []
+          acc[key].push(val)
+          return acc
+        }, {})
 
-      Object.keys(appliedFacets).forEach(facet => {
-        appliedFacets[facet].forEach(name => {
-          console.log(appliedFacets[facet], facet, name)
-          result.search_facets[facet].items = result.search_facets[facet].items.filter(item => item.name !== name)
+      if (appliedFacets) {
+        Object.keys(appliedFacets).forEach(facet => {
+          appliedFacets[facet].forEach(name => {
+            result.search_facets[facet].items = result.search_facets[facet].items.filter(item => item.name !== name)
+          })
         })
-      })
+      }
 
       // Pagination
       const from = req.query.from || 0
