@@ -241,9 +241,9 @@
   dependencies:
     arrify "^1.0.1"
 
-"@datopian/eds@^1.2.4":
-  version "1.2.4"
-  resolved "https://registry.yarnpkg.com/@datopian/eds/-/eds-1.2.4.tgz#3742553687fcd7512517f7b84b3a7f9cf15e3d00"
+"@datopian/eds@^1.2.5":
+  version "1.2.5"
+  resolved "https://registry.yarnpkg.com/@datopian/eds/-/eds-1.2.5.tgz#42ef4a35b437ce46ca684f862203c8fc1bb62c7d"
   dependencies:
     moment "^2.24.0"
     multer "^1.4.2"
