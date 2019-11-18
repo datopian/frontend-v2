@@ -379,7 +379,85 @@ module.exports.initMocks = function() {
   nock('http://127.0.0.1:5000', {"encodedQueryParams":true})
     .persist()
     .post('/api/3/action/package_show', {"name_or_id":"gdp"})
-    .reply(200, {"help":"http://127.0.0.1:5000/api/3/action/help_show?name=package_show","success":true,"result":{"license_title":null,"maintainer":null,"relationships_as_object":[],"private":false,"maintainer_email":null,"num_tags":0,"update_frequency":"P1D","id":"d2d18eea-d98a-4f9a-a580-13131e2a88dc","metadata_created":"2019-06-10T13:09:12.713162","metadata_modified":"2019-06-10T13:12:22.161302","author":"Energinet","author_email":"energidata@energinet.dk","state":"active","version":"2017","creator_user_id":"5a6c2aa5-dece-4792-adfd-b825978f321f","type":"dataset","resources":[{"cache_last_updated":null,"package_id":"d2d18eea-d98a-4f9a-a580-13131e2a88dc","filters":[],"datastore_active":true,"id":"42c7a4f1-f755-450f-9b5b-31b6085b9b19","size":null,"state":"active","schema":{"fields":[{"type":"string","name":"Country Name"},{"type":"string","name":"Country Code"},{"type":"year","name":"Year"},{"description":"GDP in current USD","type":"number","name":"Value"}]},"hash":"","description":"","format":"csv","last_modified":"2019-06-10T13:12:22.080475","url_type":"datastore","attributes":[],"path":"data/gdp.csv","mimetype":null,"cache_url":null,"name":"gdp","created":"2019-06-10T13:09:13.613813","url":"https://pkgstore.datahub.io/core/gdp/gdp_csv/data/0048bc8f6228d0393d41cac4b663b90f/gdp_csv.csv","mimetype_inner":null,"position":0,"revision_id":"a81405b5-fe0b-49c5-845a-82bb0b01a843","resource_type":null}],"num_resources":1,"tags":[],"groups":[],"license_id":null,"relationships_as_subject":[],"organization":{"description":"Just another test organization.","created":"2019-03-27T21:26:27.501417","title":"Test Organization","name":"test_org_00","is_organization":true,"state":"active","image_url":"http://placekitten.com/g/200/100","revision_id":"24612477-8155-497c-9e8d-5fef03f94c52","type":"organization","id":"2669d62a-f122-4256-9382-21c260ceef40","approval_status":"approved"},"name":"gdp","isopen":false,"url":null,"notes":"Country, regional and world GDP in current US Dollars ($). Regional means collections of countries e.g. Europe & Central Asia. Data is sourced from the World Bank and turned into a standard normalized CSV.","owner_org":"2669d62a-f122-4256-9382-21c260ceef40","title":"Country, Regional and World GDP (Gross Domestic Product)","revision_id":"1820bf3f-082d-4119-a0ab-0e1dfae1bb3c","resolution":"One hour (PT1H)"}}, [ 'Server',
+    .reply(200, {"help":"http://127.0.0.1:5000/api/3/action/help_show?name=package_show","success":true,"result":{
+      "license_title": null,
+      "maintainer": null,
+      "relationships_as_object": [],
+      "private": false,
+      "maintainer_email": null,
+      "num_tags": 0,
+      "update_frequency": "P1D",
+      "id": "d2d18eea-d98a-4f9a-a580-13131e2a88dc",
+      "metadata_created": "2019-06-10T13:09:12.713162",
+      "metadata_modified": "2019-06-10T13:12:22.161302",
+      "author": "Energinet",
+      "author_email": "energidata@energinet.dk",
+      "state": "active",
+      "version": "2017",
+      "creator_user_id": "5a6c2aa5-dece-4792-adfd-b825978f321f",
+      "type": "dataset",
+      "resources": [
+        {
+          "id": "42c7a4f1-f755-450f-9b5b-31b6085b9b19",
+          "size": 21323,
+          "state": "active",
+          "schema": {
+            "fields": [
+              {
+                "type": "string",
+                "name": "Country Name"
+              },
+              {
+                "type": "string",
+                "name": "Country Code"
+              },
+              {
+                "type": "year",
+                "name": "Year"
+              },
+              {
+                "description": "GDP in current USD",
+                "type": "number",
+                "name": "Value"
+              }
+            ]
+          },
+          "description": "Resource desription",
+          "format": "csv",
+          "last_modified": "2019-06-10T13:12:22.080475",
+          "path": "data/gdp.csv",
+          "name": "gdp",
+          "created": "2019-06-10T13:09:13.613813",
+          "url": "https://pkgstore.datahub.io/core/gdp/gdp_csv/data/0048bc8f6228d0393d41cac4b663b90f/gdp_csv.csv",
+        }
+      ],
+      "num_resources": 1,
+      "tags": [],
+      "groups": [],
+      "license_id": null,
+      "relationships_as_subject": [],
+      "organization": {
+        "description": "Just another test organization.",
+        "created": "2019-03-27T21:26:27.501417",
+        "title": "Test Organization",
+        "name": "test_org_00",
+        "is_organization": true,
+        "state": "active",
+        "image_url": "http://placekitten.com/g/200/100",
+        "revision_id": "24612477-8155-497c-9e8d-5fef03f94c52",
+        "type": "organization",
+        "id": "2669d62a-f122-4256-9382-21c260ceef40",
+        "approval_status": "approved"
+      },
+      "name": "gdp",
+      "isopen": false,
+      "url": null,
+      "notes": "Country, regional and world GDP in current US Dollars ($). Regional means collections of countries e.g. Europe & Central Asia. Data is sourced from the World Bank and turned into a standard normalized CSV.",
+      "owner_org": "2669d62a-f122-4256-9382-21c260ceef40",
+      "title": "Country, Regional and World GDP (Gross Domestic Product)",
+      "revision_id": "1820bf3f-082d-4119-a0ab-0e1dfae1bb3c",
+      "resolution": "One hour (PT1H)"
+    }}, [ 'Server',
     'PasteWSGIServer/0.5 Python/2.7.12',
     'Date',
     'Mon, 10 Jun 2019 13:43:33 GMT',
@@ -391,7 +469,12 @@ module.exports.initMocks = function() {
     .reply(200, {
       "help": "http://127.0.0.1:5000/api/3/action/help_show?name=resource_view_list",
       "success": true,
-      "result": []
+      "result": [{
+        "specType": "table",
+        "resources": ["gdp"],
+        "title": "GDP",
+        "id": 1
+      }]
     })
     // end of package_show gdp
 
