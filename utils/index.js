@@ -500,7 +500,7 @@ module.exports.prepareDataExplorers = function (datapackage) {
         widgets.push(widget)
       }
 
-      displayResource.resource.api = displayResource.api
+      displayResource.resource.api = displayResource.resource.api || displayResource.api
       const dataExplorer = JSON.stringify({
         widgets,
         datapackage: {

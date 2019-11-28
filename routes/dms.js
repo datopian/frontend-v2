@@ -161,10 +161,12 @@ module.exports = function () {
   })
 
   router.get('/:owner/:name', async (req, res, next) => {
-    let datapackage = null
+    let datapackage = res.locals.datapackage || null
 
     try {
-      datapackage = await Model.getPackage(req.params.name)
+      if (!datapackage) {
+        datapackage = await Model.getPackage(req.params.name)
+      }
     } catch (err) {
       next(err)
       return
