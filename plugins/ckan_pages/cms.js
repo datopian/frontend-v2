@@ -46,6 +46,7 @@ class CmsModel {
       const pages = await res.json()
       return pages
     } else {
+      /*istanbul ignore next*/
       const message = await res.text()
       throw {statusCode: res.status, message}
     }
