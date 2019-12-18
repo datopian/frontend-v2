@@ -378,7 +378,8 @@ module.exports.initMocks = function() {
   // package_show gdp
   nock('http://127.0.0.1:5000', {"encodedQueryParams":true})
     .persist()
-    .post('/api/3/action/package_show', {"name_or_id":"gdp"})
+    .get('/api/3/action/package_show')
+    .query({"name_or_id":"gdp"})
     .reply(200, {"help":"http://127.0.0.1:5000/api/3/action/help_show?name=package_show","success":true,"result":{
       "license_title": null,
       "maintainer": null,
@@ -481,7 +482,8 @@ module.exports.initMocks = function() {
   // package_show population
   nock('http://127.0.0.1:5000', {"encodedQueryParams":true})
     .persist()
-    .post('/api/3/action/package_show', {"name_or_id":"population"})
+    .get('/api/3/action/package_show')
+    .query({"name_or_id":"population"})
     .reply(200, {"help":"http://127.0.0.1:5000/api/3/action/help_show?name=package_show","success":true,"result":{"license_title":null,"maintainer":null,"relationships_as_object":[],"private":false,"maintainer_email":null,"num_tags":0,"update_frequency":"P1D","id":"223a978e-8f40-4277-ba6f-9127b9e98e9e","metadata_created":"2019-06-10T13:22:02.718193","metadata_modified":"2019-06-10T13:23:43.580947","author":"Energinet","author_email":"energidata@energinet.dk","state":"active","version":null,"creator_user_id":"5a6c2aa5-dece-4792-adfd-b825978f321f","type":"dataset","resources":[{"cache_last_updated":null,"package_id":"223a978e-8f40-4277-ba6f-9127b9e98e9e","filters":[],"datastore_active":true,"id":"bd9adb32-e96d-4002-8efb-688eae64b065","size":null,"state":"active","schema":{"fields":[{"type":"string","name":"Country Name"},{"type":"string","name":"Country Code"},{"type":"year","name":"Year"},{"type":"number","name":"Value"}]},"hash":"","description":"","format":"csv","last_modified":"2019-06-10T13:23:43.520760","url_type":"datastore","attributes":[],"path":"data/population.csv","mimetype":null,"cache_url":null,"name":"population","created":"2019-06-10T13:22:03.166187","url":"https://pkgstore.datahub.io/core/population/population_csv/data/ead5be05591360d33ad1a37382f8f8b1/population_csv.csv","mimetype_inner":null,"position":0,"revision_id":"9c20df7e-84fb-48f9-954b-c7cb56ceef3b","resource_type":null}],"num_resources":1,"tags":[],"groups":[],"license_id":null,"relationships_as_subject":[],"organization":{"description":"Just another test organization.","created":"2019-03-27T21:26:27.501417","title":"Test Organization","name":"test_org_00","is_organization":true,"state":"active","image_url":"http://placekitten.com/g/200/100","revision_id":"24612477-8155-497c-9e8d-5fef03f94c52","type":"organization","id":"2669d62a-f122-4256-9382-21c260ceef40","approval_status":"approved"},"name":"population","isopen":false,"url":null,"notes":"Population figures for countries, regions (e.g. Asia) and the world. Data comes originally from World Bank and has been converted into standard CSV.","owner_org":"2669d62a-f122-4256-9382-21c260ceef40","title":"Population figures for countries, regions (e.g. Asia) and the world","revision_id":"421e6b78-524c-4c9b-92bc-e77c50280dab","resolution":"One hour (PT1H)"}}, [ 'Server',
     'PasteWSGIServer/0.5 Python/2.7.12',
     'Date',
@@ -501,7 +503,8 @@ module.exports.initMocks = function() {
   // package_show geojson
   nock('http://127.0.0.1:5000', {"encodedQueryParams":true})
     .persist()
-    .post('/api/3/action/package_show', {"name_or_id":"geojson"})
+    .get('/api/3/action/package_show')
+    .query({"name_or_id":"geojson"})
     .reply(200, {
       "help": "http://127.0.0.1:5000/api/3/action/help_show?name=package_show",
       "success": true,
@@ -595,7 +598,8 @@ module.exports.initMocks = function() {
   // package_show pdf
   nock('http://127.0.0.1:5000', {"encodedQueryParams":true})
     .persist()
-    .post('/api/3/action/package_show', {"name_or_id":"pdf"})
+    .get('/api/3/action/package_show')
+    .query({"name_or_id":"pdf"})
     .reply(200, {
       "help": "http://127.0.0.1:5000/api/3/action/help_show?name=package_show",
       "success": true,
@@ -741,7 +745,8 @@ module.exports.initMocks = function() {
   // package_show co2emis
   nock('http://127.0.0.1:5000', {"encodedQueryParams":true})
     .persist()
-    .post('/api/3/action/package_show', {"name_or_id":"co2emis"})
+    .get('/api/3/action/package_show')
+    .query({"name_or_id":"co2emis"})
     .reply(200, {"help":"http://127.0.0.1:5000/api/3/action/help_show?name=package_show","success":true,"result":{"license_title":"eds-license","maintainer":"","relationships_as_object":[],"private":false,"maintainer_email":"","num_tags":0,"id":"51906c35-5f1b-42c6-834d-47566424cc57","metadata_created":"2019-04-30T17:17:41.906339","metadata_modified":"2019-04-30T17:17:43.180581","author":"Energinet","author_email":"energidata@energinet.dk","state":"active","version":"","creator_user_id":"5a6c2aa5-dece-4792-adfd-b825978f321f","type":"dataset","resources":[{"cache_last_updated":null,"package_id":"51906c35-5f1b-42c6-834d-47566424cc57","filters":[],"datastore_active":true,"id":"6ed8a2fb-f432-43ce-bae7-17684cf8a6bf","size":null,"state":"active","hash":"","description":" This text has been added for test purposes by jsq","format":"Data","last_modified":null,"url_type":"datastore","attributes":[],"mimetype":null,"cache_url":null,"name":"CO2 Emission Data","created":"2019-04-30T17:17:43.031828","url":"http://127.0.0.1:5000/datastore/dump/6ed8a2fb-f432-43ce-bae7-17684cf8a6bf","mimetype_inner":null,"position":0,"revision_id":"92646bb0-47c0-4ace-ba77-14e1a922bf52","resource_type":null}],"num_resources":1,"tags":[],"groups":[],"license_id":"eds-license","relationships_as_subject":[],"organization":{"description":"Just another test organization.","created":"2019-03-27T21:26:27.501417","title":"Test Organization","name":"test_org_00","is_organization":true,"state":"active","image_url":"http://placekitten.com/g/200/100","revision_id":"24612477-8155-497c-9e8d-5fef03f94c52","type":"organization","id":"2669d62a-f122-4256-9382-21c260ceef40","approval_status":"approved"},"name":"co2emis","isopen":false,"url":null,"notes":"This dataset provides an updated near up-to-date history for the CO2 emission from electricity consumed in Denmark measured in g/kWh.","owner_org":"2669d62a-f122-4256-9382-21c260ceef40","extras":[{"key":"Alias","value":"co2emis6"},{"key":"Unique key","value":"(Minutes5UTC, PriceArea)"}],"title":"CO2 Emission","revision_id":"8ec628ca-806d-44ba-a042-a5260fed5053"}}, [ 'Server',
     'PasteWSGIServer/0.5 Python/2.7.12',
     'Date',
@@ -769,7 +774,8 @@ module.exports.initMocks = function() {
 
   nock('http://127.0.0.1:5000', {"encodedQueryParams":true})
     .persist()
-    .post('/api/3/action/package_show', {"name_or_id":"nonexistent-dataset"})
+    .get('/api/3/action/package_show')
+    .query({"name_or_id":"nonexistent-dataset"})
     .reply(404)
 
 
