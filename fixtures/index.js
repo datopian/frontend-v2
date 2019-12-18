@@ -1057,4 +1057,12 @@ module.exports.initMocks = function() {
   nock('http://127.0.0.1:5001', {"encodedQueryParams":true})
     .get('/path/to/data.csv')
     .reply(200, 'a,b,c\n1,2,3');
+  
+  // Mock for ckan_pages getListOfPages
+  nock('http://127.0.0.1:5000', {"encodedQueryParams":true})
+    .persist()
+    .get('/api/3/action/ckanext_pages_list')
+    .query({"page_type": "page"})
+    .reply(200, [{"user_id":"c75d7c1a-3966-44aa-818a-0a5101f3c128","name":"page-one","title":"Page One Title","content":"Page One Content","publish_date":"2019-11-27T00:00:00","page_type":"page","group_id":null},{"user_id":"5e48834c-c835-4f7a-9d1e-f94e6810a721","name":"page-two","title":"Page Two Title","content":"Page Two Content","publish_date":null,"page_type":"page","group_id":null},{"user_id":"5e48834c-c835-4f7a-9d1e-f94e6810a721","name":"page-three","title":"Page Three Title","content":"Page Three Content","publish_date":null,"page_type":"page","group_id":null},{"user_id":"17a6aee1-f442-4928-aad9-a091f87829f9","name":"page-four","title":"Page Four Title","content":"Page Four Content","publish_date":null,"page_type":"page","group_id":null}])
   }
+  
