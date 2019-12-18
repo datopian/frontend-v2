@@ -465,7 +465,8 @@ module.exports.initMocks = function() {
     'application/json;charset=utf-8',
     'Content-Length',
     '2576' ])
-    .post('/api/3/action/resource_view_list', {"id":"42c7a4f1-f755-450f-9b5b-31b6085b9b19"})
+    .get('/api/3/action/resource_view_list')
+    .query({"id":"42c7a4f1-f755-450f-9b5b-31b6085b9b19"})
     .reply(200, {
       "help": "http://127.0.0.1:5000/api/3/action/help_show?name=resource_view_list",
       "success": true,
@@ -490,7 +491,8 @@ module.exports.initMocks = function() {
     'application/json;charset=utf-8',
     'Content-Length',
     '2474' ])
-    .post('/api/3/action/resource_view_list', {"id":"bd9adb32-e96d-4002-8efb-688eae64b065"})
+    .get('/api/3/action/resource_view_list')
+    .query({"id":"bd9adb32-e96d-4002-8efb-688eae64b065"})
     .reply(200, {
       "help": "http://127.0.0.1:5000/api/3/action/help_show?name=resource_view_list",
       "success": true,
@@ -584,7 +586,8 @@ module.exports.initMocks = function() {
     'application/json;charset=utf-8',
     'Content-Length',
     '2474' ])
-    .post('/api/3/action/resource_view_list', {"id":"fake-res-id"})
+    .get('/api/3/action/resource_view_list')
+    .query({"id":"fake-res-id"})
     .reply(200, {
       "help": "http://127.0.0.1:5000/api/3/action/help_show?name=resource_view_list",
       "success": true,
@@ -677,7 +680,8 @@ module.exports.initMocks = function() {
     'application/json;charset=utf-8',
     'Content-Length',
     '2474' ])
-    .post('/api/3/action/resource_view_list', {"id":"fake-res-id"})
+    .get('/api/3/action/resource_view_list')
+    .query({"id":"fake-res-id"})
     .reply(200, {
       "help": "http://127.0.0.1:5000/api/3/action/help_show?name=resource_view_list",
       "success": true,
@@ -750,7 +754,8 @@ module.exports.initMocks = function() {
     'application/json;charset=utf-8',
     'Content-Length',
     '2215' ])
-    .post('/api/3/action/resource_view_list', {"id":"6ed8a2fb-f432-43ce-bae7-17684cf8a6bf"})
+    .get('/api/3/action/resource_view_list')
+    .query({"id":"6ed8a2fb-f432-43ce-bae7-17684cf8a6bf"})
     .reply(200, {
       "help": "http://127.0.0.1:5000/api/3/action/help_show?name=resource_view_list",
       "success": true,
