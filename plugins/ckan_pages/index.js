@@ -40,7 +40,7 @@ module.exports = function (app) {
       return {
         slug: post.name,
         title: post.title,
-        content: post.content,
+        content: post.content.replace(/<\/?[^>]+(>|$)/g, ""),
         published: moment(post.date).format('MMMM Do, YYYY'),
         modified: moment(post.modified).format('MMMM Do, YYYY'),
         image: post.featured_image
@@ -56,7 +56,7 @@ module.exports = function (app) {
     try {
       const post = await Model.getPost(slug)
       res.render('post.html', {
-        slug: post.slug,
+        slug: post.name,
         title: post.title,
         content: post.content,
         published: moment(post.date).format('MMMM Do, YYYY'),
