@@ -17,9 +17,10 @@ test('getPost api works for Pages', async t => {
 
 
 test('getListOfPosts api works for Pages', async t => {
-  t.plan(1)
+  const result = await PagesModel.getListOfPages()
 
-  const result = await PagesModel.getListOfPosts()
-
-  t.is(result.length, 3)
+  t.is(result.length, 4)
+  t.is(result[0].title, 'Page One Title')
+  t.is(result[1].name, 'page-two')
+  t.is(result[2].content, 'Page Three Content')
 })
