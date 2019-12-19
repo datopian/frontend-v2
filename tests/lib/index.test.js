@@ -87,6 +87,12 @@ test('getResourceViews api works', async t => {
 })
 
 
+test('getResourceViews returns empty views array on failure', async t => {
+  const result = await DmsModel.getResourceViews('heck-no-nah-no-way')
+  t.is(Array.isArray(result), true)
+  t.is(result.length, 0)
+})
+
 test('getProfile api works', async t => {
   t.plan(1)
 
@@ -94,6 +100,8 @@ test('getProfile api works', async t => {
 
   t.is(result.created, '2019-03-27T21:26:27.501417')
 })
+
+
 
 
 test('getCollections (list of collections) api works', async t => {
