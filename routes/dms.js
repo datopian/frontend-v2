@@ -46,6 +46,7 @@ module.exports = function () {
     try {
       datapackage = await Model.getPackage(req.params.name)
     } catch (err) {
+      /* istanbul ignore next */
       next(err)
       return
     }
