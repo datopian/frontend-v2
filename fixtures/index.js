@@ -796,7 +796,9 @@ module.exports.initMocks = function() {
     'Content-Length',
     '675' ])
 
-
+nock('http:/127.0.0.1:5000')
+    .post('/api/3/action/organization_show', {"id":"known-bad","include_users":false})
+    .replyWithError('Mock error');
   nock('http://127.0.0.1:5000', {"encodedQueryParams":true})
     .persist()
     .post('/api/3/action/organization_show', {"id":"not-found-slug","include_users":false})
