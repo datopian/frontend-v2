@@ -102,6 +102,17 @@ test('getProfile api works', async t => {
 })
 
 
+test('getProfile api returns empty object on fail', async t => {
+  t.plan(2)
+
+  const result = await DmsModel.getProfile('known-bad')
+  console.log('get bad profile', result)
+
+  // make sure result is an empty object
+  t.is(result.constructor, Object)
+  t.is(Object.entries(result).length, 0)
+})
+
 
 
 test('getCollections (list of collections) api works', async t => {

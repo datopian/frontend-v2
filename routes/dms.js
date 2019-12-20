@@ -30,6 +30,7 @@ module.exports = function () {
     try {
       datapackage = await Model.getPackage(req.params.name)
     } catch (err) {
+      /* istanbul ignore next */
       next(err)
       return
     }
@@ -45,6 +46,7 @@ module.exports = function () {
     try {
       datapackage = await Model.getPackage(req.params.name)
     } catch (err) {
+      /* istanbul ignore next */
       next(err)
       return
     }
@@ -108,6 +110,7 @@ module.exports = function () {
         currentPage
       })
     } catch (e) {
+      /* istanbul ignore next */
       next(e)
     }
   })
@@ -122,6 +125,7 @@ module.exports = function () {
         slug: 'collections'
       })
     } catch (e) {
+      /* istanbul ignore next */
       next(e)
     }
   })
@@ -156,6 +160,7 @@ module.exports = function () {
         currentPage
       })
     } catch (e) {
+      /* istanbul ignore next */
       next(e)
     }
   })
@@ -168,6 +173,7 @@ module.exports = function () {
         datapackage = await Model.getPackage(req.params.name)
       }
     } catch (err) {
+      /* istanbul ignore next */
       next(err)
       return
     }
@@ -202,6 +208,7 @@ module.exports = function () {
         dpId: JSON.stringify(datapackage).replace(/'/g, "&#x27;") // keep for backwards compat?
       })
     } catch (err) {
+      /* istanbul ignore next */
       next(err)
       return
     }
@@ -213,6 +220,7 @@ module.exports = function () {
     try {
       datapackage = await Model.getPackage(req.params.name)
     } catch (err) {
+      /* istanbul ignore next */
       next(err)
       return
     }
@@ -247,6 +255,7 @@ module.exports = function () {
         slug: 'organization'
       })
     } catch (err) {
+      /* istanbul ignore next */
       next(err)
     }
   })
@@ -257,6 +266,13 @@ module.exports = function () {
       // Get owner details
       const owner = req.params.owner
       const profile = await Model.getProfile(owner)
+      // if not a valid profile, send them on the way
+      if (!profile.created) { 
+        return res.status(404).render('404.html', {
+          message: `Page found: ${owner}`,
+          status: 404
+        })
+      }
       const created = new Date(profile.created)
       const joinYear = created.getUTCFullYear()
       const joinMonth = created.toLocaleString('en-us', { month: "long" })
@@ -291,6 +307,7 @@ module.exports = function () {
         currentPage
       })
     } catch(err) {
+      /* istanbul ignore next */
       next(err)
     }
   })

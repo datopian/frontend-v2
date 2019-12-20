@@ -85,9 +85,10 @@ test('Theme defined route does NOT exists when THEME is not set', async t => {
   config.set('THEME', 'opendk')
   const app = require('../../index').makeApp()
   const res = await request(app)
-    .get('/absolutely-not-a-chance')
+    .get('/known-bad')
 
-  t.is(res.statusCode, 500)
+  t.is(res.statusCode, 404)
+  t.true(res.text.includes('<!-- placeholder for testing 404 page -->'))
 })
 
 
@@ -302,6 +303,7 @@ test('If a page is not found in neither CMS or DMS, it returns 404 page', async 
   let res = await agent
     .get('/not-found-slug')
 
+  t.is(res.status, 404)
   t.true(res.text.includes('<!-- placeholder for testing 404 page -->'))
 
   res = await agent
