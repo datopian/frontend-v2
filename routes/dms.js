@@ -30,6 +30,7 @@ module.exports = function () {
     try {
       datapackage = await Model.getPackage(req.params.name)
     } catch (err) {
+      /* Istanbul ignore next */
       next(err)
       return
     }
@@ -108,6 +109,7 @@ module.exports = function () {
         currentPage
       })
     } catch (e) {
+      /* Istanbul ignore next */
       next(e)
     }
   })
@@ -122,6 +124,7 @@ module.exports = function () {
         slug: 'collections'
       })
     } catch (e) {
+      /* Istanbul ignore next */
       next(e)
     }
   })
@@ -156,6 +159,7 @@ module.exports = function () {
         currentPage
       })
     } catch (e) {
+      /* Istanbul ignore next */
       next(e)
     }
   })
@@ -168,6 +172,7 @@ module.exports = function () {
         datapackage = await Model.getPackage(req.params.name)
       }
     } catch (err) {
+      /* Istanbul ignore next */
       next(err)
       return
     }
@@ -202,6 +207,7 @@ module.exports = function () {
         dpId: JSON.stringify(datapackage).replace(/'/g, "&#x27;") // keep for backwards compat?
       })
     } catch (err) {
+      /* Istanbul ignore next */
       next(err)
       return
     }
@@ -213,6 +219,7 @@ module.exports = function () {
     try {
       datapackage = await Model.getPackage(req.params.name)
     } catch (err) {
+      /* Istanbul ignore next */
       next(err)
       return
     }
@@ -247,6 +254,7 @@ module.exports = function () {
         slug: 'organization'
       })
     } catch (err) {
+      /* Istanbul ignore next */
       next(err)
     }
   })
@@ -298,6 +306,7 @@ module.exports = function () {
         currentPage
       })
     } catch(err) {
+      /* Istanbul ignore next */
       next(err)
     }
   })

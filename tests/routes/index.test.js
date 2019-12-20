@@ -85,7 +85,7 @@ test('Theme defined route does NOT exists when THEME is not set', async t => {
   config.set('THEME', 'opendk')
   const app = require('../../index').makeApp()
   const res = await request(app)
-    .get('/absolutely-not-a-chance')
+    .get('/known-bad')
 
   t.is(res.statusCode, 404)
   t.true(res.text.includes('<!-- placeholder for testing 404 page -->'))
