@@ -786,7 +786,8 @@ module.exports.initMocks = function() {
 
   nock('http://127.0.0.1:5000', {"encodedQueryParams":true})
     .persist()
-    .post('/api/3/action/organization_show', {"id":"test_org_00","include_users":false})
+    .get('/api/3/action/organization_show')
+    .query({"id":"test_org_00","include_users":false})
     .reply(200, {"help":"http://127.0.0.1:5000/api/3/action/help_show?name=organization_show","success":true,"result":{"display_name":"Test Organization","description":"Just another test organization.","image_display_url":"http://placekitten.com/g/200/100","package_count":5,"created":"2019-03-27T21:26:27.501417","name":"test_org_00","is_organization":true,"state":"active","extras":[],"image_url":"http://placekitten.com/g/200/100","groups":[],"type":"organization","title":"Test Organization","revision_id":"24612477-8155-497c-9e8d-5fef03f94c52","num_followers":0,"id":"2669d62a-f122-4256-9382-21c260ceef40","tags":[],"approval_status":"approved"}}, [ 'Server',
     'PasteWSGIServer/0.5 Python/2.7.12',
     'Date',
@@ -797,11 +798,13 @@ module.exports.initMocks = function() {
     '675' ])
 
 nock('http:/127.0.0.1:5000')
-    .post('/api/3/action/organization_show', {"id":"known-bad","include_users":false})
+    .get('/api/3/action/organization_show')
+    .query({"id":"known-bad","include_users":false})
     .replyWithError('Mock error');
   nock('http://127.0.0.1:5000', {"encodedQueryParams":true})
     .persist()
-    .post('/api/3/action/organization_show', {"id":"not-found-slug","include_users":false})
+    .get('/api/3/action/organization_show')
+    .query({"id":"not-found-slug","include_users":false})
     .reply(404)
 
 
