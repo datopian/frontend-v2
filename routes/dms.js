@@ -257,6 +257,13 @@ module.exports = function () {
       // Get owner details
       const owner = req.params.owner
       const profile = await Model.getProfile(owner)
+      // if not a valid profile, send them on the way
+      if (!profile.created) { 
+        return res.status(404).render('404.html', {
+          message: `Page found: ${owner}`,
+          status: 404
+        })
+      }
       const created = new Date(profile.created)
       const joinYear = created.getUTCFullYear()
       const joinMonth = created.toLocaleString('en-us', { month: "long" })
