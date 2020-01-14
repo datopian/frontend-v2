@@ -1,6 +1,6 @@
 {
   "name": "frontend-v2",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "Frontend application for CKAN backend.",
   "main": "index.js",
   "engines": {
