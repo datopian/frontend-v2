@@ -203,9 +203,16 @@ module.exports.convertToCkanSearchQuery = (query) => {
     'facet.limit': 5,
     'facet.mincount': 0
   }
-
-  ckanQuery.q = query.q
-  ckanQuery.fq = query.fq
+  // Split by space but ignore spaces within double quotes:
+  query.q.match(/(?:[^\s"]+|"[^"]*")+/g).forEach(part => {
+    if (part.includes(':')) {
+      ckanQuery.fq += part + ' '
+    } else {
+      ckanQuery.q += part + ' '
+    }
+  })
+  ckanQuery.fq = ckanQuery.fq.trim()
+  ckanQuery.q = ckanQuery.q.trim()
 
   // standard 'size' => ckan 'rows'
   ckanQuery.rows = query.size || ''
