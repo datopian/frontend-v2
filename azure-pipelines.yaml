@@ -1,0 +1,41 @@
+pool:
+  name: Hosted Ubuntu 1604
+#Your build pipeline references an undefined variable named ‘jq '.version' package.json | tr -d '"'’. Create or edit the build pipeline for this YAML file, define the variable on the Variables tab. See https://go.microsoft.com/fwlink/?linkid=865972
+#Your build pipeline references an undefined variable named ‘edp.frontend.version’. Create or edit the build pipeline for this YAML file, define the variable on the Variables tab. See https://go.microsoft.com/fwlink/?linkid=865972
+#Your build pipeline references an undefined variable named ‘edp.frontend.version’. Create or edit the build pipeline for this YAML file, define the variable on the Variables tab. See https://go.microsoft.com/fwlink/?linkid=865972
+#Your build pipeline references an undefined variable named ‘edp.frontend.version’. Create or edit the build pipeline for this YAML file, define the variable on the Variables tab. See https://go.microsoft.com/fwlink/?linkid=865972
+#Your build pipeline references an undefined variable named ‘edp.frontend.version’. Create or edit the build pipeline for this YAML file, define the variable on the Variables tab. See https://go.microsoft.com/fwlink/?linkid=865972
+
+steps:
+- script: |
+   #!/bin/bash
+   echo "##vso[task.setvariable variable=edp.frontend.version]$(jq '.version' package.json | tr -d '"')"
+   
+  displayName: 'Set version'
+
+- script: |
+   #!/bin/bash
+   echo "##vso[build.updatebuildnumber]$(edp.frontend.version)+${BUILD_BUILDNUMBER}"
+   
+  displayName: 'Update build version'
+
+- task: Docker@0
+  displayName: 'Build an image'
+  inputs:
+    azureSubscription: 'EDS Azure Container Registry ReadWrite'
+    azureContainerRegistry: '{"loginServer":"eds001containerregistry-eds001.azurecr.io", "id" : "/subscriptions/13da4e7b-b8a8-4343-afa9-9d1bfcbaca7a/resourceGroups/RG-EDS-Services-P-01/providers/Microsoft.ContainerRegistry/registries/EDS001ContainerRegistry"}'
+    imageName: '$(Build.Repository.Name):$(edp.frontend.version)-$(Build.SourceBranchName).$(Build.BuildId)'
+
+- task: Docker@0
+  displayName: 'Push an image'
+  inputs:
+    azureSubscription: 'EDS Azure Container Registry ReadWrite'
+    azureContainerRegistry: '{"loginServer":"eds001containerregistry-eds001.azurecr.io", "id" : "/subscriptions/13da4e7b-b8a8-4343-afa9-9d1bfcbaca7a/resourceGroups/RG-EDS-Services-P-01/providers/Microsoft.ContainerRegistry/registries/EDS001ContainerRegistry"}'
+    action: 'Push an image'
+    imageName: '$(Build.Repository.Name):$(edp.frontend.version)-$(Build.SourceBranchName).$(Build.BuildId)'
+
+- script: 'echo $(Build.Repository.Name):$(edp.frontend.version)-$(Build.SourceBranchName).$(Build.BuildId) > $(Build.ArtifactStagingDirectory)/imagename'
+  displayName: 'Save Image name'
+
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish Artifact: drop'

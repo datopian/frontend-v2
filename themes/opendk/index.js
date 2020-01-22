@@ -39,8 +39,8 @@ module.exports = function (app) {
         slug: post.slug,
         title: post.title,
         content: post.content,
-        published: moment(post.date).format('MMMM Do, YYYY'),
-        modified: moment(post.modified).format('MMMM Do, YYYY'),
+        published: moment(post.date).format('Do MMMM YYYY'),
+        modified: moment(post.modified).format('Do MMMM YYYY'),
         image: post.featured_image
       }
     })
@@ -48,8 +48,9 @@ module.exports = function (app) {
   })
 
   app.get('/', async (req, res, next) => {
-    // Set up main heading text from config var:
-    res.locals.home_heading = config.get('HOME_HEADING') || ''
+    // Set up main heading text from wp:
+    const siteInfo = await CmsModel.getSiteInfo()
+    res.locals.home_heading = siteInfo.description || ''
     // Get collections with extras
     const collections = await DmsModel.getCollections({
       all_fields: true,
@@ -74,28 +75,50 @@ module.exports = function (app) {
     // Get events
     res.locals.events = (await CmsModel.getListOfPosts(
       {
-        category: 'Calendar',
+        category: 'Events',
         number: 5
       }
     )).map(post => {
-      const eventDate = post.content.match(/\d{2}([\/.-])\d{2}\1\d{4}/g)
+      let eventDate
+      for (let key in post.tags) {
+        if (key.startsWith('dato:')) {
+          eventDate = post.tags[key].name.match(/\d{2}([\/.-])\d{2}\1\d{4}/g)
+        }
+      }
+      const monthNames = ["jan", "feb", "mar", "apr", "maj", "jun", "jul",
+        "aug", "sep", "okt", "nov", "dec"
+      ]
       if (eventDate) {
         const day = eventDate[0].substring(0, 2)
         const month = eventDate[0].substring(3, 5)
         const year = eventDate[0].substring(6, 10)
         const date = new Date(`${year}-${month}-${day}`)
         post.day = date.getDate()
-        const monthNames = ["jan", "feb", "mar", "apr", "maj", "jun", "jul",
-          "aug", "sep", "okt", "nov", "dec"
-        ]
         post.month = monthNames[date.getMonth()]
+        // Check if event is completed:
+        post.completed = date < new Date() ? true : false
+      } else {
+        // If no 'dato' tag is found, use current date:
+        const now = new Date()
+        post.day = now.getUTCDate()
+        post.month = monthNames[now.getUTCMonth()]
       }
       return post
     })
+
+    // Get title and content of about page to display it on front page:
+    const aboutPage = await CmsModel.getPost('about')
+    res.locals.aboutTitle = aboutPage.title
+    res.locals.aboutText = aboutPage.content
     next()
   })
 
   app.get('/blog', async (req, res, next) => {
+    // Get list of categories
+    const {found, categories} = await CmsModel.getCategories()
+    res.locals.categories = categories
+    res.locals.selectedCategory = req.query.category
+
     // Add featured posts
     res.locals.featuredPosts = (await CmsModel.getListOfPosts(
       {
@@ -107,8 +130,8 @@ module.exports = function (app) {
         slug: post.slug,
         title: post.title,
         content: post.content,
-        published: moment(post.date).format('MMMM Do, YYYY'),
-        modified: moment(post.modified).format('MMMM Do, YYYY'),
+        published: moment(post.date).format('Do MMMM YYYY'),
+        modified: moment(post.modified).format('Do MMMM YYYY'),
         image: post.featured_image
       }
     })

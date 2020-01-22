@@ -8,7 +8,7 @@ nconf.argv()
 
 nconf.use('memory')
 
-const api_url = process.env.API_URL || 'http://127.0.0.1:5000/api/3/action/'
+const api_url = (process.env.API_URL || 'http://127.0.0.1:5000/api/3/action/').replace(/\/?$/, '/')
 
 // This is the object that you want to override in your own local config
 nconf.defaults({

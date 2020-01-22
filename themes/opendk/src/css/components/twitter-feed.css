@@ -3,7 +3,7 @@
     @apply p-10 ;
     overflow-wrap: break-word;
     word-wrap: break-word;
-    word-break: break-all;
+    word-break: break-word;
     width: 100%; /* fixes IE11 layout issue */
   }
   
