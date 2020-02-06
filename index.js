@@ -140,6 +140,15 @@ module.exports.makeApp = function () {
     }
   })
 
+  env.addFilter('find', (resources, name) => {
+    try {
+      return resources.find(resource => resource.name === name)
+    } catch (e) {
+      console.warn('Failed to find resource', e)
+      return str
+    }
+  })
+
   return app
 }
 
