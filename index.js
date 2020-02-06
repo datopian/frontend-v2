@@ -130,7 +130,16 @@ module.exports.makeApp = function () {
       return str
     }
   })
-  
+
+  env.addFilter('split', (str, regExp) => {
+    try {
+      return str.match(regExp)
+    } catch (e) {
+      console.warn('Failed to split string by regular expression', e)
+      return str
+    }
+  })
+
   return app
 }
 
