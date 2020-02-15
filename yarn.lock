@@ -241,9 +241,9 @@
   dependencies:
     arrify "^1.0.1"
 
-"@datopian/edp@^1.4.0":
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/@datopian/edp/-/edp-1.4.0.tgz#9a48be9c686e86248dfe823ecb3bd27a746dd430"
+"@datopian/edp@^1.4.1":
+  version "1.4.1"
+  resolved "https://registry.yarnpkg.com/@datopian/edp/-/edp-1.4.1.tgz#aaf54ba9ad181dc4466b04478a244f7c3e1e12f9"
   dependencies:
     lunr "^2.3.8"
     lunr-languages "^1.4.0"
