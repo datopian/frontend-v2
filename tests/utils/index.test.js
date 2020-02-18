@@ -147,7 +147,8 @@ const datapackage = {
       datastore_active: true,
       id: 'resource-1-id',
       path: 'https://datastore.com/resource-1-id',
-      views: [{name: 'view-1-1'}, {name: 'view-1-2'}]
+      views: [{name: 'view-1-1'}, {name: 'view-1-2'}],
+      fields: "[{\"type\": \"any\", \"name\": \"Field Name\"}]"
     },
     {
       name: 'resource-2',
@@ -185,4 +186,15 @@ test('Prepare data package views', t => {
   const result = utils.prepareViews(datapackage)
   t.is(result.views.length, 3)
   t.deepEqual(result.views[1].resources, ['resource-1'])
+})
+
+
+test('resource.fields => resource.schema', t => {
+  const result = utils.ckanToDataPackage(datapackage)
+  const expectedSchema = {
+    fields: [
+      {name: 'Field Name', type: 'any'}
+    ]
+  }
+  t.deepEqual(result.resources[0].schema, expectedSchema)
 })
