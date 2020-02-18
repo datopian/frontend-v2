@@ -101,7 +101,18 @@ module.exports.ckanToDataPackage = function (descriptor) {
     }
 
     if (!resource.schema) {
-      // TODO: add schema
+      // If 'fields' property exists use it as schema fields
+      if (resource.fields) {
+        if (typeof(resource.fields) === 'string') {
+          try {
+            resource.fields = JSON.parse(resource.fields)
+          } catch (e) {
+            console.log('Could not parse resource.fields')
+          }
+        }
+        resource.schema = {fields: resource.fields}
+        delete resource.fields
+      }
     }
 
     return resource
