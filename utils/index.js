@@ -100,8 +100,11 @@ module.exports.ckanToDataPackage = function (descriptor) {
       delete resource.url
     }
 
-    if (!resource.schema) {
-      // TODO: add schema
+    if (resource.schema) {
+      const fields = resource.schema
+      resource.schema = {
+        fields
+      }
     }
 
     return resource
