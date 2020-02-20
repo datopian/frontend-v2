@@ -42,7 +42,8 @@ class CmsModel {
     })
   }
 
-  async getListOfPages(query) {
+  async getListOfPages(query={}) {
+    query.type = "page"
     const result = await this.getListOfPostsWithMeta(query)
     return result.posts
   }
