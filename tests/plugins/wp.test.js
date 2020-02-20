@@ -16,6 +16,17 @@ test('getPost api works', async t => {
   t.is(result.title, 'Welcome to Data Service!')
 })
 
+test('getListOfPagess api works', async t => {
+  t.plan(1)
+
+  const result = await WPModel.getListOfPages({
+    "number": "10",
+    "page": 1,
+    "fields": "slug,title,content,date,modified,featured_image,categories"
+  })
+
+  t.is(result.length, 2)
+})
 
 test('getListOfPosts api works', async t => {
   t.plan(1)
