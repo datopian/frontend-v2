@@ -187,16 +187,31 @@ module.exports.ckanViewToDataPackageView = (ckanView) => {
   return dataPackageView
 }
 
-module.exports.dataStoreDataDictionaryToTableSchema = (ckanSchema) => {
-  let field = {}
-  field.name = ckanSchema.id
-  field.type = ckanSchema.type
-  if (ckanSchema.info) {
+/*
+Takes single field descriptor from datastore data dictionary and coverts into
+tableschema field descriptor.
+*/
+module.exports.dataStoreDataDictionaryToTableSchema = (dataDictionary) => {
+  const dataDictionaryType2TableSchemaType = {
+    'text': 'string',
+    'int': 'integer',
+    'float': 'number',
+    'date': 'date',
+    'time': 'time',
+    'timestamp': 'datetime',
+    'bool': 'boolean',
+    'json': 'object'
+  }
+  const field = {
+    name: dataDictionary.id,
+    type: dataDictionaryType2TableSchemaType[dataDictionary.type] || 'any'
+  }
+  if (dataDictionary.info) {
     return {
       ...field,
-      ...ckanSchema.info,  
+      ...dataDictionary.info,
     }
-  } 
+  }
   return field
 }
 
