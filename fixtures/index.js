@@ -378,8 +378,87 @@ module.exports.initMocks = function() {
   // package_show gdp
   nock('http://127.0.0.1:5000', {"encodedQueryParams":true})
     .persist()
-    .post('/api/3/action/package_show', {"name_or_id":"gdp"})
-    .reply(200, {"help":"http://127.0.0.1:5000/api/3/action/help_show?name=package_show","success":true,"result":{"license_title":null,"maintainer":null,"relationships_as_object":[],"private":false,"maintainer_email":null,"num_tags":0,"update_frequency":"P1D","id":"d2d18eea-d98a-4f9a-a580-13131e2a88dc","metadata_created":"2019-06-10T13:09:12.713162","metadata_modified":"2019-06-10T13:12:22.161302","author":"Energinet","author_email":"energidata@energinet.dk","state":"active","version":"2017","creator_user_id":"5a6c2aa5-dece-4792-adfd-b825978f321f","type":"dataset","resources":[{"cache_last_updated":null,"package_id":"d2d18eea-d98a-4f9a-a580-13131e2a88dc","filters":[],"datastore_active":true,"id":"42c7a4f1-f755-450f-9b5b-31b6085b9b19","size":null,"state":"active","schema":{"fields":[{"type":"string","name":"Country Name"},{"type":"string","name":"Country Code"},{"type":"year","name":"Year"},{"description":"GDP in current USD","type":"number","name":"Value"}]},"hash":"","description":"","format":"csv","last_modified":"2019-06-10T13:12:22.080475","url_type":"datastore","attributes":[],"path":"data/gdp.csv","mimetype":null,"cache_url":null,"name":"gdp","created":"2019-06-10T13:09:13.613813","url":"https://pkgstore.datahub.io/core/gdp/gdp_csv/data/0048bc8f6228d0393d41cac4b663b90f/gdp_csv.csv","mimetype_inner":null,"position":0,"revision_id":"a81405b5-fe0b-49c5-845a-82bb0b01a843","resource_type":null}],"num_resources":1,"tags":[],"groups":[],"license_id":null,"relationships_as_subject":[],"organization":{"description":"Just another test organization.","created":"2019-03-27T21:26:27.501417","title":"Test Organization","name":"test_org_00","is_organization":true,"state":"active","image_url":"http://placekitten.com/g/200/100","revision_id":"24612477-8155-497c-9e8d-5fef03f94c52","type":"organization","id":"2669d62a-f122-4256-9382-21c260ceef40","approval_status":"approved"},"name":"gdp","isopen":false,"url":null,"notes":"Country, regional and world GDP in current US Dollars ($). Regional means collections of countries e.g. Europe & Central Asia. Data is sourced from the World Bank and turned into a standard normalized CSV.","owner_org":"2669d62a-f122-4256-9382-21c260ceef40","title":"Country, Regional and World GDP (Gross Domestic Product)","revision_id":"1820bf3f-082d-4119-a0ab-0e1dfae1bb3c","resolution":"One hour (PT1H)"}}, [ 'Server',
+    .get('/api/3/action/package_show')
+    .query({"name_or_id":"gdp"})
+    .reply(200, {"help":"http://127.0.0.1:5000/api/3/action/help_show?name=package_show","success":true,"result":{
+      "license_title": null,
+      "maintainer": null,
+      "relationships_as_object": [],
+      "private": false,
+      "maintainer_email": null,
+      "num_tags": 0,
+      "update_frequency": "P1D",
+      "id": "d2d18eea-d98a-4f9a-a580-13131e2a88dc",
+      "metadata_created": "2019-06-10T13:09:12.713162",
+      "metadata_modified": "2019-06-10T13:12:22.161302",
+      "author": "Energinet",
+      "author_email": "energidata@energinet.dk",
+      "state": "active",
+      "version": "2017",
+      "creator_user_id": "5a6c2aa5-dece-4792-adfd-b825978f321f",
+      "type": "dataset",
+      "resources": [
+        {
+          "id": "42c7a4f1-f755-450f-9b5b-31b6085b9b19",
+          "size": 21323,
+          "state": "active",
+          "schema": {
+            "fields": [
+              {
+                "type": "string",
+                "name": "Country Name"
+              },
+              {
+                "type": "string",
+                "name": "Country Code"
+              },
+              {
+                "type": "year",
+                "name": "Year"
+              },
+              {
+                "description": "GDP in current USD",
+                "type": "number",
+                "name": "Value"
+              }
+            ]
+          },
+          "description": "Resource desription",
+          "format": "csv",
+          "last_modified": "2019-06-10T13:12:22.080475",
+          "path": "data/gdp.csv",
+          "name": "gdp",
+          "created": "2019-06-10T13:09:13.613813",
+          "url": "https://pkgstore.datahub.io/core/gdp/gdp_csv/data/0048bc8f6228d0393d41cac4b663b90f/gdp_csv.csv",
+        }
+      ],
+      "num_resources": 1,
+      "tags": [],
+      "groups": [],
+      "license_id": null,
+      "relationships_as_subject": [],
+      "organization": {
+        "description": "Just another test organization.",
+        "created": "2019-03-27T21:26:27.501417",
+        "title": "Test Organization",
+        "name": "test_org_00",
+        "is_organization": true,
+        "state": "active",
+        "image_url": "http://placekitten.com/g/200/100",
+        "revision_id": "24612477-8155-497c-9e8d-5fef03f94c52",
+        "type": "organization",
+        "id": "2669d62a-f122-4256-9382-21c260ceef40",
+        "approval_status": "approved"
+      },
+      "name": "gdp",
+      "isopen": false,
+      "url": null,
+      "notes": "Country, regional and world GDP in current US Dollars ($). Regional means collections of countries e.g. Europe & Central Asia. Data is sourced from the World Bank and turned into a standard normalized CSV.",
+      "owner_org": "2669d62a-f122-4256-9382-21c260ceef40",
+      "title": "Country, Regional and World GDP (Gross Domestic Product)",
+      "revision_id": "1820bf3f-082d-4119-a0ab-0e1dfae1bb3c",
+      "resolution": "One hour (PT1H)"
+    }}, [ 'Server',
     'PasteWSGIServer/0.5 Python/2.7.12',
     'Date',
     'Mon, 10 Jun 2019 13:43:33 GMT',
@@ -387,18 +466,25 @@ module.exports.initMocks = function() {
     'application/json;charset=utf-8',
     'Content-Length',
     '2576' ])
-    .post('/api/3/action/resource_view_list', {"id":"42c7a4f1-f755-450f-9b5b-31b6085b9b19"})
+    .get('/api/3/action/resource_view_list')
+    .query({"id":"42c7a4f1-f755-450f-9b5b-31b6085b9b19"})
     .reply(200, {
       "help": "http://127.0.0.1:5000/api/3/action/help_show?name=resource_view_list",
       "success": true,
-      "result": []
+      "result": [{
+        "specType": "table",
+        "resources": ["gdp"],
+        "title": "GDP",
+        "id": 1
+      }]
     })
     // end of package_show gdp
 
   // package_show population
   nock('http://127.0.0.1:5000', {"encodedQueryParams":true})
     .persist()
-    .post('/api/3/action/package_show', {"name_or_id":"population"})
+    .get('/api/3/action/package_show')
+    .query({"name_or_id":"population"})
     .reply(200, {"help":"http://127.0.0.1:5000/api/3/action/help_show?name=package_show","success":true,"result":{"license_title":null,"maintainer":null,"relationships_as_object":[],"private":false,"maintainer_email":null,"num_tags":0,"update_frequency":"P1D","id":"223a978e-8f40-4277-ba6f-9127b9e98e9e","metadata_created":"2019-06-10T13:22:02.718193","metadata_modified":"2019-06-10T13:23:43.580947","author":"Energinet","author_email":"energidata@energinet.dk","state":"active","version":null,"creator_user_id":"5a6c2aa5-dece-4792-adfd-b825978f321f","type":"dataset","resources":[{"cache_last_updated":null,"package_id":"223a978e-8f40-4277-ba6f-9127b9e98e9e","filters":[],"datastore_active":true,"id":"bd9adb32-e96d-4002-8efb-688eae64b065","size":null,"state":"active","schema":{"fields":[{"type":"string","name":"Country Name"},{"type":"string","name":"Country Code"},{"type":"year","name":"Year"},{"type":"number","name":"Value"}]},"hash":"","description":"","format":"csv","last_modified":"2019-06-10T13:23:43.520760","url_type":"datastore","attributes":[],"path":"data/population.csv","mimetype":null,"cache_url":null,"name":"population","created":"2019-06-10T13:22:03.166187","url":"https://pkgstore.datahub.io/core/population/population_csv/data/ead5be05591360d33ad1a37382f8f8b1/population_csv.csv","mimetype_inner":null,"position":0,"revision_id":"9c20df7e-84fb-48f9-954b-c7cb56ceef3b","resource_type":null}],"num_resources":1,"tags":[],"groups":[],"license_id":null,"relationships_as_subject":[],"organization":{"description":"Just another test organization.","created":"2019-03-27T21:26:27.501417","title":"Test Organization","name":"test_org_00","is_organization":true,"state":"active","image_url":"http://placekitten.com/g/200/100","revision_id":"24612477-8155-497c-9e8d-5fef03f94c52","type":"organization","id":"2669d62a-f122-4256-9382-21c260ceef40","approval_status":"approved"},"name":"population","isopen":false,"url":null,"notes":"Population figures for countries, regions (e.g. Asia) and the world. Data comes originally from World Bank and has been converted into standard CSV.","owner_org":"2669d62a-f122-4256-9382-21c260ceef40","title":"Population figures for countries, regions (e.g. Asia) and the world","revision_id":"421e6b78-524c-4c9b-92bc-e77c50280dab","resolution":"One hour (PT1H)"}}, [ 'Server',
     'PasteWSGIServer/0.5 Python/2.7.12',
     'Date',
@@ -407,7 +493,8 @@ module.exports.initMocks = function() {
     'application/json;charset=utf-8',
     'Content-Length',
     '2474' ])
-    .post('/api/3/action/resource_view_list', {"id":"bd9adb32-e96d-4002-8efb-688eae64b065"})
+    .get('/api/3/action/resource_view_list')
+    .query({"id":"bd9adb32-e96d-4002-8efb-688eae64b065"})
     .reply(200, {
       "help": "http://127.0.0.1:5000/api/3/action/help_show?name=resource_view_list",
       "success": true,
@@ -418,7 +505,8 @@ module.exports.initMocks = function() {
   // package_show geojson
   nock('http://127.0.0.1:5000', {"encodedQueryParams":true})
     .persist()
-    .post('/api/3/action/package_show', {"name_or_id":"geojson"})
+    .get('/api/3/action/package_show')
+    .query({"name_or_id":"geojson"})
     .reply(200, {
       "help": "http://127.0.0.1:5000/api/3/action/help_show?name=package_show",
       "success": true,
@@ -501,7 +589,8 @@ module.exports.initMocks = function() {
     'application/json;charset=utf-8',
     'Content-Length',
     '2474' ])
-    .post('/api/3/action/resource_view_list', {"id":"fake-res-id"})
+    .get('/api/3/action/resource_view_list')
+    .query({"id":"fake-res-id"})
     .reply(200, {
       "help": "http://127.0.0.1:5000/api/3/action/help_show?name=resource_view_list",
       "success": true,
@@ -512,7 +601,8 @@ module.exports.initMocks = function() {
   // package_show pdf
   nock('http://127.0.0.1:5000', {"encodedQueryParams":true})
     .persist()
-    .post('/api/3/action/package_show', {"name_or_id":"pdf"})
+    .get('/api/3/action/package_show')
+    .query({"name_or_id":"pdf"})
     .reply(200, {
       "help": "http://127.0.0.1:5000/api/3/action/help_show?name=package_show",
       "success": true,
@@ -594,7 +684,8 @@ module.exports.initMocks = function() {
     'application/json;charset=utf-8',
     'Content-Length',
     '2474' ])
-    .post('/api/3/action/resource_view_list', {"id":"fake-res-id"})
+    .get('/api/3/action/resource_view_list')
+    .query({"id":"fake-res-id"})
     .reply(200, {
       "help": "http://127.0.0.1:5000/api/3/action/help_show?name=resource_view_list",
       "success": true,
@@ -658,7 +749,8 @@ module.exports.initMocks = function() {
   // package_show co2emis
   nock('http://127.0.0.1:5000', {"encodedQueryParams":true})
     .persist()
-    .post('/api/3/action/package_show', {"name_or_id":"co2emis"})
+    .get('/api/3/action/package_show')
+    .query({"name_or_id":"co2emis"})
     .reply(200, {"help":"http://127.0.0.1:5000/api/3/action/help_show?name=package_show","success":true,"result":{"license_title":"eds-license","maintainer":"","relationships_as_object":[],"private":false,"maintainer_email":"","num_tags":0,"id":"51906c35-5f1b-42c6-834d-47566424cc57","metadata_created":"2019-04-30T17:17:41.906339","metadata_modified":"2019-04-30T17:17:43.180581","author":"Energinet","author_email":"energidata@energinet.dk","state":"active","version":"","creator_user_id":"5a6c2aa5-dece-4792-adfd-b825978f321f","type":"dataset","resources":[{"cache_last_updated":null,"package_id":"51906c35-5f1b-42c6-834d-47566424cc57","filters":[],"datastore_active":true,"id":"6ed8a2fb-f432-43ce-bae7-17684cf8a6bf","size":null,"state":"active","hash":"","description":" This text has been added for test purposes by jsq","format":"Data","last_modified":null,"url_type":"datastore","attributes":[],"mimetype":null,"cache_url":null,"name":"CO2 Emission Data","created":"2019-04-30T17:17:43.031828","url":"http://127.0.0.1:5000/datastore/dump/6ed8a2fb-f432-43ce-bae7-17684cf8a6bf","mimetype_inner":null,"position":0,"revision_id":"92646bb0-47c0-4ace-ba77-14e1a922bf52","resource_type":null}],"num_resources":1,"tags":[],"groups":[],"license_id":"eds-license","relationships_as_subject":[],"organization":{"description":"Just another test organization.","created":"2019-03-27T21:26:27.501417","title":"Test Organization","name":"test_org_00","is_organization":true,"state":"active","image_url":"http://placekitten.com/g/200/100","revision_id":"24612477-8155-497c-9e8d-5fef03f94c52","type":"organization","id":"2669d62a-f122-4256-9382-21c260ceef40","approval_status":"approved"},"name":"co2emis","isopen":false,"url":null,"notes":"This dataset provides an updated near up-to-date history for the CO2 emission from electricity consumed in Denmark measured in g/kWh.","owner_org":"2669d62a-f122-4256-9382-21c260ceef40","extras":[{"key":"Alias","value":"co2emis6"},{"key":"Unique key","value":"(Minutes5UTC, PriceArea)"}],"title":"CO2 Emission","revision_id":"8ec628ca-806d-44ba-a042-a5260fed5053"}}, [ 'Server',
     'PasteWSGIServer/0.5 Python/2.7.12',
     'Date',
@@ -667,7 +759,8 @@ module.exports.initMocks = function() {
     'application/json;charset=utf-8',
     'Content-Length',
     '2215' ])
-    .post('/api/3/action/resource_view_list', {"id":"6ed8a2fb-f432-43ce-bae7-17684cf8a6bf"})
+    .get('/api/3/action/resource_view_list')
+    .query({"id":"6ed8a2fb-f432-43ce-bae7-17684cf8a6bf"})
     .reply(200, {
       "help": "http://127.0.0.1:5000/api/3/action/help_show?name=resource_view_list",
       "success": true,
@@ -686,13 +779,15 @@ module.exports.initMocks = function() {
 
   nock('http://127.0.0.1:5000', {"encodedQueryParams":true})
     .persist()
-    .post('/api/3/action/package_show', {"name_or_id":"nonexistent-dataset"})
+    .get('/api/3/action/package_show')
+    .query({"name_or_id":"nonexistent-dataset"})
     .reply(404)
 
 
   nock('http://127.0.0.1:5000', {"encodedQueryParams":true})
     .persist()
-    .post('/api/3/action/organization_show', {"id":"test_org_00","include_users":false})
+    .get('/api/3/action/organization_show')
+    .query({"id":"test_org_00","include_users":false})
     .reply(200, {"help":"http://127.0.0.1:5000/api/3/action/help_show?name=organization_show","success":true,"result":{"display_name":"Test Organization","description":"Just another test organization.","image_display_url":"http://placekitten.com/g/200/100","package_count":5,"created":"2019-03-27T21:26:27.501417","name":"test_org_00","is_organization":true,"state":"active","extras":[],"image_url":"http://placekitten.com/g/200/100","groups":[],"type":"organization","title":"Test Organization","revision_id":"24612477-8155-497c-9e8d-5fef03f94c52","num_followers":0,"id":"2669d62a-f122-4256-9382-21c260ceef40","tags":[],"approval_status":"approved"}}, [ 'Server',
     'PasteWSGIServer/0.5 Python/2.7.12',
     'Date',
@@ -702,11 +797,10 @@ module.exports.initMocks = function() {
     'Content-Length',
     '675' ])
 
-
-  nock('http://127.0.0.1:5000', {"encodedQueryParams":true})
-    .persist()
-    .post('/api/3/action/organization_show', {"id":"not-found-slug","include_users":false})
-    .reply(404)
+nock('http:/127.0.0.1:5000')
+    .get('/api/3/action/organization_show')
+    .query({"id":"known-bad","include_users":false})
+    .replyWithError('Mock error');
 
 
   nock('http://127.0.0.1:5000', {"encodedQueryParams":true})
@@ -974,4 +1068,60 @@ module.exports.initMocks = function() {
   nock('http://127.0.0.1:5001', {"encodedQueryParams":true})
     .get('/path/to/data.csv')
     .reply(200, 'a,b,c\n1,2,3');
+
+  // Mock for ckan_pages getListOfPages
+  nock('http://127.0.0.1:5000', {"encodedQueryParams":true})
+    .persist()
+    .get('/api/3/action/ckanext_pages_list')
+    .query({"page_type": "page"})
+    .reply(200, [{"user_id":"c75d7c1a-3966-44aa-818a-0a5101f3c128","name":"page-one","title":"Page One Title","content":"Page One Content","publish_date":"2019-11-27T00:00:00","page_type":"page","group_id":null},{"user_id":"5e48834c-c835-4f7a-9d1e-f94e6810a721","name":"page-two","title":"Page Two Title","content":"Page Two Content","publish_date":null,"page_type":"page","group_id":null},{"user_id":"5e48834c-c835-4f7a-9d1e-f94e6810a721","name":"page-three","title":"Page Three Title","content":"Page Three Content","publish_date":null,"page_type":"page","group_id":null},{"user_id":"17a6aee1-f442-4928-aad9-a091f87829f9","name":"page-four","title":"Page Four Title","content":"Page Four Content","publish_date":null,"page_type":"page","group_id":null}])
   }
+
+  // Mock for google api
+  nock('https://www.googleapis.com:443', {"encodedQueryParams":true})
+    .get('/analytics/v3/data/ga')
+    .query({
+      dimensions: 'ga:pagePathLevel2',
+      'end-date': 'today',
+      filters: 'ga:pagePathLevel1==/dataset/',
+      ids: 'ga:undefined',
+      key: 'some test string',
+      'max-results': 30,
+      metrics: 'ga:uniquePageviews',
+      sort: '-ga:uniquePageviews',
+      'start-date': '30daysAgo',
+    })
+    .reply(200, ["1f","8b","08","00","00","00","00","00","02ffe5564d6fe33610bde757185ed46881d55a1f962507308aa071b70676dd20c9a287a2075a1a2b4428524b52718c20ffbda32f8bf68a6ddaeb02be6866deccf071e6d12f17a3d1f891f2747c391a134ed841d344bdcbc835d164fcbef2d2daf7a075a12ea7d3fd7eff21132263400aaa3e24229f1e61d3a7609a226e9a919f69aa9619b9f4423ff002d79d4d529a035754f0da5e900c6e887ef8044fc0fc490e5a6282ca5372fab5445f064f14f66aa284d44b67c0b1a34c83fc369bf743708dbfba13057a3a519a48ede0272c0337250775958909f0b4316981a6494e9e1d09aa645a61507370ac260f78f617fcc0cf3e4dc5c731531d8bee2e61e5ac73760e64a2b2996474ae9e9336e294962eac650763feac0da33af68c8f71edfaab8554ac99f103049e025a3687faf096cb23995d4b0d193837f08c10af6bb46711ad818bd6d7668634e4ea066455bcf6d4562d3461b7c778cf5dd466056cf789f2c7ef74ec383cebefe4f8c6142d036f908d420a2c096bbe13fd2a76c65a99bed92a9224a2e4baf5ba911bfa5e1077de3d6c6fa42840ea4313f1e5ca89627fe18791ef04c7a5e5784a64f88ff3686f16cde279e8875d64dbcb86e4f5eaaf38c88c362cc8279ac0e8c75bb2ffa98bd664dbf57d2208c74d4904d784727547f282415acbf0e568479882d6cfca9cff06246db6b5d9f0976ecf79db864d4b8e19ee0f451d78bdfebcdadcad7fdff40155f39dfbeefe76bdf9d848c5eb7b6bad7369b114fbbcc274bf0c575a6fee571f57b76da98b56991a8d50bf0a79c50ca968e760a07225cdb370d1132ac5bee7e9a88753609054d34ff5614b18e1094cfbbebc6871a28e3d2c9738b3badaa78ca8af2561883f01861620702d0ff04cf5302ef46c38a60aa10bec149409f0632be0fc6006cab3b6d7a370a0711fc39c720984691410b3ae6b6326113ee4f4a44737b2c4ee12897b8efb012a","7df40c486c43b4d98d48df76433b694beebe81e33edc3a030657aa2c0a467113512132896b8f941915e7ff8b6e036f3b64179a13f9d8bfcaff84f897a6fb0ca1edd88bc4f34990a64ee441eccc8260eb6ca3189cc8777d2f0ee27411474627a16d40b5245ce15d56af12a3fc64ac43dbfd9fdeaa6f426c1cb72383fc6666b88da08414a4be0f90398a4a428bf3259dd99a2373f081443387b80971660b58385b0863c74347127bf35d3c5f9879ec1d7355e645252fc3f364459e2c94c9ce2cf86fc7359056a206bb7c0310956fc7c4deeccea67ad5c3f0506eeb95645499131ed8e613d3e3ffa242285ab566226c933824e66f8011abc204f316523d5f17af177f035bc6e5895e0d0000"], [
+      'ETag',
+      '"MStl7qkUFM3n4xnO9uBzP7UTnPduNvIK5eG_ZfkcVQQ/13XRLzOZJJxviJX7mWK7nwkQCSE"',
+      'Content-Type',
+      'application/json; charset=UTF-8',
+      'Vary',
+      'Origin',
+      'Vary',
+      'X-Origin',
+      'Vary',
+      'Referer',
+      'Content-Encoding',
+      'gzip',
+      'Date',
+      'Wed, 19 Feb 2020 14:40:24 GMT',
+      'Server',
+      'ESF',
+      'Cache-Control',
+      'private',
+      'X-XSS-Protection',
+      '0',
+      'X-Frame-Options',
+      'SAMEORIGIN',
+      'X-Content-Type-Options',
+      'nosniff',
+      'Alt-Svc',
+      'quic=":443"; ma=2592000; v="46,43",h3-Q050=":443"; ma=2592000,h3-Q049=":443"; ma=2592000,h3-Q048=":443"; ma=2592000,h3-Q046=":443"; ma=2592000,h3-Q043=":443"; ma=2592000',
+      'Connection',
+      'close',
+      'Transfer-Encoding',
+      'chunked'
+  ]);
+
+

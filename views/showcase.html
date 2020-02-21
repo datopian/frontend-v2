@@ -79,12 +79,8 @@
           <div class="readme-snippet readable-width">{{dataset.readmeSnippet}} <a href="#readme" onclick="scrollDown(this)">read more</a></div>
         {% elif dataset.readmeHtml %}
           <div class="readme-snippet readable-width">{{dataset.readmeHtml|safe}}</div>
-        {% elif dataset.description %}
-          {% if dataset.description|length > 250 %}
-            <div class="readme-snippet readable-width">{{dataset.description|truncate(200)}} <a href="#readme" onclick="scrollDown(this)">read more</a></div>
-          {% else %}
-            <div class="readme-snippet readable-width">{{dataset.description}}</div>
-          {% endif %}
+        {% elif dataset.descriptionHtml %}
+          <div class="readme-snippet readable-width">{{dataset.descriptionHtml|safe}}</div>
         {% endif %}
 
         <!-- download button -->
@@ -96,123 +92,10 @@
         <div class="react-me part" data-type="data-views" id="next-section"></div>
 
         <!-- data files (downloads) table -->
-        <h2 class="section-title" id="data">Data Files</h2>
-        <p>Download files in this dataset</p>
-        <div class="resource-listing part">
-          <table class="table table-condensed table-striped resource-listing">
-            <thead>
-              <th class="col-xs-2">File</th>
-              <th class="col-xs-4">Description</th>
-              <th class="col-xs-1">Size</th>
-              <th class="col-xs-2">Last changed</th>
-              <th class="col-xs-4">Download</th>
-            </thead>
-            <tbody>
-            {% for resource in dataset.downloads or dataset.resources %}
-              <tr>
-                <td class="col-xs-2">
-                  <i class="far fa-file-alt"></i> <a href="#resource-{{resource.name}}" onclick="scrollDown(this)" class="anchor-link" title="{{resource.title or resource.name}}">{{resource.title or resource.name}}</a>
-                </td>
-                <td class="col-xs-4" title="{{ resource.description or resource.title }}">
-                  {{ resource.description or resource.title }}
-                </td>
-                <td class="col-xs-1" title="{{ resource.prettyBytes }}">
-                  {{ resource.size }}
-                </td>
-                <td class="col-xs-1" title="{{ resource.modified }}">
-                  {{ resource.modified }}
-                </td>
-                <td class="download truncate col-xs-4">
-                  <a href="{{ resource.downloadPath }}" onclick="sendGAEvent('{{ dataset.name }}', '{{ resource.name }}', '{{ resource.format }}')">
-                    {{ resource.format or 'Data file' }} {% if resource.size %}({{resource.size}}){% endif %}
-                  </a>
-                  {% for alt in resource.otherFormats %}
-                  ,
-                  <a href="/{{ owner.name }}/{{ dataset.name }}/r/{{ resource.name }}.{{ alt.format }}{{ '?v='+revisionId if revisionId }}">
-                    {{alt.format}} ({{alt.prettyBytes}})
-                  </a>
-                  {% endfor %}
-                </td>
-              </tr>
-            {% endfor %}
-            </tbody>
-          </table>
-        </div>
+        {% include "./partials/resource-summary.njk" %}
 
         <!-- preview + field information -->
-        {% for view in dataset.views %}
-        {% set viewName = view.resources[0].name or view.resources[0] %}
-
-        <div class="resource-info part">
-          <!-- Heading for each resource -->
-          <h2 id="resource-{{viewName}}" class="section-title">
-            {{view.title}}
-          </h2>
-
-          <!-- Placeholder div elements for React components: preview tables -->
-          <div id="datapackage-view-{{view.id}}" class="react-me tables"></div>
-          <!-- End of div elements for React -->
-          <p class="notice">
-            This is a preview version. There might be more data in the original version.
-          </p>
-          {% if view.resources[0].schema %}
-           <h3 class="section-title">Field information</h3>
-           <table class="table table-bordered table-striped resource-summary">
-             <thead>
-               <tr>
-                 <th>Field Name</th>
-                 <th>Order</th>
-                 <th>Type (Format)</th>
-                 <th>Description</th>
-               </tr>
-             </thead>
-             <tbody>
-               {% for field in view.resources[0].schema.fields %}
-               <tr>
-                 <th>{{field.name}}</th>
-                 <td>{{loop.index}}</td>
-                 <td class="type type-{{field.type}}">{{field.type}} {% if field.format %}({{field.format}}) {% endif %}</td>
-                 <td>{{field.description}}</td>
-               </tr>
-               {% endfor %}
-             </tbody>
-           </table>
-         {% endif %}
-        </div>
-
-        {% endfor %}
-
-        <!-- Similar datasets -->
-        {% if dataset.related %}
-          <h2 class="section-title">Similar Datasets</h2>
-          <section class="similar-datasets">
-            <div class="row">
-              {% for item in dataset.related %}
-              <div class="col-sm-3">
-                <div class="element">
-
-                  <h4>{{item.title}}</h4>
-
-                  <div class="bottom">
-                     <div class="content">
-                       {% if item.publisher %}
-                       <p class="pull-left"><i class="far fa-user"></i> <a href="/{{item.publisher}}" class="secondary">{{item.publisher}}</a></p><br />
-                       {% endif %}
-                       {% if item.formats %}
-                       <p class="pull-left"><i class="far fa-file-alt"></i> {{ item.formats | join(',') }}</p><br />
-                       {% endif %}
-                       <p class="pull-left"><a href="{{item.path}}" class="pull-right">View &rsaquo;</a></p>
-                     </div>
-                     <p></p>
-                  </div>
-                </div>
-              </div>
-              {% endfor %}
-            </div>
-          </section>
-
-        {% endif %}
-        <!-- End of Similar datasets -->
+        {% include "./partials/resource-display.njk" %}
 
       </div>
     </div>
@@ -287,12 +170,12 @@
       </div>
     </div>
   </div>
-  {% elif dataset.description %}
+  {% elif dataset.descriptionHtml %}
   <div class="container">
     <div class="inner_container">
       <div class="dataset show">
         <h2 id="readme" class="section-title">Read me</h2>
-        <div class="readme part readable-width">{{dataset.description}}</div>
+        <div class="readme part readable-width">{{dataset.descriptionHtml|safe}}</div>
       </div>
     </div>
   </div>

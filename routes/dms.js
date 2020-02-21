@@ -1,9 +1,6 @@
 'use strict'
-const { URL } = require('url')
 const querystring = require('querystring')
 const express = require('express')
-const moment = require('moment')
-const bytes = require('bytes')
 
 const config = require('../config')
 const dms = require('../lib/dms')
@@ -33,6 +30,7 @@ module.exports = function () {
     try {
       datapackage = await Model.getPackage(req.params.name)
     } catch (err) {
+      /* istanbul ignore next */
       next(err)
       return
     }
@@ -48,6 +46,7 @@ module.exports = function () {
     try {
       datapackage = await Model.getPackage(req.params.name)
     } catch (err) {
+      /* istanbul ignore next */
       next(err)
       return
     }
@@ -111,6 +110,7 @@ module.exports = function () {
         currentPage
       })
     } catch (e) {
+      /* istanbul ignore next */
       next(e)
     }
   })
@@ -125,6 +125,7 @@ module.exports = function () {
         slug: 'collections'
       })
     } catch (e) {
+      /* istanbul ignore next */
       next(e)
     }
   })
@@ -159,109 +160,38 @@ module.exports = function () {
         currentPage
       })
     } catch (e) {
+      /* istanbul ignore next */
       next(e)
     }
   })
 
   router.get('/:owner/:name', async (req, res, next) => {
-    let datapackage = null
+    let datapackage = res.locals.datapackage || null
 
     try {
-      datapackage = await Model.getPackage(req.params.name)
+      if (!datapackage) {
+        datapackage = await Model.getPackage(req.params.name)
+      }
     } catch (err) {
+      /* istanbul ignore next */
       next(err)
       return
     }
 
+    // Prepare datapackage for display, eg, process markdown, convert values to
+    // human-readable format etc.:
+    datapackage = utils.processDataPackage(datapackage)
+
+    // Prepare resources for display (preview):
+    datapackage = utils.prepareResourcesForDisplay(datapackage)
+
     // Since "datapackage-views-js" library renders views according to
-    // descriptor's "views" property, we need to generate view objects:
-    datapackage.views = datapackage.views || []
+    // descriptor's "views" property, we need to generate view objects.
+    // Note that we have "views" per resources so here we will consolidate them.
+    datapackage = utils.prepareViews(datapackage)
 
-    // Data Explorer used a slightly different spec
-    datapackage.dataExplorers= []
-
-    // Create a visualization per resource as needed
-    datapackage.resources.forEach((resource, index) => {
-      // Process markdown content (resource descriptions)
-      resource.descriptionHtml = resource.description
-        ? utils.processMarkdown.render(resource.description)
-        : ''
-      // Normalize format
-      resource.format = resource.format.toLowerCase()
-      // Handle datastore_active resources, e.g., 'path' property might point to
-      // some filestore (eg S3) but it is also stored in the datastore so we can
-      // query first N rows instead of trying to read entire file:
-      resource.downloadPath = resource.path
-      if (resource.datastore_active) {
-        resource.downloadPath = resource.path
-        resource.path = config.get('API_URL') + 'datastore_search?resource_id=' + resource.id
-      }
-      // Use proxy path if datastore/filestore proxies are given:
-      try {
-        const resourceUrl = new URL(resource.path)
-        if (resourceUrl.host === config.get('PROXY_DATASTORE') && resource.format !== 'pdf') {
-          resource.path = '//' + req.get('host') + '/proxy/datastore' + resourceUrl.pathname + resourceUrl.search
-        }
-        if (resourceUrl.host === config.get('PROXY_FILESTORE') && resource.format !== 'pdf') {
-          resource.path = '//' + req.get('host') + '/proxy/filestore' + resourceUrl.pathname + resourceUrl.search
-        }
-        // Store a CKAN Classic proxy path
-        // https://github.com/ckan/ckan/blob/master/ckanext/resourceproxy/plugin.py#L59
-        const apiUrlObject = new URL(config.get('API_URL'))
-        resource.cc_proxy = apiUrlObject.origin + `/dataset/${datapackage.id}/resource/${resource.id}/proxy`
-      } catch (e) {
-        console.warn(e)
-      }
-      // Convert bytes into human-readable format:
-      resource.size = resource.size ? bytes(resource.size, {decimalPlaces: 0}) : resource.size
-
-      let controls = {
-        showChartBuilder: false,
-        showMapBuilder: false
-      }
-
-      const view = {
-        id: index,
-        title: resource.title || resource.name,
-        resources: [
-           resource.name
-        ],
-        specType: null
-      }
-
-      // Add 'table' views for each tabular resource:
-      const tabularFormats = ['csv', 'tsv', 'dsv', 'xls', 'xlsx']
-      let chartView, tabularMapView
-
-      if (tabularFormats.includes(resource.format)) {
-        // Default table view
-        view.specType = 'table'
-        // DataExplorer specific view to render a chart from tabular data
-        chartView = Object.assign({}, view)
-        chartView.specType = 'simple'
-        // DataExplorer specific view to render a map from tabular data
-        tabularMapView = Object.assign({}, view)
-        tabularMapView.specType = 'tabularmap'
-      } else if (resource.format.includes('json')) {
-        // Add 'map' views for each geo resource:
-        view.specType = 'map'
-      } else if (resource.format === 'pdf') {
-        view.specType = 'document'
-      }
-
-      
-      // Determine when to show chart builder
-      const chartBuilderFormats = ['csv', 'tsv']
-      
-      if (chartBuilderFormats.includes(resource.format)) controls = { showChartBuilder: true, showMapBuilder: true }
-
-      const views =  (tabularMapView) ? [view, chartView, tabularMapView] : [view]
-      const dataExplorer = JSON.stringify({datapackage: {resources: [resource], views, controls}}).replace(/'/g, "&#x27;")
-      
-      // Add Data Explorer item per resource
-      datapackage.dataExplorers.push(dataExplorer)
-      datapackage.views.push(view)
-    })
+    // Data Explorer used a slightly different spec than "datapackage-views-js":
+    datapackage = utils.prepareDataExplorers(datapackage)
 
     try {
       const profile = await Model.getProfile(req.params.owner)
@@ -278,6 +208,7 @@ module.exports = function () {
         dpId: JSON.stringify(datapackage).replace(/'/g, "&#x27;") // keep for backwards compat?
       })
     } catch (err) {
+      /* istanbul ignore next */
       next(err)
       return
     }
@@ -289,9 +220,25 @@ module.exports = function () {
     try {
       datapackage = await Model.getPackage(req.params.name)
     } catch (err) {
+      /* istanbul ignore next */
       next(err)
       return
     }
+
+    // Prepare datapackage for display, eg, process markdown, convert values to
+    // human-readable format etc.:
+    datapackage = utils.processDataPackage(datapackage)
+
+    // Prepare resources for display (preview):
+    datapackage = utils.prepareResourcesForDisplay(datapackage)
+
+    // Since "datapackage-views-js" library renders views according to
+    // descriptor's "views" property, we need to generate view objects.
+    // Note that we have "views" per resources so here we will consolidate them.
+    datapackage = utils.prepareViews(datapackage)
+
+    // Data Explorer used a slightly different spec than "datapackage-views-js":
+    datapackage = utils.prepareDataExplorers(datapackage)
 
     res.setHeader('Content-Type', 'application/json')
     res.status(200)
@@ -308,6 +255,7 @@ module.exports = function () {
         slug: 'organization'
       })
     } catch (err) {
+      /* istanbul ignore next */
       next(err)
     }
   })
@@ -318,6 +266,13 @@ module.exports = function () {
       // Get owner details
       const owner = req.params.owner
       const profile = await Model.getProfile(owner)
+      // if not a valid profile, send them on the way
+      if (!profile.created) { 
+        return res.status(404).render('404.html', {
+          message: `Page found: ${owner}`,
+          status: 404
+        })
+      }
       const created = new Date(profile.created)
       const joinYear = created.getUTCFullYear()
       const joinMonth = created.toLocaleString('en-us', { month: "long" })
@@ -352,6 +307,7 @@ module.exports = function () {
         currentPage
       })
     } catch(err) {
+      /* istanbul ignore next */
       next(err)
     }
   })
