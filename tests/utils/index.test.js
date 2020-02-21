@@ -198,3 +198,40 @@ test('resource.fields => resource.schema', t => {
   }
   t.deepEqual(result.resources[0].schema, expectedSchema)
 })
+
+
+test('datastore data dictionary => tableschema', t => {
+  let result = utils.dataStoreDataDictionaryToTableSchema({
+    id: 'column',
+    type: 'text'
+  })
+
+  let expected = {
+    name: 'column',
+    type: 'string'
+  }
+
+  t.deepEqual(result, expected)
+
+  result = utils.dataStoreDataDictionaryToTableSchema({
+    id: 'column',
+    type: 'text',
+    info: {
+      title: 'Column',
+      minLength: 5,
+      maxLength: 10
+    }
+  })
+
+  expected = {
+    name: 'column',
+    type: 'string',
+    title: 'Column',
+    constraints: {
+      minLength: 5,
+      maxLength: 10
+    }
+  }
+
+  t.deepEqual(result, expected)
+})
