@@ -42,6 +42,11 @@ class CmsModel {
     })
   }
 
+  async getListOfPages(query={}) {
+    query.type = "page"
+    const result = await this.getListOfPostsWithMeta(query)
+    return result.posts
+  }
 
   async getListOfPosts(query) {
     const result = await this.getListOfPostsWithMeta(query)
@@ -59,6 +64,10 @@ class CmsModel {
 
   async getSiteInfo() {
     return await this.blog.get()
+  }
+
+  api() {
+    return wpcom.req
   }
 }
 

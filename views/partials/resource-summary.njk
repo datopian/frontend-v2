@@ -1,0 +1,43 @@
+<h2 class="section-title" id="data">Data Files</h2>
+<p>Download files in this dataset</p>
+
+<div class="resource-listing part">
+  <table class="table table-condensed table-striped resource-listing">
+    <thead>
+      <th class="col-xs-2">File</th>
+      <th class="col-xs-4">Description</th>
+      <th class="col-xs-1">Size</th>
+      <th class="col-xs-2">Last changed</th>
+      <th class="col-xs-4">Download</th>
+    </thead>
+    <tbody>
+    {% for item in dataset.displayResources %}
+      <tr>
+        <td class="col-xs-2">
+          <i class="far fa-file-alt"></i> <a href="#{{item.slug}}" onclick="scrollDown(this)" class="anchor-link" title="{{item.resource.title or item.resource.name}}">{{item.resource.title or item.resource.name}}</a>
+        </td>
+        <td class="col-xs-4" title="{{ item.resource.descriptionHtml or item.resource.title }}">
+          {{ (item.resource.descriptionHtml or item.resource.title) | safe }}
+        </td>
+        <td class="col-xs-1" title="{{ item.resource.sizeFormatted }}">
+          {{ item.resource.sizeFormatted }}
+        </td>
+        <td class="col-xs-1" title="{{ item.resource.modified }}">
+          {{ (item.resource.modified or item.resource.last_modified) | formatDateFromNow }}
+        </td>
+        <td class="download truncate col-xs-4">
+          <a href="{{ item.resource.path }}" onclick="sendGAEvent('{{ dataset.name }}', '{{ item.esource.name }}', '{{ item.resource.format }}')">
+            {{ item.resource.format or 'Data file' }} {% if item.resource.size %}({{item.resource.sizeFormatted}}){% endif %}
+          </a>
+          {% for alt in item.resource.alternatives %}
+          ,
+          <a href="/{{ owner.name }}/{{ dataset.name }}/r/{{ item.resource.name }}.{{ alt.format }}{{ '?v='+revisionId if revisionId }}">
+            {{alt.format}} ({{alt.sizeFormatted}})
+          </a>
+          {% endfor %}
+        </td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</div>

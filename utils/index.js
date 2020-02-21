@@ -1,6 +1,9 @@
-const config = require('../config')
 const path = require('path')
 const fs = require('fs')
+const { URL } = require('url')
+const bytes = require('bytes')
+const slugify = require('slugify')
+const config = require('../config')
 
 module.exports.ckanToDataPackage = function (descriptor) {
   // Make a copy
@@ -98,7 +101,18 @@ module.exports.ckanToDataPackage = function (descriptor) {
     }
 
     if (!resource.schema) {
-      // TODO: add schema
+      // If 'fields' property exists use it as schema fields
+      if (resource.fields) {
+        if (typeof(resource.fields) === 'string') {
+          try {
+            resource.fields = JSON.parse(resource.fields)
+          } catch (e) {
+            console.log('Could not parse resource.fields')
+          }
+        }
+        resource.schema = {fields: resource.fields}
+        delete resource.fields
+      }
     }
 
     return resource
@@ -132,7 +146,9 @@ module.exports.ckanViewToDataPackageView = (ckanView) => {
     webpage_view: 'web'
   }
   const dataPackageView = JSON.parse(JSON.stringify(ckanView))
-  dataPackageView.specType = viewTypeToSpecType[ckanView.view_type] || 'unsupported'
+  dataPackageView.specType = viewTypeToSpecType[ckanView.view_type]
+    || dataPackageView.specType
+    || 'unsupported'
 
   if (dataPackageView.specType === 'dataExplorer') {
     dataPackageView.spec = {
@@ -344,4 +360,167 @@ module.exports.loadPlugins = function (app) {
     console.warn('WARNING: Failed to load configured plugins', plugins, e)
     return []
   }
+}
+
+
+/**
+ * Process data package attributes prior to display to users.
+ * Process markdown
+ * Convert bytes to human readable format
+ * etc.
+ **/
+module.exports.processDataPackage = function (datapackage) {
+  const newDatapackage = JSON.parse(JSON.stringify(datapackage))
+  if (newDatapackage.description) {
+    newDatapackage.descriptionHtml = module.exports.processMarkdown
+      .render(newDatapackage.description)
+  }
+
+  if (newDatapackage.readme) {
+    newDatapackage.readmeHtml = module.exports.processMarkdown
+      .render(newDatapackage.readme)
+  }
+
+  newDatapackage.formats = newDatapackage.formats || []
+  // Per each resource:
+  newDatapackage.resources.forEach(resource => {
+    if (resource.description) {
+      resource.descriptionHtml = module.exports.processMarkdown
+        .render(resource.description)
+    }
+    // Normalize format (lowercase)
+    if (resource.format) {
+      resource.format = resource.format.toLowerCase()
+      newDatapackage.formats.push(resource.format)
+    }
+
+    // Convert bytes into human-readable format:
+    if (resource.size) {
+      resource.sizeFormatted = bytes(resource.size, {decimalPlaces: 0})
+    }
+  })
+
+  return newDatapackage
+}
+
+
+/**
+ * Create 'displayResources' property which has:
+ * resource: Object containing resource descriptor
+ * api: API URL for the resource if available, e.g., Datastore
+ * proxy: path via proxy for the resource if available
+ * cc_proxy: path via CKAN Classic proxy if available
+ * slug: slugified name of a resource
+ **/
+module.exports.prepareResourcesForDisplay = function (datapackage) {
+  const newDatapackage = JSON.parse(JSON.stringify(datapackage))
+  newDatapackage.displayResources = []
+  newDatapackage.resources.forEach((resource, index) => {
+    const api = resource.datastore_active
+      ? config.get('API_URL') + 'datastore_search?resource_id=' + resource.id
+      : null
+    // Use proxy path if datastore/filestore proxies are given:
+    let proxy, cc_proxy
+    try {
+      const resourceUrl = new URL(resource.path)
+      if (resourceUrl.host === config.get('PROXY_DATASTORE') && resource.format !== 'pdf') {
+        proxy = '/proxy/datastore' + resourceUrl.pathname + resourceUrl.search
+      }
+      if (resourceUrl.host === config.get('PROXY_FILESTORE') && resource.format !== 'pdf') {
+        proxy = '/proxy/filestore' + resourceUrl.pathname + resourceUrl.search
+      }
+      // Store a CKAN Classic proxy path
+      // https://github.com/ckan/ckan/blob/master/ckanext/resourceproxy/plugin.py#L59
+      const apiUrlObject = new URL(config.get('API_URL'))
+      cc_proxy = apiUrlObject.origin + `/dataset/${datapackage.id}/resource/${resource.id}/proxy`
+    } catch (e) {
+      console.warn(e)
+    }
+    const displayResource = {
+      resource,
+      api, // URI for getting the resource via API, e.g., Datastore. Useful when you want to fetch only 100 rows or similar.
+      proxy, // alternative for path in case there is CORS issue
+      cc_proxy,
+      slug: slugify(resource.name) + '-' + index // Used for anchor links
+    }
+    newDatapackage.displayResources.push(displayResource)
+  })
+  return newDatapackage
+}
+
+
+/**
+ * Prepare 'views' property which is used by 'datapackage-views-js' library to
+ * render visualizations such as tables, graphs and maps.
+ **/
+module.exports.prepareViews = function (datapackage) {
+  const newDatapackage = JSON.parse(JSON.stringify(datapackage))
+  newDatapackage.views = newDatapackage.views || []
+  newDatapackage.resources.forEach(resource => {
+    const resourceViews = resource.views.map(view => {
+      view.resources = [resource.name]
+      return view
+    })
+
+    newDatapackage.views = newDatapackage.views.concat(resourceViews)
+  })
+
+  return newDatapackage
+}
+
+
+/**
+ * Create 'dataExplorers' property which is used by 'data-explorer' library to
+ * render data explorer widgets.
+ **/
+module.exports.prepareDataExplorers = function (datapackage) {
+  const newDatapackage = JSON.parse(JSON.stringify(datapackage))
+  newDatapackage.displayResources.forEach((displayResource, idx) => {
+    newDatapackage.displayResources[idx].dataExplorers = []
+    displayResource.resource.views.forEach(view => {
+      const widgets = []
+      if (view.specType === 'dataExplorer') {
+        view.spec.widgets.forEach((widget, index) => {
+          const widgetNames = {
+            table: 'Table',
+            simple: 'Chart',
+            tabularmap: 'Map'
+          }
+          widget = {
+            name: widgetNames[widget.specType] || 'Widget-' + index,
+            active: index === 0 ? true : false,
+            datapackage: {
+              views: [
+                {
+                  id: view.id,
+                  specType: widget.specType
+                }
+              ]
+            }
+          }
+          widgets.push(widget)
+        })
+      } else {
+        const widget = {
+          name: view.title || '',
+          active: true,
+          datapackage: {
+            views: [view]
+          }
+        }
+        widgets.push(widget)
+      }
+
+      displayResource.resource.api = displayResource.resource.api || displayResource.api
+      const dataExplorer = JSON.stringify({
+        widgets,
+        datapackage: {
+          resources: [displayResource.resource]
+        }
+      }).replace(/'/g, "&#x27;")
+      newDatapackage.displayResources[idx].dataExplorers.push(dataExplorer)
+    })
+  })
+
+  return newDatapackage
 }

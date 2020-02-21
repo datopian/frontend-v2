@@ -131,3 +131,70 @@ test('Convert CKAN view to data package view', t => {
   }
   t.deepEqual(result, expected)
 })
+
+
+const datapackage = {
+  name: 'test',
+  id: 'dp-id',
+  description: '# Dataset',
+  readme: '# Readme',
+  resources: [
+    {
+      name: 'resource-1',
+      description: '# Resource',
+      format: 'CSV',
+      size: 2312414,
+      datastore_active: true,
+      id: 'resource-1-id',
+      path: 'https://datastore.com/resource-1-id',
+      views: [{name: 'view-1-1'}, {name: 'view-1-2'}],
+      fields: "[{\"type\": \"any\", \"name\": \"Field Name\"}]"
+    },
+    {
+      name: 'resource-2',
+      path: 'https://datastore.com/resource-2-id',
+      views: [{name: 'view-2-1', specType: 'dataExplorer'}]
+    },
+    {
+      name: 'resource-3',
+      path: 'https://datastore.com/resource-3-id',
+      views: []
+    }
+  ]
+}
+
+
+test('Prepare data package for display', t => {
+  const result = utils.processDataPackage(datapackage)
+  t.true(result.descriptionHtml.includes('<h1>Dataset</h1>'))
+  t.true(result.readmeHtml.includes('<h1>Readme</h1>'))
+  t.true(result.resources[0].descriptionHtml.includes('<h1>Resource</h1>'))
+  t.is(result.resources[0].format, 'csv')
+  t.is(result.resources[0].sizeFormatted, '2MB')
+})
+
+
+test('Prepare resources for display', t => {
+  const result = utils.prepareResourcesForDisplay(datapackage)
+  t.is(result.displayResources.length, datapackage.resources.length)
+  t.is(result.displayResources[0].api, 'http://127.0.0.1:5000/api/3/action/datastore_search?resource_id=resource-1-id')
+  t.is(result.displayResources[0].cc_proxy, 'http://127.0.0.1:5000/dataset/dp-id/resource/resource-1-id/proxy')
+})
+
+
+test('Prepare data package views', t => {
+  const result = utils.prepareViews(datapackage)
+  t.is(result.views.length, 3)
+  t.deepEqual(result.views[1].resources, ['resource-1'])
+})
+
+
+test('resource.fields => resource.schema', t => {
+  const result = utils.ckanToDataPackage(datapackage)
+  const expectedSchema = {
+    fields: [
+      {name: 'Field Name', type: 'any'}
+    ]
+  }
+  t.deepEqual(result.resources[0].schema, expectedSchema)
+})
