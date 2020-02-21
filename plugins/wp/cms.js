@@ -65,6 +65,10 @@ class CmsModel {
   async getSiteInfo() {
     return await this.blog.get()
   }
+
+  api() {
+    return wpcom.req
+  }
 }
 
 module.exports.CmsModel = CmsModel
