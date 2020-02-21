@@ -192,9 +192,10 @@ module.exports.ckanSchemaToTableSchema = (ckanSchema) => {
   fields.name = ckanSchema.id
   fields.type = ckanSchema.type
   if (ckanSchema.info) {
-    fields = {
-       ...ckanSchema.info,   
-      }
+    return {
+      ...fields,
+      ...ckanSchema.info,   
+    }
   } 
   return fields
 }
