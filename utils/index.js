@@ -187,6 +187,18 @@ module.exports.ckanViewToDataPackageView = (ckanView) => {
   return dataPackageView
 }
 
+module.exports.dataStoreDataDictionaryToTableSchema = (ckanSchema) => {
+  let field = {}
+  field.name = ckanSchema.id
+  field.type = ckanSchema.type
+  if (ckanSchema.info) {
+    return {
+      ...field,
+      ...ckanSchema.info,  
+    }
+  } 
+  return field
+}
 
 module.exports.convertToStandardCollection = (descriptor) => {
   const standard = {
