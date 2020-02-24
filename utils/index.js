@@ -192,6 +192,10 @@ Takes single field descriptor from datastore data dictionary and coverts into
 tableschema field descriptor.
 */
 module.exports.dataStoreDataDictionaryToTableSchema = (dataDictionary) => {
+  const internalDataStoreFields = ['_id', '_full_text', '_count']
+  if (internalDataStoreFields.includes(dataDictionary.id)) {
+    return null
+  }
   const dataDictionaryType2TableSchemaType = {
     'text': 'string',
     'int': 'integer',
