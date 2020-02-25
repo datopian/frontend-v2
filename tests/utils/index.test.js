@@ -234,4 +234,11 @@ test('datastore data dictionary => tableschema', t => {
   }
 
   t.deepEqual(result, expected)
+
+  result = utils.dataStoreDataDictionaryToTableSchema({
+    id: '_id',
+    type: 'int'
+  })
+
+  t.is(result, null)
 })
