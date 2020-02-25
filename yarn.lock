@@ -241,10 +241,11 @@
   dependencies:
     arrify "^1.0.1"
 
-"@datopian/edp@^1.4.2":
-  version "1.4.2"
-  resolved "https://registry.yarnpkg.com/@datopian/edp/-/edp-1.4.2.tgz#ff032ba7fc58fe57e78e0b38a435a09de3e546ed"
+"@datopian/edp@^1.4.3":
+  version "1.4.3"
+  resolved "https://registry.yarnpkg.com/@datopian/edp/-/edp-1.4.3.tgz#57292482b71d80fb72e69cfec2d6bd9cff034e22"
   dependencies:
+    base-64 "^0.1.0"
     lunr "^2.3.8"
     lunr-languages "^1.4.0"
     moment "^2.24.0"
@@ -654,6 +655,10 @@ backo2@1.0.2:
 balanced-match@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/balanced-match/-/balanced-match-1.0.0.tgz#89b4d199ab2bee49de164ea02b89ce462d71b767"
+
+base-64@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/base-64/-/base-64-0.1.0.tgz#780a99c84e7d600260361511c4877613bf24f6bb"
 
 base64-arraybuffer@0.1.5:
   version "0.1.5"
