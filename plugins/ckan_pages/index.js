@@ -18,7 +18,7 @@ module.exports = function (app) {
         slug: post.name,
         title: post.title,
         content: post.content,
-        published: moment(post.date).format('MMMM Do, YYYY'),
+        published: moment(post.publish_date).format('MMMM Do, YYYY'),
         modified: moment(post.modified).format('MMMM Do, YYYY'),
         image: post.featured_image
       }
@@ -41,7 +41,7 @@ module.exports = function (app) {
         slug: post.name,
         title: post.title,
         content: post.content.replace(/<\/?[^>]+(>|$)/g, ""),
-        published: moment(post.date).format('MMMM Do, YYYY'),
+        published: moment(post.publish_date).format('MMMM Do, YYYY'),
         modified: moment(post.modified).format('MMMM Do, YYYY'),
         image: post.featured_image
       }
@@ -59,7 +59,7 @@ module.exports = function (app) {
         slug: post.name,
         title: post.title,
         content: post.content,
-        published: moment(post.date).format('MMMM Do, YYYY'),
+        published: moment(post.publish_date).format('MMMM Do, YYYY'),
         modified: moment(post.modified).format('MMMM Do, YYYY'),
         image: post.featured_image,
         thisPageFullUrl: req.protocol + '://' + req.get('host') + req.originalUrl
