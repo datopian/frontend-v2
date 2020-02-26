@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% import '_snippets.html' as snippets %}
+{% import '_instructions.html' as instructions %}
+
+{% block title %}
+Log in
+{% endblock %}
+
+{% block content %}
+
+<div role="main" class="container">
+    <form id="login-form" action="/signup-form-submit" method="POST">
+        <label>Username</label>
+        <input type="text" name="name" />
+        <br />
+        <br />
+        <label>Display Name</label>
+        <input type="text" name="fullname" />
+        <br />
+        <br />
+        <label>E-mail</label>
+        <input type="text" name="email" />
+        <br />
+        <br />
+        <label>Password</label>
+        <input type="password" name="password" />
+        <label>Confirm Password</label>
+        <input type="password" name="password" />
+        <br /><br />
+        <input type="submit" />
+    </form>
+</div>
+
+{% endblock %}

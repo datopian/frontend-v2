@@ -37,7 +37,8 @@ nconf.defaults({
   CARTO_USER: process.env.CARTO_USER || '',
   CARTO_APIKEY: process.env.CARTO_APIKEY || 'default_public',
   // disqus
-  DISQUS_PAGES: process.env.DISQUS_PAGES || ''
+  DISQUS_PAGES: process.env.DISQUS_PAGES || '',
+  USER_ACCOUNTS_ENABLED: process.env.USER_ACCOUNTS_ENABLED || false
 })
 
 module.exports = {
