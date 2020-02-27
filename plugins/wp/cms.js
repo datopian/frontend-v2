@@ -43,27 +43,52 @@ class CmsModel {
   }
 
   async getListOfPages(query={}) {
-    query.type = "page"
-    const result = await this.getListOfPostsWithMeta(query)
-    return result.posts
+    try {
+      query.type = "page"
+      const result = await this.getListOfPostsWithMeta(query)
+      return result.posts
+    } catch (e) {
+      console.warn('Failed to fetch wordpress pages', e)
+      return []
+    }
   }
 
   async getListOfPosts(query) {
-    const result = await this.getListOfPostsWithMeta(query)
-    return result.posts
+    try {
+      const result = await this.getListOfPostsWithMeta(query)
+      return result.posts
+    } catch (e) {
+      console.warn('Failed to fetch wordpress posts', e)
+      return []
+    }
   }
 
 
   async getListOfPostsWithMeta(query) {
-    return await this.blog.postsList(query)
+    try {
+      return await this.blog.postsList(query)
+    } catch (e) {
+      console.warn('Failed to fetch wordpress list of posts with meta', e)
+      return []
+    }
   }
 
   async getCategories() {
-    return await this.blog.categoriesList()
+    try {
+      return await this.blog.categoriesList()
+    } catch (e) {
+      console.warn('Failed to fetch wordpress category list', e)
+      return []
+    }
   }
 
   async getSiteInfo() {
-    return await this.blog.get()
+    try {
+      return await this.blog.get()
+    } catch (e) {
+      console.warn('Failed to fetch wordpress site info', e)
+      return
+    }
   }
 
   api() {
