@@ -24,7 +24,7 @@ module.exports = function () {
 
   router.get('/dataset/:name', async (req, res, next) => {
     // Identify owner org name
-    const Model = new dms.DmsModel({confing, user: req.session.user})
+    const Model = new dms.DmsModel({user: req.session.user})
     let datapackage = null
 
     try {
@@ -41,7 +41,7 @@ module.exports = function () {
 
   router.get('/dataset/:name/resource/:id', async (req, res, next) => {
     // Identify owner org name
-    const Model = new dms.DmsModel({confing, user: req.session.user})
+    const Model = new dms.DmsModel({user: req.session.user})
     let datapackage = null
 
     try {
@@ -92,7 +92,7 @@ module.exports = function () {
   })
 
   router.get('/search', async (req, res, next) => {
-    const Model = new dms.DmsModel({confing, user: req.session.user})
+    const Model = new dms.DmsModel({user: req.session.user})
 
     try {
       const result = await Model.search(req.query)
@@ -119,7 +119,7 @@ module.exports = function () {
   })
 
   router.get('/collections', async (req, res, next) => {
-    const Model = new dms.DmsModel({confing, user: req.session.user})
+    const Model = new dms.DmsModel({user: req.session.user})
     try {
       const collections = await Model.getCollections()
       res.render('collections-home.html', {
@@ -135,7 +135,7 @@ module.exports = function () {
   })
 
   router.get('/collections/:collectionName', async (req, res, next) => {
-    const Model = new dms.DmsModel({confing, user: req.session.user})
+    const Model = new dms.DmsModel({user: req.session.user})
 
     try {
       // Get collection details
@@ -172,7 +172,7 @@ module.exports = function () {
   })
 
   router.get('/:owner/:name', async (req, res, next) => {
-    const Model = new dms.DmsModel({confing, user: req.session.user})
+    const Model = new dms.DmsModel({user: req.session.user})
     let datapackage = res.locals.datapackage || null
 
     try {
@@ -222,7 +222,7 @@ module.exports = function () {
   })
 
   router.get('/:owner/:name/datapackage.json', async (req, res, next) => {
-    const Model = new dms.DmsModel({confing, user: req.session.user})
+    const Model = new dms.DmsModel({user: req.session.user})
     let datapackage = null
 
     try {
@@ -254,7 +254,7 @@ module.exports = function () {
   })
 
   router.get('/organization', async (req, res, next) => {
-    const Model = new dms.DmsModel({confing, user: req.session.user})
+    const Model = new dms.DmsModel({user: req.session.user})
 
     try {
       const collections = await Model.getOrganizations()
@@ -272,7 +272,7 @@ module.exports = function () {
 
   // MUST come last in order to catch all the publisher pages
   router.get('/:owner', async (req, res, next) => {
-    const Model = new dms.DmsModel({confing, user: req.session.user})
+    const Model = new dms.DmsModel({user: req.session.user})
 
     try {
       // Get owner details
