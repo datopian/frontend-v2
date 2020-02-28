@@ -168,7 +168,7 @@ module.exports = function () {
   router.get('/:owner/:name', async (req, res, next) => {
     let datapackage = res.locals.datapackage || null
     try {
-      datapackage = await prepDataPackageForView(req.params.name, datapackage)
+      datapackage = await prepareDataPackageForRender(req.params.name, datapackage)
     } catch (err) {
       /* istanbul ignore next */
       next(err)
@@ -199,7 +199,7 @@ module.exports = function () {
   router.get('/:owner/:name/datapackage.json', async (req, res, next) => {
     let datapackage = res.locals.datapackage || null
     try {
-      datapackage = await prepDataPackageForView(req.params.name, datapackage)
+      datapackage = await prepareDataPackageForRender(req.params.name, datapackage)
     } catch (err) {
       /* istanbul ignore next */
       next(err)
@@ -211,7 +211,7 @@ module.exports = function () {
     res.end(JSON.stringify(datapackage))
   })
 
-  async function prepDataPackageForView(name, datapackage) {
+  async function prepareDataPackageForRender(name, datapackage) {
     if (!datapackage) {
       datapackage = await Model.getPackage(name)
     }
