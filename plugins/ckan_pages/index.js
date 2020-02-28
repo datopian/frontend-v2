@@ -12,7 +12,14 @@ module.exports = function (app) {
   app.get('/', async (req, res, next) => {
     // Get latest 3 blog posts and pass it to home template
     const size = 3
-    let posts = await Model.getListOfPosts(size)
+    let posts = []
+    
+    try {
+      posts = await Model.getListOfPosts(size)
+    } catch (e) {
+      console.warn(e)
+    }
+
     posts = posts.map(post => {
       return {
         slug: post.name,
@@ -35,7 +42,14 @@ module.exports = function (app) {
   async function listStaticPages(req, res) {
     // Get latest 10 blog posts
     const size = 10
-    let posts = await Model.getListOfPosts(size)
+    let posts = []
+    
+    try {
+      posts = await Model.getListOfPosts(size)
+    } catch (e) {
+      console.warn(e)
+    }
+    
     posts = posts.map(post => {
       return {
         slug: post.name,
