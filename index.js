@@ -11,7 +11,7 @@ const moment = require('moment')
 
 const config = require('./config')
 const dmsRoutes = require('./routes/dms')
-const userRoutes = require('./user')
+const userRoutes = require('./routes/user')
 const {loadTheme, loadPlugins, processMarkdown} = require('./utils')
 
 module.exports.makeApp = function () {
