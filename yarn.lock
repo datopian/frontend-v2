@@ -241,11 +241,12 @@
   dependencies:
     arrify "^1.0.1"
 
-"@datopian/edp@^1.4.6":
-  version "1.4.6"
-  resolved "https://registry.yarnpkg.com/@datopian/edp/-/edp-1.4.6.tgz#484758326a86936a61fbe047cf9284e0fa82770d"
-  integrity sha512-x8OI1TbdfihPyAPXM69OADH/7UPGbu79NyFPrws7PwEkJmMIztFTh8VW2O8PSPoDv9d1kBV/4e1fUQtrWfUNLQ==
+"@datopian/edp@^1.4.7":
+  version "1.4.7"
+  resolved "https://registry.yarnpkg.com/@datopian/edp/-/edp-1.4.7.tgz#b3ebbd79d5ca18a6ffcc66e440c38edb64282e13"
+  integrity sha512-Kdz00ZLTl8+ia91mE+D/7bq8OkqoxOfbdm0jvAaZ3RTuzTRspNUl72eAaU+yQHuxtAERjtpSo8g2gG2gJlhyrQ==
   dependencies:
+    apicache "^1.5.3"
     base-64 "^0.1.0"
     lunr "^2.3.8"
     lunr-languages "^1.4.0"
@@ -402,6 +403,11 @@ anymatch@^3.0.1:
   dependencies:
     normalize-path "^3.0.0"
     picomatch "^2.0.4"
+
+apicache@^1.5.3:
+  version "1.5.3"
+  resolved "https://registry.yarnpkg.com/apicache/-/apicache-1.5.3.tgz#8977b358bf7d579d55fe3d183c907ae5dbcfb357"
+  integrity sha512-n1h39Bt7tMiJMV0u0tFlhigig8Uo/wJmKoj6WE/OwvZ+WbFchn7jnXleotZOzZTUBtr0Tg9iJshHnJDAGQbAEQ==
 
 append-field@^1.0.0:
   version "1.0.0"
