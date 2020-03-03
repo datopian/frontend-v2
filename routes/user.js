@@ -1,64 +1,15 @@
-module.exports = function(app) {
-  const config = require('../config')
-  const { url, resolve } = require("url")
-  const fetch = require("node-fetch")
-  const proxy = require("express-http-proxy")
-  const { check, validationResult } = require("express-validator")
-  const { sanitizeBody } = require("express-validator/filter")
+const config = require("../config")
+const { url, resolve } = require("url")
+const fetch = require("node-fetch")
+const proxy = require("express-http-proxy")
+const { check, validationResult } = require("express-validator")
+const { sanitizeBody } = require("express-validator/filter")
+const user = require("../lib/user")
 
+module.exports = function(app) {
   //  don't enable routes unless user accounts enabled in config
   if (config.get("USER_ACCOUNTS_ENABLED")) {
-    const doAPILogin = async body => {
-      const action = "user_login"
-      const url = new URL(resolve(config.get("API_URL"), action))
-      const params = {
-        id: body.username,
-        password: body.password
-      }
-
-      try {
-        const response = await fetch(url, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: config.get("API_KEY")
-          },
-          body: JSON.stringify(params)
-        })
-
-        const APIResponse = await response.json()
-
-        return APIResponse && APIResponse.result
-      } catch (e) {
-        console.error("Error getting logged in user", e)
-        return false
-      }
-    }
-
-    const doAPIUserCreate = async body => {
-      const action = "user_create"
-      const url = new URL(resolve(config.get("API_URL"), action))
-      const params = Object.assign({}, body, { name: body.username })
-      const API_KEY = config.get("API_KEY")
-
-      try {
-        const response = await fetch(url, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: API_KEY
-          },
-          body: JSON.stringify(params)
-        })
-
-        const json = await response.json()
-
-        return json
-      } catch (e) {
-        console.error("Error getting logged in user", e)
-        return false
-      }
-    }
+    const Model = new user.UserModel()
 
     app.use((req, res, next) => {
       res.locals.ckan_user = req.session.ckan_user
@@ -72,7 +23,6 @@ module.exports = function(app) {
     app.post("/login", async (req, res) => {
       check("username", "Username is required").isLength(1)
       check("password", "Password is required").isLength(1)
-
       const errors = validationResult(req)
 
       if (!errors.isEmpty()) {
@@ -80,9 +30,10 @@ module.exports = function(app) {
         return res.status(422).json({ errors: errors.array() })
       } else {
         try {
-          const loggedUser = await doAPILogin(req.body)
+          const loggedUser = await Model.login(req.body)
           if (loggedUser) {
             req.session.ckan_user = loggedUser
+            req.flash('info', 'Testing flash messages')
             res.redirect("/profile")
           } else {
             res.redirect("/login-failure")
@@ -125,7 +76,7 @@ module.exports = function(app) {
       ],
       async (req, res) => {
         const validation = validationResult(req)
-        
+
         if (!validation.isEmpty()) {
           const result = validation.errors.reduce((acc, cur) => {
             const name = cur.param
@@ -148,7 +99,7 @@ module.exports = function(app) {
           return res.render("user/signup.html", r)
         } else {
           // if local form validation succeeds, continue to API:
-          const APIResponse = await doAPIUserCreate(req.body)
+          const APIResponse = await Model.create(req.body)
 
           // handle errors
           if (APIResponse.error) {
