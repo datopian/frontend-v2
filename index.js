@@ -59,8 +59,13 @@ module.exports.makeApp = function () {
       maxAge: config.get("SESSION_COOKIE_MAX_AGE")
     }
   }))
-
+  
+  // enable flash messages
   app.use(flash())
+  app.use((req, res, next) => {
+    res.locals.message = req.flash('info')
+    next()
+  })
   
   loadPlugins(app)
   loadTheme(app)

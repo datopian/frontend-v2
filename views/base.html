@@ -86,21 +86,7 @@
                 <a href="/">DISCOVER</a>
               </li>
   						-->
-              {% if login %}
-                <li>
-                  <a class="nav-link nav-avatar" href="#" tabindex="0" data-toggle="popover" title=""
-                    data-content="<p><a href='/dashboard' class='a-popover'>Dashboard</a></p><p><a href='/logout' class='a-popover'>Logout</a></p>">
-                    <img src="" id="avatar" class="img-responsive img-circle nav-avatar" />
-                  </a>
-                </li>
-              {% else %}
-                <li>
-                  <a href="/login">Login</a>
-                </li>
-                <li>
-                  <a href="/login" class="join-link">Join free</a>
-                </li>
-              {% endif %}
+              {% include 'user/user-menu.html' %}
             </ul>
           </div>
         </div>

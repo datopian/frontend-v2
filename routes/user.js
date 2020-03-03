@@ -33,10 +33,10 @@ module.exports = function(app) {
           const loggedUser = await Model.login(req.body)
           if (loggedUser) {
             req.session.ckan_user = loggedUser
-            req.flash('info', 'Testing flash messages')
             res.redirect("/profile")
           } else {
-            res.redirect("/login-failure")
+            req.flash('info', 'Login failed.')
+            res.redirect('/login')
           }
         } catch (e) {
           console.warn("Login via login form failed with exception", e)
