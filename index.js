@@ -59,6 +59,7 @@ module.exports.makeApp = function () {
       maxAge: config.get("SESSION_COOKIE_MAX_AGE")
     }
   }))
+
   app.use(flash())
   
   loadPlugins(app)

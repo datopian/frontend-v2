@@ -6,6 +6,26 @@ module.exports.initMocks = function() {
   // Uncomment this line if you want to record API calls
   // nock.recorder.rec()
 
+  nock('http://127.0.0.1:5000', {"encodedQueryParams":true})
+    .persist()
+    .post('/api/3/action/user_login', {"facet.field":["organization","groups","tags","res_format","license_id"],"facet.limit":5})
+    .reply(200, {
+			help: 'http://ckan:5000/api/3/action/help_show?name=national_grid_user_login',
+			success: true,
+			result: {
+				id: '6174d757-4afd-4d96-8168-933c5d342d0f',
+				name: 't1',
+				fullname: 'Paul Walker',
+				email: 't@t.com',
+				apikey: '30f5c1fa-45d9-43b1-9c0b-a4b65f0ed8fe',
+				created: '2020-03-02 15:37:37.509468',
+				reset_key: null,
+				about: null,
+				activity_streams_email_notifications: false,
+				sysadmin: false,
+				state: 'active'
+			}
+    })
 
   // Mocks for standalone version:
   // package_search
