@@ -28,7 +28,6 @@ module.exports = function(app) {
 
         const APIResponse = await response.json()
 
-        console.log("API Login resulti::", APIResponse)
         return APIResponse && APIResponse.result
       } catch (e) {
         console.error("Error getting logged in user", e)
@@ -42,8 +41,6 @@ module.exports = function(app) {
       const params = Object.assign({}, body, { name: body.username })
       const API_KEY = config.get("API_KEY")
 
-      console.log("api key -->", API_KEY)
-
       try {
         const response = await fetch(url, {
           method: "POST",
@@ -56,7 +53,6 @@ module.exports = function(app) {
 
         const json = await response.json()
 
-        console.log("API Create result", json)
         return json
       } catch (e) {
         console.error("Error getting logged in user", e)
@@ -78,7 +74,6 @@ module.exports = function(app) {
       check("password", "Password is required").isLength(1)
 
       const errors = validationResult(req)
-      console.log("Login form errors", errors)
 
       if (!errors.isEmpty()) {
         // TODO create response object and re-render login page
@@ -87,8 +82,6 @@ module.exports = function(app) {
         try {
           const loggedUser = await doAPILogin(req.body)
           if (loggedUser) {
-            // add logged user to session
-            console.log("do it")
             req.session.ckan_user = loggedUser
             res.redirect("/profile")
           } else {
@@ -96,11 +89,9 @@ module.exports = function(app) {
           }
         } catch (e) {
           console.warn("Login via login form failed with exception", e)
-
           // TODO handle error here
         }
       }
-      // do user login and redirect if success
     })
 
     app.get("/logout", (req, res) => {
@@ -182,8 +173,6 @@ module.exports = function(app) {
         }
       }
     )
-
-    app.get("/dashboard", (req, res) => {})
 
     app.get("/profile", (req, res) => {
       if (!req.session.ckan_user) res.redirect("/")

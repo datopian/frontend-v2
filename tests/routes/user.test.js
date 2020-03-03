@@ -42,19 +42,6 @@ test("signup submit validation error returns errors", async t => {
   t.is(true, res.text.includes('Password field is required'))
 })
 
-test("login submit validation error returns errors", async t => {
-  config.set("USER_ACCOUNTS_ENABLED", true)
-  const app = require("../../index").makeApp()
-
-  let res = await request(app)
-    .post("/login")
-    .send({ id: "valid"})
-
-  console.log(res.text)
-
-  t.is(true, res.text.includes('Password field is required'))
-})
-
 // TODO login success shows dashboard page
 
 // TODO login failure shows failure page
