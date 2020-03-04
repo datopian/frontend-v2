@@ -50,5 +50,7 @@
 	"Creator": "Creator",
 	"Date Created": "Date Created",
 	"Source": "Source",
-	"Rights": "Rights"
+	"Rights": "Rights",
+	"Licence": "Licence",
+	"Showcases are any app, article or report that relate to the published dataset. For example, an annual report that contains aggregated information relating to the dataset or a website where there is further background information on the dataset or a link to an app that has been created utilising some or all of the dataset.": "Showcases are any app, article or report that relate to the published dataset. For example, an annual report that contains aggregated information relating to the dataset or a website where there is further background information on the dataset or a link to an app that has been created utilising some or all of the dataset."
 }

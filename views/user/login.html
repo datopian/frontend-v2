@@ -1,0 +1,28 @@
+{% extends "base.html" %} {% block content %}
+<div class="container mt-6">
+  <h2>Login</h2>
+  <form id="login-form" action="login" method="POST">
+    <label class="block mt-4">
+      <span class="text-gray-700">Username</span>
+      <input
+        class="form-input"
+        type="text"
+        name="username"
+        placeholder="Username"
+      />
+    </label>
+    <label class="block mt-4">
+      <span class="text-gray-700">Password</span>
+      <input
+        class="form-input"
+        type="password"
+        name="password"
+        placeholder="**********"
+      />
+    </label>
+    <label class="block mt-4">
+      <input class="form-input" type="submit" />
+    </label>
+  </form>
+</div>
+{% endblock %}

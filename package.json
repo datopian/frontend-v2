@@ -51,6 +51,7 @@
     "express": "^4.17.1",
     "express-http-proxy": "^1.5.1",
     "express-session": "^1.16.1",
+    "express-validator": "^6.4.0",
     "googleapis": "^47.0.0",
     "i18n": "^0.8.3",
     "markdown-it": "^8.4.2",

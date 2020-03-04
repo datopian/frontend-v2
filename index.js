@@ -11,6 +11,7 @@ const moment = require('moment')
 
 const config = require('./config')
 const dmsRoutes = require('./routes/dms')
+const userRoutes = require('./routes/user')
 const {loadTheme, loadPlugins, processMarkdown} = require('./utils')
 
 module.exports.makeApp = function () {
@@ -58,7 +59,13 @@ module.exports.makeApp = function () {
       maxAge: config.get("SESSION_COOKIE_MAX_AGE")
     }
   }))
+  
+  // enable flash messages
   app.use(flash())
+  app.use((req, res, next) => {
+    res.locals.message = req.flash('info')
+    next()
+  })
   
   loadPlugins(app)
   loadTheme(app)
@@ -72,6 +79,9 @@ module.exports.makeApp = function () {
       next()
     }
   })
+
+  // Users
+  userRoutes(app)
 
   // Controllers
   app.use([
