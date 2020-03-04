@@ -453,7 +453,7 @@ module.exports.prepareResourcesForDisplay = function (datapackage) {
   newDatapackage.displayResources = []
   newDatapackage.resources.forEach((resource, index) => {
     const api = resource.datastore_active
-      ? config.get('API_URL') + 'datastore_search?resource_id=' + resource.id
+      ? config.get('API_URL') + 'datastore_search?resource_id=' + resource.id + '&sort=_id desc'
       : null
     // Use proxy path if datastore/filestore proxies are given:
     let proxy, cc_proxy
