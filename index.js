@@ -159,4 +159,6 @@ module.exports.start = function () {
   })
 }
 
-module.exports.start()
+if (process.env.NODE_ENV !== 'test') {
+  module.exports.start()
+}
