@@ -211,6 +211,7 @@ module.exports.dataStoreDataDictionaryToTableSchema = (dataDictionary) => {
     type: dataDictionaryType2TableSchemaType[dataDictionary.type] || 'any'
   }
   if (dataDictionary.info) {
+    field.name = dataDictionary.info.title || dataDictionary.id
     const constraintsAttributes = ['required', 'unique', 'minLength', 'maxLength', 'minimum', 'maximum', 'pattern', 'enum']
     field.constraints = {}
     Object.keys(dataDictionary.info).forEach(key => {
