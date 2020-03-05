@@ -214,7 +214,7 @@ test('datastore data dictionary => tableschema', t => {
   t.deepEqual(result, expected)
 
   result = utils.dataStoreDataDictionaryToTableSchema({
-    id: 'column',
+    id: 'Column',
     type: 'text',
     info: {
       title: 'Column',
@@ -224,7 +224,7 @@ test('datastore data dictionary => tableschema', t => {
   })
 
   expected = {
-    name: 'column',
+    name: 'Column',
     type: 'string',
     title: 'Column',
     constraints: {
