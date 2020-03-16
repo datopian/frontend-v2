@@ -56,7 +56,6 @@ class CmsModel {
     return result.posts
   }
 
-  
   async getListOfPostsWithMeta(query) {
     return await this.blog.postsList(Object.assign(this.baseQuery, query))
   }
