@@ -8,6 +8,9 @@ const wpcom = require('wpcom')(config.get('WP_TOKEN'))
 class CmsModel {
   constructor() {
     this.blog = wpcom.site(config.get('WP_URL'))
+    this.baseQuery = {
+      status: `publish${eval(config.get('WP_SHOW_DRAFT')) ? ',draft' : ''}`
+    }
   }
 
 
@@ -53,9 +56,9 @@ class CmsModel {
     return result.posts
   }
 
-
+  
   async getListOfPostsWithMeta(query) {
-    return await this.blog.postsList(query)
+    return await this.blog.postsList(Object.assign(this.baseQuery, query))
   }
 
   async getCategories() {
