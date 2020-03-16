@@ -32,7 +32,8 @@ module.exports.makeApp = function () {
   const translationsDir = config.get('TRANSLATIONS') || '/i18n'
   i18n.configure({
     cookie: 'defaultLocale',
-    directory: __dirname + translationsDir
+    directory: __dirname + translationsDir,
+    defaultLocale: config.get('DEFAULT_LOCALE') || 'en'
   })
 
   // Middlewares
@@ -59,6 +60,13 @@ module.exports.makeApp = function () {
       maxAge: config.get("SESSION_COOKIE_MAX_AGE")
     }
   }))
+
+  // Configure Moment locale 
+  app.use(function (req, res, next) {
+    moment.locale(i18n.getLocale(req))
+
+    next()
+  });
   
   // enable flash messages
   app.use(flash())
