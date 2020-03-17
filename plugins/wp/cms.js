@@ -14,16 +14,16 @@ class CmsModel {
   }
 
 
-  async getPost(slug, parentSlug = "") {
+  async getPost(idOrSlug, parentIdOrSlug = '') {
 
     return new Promise(async (resolve, reject) => {
 
       // type any will request both pages and posts
-      let query = {type: 'any'}
+      let query = Object.assign(this.baseQuery, {type: 'any'})
 
-      if (parentSlug) {
+      if (parentIdOrSlug) {
         try {
-          let parent = await (await this.blog.post({slug: parentSlug})).getBySlug()
+          let parent = await (await this.blog.post(Object.assign(this.baseQuery, {slug: parentIdOrSlug, id: parentIdOrSlug}))).get()
           query.parent_id = parent.ID
           let posts = (await this.blog.postsList(query)).posts
           let post = posts.find(post => post.slug == slug)
@@ -33,8 +33,9 @@ class CmsModel {
         }
 
       } else {
-        query.slug = slug
-        this.blog.post(query).getBySlug((err, data) => {
+        query.id = idOrSlug
+        query.slug = idOrSlug
+        this.blog.post(query).get((err, data) => {
           if (err) {
             reject(err)
           } else {
