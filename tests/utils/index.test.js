@@ -177,7 +177,7 @@ test('Prepare data package for display', t => {
 test('Prepare resources for display', t => {
   const result = utils.prepareResourcesForDisplay(datapackage)
   t.is(result.displayResources.length, datapackage.resources.length)
-  t.is(result.displayResources[0].api, 'http://127.0.0.1:5000/api/3/action/datastore_search?resource_id=resource-1-id&sort=_id desc')
+  t.is(result.displayResources[0].api, 'http://127.0.0.1:5000/api/3/action/datastore_search?resource_id=resource-1-id&sort=_id asc')
   t.is(result.displayResources[0].cc_proxy, 'http://127.0.0.1:5000/dataset/dp-id/resource/resource-1-id/proxy')
 })
 
