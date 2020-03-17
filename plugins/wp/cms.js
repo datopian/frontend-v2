@@ -19,7 +19,7 @@ class CmsModel {
     return new Promise(async (resolve, reject) => {
 
       // type any will request both pages and posts
-      let query = Object.assign(this.baseQuery, {type: 'any'})
+      let query = Object.assign({type: 'any'}, this.baseQuery)
 
       if (parentSlug || parentId) {
         try {
@@ -27,7 +27,7 @@ class CmsModel {
           if (parentId) {
             parentQuery.id = parentId
           }
-          let parent = await (await this.blog.post(Object.assign(this.baseQuery, parentQuery))).get()
+          let parent = await (await this.blog.post(Object.assign(parentQuery, this.baseQuery))).get()
           query.parent_id = parent.ID
           let posts = (await this.blog.postsList(query)).posts
           let post = posts.find(post => post.slug == slug)
@@ -64,7 +64,7 @@ class CmsModel {
   }
 
   async getListOfPostsWithMeta(query) {
-    return await this.blog.postsList(Object.assign(this.baseQuery, query))
+    return await this.blog.postsList(Object.assign(query, this.baseQuery))
   }
 
   async getCategories() {
