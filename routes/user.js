@@ -8,10 +8,11 @@ const user = require("../lib/user")
 
 module.exports = function(app) {
   //  don't enable routes unless user accounts enabled in config
-  if (config.get("USER_ACCOUNTS_ENABLED")) {
+  if (config.get("USER_ACCOUNTS_ENABLED") === true) {
     const Model = new user.UserModel()
 
     app.use((req, res, next) => {
+      res.locals.userAccountsEnabled = true
       res.locals.ckan_user = req.session.ckan_user
       next()
     })

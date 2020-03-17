@@ -81,12 +81,9 @@
               <li>
                 <a href="https://gitter.im/datahubio/chat" class="chat" target="_blank">Chat</a>
               </li>
-  						<!--
-              <li>
-                <a href="/">DISCOVER</a>
-              </li>
-  						-->
-              {% include 'user/user-menu.html' %}
+  						{% if userAccountsEnabled %}
+                {% include 'user/user-menu.html' %}
+              {% endif %}
             </ul>
           </div>
         </div>
