@@ -56,7 +56,7 @@ module.exports = function () {
       .name
 
     const destination = `/${datapackage.organization.name}/${datapackage.name}#resource-${resourceName.replace('.', '_')}`
-    console.log(destination)
+
     res.redirect(301, destination)
   })
 
