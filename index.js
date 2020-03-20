@@ -148,7 +148,25 @@ module.exports.makeApp = function () {
       return str
     }
   })
-  
+
+  env.addFilter('split', (str, regExp) => {
+    try {
+      return str.match(regExp)
+    } catch (e) {
+      console.warn('Failed to split string by regular expression', e)
+      return str
+    }
+  })
+
+  env.addFilter('find', (resources, name) => {
+    try {
+      return resources.find(resource => resource.name === name)
+    } catch (e) {
+      console.warn('Failed to find resource', e)
+      return str
+    }
+  })
+
   return app
 }
 
