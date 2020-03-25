@@ -269,6 +269,10 @@ module.exports.convertToCkanSearchQuery = (query) => {
     ckanQuery.q = ckanQuery.q.trim()
   }
 
+  if (query.fq) {
+    ckanQuery.fq = ckanQuery.fq ? ckanQuery.fq + ' ' + query.fq : query.fq
+  }
+
   // standard 'size' => ckan 'rows'
   ckanQuery.rows = query.size || ''
 
