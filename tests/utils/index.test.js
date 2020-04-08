@@ -177,7 +177,7 @@ test('Prepare data package for display', t => {
 test('Prepare resources for display', t => {
   const result = utils.prepareResourcesForDisplay(datapackage)
   t.is(result.displayResources.length, datapackage.resources.length)
-  t.is(result.displayResources[0].api, 'http://127.0.0.1:5000/api/3/action/datastore_search?resource_id=resource-1-id')
+  t.is(result.displayResources[0].api, 'http://127.0.0.1:5000/api/3/action/datastore_search?resource_id=resource-1-id&sort=_id asc')
   t.is(result.displayResources[0].cc_proxy, 'http://127.0.0.1:5000/dataset/dp-id/resource/resource-1-id/proxy')
 })
 
@@ -197,4 +197,48 @@ test('resource.fields => resource.schema', t => {
     ]
   }
   t.deepEqual(result.resources[0].schema, expectedSchema)
+})
+
+
+test('datastore data dictionary => tableschema', t => {
+  let result = utils.dataStoreDataDictionaryToTableSchema({
+    id: 'column',
+    type: 'text'
+  })
+
+  let expected = {
+    name: 'column',
+    type: 'string'
+  }
+
+  t.deepEqual(result, expected)
+
+  result = utils.dataStoreDataDictionaryToTableSchema({
+    id: 'column',
+    type: 'text',
+    info: {
+      title: 'Column',
+      minLength: 5,
+      maxLength: 10
+    }
+  })
+
+  expected = {
+    name: 'column',
+    type: 'string',
+    title: 'Column',
+    constraints: {
+      minLength: 5,
+      maxLength: 10
+    }
+  }
+
+  t.deepEqual(result, expected)
+
+  result = utils.dataStoreDataDictionaryToTableSchema({
+    id: '_id',
+    type: 'int'
+  })
+
+  t.is(result, null)
 })

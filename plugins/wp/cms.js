@@ -8,19 +8,26 @@ const wpcom = require('wpcom')(config.get('WP_TOKEN'))
 class CmsModel {
   constructor() {
     this.blog = wpcom.site(config.get('WP_URL'))
+    this.baseQuery = {
+      status: `publish${eval(config.get('WP_SHOW_DRAFT')) ? ',draft' : ''}`
+    }
   }
 
 
-  async getPost(slug, parentSlug = "") {
+  async getPost({slug, id, parentSlug, parentId}={}) {
 
     return new Promise(async (resolve, reject) => {
 
       // type any will request both pages and posts
-      let query = {type: 'any'}
+      let query = Object.assign({type: 'any'}, this.baseQuery)
 
-      if (parentSlug) {
+      if (parentSlug || parentId) {
         try {
-          let parent = await (await this.blog.post({slug: parentSlug})).getBySlug()
+          const parentQuery = {slug: parentSlug}
+          if (parentId) {
+            parentQuery.id = parentId
+          }
+          let parent = await (await this.blog.post(Object.assign(parentQuery, this.baseQuery))).get()
           query.parent_id = parent.ID
           let posts = (await this.blog.postsList(query)).posts
           let post = posts.find(post => post.slug == slug)
@@ -30,8 +37,11 @@ class CmsModel {
         }
 
       } else {
+        if (id) {
+          query.id = id
+        }
         query.slug = slug
-        this.blog.post(query).getBySlug((err, data) => {
+        this.blog.post(query).get((err, data) => {
           if (err) {
             reject(err)
           } else {
@@ -53,9 +63,8 @@ class CmsModel {
     return result.posts
   }
 
-
   async getListOfPostsWithMeta(query) {
-    return await this.blog.postsList(query)
+    return await this.blog.postsList(Object.assign(query, this.baseQuery))
   }
 
   async getCategories() {

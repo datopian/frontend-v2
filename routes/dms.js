@@ -56,7 +56,7 @@ module.exports = function () {
       .name
 
     const destination = `/${datapackage.organization.name}/${datapackage.name}#resource-${resourceName.replace('.', '_')}`
-    console.log(destination)
+
     res.redirect(301, destination)
   })
 
@@ -167,31 +167,13 @@ module.exports = function () {
 
   router.get('/:owner/:name', async (req, res, next) => {
     let datapackage = res.locals.datapackage || null
-
     try {
-      if (!datapackage) {
-        datapackage = await Model.getPackage(req.params.name)
-      }
+      datapackage = await prepareDataPackageForRender(req.params.name, datapackage)
     } catch (err) {
       /* istanbul ignore next */
       next(err)
       return
     }
-
-    // Prepare datapackage for display, eg, process markdown, convert values to
-    // human-readable format etc.:
-    datapackage = utils.processDataPackage(datapackage)
-
-    // Prepare resources for display (preview):
-    datapackage = utils.prepareResourcesForDisplay(datapackage)
-
-    // Since "datapackage-views-js" library renders views according to
-    // descriptor's "views" property, we need to generate view objects.
-    // Note that we have "views" per resources so here we will consolidate them.
-    datapackage = utils.prepareViews(datapackage)
-
-    // Data Explorer used a slightly different spec than "datapackage-views-js":
-    datapackage = utils.prepareDataExplorers(datapackage)
 
     try {
       const profile = await Model.getProfile(req.params.owner)
@@ -215,14 +197,23 @@ module.exports = function () {
   })
 
   router.get('/:owner/:name/datapackage.json', async (req, res, next) => {
-    let datapackage = null
-
+    let datapackage = res.locals.datapackage || null
     try {
-      datapackage = await Model.getPackage(req.params.name)
+      datapackage = await prepareDataPackageForRender(req.params.name, datapackage)
     } catch (err) {
       /* istanbul ignore next */
       next(err)
       return
+    }
+
+    res.setHeader('Content-Type', 'application/json')
+    res.status(200)
+    res.end(JSON.stringify(datapackage))
+  })
+
+  async function prepareDataPackageForRender(name, datapackage) {
+    if (!datapackage) {
+      datapackage = await Model.getPackage(name)
     }
 
     // Prepare datapackage for display, eg, process markdown, convert values to
@@ -240,10 +231,8 @@ module.exports = function () {
     // Data Explorer used a slightly different spec than "datapackage-views-js":
     datapackage = utils.prepareDataExplorers(datapackage)
 
-    res.setHeader('Content-Type', 'application/json')
-    res.status(200)
-    res.end(JSON.stringify(datapackage))
-  })
+    return datapackage
+  }
 
   router.get('/organization', async (req, res, next) => {
     try {

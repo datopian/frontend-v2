@@ -187,6 +187,42 @@ module.exports.ckanViewToDataPackageView = (ckanView) => {
   return dataPackageView
 }
 
+/*
+Takes single field descriptor from datastore data dictionary and coverts into
+tableschema field descriptor.
+*/
+module.exports.dataStoreDataDictionaryToTableSchema = (dataDictionary) => {
+  const internalDataStoreFields = ['_id', '_full_text', '_count']
+  if (internalDataStoreFields.includes(dataDictionary.id)) {
+    return null
+  }
+  const dataDictionaryType2TableSchemaType = {
+    'text': 'string',
+    'int': 'integer',
+    'float': 'number',
+    'date': 'date',
+    'time': 'time',
+    'timestamp': 'datetime',
+    'bool': 'boolean',
+    'json': 'object'
+  }
+  const field = {
+    name: dataDictionary.id,
+    type: dataDictionaryType2TableSchemaType[dataDictionary.type] || 'any'
+  }
+  if (dataDictionary.info) {
+    const constraintsAttributes = ['required', 'unique', 'minLength', 'maxLength', 'minimum', 'maximum', 'pattern', 'enum']
+    field.constraints = {}
+    Object.keys(dataDictionary.info).forEach(key => {
+      if (constraintsAttributes.includes(key)) {
+        field.constraints[key] = dataDictionary.info[key]
+      } else {
+        field[key] = dataDictionary.info[key]
+      }
+    })
+  }
+  return field
+}
 
 module.exports.convertToStandardCollection = (descriptor) => {
   const standard = {
@@ -199,10 +235,11 @@ module.exports.convertToStandardCollection = (descriptor) => {
 
   standard.name = descriptor.name
   standard.title = descriptor.title || descriptor.display_name
-  standard.summary = descriptor.description ? descriptor.description.substring(0, 100) : ''
+  standard.summary = descriptor.description || ''
   standard.image = descriptor.image_display_url || descriptor.image_url
   standard.count = descriptor.package_count || 0
   standard.extras = descriptor.extras || []
+  standard.groups = descriptor.groups || []
 
   return standard
 }
@@ -219,9 +256,22 @@ module.exports.convertToCkanSearchQuery = (query) => {
     'facet.limit': 5,
     'facet.mincount': 0
   }
+  // Split by space but ignore spaces within double quotes:
+  if (query.q) {
+    query.q.match(/(?:[^\s"]+|"[^"]*")+/g).forEach(part => {
+      if (part.includes(':')) {
+        ckanQuery.fq += part + ' '
+      } else {
+        ckanQuery.q += part + ' '
+      }
+    })
+    ckanQuery.fq = ckanQuery.fq.trim()
+    ckanQuery.q = ckanQuery.q.trim()
+  }
 
-  ckanQuery.q = query.q
-  ckanQuery.fq = query.fq
+  if (query.fq) {
+    ckanQuery.fq = ckanQuery.fq ? ckanQuery.fq + ' ' + query.fq : query.fq
+  }
 
   // standard 'size' => ckan 'rows'
   ckanQuery.rows = query.size || ''
@@ -417,7 +467,7 @@ module.exports.prepareResourcesForDisplay = function (datapackage) {
   newDatapackage.displayResources = []
   newDatapackage.resources.forEach((resource, index) => {
     const api = resource.datastore_active
-      ? config.get('API_URL') + 'datastore_search?resource_id=' + resource.id
+      ? config.get('API_URL') + 'datastore_search?resource_id=' + resource.id + '&sort=_id asc'
       : null
     // Use proxy path if datastore/filestore proxies are given:
     let proxy, cc_proxy

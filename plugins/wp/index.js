@@ -78,7 +78,7 @@ module.exports = function (app) {
   async function showPostPage(req, res, next) {
     const slug = req.params.page
     try {
-      const post = await Model.getPost(slug)
+      const post = await Model.getPost({slug})
       res.render('post.html', {
         slug: post.slug,
         title: post.title,
@@ -108,7 +108,8 @@ module.exports = function (app) {
       slug += `-${locale}`
     }
     try {
-      const post = await Model.getPost(req.params.page, req.params.parent)
+      const id = Number.isInteger(parseInt(req.params.page)) ? req.params.page : undefined
+      const post = await Model.getPost({slug: req.params.page, id, parentSlug: req.params.parent})
       res.render('static.html', {
         slug: post.slug,
         parentSlug: req.params.parent,

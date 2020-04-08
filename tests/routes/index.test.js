@@ -82,7 +82,7 @@ test('Theme defined route exists when THEME is set', async t => {
 
 
 test('Theme defined route does NOT exists when THEME is not set', async t => {
-  config.set('THEME', 'opendk')
+  config.set('THEME', 'example')
   const app = require('../../index').makeApp()
   const res = await request(app)
     .get('/known-bad')

@@ -1,0 +1,80 @@
+{% extends 'base.html' %} {% block content %}
+<div class="container mt-6">
+  <h2>Sign up</h2>
+  <form id="signup-form" action="signup" method="POST">
+    <label class="block mt-4">
+      <span class="text-gray-700 w-6">Username</span>
+      <input
+        type="text"
+        class="form-input {{ 'color-red' if username.msg }}"
+        name="username"
+        value="{{ username.value }}"
+        placeholder="Username"
+      />
+      <p class="form-error-msg color-red {{ 'hidden' if not username.msg }}">
+        *{{ username.msg }}
+      </p>
+    </label>
+    <label class="block mt-4">
+      <span class="text-gray-700">Email</span>
+      <input
+        type="text"
+        class="form-input {{ 'color-red' if email.msg }}"
+        name="email"
+        value="{{ email.value }}"
+        placeholder="email@example.com"
+      />
+      <p class="form-error-msg color-red {{ 'hidden' if not email.msg }}">
+        *{{ email.msg }}
+      </p>
+    </label>
+    <label class="block mt-4">
+      <span class="text-gray-700">Full name</span>
+      <input
+        type="text"
+        class="form-input {{ 'color-red' if fullname.msg }}"
+        name="fullname"
+        value="{{ fullname.value }}"
+        placeholder="Full Name"
+      />
+      <p class="form-error-msg color-red {{ 'hidden' if not fullname.msg }}">
+        *{{ fullname.msg }}
+      </p>
+    </label>
+    <label class="block mt-4">
+      <span class="text-gray-700">Password</span>
+      <input
+        type="password"
+        class="form-input {{ 'color-red' if password.msg }}"
+        name="password"
+        placeholder="**********"
+      />
+      <p class="form-error-msg color-red {{ 'hidden' if not password.msg }}">
+        *{{ password.msg }}
+      </p>
+    </label>
+    <label class="block mt-4">
+      <span class="text-gray-700">Confirm Password</span>
+      <input
+        type="password"
+        class="form-input {{ 'color-red' if password.msg }}"
+        name="confirmPassword"
+        placeholder="**********"
+      />
+      <p class="form-error-msg color-red {{ 'hidden' if not confirmPassword.msg }}">
+        *{{confirmPassword.msg }}
+      </p>
+    </label>
+    <label class="block mt-4">
+      <input class="form-input" type="submit" />
+    </label>
+  </form>
+  <div class="form-errors">
+    {% if APIError %} {% for error in APIError.name %}
+    <p class="error-message color-red">
+      {{ error }}
+    </p>
+    {% endfor %} {% endif %}
+  </div>
+</div>
+{% endblock %}

@@ -11,12 +11,12 @@ test('getPost api works', async t => {
   t.plan(1)
 
   const slug = 'about'
-  const result = await WPModel.getPost(slug)
+  const result = await WPModel.getPost({slug})
 
   t.is(result.title, 'Welcome to Data Service!')
 })
 
-test('getListOfPagess api works', async t => {
+test('getListOfPages api works', async t => {
   t.plan(1)
 
   const result = await WPModel.getListOfPages({
