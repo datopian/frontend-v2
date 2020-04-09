@@ -61,6 +61,8 @@ module.exports.makeApp = function () {
     saveUninitialized: false,
     cookie: {
       maxAge: config.get("SESSION_COOKIE_MAX_AGE")
+        ? parseInt(config.get("SESSION_COOKIE_MAX_AGE"))
+        : 60 * 60 * 1000
     }
   }))
 
