@@ -56,6 +56,9 @@ module.exports.makeApp = function () {
   app.use(i18n.init)
   app.use(session({
     secret: config.get('SESSION_SECRET'),
+    resave: true,
+    rolling: true,
+    saveUninitialized: false,
     cookie: {
       maxAge: config.get("SESSION_COOKIE_MAX_AGE")
     }
