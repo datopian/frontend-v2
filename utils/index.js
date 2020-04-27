@@ -248,7 +248,6 @@ module.exports.convertToStandardCollection = (descriptor) => {
 module.exports.convertToCkanSearchQuery = (query) => {
   const ckanQuery = {
     q: '',
-    fq: '',
     rows: '',
     start: '',
     sort: '',
@@ -259,18 +258,9 @@ module.exports.convertToCkanSearchQuery = (query) => {
   // Split by space but ignore spaces within double quotes:
   if (query.q) {
     query.q.match(/(?:[^\s"]+|"[^"]*")+/g).forEach(part => {
-      if (part.includes(':')) {
-        ckanQuery.fq += part + ' '
-      } else {
-        ckanQuery.q += part + ' '
-      }
+      ckanQuery.q += part + ' '
     })
-    ckanQuery.fq = ckanQuery.fq.trim()
     ckanQuery.q = ckanQuery.q.trim()
-  }
-
-  if (query.fq) {
-    ckanQuery.fq = ckanQuery.fq ? ckanQuery.fq + ' ' + query.fq : query.fq
   }
 
   // standard 'size' => ckan 'rows'
@@ -303,7 +293,7 @@ module.exports.convertToCkanSearchQuery = (query) => {
 
   // Remove attributes with empty string, null or undefined values
   Object.keys(ckanQuery).forEach((key) => (!ckanQuery[key]) && delete ckanQuery[key])
-
+  ckanQuery.q = ckanQuery.q || ''
   return ckanQuery
 }
 
