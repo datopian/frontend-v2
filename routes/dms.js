@@ -185,7 +185,13 @@ module.exports = function () {
   }
 
   router.get('/organization', async (req, res, next) => {
-    const collections = await Model.getOrganizations()
+    let collections = await Model.getOrganizations()
+    collections = await Promise.all(collections.map(async item => {
+      const result = await Model.search({q: `organization:${item.name}`})
+      item.count = result.count
+      return item
+    }))
+
     res.render('collections-home.html', {
       title: 'Organizations',
       description: 'CKAN Organizations are used to create, manage and publish collections of datasets. Users can have different roles within an Organization, depending on their level of authorisation to create, edit and publish.',
