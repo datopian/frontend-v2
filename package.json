@@ -42,7 +42,7 @@
     "supertest": "^4.0.2"
   },
   "dependencies": {
-    "@datopian/edp": "^1.4.10",
+    "@datopian/edp": "^1.4.11",
     "body-parser": "^1.19.0",
     "bytes": "^3.1.0",
     "connect-flash": "^0.1.1",
