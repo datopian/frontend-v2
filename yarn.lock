@@ -241,10 +241,10 @@
   dependencies:
     arrify "^1.0.1"
 
-"@datopian/edp@^1.4.13":
-  version "1.4.13"
-  resolved "https://registry.yarnpkg.com/@datopian/edp/-/edp-1.4.13.tgz#d9174e1ce57ed39cccdd145ac0edd05dd4f419e9"
-  integrity sha512-yeixJlESkhiI4fKT8MdmW6AB4PFUp9zkVpUYh1TUy/L+fbV9dKPLinGgwTm9lWwJflxD6Ufdc5WbCs6Ol5qEQA==
+"@datopian/edp@^1.4.14":
+  version "1.4.14"
+  resolved "https://registry.yarnpkg.com/@datopian/edp/-/edp-1.4.14.tgz#daad8badeeedd95a694fb06a83842efc4bef931b"
+  integrity sha512-nYGvsJBNCpoKD48uMgYeuKG4kfmBaBzh5gzJ8hmBfwACWf/nyrNv5nYbnU7KKQpmk9aEj6c4ugp2RTwtYDC79w==
   dependencies:
     base-64 "^0.1.0"
     lunr "^2.3.8"
