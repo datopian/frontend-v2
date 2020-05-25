@@ -40,7 +40,7 @@ nconf.defaults({
   DISQUS_PAGES: process.env.DISQUS_PAGES || '',
   kratos: {
     admin: process.env.KRATOS_ADMIN_URL && process.env.KRATOS_ADMIN_URL.replace(/\/+$/, ''),
-    public: process.env.KRATOS_PUBLIC_URL && process.env.KRATOS_ADMIN_URL.replace(/\/+$/, '')
+    public: process.env.KRATOS_PUBLIC_URL && process.env.KRATOS_PUBLIC_URL.replace(/\/+$/, '')
   }
 })
 
