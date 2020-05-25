@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="py-12 mb-10 page-heading">
+  <div class="container">
+    <ul class="breadcrumb w-full m-0">
+      <li>
+        <a href="/">Home </a>
+      </li>
+      <li>
+        <a href="/auth/login"><strong>Login</strong></a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div class="container">
+        <h3 class="py-5 text-orange font-bold text-center">
+          Log in to the Data Portal
+        </h3>
+
+        {% if sso %}
+        <div class="flex items-center justify-center">
+          <div class="w-full max-w-2xl">
+            {% if sso.errors %}
+              {% for error in sso.errors %}
+                <div
+                  class="border border-orange text-orange font-medium px-8 py-3"
+                  role="alert"
+                >
+                  <div class="content flex items-center justify-between">
+                      {{ error.message | safe }}
+                  </div>
+                </div>
+              {% endfor %}
+              {% if accountExists %}
+                <div
+                  class="border border-orange text-orange font-medium px-8 py-3"
+                  role="alert"
+                >
+                  E-mail: {{accountExists.value}}<br />
+                  <a href="/auth/login">Please, try to login using another method.</a>
+                </div>
+              {% endif %}
+            {% else %}
+              <form action="{{sso.action}}" method="{{sso.method}}" class="bg-white px-8 pt-6 pb-8 mb-4">
+                {% for field in sso.fields %}
+                  {% if field.name == 'csrf_token' %}
+                    <input name="{{field.name}}" type="{{field.type}}" value="{{field.value}}">
+                  {% elif field.name == 'traits.email' %}
+                    <label>
+                      <span>E-Mail</span>
+                      <input name="{{field.name}}" type="{{field.type}}" value="{{field.value}}" placeholder="E-Mail">
+                    </label>
+                  {% else %}
+                    <button name="{{field.name}}" type="{{field.type}}" value="{{field.value}}" class="border border-orange bg-orange text-2xl text-white hover:bg-white hover:text-orange py-5 px-6 my-3 w-full inline-block outline-none rounded focus:outline-none focus:bg-orange focus:border-orange">
+                        Continue with {{field.value | capitalize}}
+                    </button>
+                  {% endif %}
+                {% endfor %}
+              </form>
+            {% endif %}
+          </div>
+        </div>
+        {% endif %}
+</div>
+{% endblock %}

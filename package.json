@@ -42,6 +42,7 @@
     "supertest": "^4.0.2"
   },
   "dependencies": {
+    "@oryd/kratos-client": "^0.3.0-alpha.1",
     "body-parser": "^1.19.0",
     "bytes": "^3.1.0",
     "connect-flash": "^0.1.1",
@@ -51,10 +52,13 @@
     "express": "^4.17.1",
     "express-async-errors": "^3.1.1",
     "express-http-proxy": "^1.5.1",
+    "express-jwt": "^5.3.3",
     "express-session": "^1.16.1",
     "express-validator": "^6.4.0",
     "googleapis": "^47.0.0",
     "i18n": "^0.8.3",
+    "jwks-rsa": "^1.8.0",
+    "jwt-decode": "^2.2.0",
     "markdown-it": "^8.4.2",
     "md5": "^2.2.1",
     "moment": "^2.24.0",
