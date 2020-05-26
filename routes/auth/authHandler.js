@@ -50,14 +50,10 @@ module.exports.authHandler = (type) => (
         res.redirect(`${config.get('SITE_URL')}/.ory/kratos/public/self-service/browser/flows/${type}`)
         return
       }
-      const configOIDC = request.methods.oidc.config
-      const configPassword = request.methods.password.config
-      const accountExists = configOIDC.fields.find(item => item.name === 'traits.email')
-      res.render('auth/login.html', {
-        sso: configOIDC,
-        password: configPassword,
-        accountExists
-      })
+      res.locals.sso = request.methods.oidc.config
+      res.locals.password = request.methods.password.config
+      res.locals.accountExists = res.locals.sso.fields.find(item => item.name === 'traits.email')
+      next()
     })
     .catch(err => {
       console.error(err)

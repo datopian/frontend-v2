@@ -75,8 +75,9 @@ module.exports = function(app) {
       .then(response => {
         res.redirect('/auth/registration')
       })
-      .catch(error => {
-        next(error)
+      .catch(err => {
+        console.error(err)
+        next(err)
       })
   })
   app.get('/error', errorHandler)

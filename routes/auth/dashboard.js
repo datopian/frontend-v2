@@ -37,14 +37,13 @@ const authInfo = (req) => {
   }
 }
 
-module.exports.dashboard =  (req, res) => {
+module.exports.dashboard =  (req, res, next) => {
   const ai = authInfo(req)
   const user = {
     email: ai.claims.session.identity.traits.email,
     avatar: `https://www.gravatar.com/avatar/${md5(ai.claims.session.identity.traits.email)}`
   }
-  res.render('auth/dashboard.html', {
-    session: ai.claims.session,
-    user
-  })
+  res.locals.session = ai.claims.session
+  res.locals.user = user
+  next()
 }
