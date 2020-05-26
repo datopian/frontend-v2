@@ -41,6 +41,7 @@ module.exports.dashboard =  (req, res, next) => {
   const ai = authInfo(req)
   const user = {
     email: ai.claims.session.identity.traits.email,
+    name: ai.claims.session.identity.traits.name || '',
     avatar: `https://www.gravatar.com/avatar/${md5(ai.claims.session.identity.traits.email)}`
   }
   res.locals.session = ai.claims.session

@@ -45,6 +45,7 @@ module.exports = function(app) {
           res.locals.logged_in = true;
           res.locals.userEmail = body.identity.traits.email;
           res.locals.userId = body.identity.id;
+          res.locals.userName = body.identity.traits.name;
           next()
         })
         .catch(() => {
