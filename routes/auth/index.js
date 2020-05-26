@@ -1,7 +1,7 @@
 const request = require('request')
 const jwks = require('jwks-rsa')
 const jwt = require('express-jwt')
-const { FormField, PublicApi } = require('@oryd/kratos-client')
+const { FormField, PublicApi, AdminApi } = require('@oryd/kratos-client')
 const config = require('../../config')
 const { authHandler } = require('./authHandler')
 const { dashboard } = require('./dashboard')
@@ -18,6 +18,7 @@ const protectOathKeeper = jwt({
 })
 
 const publicEndpoint = new PublicApi(config.get('kratos').public)
+const adminEndpoint = new AdminApi(config.get('kratos').admin)
 const protectProxy = (req, res, next) => {
   // When using ORY Oathkeeper, the redirection is done by ORY Oathkeeper.
   // Since we're checking for the session ourselves here, we redirect here
@@ -68,6 +69,15 @@ module.exports = function(app) {
   app.get('/auth/login', authHandler('login'))
   app.get('/auth/logout', (req, res) => {
     res.redirect('/.ory/kratos/public/self-service/browser/flows/logout')
+  })
+  app.post('/auth/delete', protect, (req, res, next) => {
+    adminEndpoint.deleteIdentity(res.locals.userId)
+      .then(response => {
+        res.redirect('/auth/registration')
+      })
+      .catch(error => {
+        next(error)
+      })
   })
   app.get('/error', errorHandler)
   app.get('/settings', protect)
