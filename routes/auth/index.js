@@ -55,13 +55,13 @@ module.exports = function(app) {
       next()
     }
   })
-  app.use('/.ory/kratos/public/', (req, res) => {
+  app.use('/.ory/kratos/public/', (req, res, next) => {
     const url =
       config.get('kratos').public + req.url.replace('/.ory/kratos/public', '')
     req
       .pipe(
         request(url, { followRedirect: false })
-          .on('error', err => console.error)
+          .on('error', err => next)
       )
       .pipe(res)
   })
