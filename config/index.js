@@ -18,7 +18,9 @@ nconf.defaults({
     port: process.env.PORT || 4000
   },
   API_URL: api_url,
-  SITE_URL: process.env.SITE_URL.replace(/\/+$/, '') || 'http://0.0.0.0:4000',
+  SITE_URL: process.env.SITE_URL ?
+    process.env.SITE_URL.replace(/\/+$/, '')
+    : 'http://0.0.0.0:4000',
   SITE_LOCALE: process.env.SITE_LOCALE || 'en',
   WP_URL: process.env.WP_URL || 'http://127.0.0.1:6000',
   WP_BLOG_PATH: process.env.WP_BLOG_PATH || '/news',
