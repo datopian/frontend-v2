@@ -91,8 +91,7 @@ module.exports.ckanToDataPackage = function (descriptor) {
     datapackage.comment = comment && comment.value
   }
   // Filter extras so that we have only expected items (EDS specific)
-  const expectedExtras = ['resolution', 'update_frequency', 'metadata_language',
-    'Unique key', 'Alias']
+  const expectedExtras = ['resolution', 'update_frequency']
   datapackage.extras = datapackage.extras.filter(item => expectedExtras.includes(item.key))
 
   // Resources
