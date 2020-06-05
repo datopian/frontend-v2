@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-6">
+  <!-- User detail -->
+  <section class="user-detail bg-gray-100 mt-8">
+    <div class="row">
+      <div class="col-sm-8 col-xs-12">
+        <div class="md-flex p-6">
+          <div class="col-sm-3 text-center py-6">
+            <img src="{{user.avatar}}" class="rounded-full mx-auto" />
+          </div>
+
+          <div class="col-sm-9">
+            <p class="my-0 text-3xl font-semibold">{{ user.name }}</p>
+            <p class="my-0 text-gray-700">{{ user.fullname }}</p>
+            <p class="text-gray-700">{{ user.email }}</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-4 col-xs-12">
+        <div class="col-sm-6">
+          <div class="text-center">
+            <h1 class="mb-0">{{ subscriptions | length }}</h1>
+            <p class="text-gray-700">Subscriptions</p>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="md-flex px-6 py-16">
+            <a
+              href="/settings"
+              class="bg-orange text-xl text-white px-3 py-2 rounded inline-block"
+              >Settings</a
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- End of User detail -->
+
+  <!-- Recent updates -->
+  <div
+    class="mt-12 overflow-y-auto scrollbar-w-2 scrollbar-track-gray-lighter scrollbar-thumb-rounded scrollbar-thumb-gray scrolling-touch"
+  >
+    {% if recentUpdates|length == 0 %}
+    <p class="items-center justify-center text-orange text-center">
+      You are not subscribed to any dataset.
+    </p>
+    <p class="items-center text-orange text-center">
+      To subscribe to updates, please visit the dataset page for which you would
+      like to receive notifications and click the "Subscribe to Updates" button.
+    </p>
+    {% else %}
+    <table class="w-full text-left table-collapse">
+      <thead>
+        <tr>
+          <th class="text-2xl font-semibold text-gray-800 p-3 bg-gray-200">
+            {{__('Recent updates')}}
+          </th>
+          <th
+            class="text-2xl font-semibold text-gray-800 p-3 bg-gray-200 text-center"
+          ></th>
+          <th
+            class="text-2xl font-semibold text-gray-800 p-3 bg-gray-200 text-center"
+          ></th>
+        </tr>
+      </thead>
+
+      <tbody class="align-baseline">
+        {% set cls = cycler("bg-gray-100", "bg-white") %} {% for item in
+        recentUpdates %}
+        <tr class="{{ cls.next() }}">
+          <td
+            class="p-3 border-t border-gray-200 font-mono text-2xl text-gray-700"
+          >
+            <a href="/{{ item.organization.name }}/{{ item.name }}"
+              >{{ item.organization.name }}/{{ item.name }}</a
+            >
+          </td>
+
+          <td
+            class="p-3 border-t border-gray-200 font-mono text-2xl text-gray-700 text-center"
+          >
+            {{ item.metadata_modified | formatDateFromNow }}
+          </td>
+
+          <td
+            class="p-3 border-t border-gray-200 font-mono text-2xl text-gray-700 text-center"
+          >
+            <a class="" href="/{{ item.organization.name }}/{{ item.name }}"
+              >{{__('Explore')}}</a
+            >
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% endif %}
+  </div>
+  <!-- End of recent updates -->
+</div>
+{% endblock %}

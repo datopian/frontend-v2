@@ -1,5 +1,6 @@
 const path = require('path')
 const express = require('express')
+require('express-async-errors')
 const cors = require('cors')
 const nunjucks = require('nunjucks')
 const bodyParser = require('body-parser')
@@ -11,7 +12,7 @@ const moment = require('moment')
 
 const config = require('./config')
 const dmsRoutes = require('./routes/dms')
-const userRoutes = require('./routes/user')
+const authRoutes = require('./routes/auth')
 const {loadTheme, loadPlugins, processMarkdown} = require('./utils')
 
 module.exports.makeApp = function () {
@@ -46,35 +47,52 @@ module.exports.makeApp = function () {
   // Default assets
   app.use('/static', express.static(path.join(__dirname, '/public')))
 
-  app.use(
-    bodyParser.urlencoded({
-      extended: true
-    })
-  )
+  const authEnabled = config.get('kratos') && config.get('kratos').admin && config.get('kratos').public
+
+  // Auth (kratos) isn't compatiable with body-parser
+  if (!authEnabled) {
+    app.use(
+      bodyParser.urlencoded({
+        extended: true
+      })
+    )
+  }
+
   app.use(cors())
   app.use(cookieParser())
   app.use(i18n.init)
   app.use(session({
     secret: config.get('SESSION_SECRET'),
+    resave: true,
+    rolling: true,
+    saveUninitialized: false,
     cookie: {
       maxAge: config.get("SESSION_COOKIE_MAX_AGE")
+        ? parseInt(config.get("SESSION_COOKIE_MAX_AGE"))
+        : 60 * 60 * 1000
     }
   }))
 
-  // Configure Moment locale 
+  // Configure Moment locale
   app.use(function (req, res, next) {
     moment.locale(i18n.getLocale(req))
 
     next()
   });
-  
+
   // enable flash messages
   app.use(flash())
+
+  // Auth
+  if (authEnabled) {
+    authRoutes(app)
+  }
+
   app.use((req, res, next) => {
     res.locals.message = req.flash('info')
     next()
   })
-  
+
   loadPlugins(app)
   loadTheme(app)
 
@@ -87,9 +105,6 @@ module.exports.makeApp = function () {
       next()
     }
   })
-
-  // Users
-  userRoutes(app)
 
   // Controllers
   app.use([

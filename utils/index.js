@@ -507,7 +507,7 @@ module.exports.prepareViews = function (datapackage) {
   const newDatapackage = JSON.parse(JSON.stringify(datapackage))
   newDatapackage.views = newDatapackage.views || []
   newDatapackage.resources.forEach(resource => {
-    const resourceViews = resource.views.map(view => {
+    const resourceViews = resource.views && resource.views.map(view => {
       view.resources = [resource.name]
       return view
     })
@@ -527,7 +527,7 @@ module.exports.prepareDataExplorers = function (datapackage) {
   const newDatapackage = JSON.parse(JSON.stringify(datapackage))
   newDatapackage.displayResources.forEach((displayResource, idx) => {
     newDatapackage.displayResources[idx].dataExplorers = []
-    displayResource.resource.views.forEach(view => {
+    displayResource.resource.views && displayResource.resource.views.forEach(view => {
       const widgets = []
       if (view.specType === 'dataExplorer') {
         view.spec.widgets.forEach((widget, index) => {
