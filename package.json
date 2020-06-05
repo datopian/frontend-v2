@@ -43,6 +43,7 @@
   },
   "dependencies": {
     "@datopian/edp": "^1.4.19",
+    "@oryd/kratos-client": "^0.3.0-alpha.1",
     "body-parser": "^1.19.0",
     "bytes": "^3.1.0",
     "connect-flash": "^0.1.1",
