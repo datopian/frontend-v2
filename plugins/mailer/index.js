@@ -22,20 +22,24 @@ module.exports = function(app) {
           (!config.get('SMTP_HOST')       ||
             !config.get('SMTP_PORT')))    ||
           !config.get('EMAIL_FROM')       ||
-          !config.get('EMAIL_PASSWORD')   ||
           !config.get('EMAIL_TO')) {
         next({status: 500, message: 'One of the environment variables are not set for mailer plugin.'})
         return
       }
 
+      // optional authentication if the password was provided
+      const auth = config.get('EMAIL_PASSWORD') ?
+        {
+          user: config.get('EMAIL_FROM'),
+          pass: config.get('EMAIL_PASSWORD')
+        }
+      : {}
+
       let transporter = nodemailer.createTransport({
         service: config.get('SMTP_SERVICE'),
         host: config.get('SMTP_HOST'),
         port: config.get('SMTP_PORT'),
-        auth: {
-          user: config.get('EMAIL_FROM'),
-          pass: config.get('EMAIL_PASSWORD')
-        }
+        auth
       })
 
       let mailSubject = 'Contacting about: ' + req.body.topic
