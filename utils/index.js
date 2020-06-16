@@ -84,15 +84,16 @@ module.exports.ckanToDataPackage = function (descriptor) {
   }
 
   // Parse extras
-
-  // Keep comment if available in extras as root property (EDS specific)
-  if (!datapackage.comment) {
-    const comment = datapackage.extras.find(item => item.key === 'comment')
-    datapackage.comment = comment && comment.value
+  if (datapackage.extras) {
+    // Keep comment if available in extras as root property (EDS specific)
+    if (!datapackage.comment) {
+      const comment = datapackage.extras.find(item => item.key === 'comment')
+      datapackage.comment = comment && comment.value
+    }
+    // Filter extras so that we have only expected items (EDS specific)
+    const expectedExtras = ['resolution', 'update_frequency']
+    datapackage.extras = datapackage.extras.filter(item => expectedExtras.includes(item.key))
   }
-  // Filter extras so that we have only expected items (EDS specific)
-  const expectedExtras = ['resolution', 'update_frequency']
-  datapackage.extras = datapackage.extras.filter(item => expectedExtras.includes(item.key))
 
   // Resources
   datapackage.resources = datapackage.resources.map(resource => {
