@@ -31,9 +31,13 @@ module.exports.errorHandler = (req, res, next) => {
     )
     .then((errorContainer = {}) => {
       if ('errors' in errorContainer) {
-        res.status(500).send({
-          message: JSON.stringify(errorContainer.errors, null, 2),
-        })
+        const errorMessage = JSON.stringify(errorContainer.errors, null, 2)
+        console.log(errorMessage)
+        req.flash(
+          'info',
+          'We could not login/register you this time. Please, try again later. If the issue persists, please contact the site administration.'
+        )
+        res.redirect('/auth/registration')
         return Promise.resolve()
       }
 
