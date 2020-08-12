@@ -192,9 +192,7 @@ module.exports = function () {
   }
 
   async function prepareTextViews(name, datapackage) {
-    // const newDatapackage = await JSON.parse(JSON.stringify(datapackage))
-    const textViews = {}
-    await datapackage.resources.forEach( async (resource) => {
+    return await Promise.all(datapackage.resources.map(async (resource) => {
       // console.log(resource)
       try {
         if (resource.views[0].view_type === 'text_view') { 
@@ -222,46 +220,29 @@ module.exports = function () {
       } catch(err){
         console.log(err)
       }
-    })    
+    }))
   }
   
   
-  async function fetchTextContent(url) {
-    // try {
-      const textContent = https.get(url, async (res, error) => {
-        console.log(res.statusCode)
-        console.log(res.headers)
-        console.log(res.headers.location)
+  function fetchTextContent(url) {
+    return new Promise((resolve, reject) => {
+      https.get(url, (res, error) => {
         if (res.statusCode === 301 || res.statusCode === 302) {
           url = res.headers.location
-          https.get(url, async (res, error) => {
-            console.log(res.statusCode)
-            console.log(res.headers)
-
+          https.get(url, (res, error) => {
             var buff = new Buffer(0)
             res.on('data', function (chunk) {
-              // console.log(buff)
-              console.log(buff.length)
               if (buff.length > 10240) {
                 res.destroy()
-                // console.log(buff.toString())
-                // let textContent = buff.toString
-                // return buff.toString()
-              }
-              else {
+                resolve(buff.toString())
+              } else {
                 buff = Buffer.concat([buff, chunk])
               }
             })
-
           })
         }
       })
-      console.log(textContent)
-      return textContent
-      // console.log(urlRedirected)
-    // } catch(error) {
-    //   console.warn(error)
-    // }
+    })
   }
   
   router.get('/organization', async (req, res, next) => {
