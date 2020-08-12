@@ -5,7 +5,9 @@ const express = require('express')
 const config = require('../config')
 const dms = require('../lib/dms')
 const utils = require('../utils')
-
+const { URL } = require('url')
+const https = require("https")
+const { callbackPromise } = require('nodemailer/lib/shared')
 
 module.exports = function () {
   const router = express.Router()
@@ -135,7 +137,11 @@ module.exports = function () {
 
   router.get('/:owner/:name', async (req, res, next) => {
     let datapackage = res.locals.datapackage || null
+
     datapackage = await prepareDataPackageForRender(req.params.name, datapackage)
+
+    const textViews = await prepareTextViews(req.params.name, datapackage)
+    console.log(textViews)
 
     const profile = await Model.getProfile(req.params.owner)
     res.render('showcase.html', {
@@ -147,6 +153,7 @@ module.exports = function () {
         description: utils.processMarkdown.render(profile.description),
         avatar: profile.image_display_url || profile.image_url
       },
+      textViews,
       thisPageFullUrl: '//' + req.get('host') + req.originalUrl,
       dpId: JSON.stringify(datapackage).replace(/'/g, "&#x27;") // keep for backwards compat?
     })
@@ -184,6 +191,79 @@ module.exports = function () {
     return datapackage
   }
 
+  async function prepareTextViews(name, datapackage) {
+    // const newDatapackage = await JSON.parse(JSON.stringify(datapackage))
+    const textViews = {}
+    await datapackage.resources.forEach( async (resource) => {
+      // console.log(resource)
+      try {
+        if (resource.views[0].view_type === 'text_view') { 
+          const resourceUrl = new URL(resource.path)
+          // let textContent = ''
+          // console.log(resource.views[0].view_type || "nema view")
+          console.log(resourceUrl.href)
+          const textContent = await fetchTextContent(resourceUrl.href)
+          console.log(textContent)
+          // let resource_name = name
+          // let file_type = resource.format.toLowerCase()
+    
+          const textView = {
+            resource_name: name,
+            file_type: resource.format.toLowerCase(),
+            content: textContent
+          }
+          console.log(textView)
+          return textView
+          // console.log(textView)
+        }
+    
+        // textViews = textViews.textView.push(textView)
+        // return textViews
+      } catch(err){
+        console.log(err)
+      }
+    })    
+  }
+  
+  
+  async function fetchTextContent(url) {
+    // try {
+      const textContent = https.get(url, async (res, error) => {
+        console.log(res.statusCode)
+        console.log(res.headers)
+        console.log(res.headers.location)
+        if (res.statusCode === 301 || res.statusCode === 302) {
+          url = res.headers.location
+          https.get(url, async (res, error) => {
+            console.log(res.statusCode)
+            console.log(res.headers)
+
+            var buff = new Buffer(0)
+            res.on('data', function (chunk) {
+              // console.log(buff)
+              console.log(buff.length)
+              if (buff.length > 10240) {
+                res.destroy()
+                // console.log(buff.toString())
+                // let textContent = buff.toString
+                // return buff.toString()
+              }
+              else {
+                buff = Buffer.concat([buff, chunk])
+              }
+            })
+
+          })
+        }
+      })
+      console.log(textContent)
+      return textContent
+      // console.log(urlRedirected)
+    // } catch(error) {
+    //   console.warn(error)
+    // }
+  }
+  
   router.get('/organization', async (req, res, next) => {
     const collections = await Model.getOrganizations()
     res.render('collections-home.html', {

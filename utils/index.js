@@ -143,7 +143,8 @@ module.exports.ckanViewToDataPackageView = (ckanView) => {
     geojson_view: 'map',
     pdf_view: 'document',
     image_view: 'web',
-    webpage_view: 'web'
+    webpage_view: 'web',
+    text_view: 'text'
   }
   const dataPackageView = JSON.parse(JSON.stringify(ckanView))
   dataPackageView.specType = viewTypeToSpecType[ckanView.view_type]
@@ -574,3 +575,4 @@ module.exports.prepareDataExplorers = function (datapackage) {
 
   return newDatapackage
 }
+
