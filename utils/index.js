@@ -143,7 +143,8 @@ module.exports.ckanViewToDataPackageView = (ckanView) => {
     geojson_view: 'map',
     pdf_view: 'document',
     image_view: 'web',
-    webpage_view: 'web'
+    webpage_view: 'web',
+    text_view: 'web'
   }
   const dataPackageView = JSON.parse(JSON.stringify(ckanView))
   dataPackageView.specType = viewTypeToSpecType[ckanView.view_type]
@@ -509,6 +510,11 @@ module.exports.prepareViews = function (datapackage) {
   newDatapackage.resources.forEach(resource => {
     const resourceViews = resource.views && resource.views.map(view => {
       view.resources = [resource.name]
+      if (view.view_type == 'text_view') {
+        resource_url = resource.path
+        view_url = resource_url.slice(0, resource_url.lastIndexOf("download/")) + 'view/' + resource.views[0].id
+        view.page_url = view_url
+      }
       return view
     })
 
