@@ -510,11 +510,13 @@ module.exports.prepareViews = function (datapackage) {
   newDatapackage.resources.forEach(resource => {
     const resourceViews = resource.views && resource.views.map(view => {
       view.resources = [resource.name]
+      // Adding URL to text view on the backend so we can show that view as web view
       if (view.view_type == 'text_view') {
         resource_url = resource.path
         view_url = resource_url.slice(0, resource_url.lastIndexOf("download/")) + 'view/' + resource.views[0].id
         view.page_url = view_url
       }
+
       return view
     })
 
