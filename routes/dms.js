@@ -140,9 +140,6 @@ module.exports = function () {
 
     datapackage = await prepareDataPackageForRender(req.params.name, datapackage)
 
-    const textViews = await prepareTextViews(req.params.name, datapackage)
-    console.log(textViews)
-
     const profile = await Model.getProfile(req.params.owner)
     res.render('showcase.html', {
       title: req.params.owner + ' | ' + req.params.name,
@@ -153,7 +150,6 @@ module.exports = function () {
         description: utils.processMarkdown.render(profile.description),
         avatar: profile.image_display_url || profile.image_url
       },
-      textViews,
       thisPageFullUrl: '//' + req.get('host') + req.originalUrl,
       dpId: JSON.stringify(datapackage).replace(/'/g, "&#x27;") // keep for backwards compat?
     })
@@ -188,63 +184,47 @@ module.exports = function () {
     // Data Explorer used a slightly different spec than "datapackage-views-js":
     datapackage = utils.prepareDataExplorers(datapackage)
 
+    // Prep text views - load first 10Kb of a file to 'content' attribut which
+    // we can render as is in the template.
+    datapackage.displayResources = await Promise.all(datapackage.displayResources.map(async item => {
+      await Promise.all(item.resource.views.map(async (view, index) => {
+        if (view && view.specType === 'text') {
+          item.resource.views[index].content = await fetchTextContent(item.resource.path)
+        }
+      }))
+      return item
+    }))
+
     return datapackage
   }
 
-  async function prepareTextViews(name, datapackage) {
-    return await Promise.all(datapackage.resources.map(async (resource) => {
-      // console.log(resource)
-      try {
-        if (resource.views[0].view_type === 'text_view') { 
-          const resourceUrl = new URL(resource.path)
-          // let textContent = ''
-          // console.log(resource.views[0].view_type || "nema view")
-          console.log(resourceUrl.href)
-          const textContent = await fetchTextContent(resourceUrl.href)
-          console.log(textContent)
-          // let resource_name = name
-          // let file_type = resource.format.toLowerCase()
-    
-          const textView = {
-            resource_name: name,
-            file_type: resource.format.toLowerCase(),
-            content: textContent
-          }
-          console.log(textView)
-          return textView
-          // console.log(textView)
-        }
-    
-        // textViews = textViews.textView.push(textView)
-        // return textViews
-      } catch(err){
-        console.log(err)
-      }
-    }))
-  }
-  
-  
+
   function fetchTextContent(url) {
     return new Promise((resolve, reject) => {
       https.get(url, (res, error) => {
         if (res.statusCode === 301 || res.statusCode === 302) {
-          url = res.headers.location
-          https.get(url, (res, error) => {
-            var buff = new Buffer(0)
-            res.on('data', function (chunk) {
+          https.get(res.headers.location, (res, error) => {
+            let buff = new Buffer(0)
+            res.on('data', (chunk) => {
+              buff = Buffer.concat([buff, chunk])
               if (buff.length > 10240) {
                 res.destroy()
                 resolve(buff.toString())
-              } else {
-                buff = Buffer.concat([buff, chunk])
               }
             })
+            res.on('end', () => {
+              resolve(buff.toString())
+            } )
+          }).on('error', (e) => {
+            console.error(e)
           })
         }
+      }).on('error', (e) => {
+        console.error(e)
       })
     })
   }
-  
+
   router.get('/organization', async (req, res, next) => {
     const collections = await Model.getOrganizations()
     res.render('collections-home.html', {
