@@ -8,7 +8,13 @@
 
   <!-- Placeholder div elements for React components: preview tables -->
   {% for view in item.resource.views %}
+    {% if view.specType == 'text' %}
+    <div class="text-view overflow-scroll p-8 border border-solid rounded border-gray-300">
+      {{ view.content }}
+    </div>
+    {% else %}
     <div id="datapackage-view-{{view.id}}" class="react-me tables"></div>
+    {% endif %}
     <p class="notice">
       This is a preview version. There might be more data in the original version.
     </p>
