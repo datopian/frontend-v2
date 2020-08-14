@@ -5,7 +5,9 @@ const express = require('express')
 const config = require('../config')
 const dms = require('../lib/dms')
 const utils = require('../utils')
-
+const { URL } = require('url')
+const https = require("https")
+const { callbackPromise } = require('nodemailer/lib/shared')
 
 module.exports = function () {
   const router = express.Router()
@@ -135,6 +137,7 @@ module.exports = function () {
 
   router.get('/:owner/:name', async (req, res, next) => {
     let datapackage = res.locals.datapackage || null
+
     datapackage = await prepareDataPackageForRender(req.params.name, datapackage)
 
     const profile = await Model.getProfile(req.params.owner)
@@ -181,7 +184,45 @@ module.exports = function () {
     // Data Explorer used a slightly different spec than "datapackage-views-js":
     datapackage = utils.prepareDataExplorers(datapackage)
 
+    // Prep text views - load first 10Kb of a file to 'content' attribut which
+    // we can render as is in the template.
+    datapackage.displayResources = await Promise.all(datapackage.displayResources.map(async item => {
+      await Promise.all(item.resource.views.map(async (view, index) => {
+        if (view && view.specType === 'text') {
+          item.resource.views[index].content = await fetchTextContent(item.resource.path)
+        }
+      }))
+      return item
+    }))
+
     return datapackage
+  }
+
+
+  function fetchTextContent(url) {
+    return new Promise((resolve, reject) => {
+      https.get(url, (res, error) => {
+        if (res.statusCode === 301 || res.statusCode === 302) {
+          https.get(res.headers.location, (res, error) => {
+            let buff = new Buffer(0)
+            res.on('data', (chunk) => {
+              buff = Buffer.concat([buff, chunk])
+              if (buff.length > 10240) {
+                res.destroy()
+                resolve(buff.toString())
+              }
+            })
+            res.on('end', () => {
+              resolve(buff.toString())
+            } )
+          }).on('error', (e) => {
+            console.error(e)
+          })
+        }
+      }).on('error', (e) => {
+        console.error(e)
+      })
+    })
   }
 
   router.get('/organization', async (req, res, next) => {
