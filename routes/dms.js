@@ -202,23 +202,25 @@ module.exports = function () {
   function fetchTextContent(url) {
     return new Promise((resolve, reject) => {
       https.get(url, (res, error) => {
+        // Check if there is redirection and set new URL if yes
         if (res.statusCode === 301 || res.statusCode === 302) {
-          https.get(res.headers.location, (res, error) => {
-            let buff = new Buffer(0)
-            res.on('data', (chunk) => {
-              buff = Buffer.concat([buff, chunk])
-              if (buff.length > 10240) {
-                res.destroy()
-                resolve(buff.toString())
-              }
-            })
-            res.on('end', () => {
-              resolve(buff.toString())
-            } )
-          }).on('error', (e) => {
-            console.error(e)
-          })
+          url = res.headers.location
         }
+        https.get(url, (res, error) => {
+          let buff = new Buffer(0)
+          res.on('data', (chunk) => {
+            buff = Buffer.concat([buff, chunk])
+            if (buff.length > 10240) {
+              res.destroy()
+              resolve(buff.toString())
+            }
+          })
+          res.on('end', () => {
+            resolve(buff.toString())
+          })
+        }).on('error', (e) => {
+          console.error(e)
+        })
       }).on('error', (e) => {
         console.error(e)
       })
