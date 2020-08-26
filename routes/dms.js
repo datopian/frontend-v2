@@ -214,9 +214,21 @@ module.exports = function () {
             })
             res.on('end', () => {
               resolve(buff.toString())
-            } )
+            })
           }).on('error', (e) => {
             console.error(e)
+          })
+        } else {
+          let buff = new Buffer(0)
+          res.on('data', (chunk) => {
+            buff = Buffer.concat([buff, chunk])
+            if (buff.length > 10240) {
+              res.destroy()
+              resolve(buff.toString())
+            }
+          })
+          res.on('end', () => {
+            resolve(buff.toString())
           })
         }
       }).on('error', (e) => {
