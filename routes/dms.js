@@ -7,6 +7,7 @@ const dms = require('../lib/dms')
 const utils = require('../utils')
 const { URL } = require('url')
 const https = require("https")
+const http = require("http")
 const { callbackPromise } = require('nodemailer/lib/shared')
 
 module.exports = function () {
@@ -200,8 +201,13 @@ module.exports = function () {
 
 
   function fetchTextContent(url) {
+    let newURL = new URL(url)
+    let protocol = https
     return new Promise((resolve, reject) => {
-      https.get(url, (res, error) => {
+      if (newURL.protocol == 'http:') {
+        protocol = http
+      }
+      protocol.get(newURL, (res, error) => {
         if (res.statusCode === 301 || res.statusCode === 302) {
           https.get(res.headers.location, (res, error) => {
             let buff = new Buffer(0)
