@@ -1,4 +1,17 @@
-CKAN / Data Portal frontend. "Next Generation" architecture as a microservice so can run and customize standalone and then connect to your backend of choice. Designed for CKAN but can and is used with other systems. Built in pure Javascript (Node).
+Data Portal frontend. Designed for CKAN but usable anywhere. Microservice architecture so you can run and customize it standalone and connect to your backend of choice. Built in pure Javascript (Node).
+
+<div align="center">
+
+## 📣 Announcing Portal.js 🌀
+### [Portal.js] 🌀 is a javascript framework for building rich data portal frontends fast<br/><br/>using a modern frontend approach (JavaScript, React, SSR).
+
+### 👉 https://github.com/datopian/portal.js
+
+### Next step in the evolution of this codebase
+
+</div>
+
+[Portal.js]: https://github.com/datopian/portal.js
 
 [![Build Status](https://travis-ci.org/datopian/frontend-v2.svg?branch=master)](https://travis-ci.org/datopian/frontend-v2)
 [![Coverage Status](https://coveralls.io/repos/github/datopian/frontend-v2/badge.svg?branch=master)](https://coveralls.io/github/datopian/frontend-v2?branch=master)
