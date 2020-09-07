@@ -189,7 +189,7 @@ module.exports = function () {
     // we can render as is in the template.
     datapackage.displayResources = await Promise.all(datapackage.displayResources.map(async item => {
       await Promise.all(item.resource.views.map(async (view, index) => {
-        if (view && view.specType === 'text') {
+        if (view && view.specType === 'text' && item.resource.path) {
           item.resource.views[index].content = await fetchTextContent(item.resource.path)
         }
       }))

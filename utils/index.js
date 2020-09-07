@@ -473,17 +473,19 @@ module.exports.prepareResourcesForDisplay = function (datapackage) {
     // Use proxy path if datastore/filestore proxies are given:
     let proxy, cc_proxy
     try {
-      const resourceUrl = new URL(resource.path)
-      if (resourceUrl.host === config.get('PROXY_DATASTORE') && resource.format !== 'pdf') {
-        proxy = '/proxy/datastore' + resourceUrl.pathname + resourceUrl.search
+      if (resource.path) {
+        const resourceUrl = new URL(resource.path)
+        if (resourceUrl.host === config.get('PROXY_DATASTORE') && resource.format !== 'pdf') {
+          proxy = '/proxy/datastore' + resourceUrl.pathname + resourceUrl.search
+        }
+        if (resourceUrl.host === config.get('PROXY_FILESTORE') && resource.format !== 'pdf') {
+          proxy = '/proxy/filestore' + resourceUrl.pathname + resourceUrl.search
+        }
+        // Store a CKAN Classic proxy path
+        // https://github.com/ckan/ckan/blob/master/ckanext/resourceproxy/plugin.py#L59
+        const apiUrlObject = new URL(config.get('API_URL'))
+        cc_proxy = apiUrlObject.origin + `/dataset/${datapackage.id}/resource/${resource.id}/proxy`
       }
-      if (resourceUrl.host === config.get('PROXY_FILESTORE') && resource.format !== 'pdf') {
-        proxy = '/proxy/filestore' + resourceUrl.pathname + resourceUrl.search
-      }
-      // Store a CKAN Classic proxy path
-      // https://github.com/ckan/ckan/blob/master/ckanext/resourceproxy/plugin.py#L59
-      const apiUrlObject = new URL(config.get('API_URL'))
-      cc_proxy = apiUrlObject.origin + `/dataset/${datapackage.id}/resource/${resource.id}/proxy`
     } catch (e) {
       console.warn(e)
     }
