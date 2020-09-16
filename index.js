@@ -83,6 +83,12 @@ module.exports.makeApp = function () {
   // enable flash messages
   app.use(flash())
 
+  // Robots txt
+  app.use('/robots.txt', function (req, res, next) {
+    res.type('text/plain')
+    res.send("User-agent: *\nAllow: /");
+  });
+
   // Auth
   if (authEnabled) {
     authRoutes(app)
