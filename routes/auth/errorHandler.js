@@ -1,7 +1,7 @@
 const config = require('../../config')
 const { CommonApi, ErrorContainer } = require('@oryd/kratos-client')
 const { IncomingMessage } = require('http')
-
+const logger  = require('../../utils/logger')
 const commonApi = new CommonApi(config.get('kratos').admin)
 
 module.exports.errorHandler = (req, res, next) => {
@@ -32,7 +32,7 @@ module.exports.errorHandler = (req, res, next) => {
     .then((errorContainer = {}) => {
       if ('errors' in errorContainer) {
         const errorMessage = JSON.stringify(errorContainer.errors, null, 2)
-        console.log(errorMessage)
+        logger.warn(errorMessage)
         req.flash(
           'info',
           'We could not login/register you this time. Please, try again later. If the issue persists, please contact the site administration.'

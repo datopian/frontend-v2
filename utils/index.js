@@ -4,6 +4,7 @@ const { URL } = require('url')
 const bytes = require('bytes')
 const slugify = require('slugify')
 const config = require('../config')
+const logger = require('./logger')
 
 module.exports.ckanToDataPackage = function (descriptor) {
   // Make a copy
@@ -107,7 +108,7 @@ module.exports.ckanToDataPackage = function (descriptor) {
           try {
             resource.fields = JSON.parse(resource.fields)
           } catch (e) {
-            console.log('Could not parse resource.fields')
+            logger.info('Could not parse resource.fields')
           }
         }
         resource.schema = {fields: resource.fields}
@@ -354,7 +355,7 @@ module.exports.processMarkdown = require('markdown-it')({
  * or in node_moduels directory
  **/
 function loadExtension(extension, extensionsPath) {
-  console.log(extension) // stdout
+  logger.info(extension) // stdout
   const nodeModulesPath = config.get('NODE_MODULES_PATH')
   const userResource = path.join(process.cwd(), extensionsPath, extension, 'index.js')
   const npmResource = path.join(process.cwd(), nodeModulesPath, extension)
@@ -376,7 +377,7 @@ function loadExtension(extension, extensionsPath) {
  * or via node_modules
  **/
 module.exports.loadTheme = function (app) {
-  console.log('Loading configured theme...')
+  logger.info('Loading configured theme...')
 
   try {
     const theme = config.get('THEME')
@@ -385,7 +386,7 @@ module.exports.loadTheme = function (app) {
     loadExtension(theme, themePath, 'theme')(app)
   } catch (e) {
     const theme = config.get('THEME')
-    console.warn('WARNING: Failed to load theme', theme, e)
+    logger.warn('WARNING: Failed to load theme', theme, e)
   }
 }
 
@@ -394,7 +395,7 @@ module.exports.loadTheme = function (app) {
  * or via node_modules folder
  **/
 module.exports.loadPlugins = function (app) {
-  console.log('Loading configured plugins...')
+  logger.info('Loading configured plugins...')
 
   try {
     const plugins = config.get('PLUGINS')
@@ -408,7 +409,7 @@ module.exports.loadPlugins = function (app) {
     })
   } catch (e) {
     const plugins = config.get('PLUGINS').split(" ") || []
-    console.warn('WARNING: Failed to load configured plugins', plugins, e)
+    logger.warn('WARNING: Failed to load configured plugins', plugins, e)
     return []
   }
 }
@@ -487,7 +488,7 @@ module.exports.prepareResourcesForDisplay = function (datapackage) {
         cc_proxy = apiUrlObject.origin + `/dataset/${datapackage.id}/resource/${resource.id}/proxy`
       }
     } catch (e) {
-      console.warn(e)
+      logger.warn(e)
     }
     const displayResource = {
       resource,

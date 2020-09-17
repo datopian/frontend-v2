@@ -9,6 +9,7 @@ const session = require('express-session')
 const flash = require('connect-flash')
 const i18n = require("i18n")
 const moment = require('moment')
+const logger = require('./utils/logger')
 
 const config = require('./config')
 const dmsRoutes = require('./routes/dms')
@@ -24,7 +25,7 @@ module.exports.makeApp = function () {
   if (config.get('env') === 'development') {
     const mocks = require('./fixtures')
     mocks.initMocks()
-    console.warn('You are activated the mocks.')
+    logger.warn('You are activated the mocks.')
   }
   // Explicitely set views location - this is needed for Zeit to work
   app.set('views', path.join(__dirname, '/views'))
@@ -119,7 +120,7 @@ module.exports.makeApp = function () {
       })
       return
     } else {
-      console.error(err)
+      logger.error(err)
       res.status(500).send('Something failed. Please, try again later.')
     }
   })
@@ -141,7 +142,7 @@ module.exports.makeApp = function () {
     try {
       return moment(date).format('YYYY[-]MM[-]DD')
     } catch (e) {
-      console.warn('Failed to format date', e)
+      logger.warn('Failed to format date', e)
       return date || '--'
     }
   })
@@ -150,7 +151,7 @@ module.exports.makeApp = function () {
     try {
       return moment(date).fromNow()
     } catch (e) {
-      console.warn('Failed to format date', e)
+      logger.warn('Failed to format date', e)
       return date || '--'
     }
   })
@@ -159,7 +160,7 @@ module.exports.makeApp = function () {
     try {
       return processMarkdown.render(str)
     } catch (e) {
-      console.warn('Failed to format markdown', e)
+      logger.warn('Failed to format markdown', e)
       return str
     }
   })
@@ -168,7 +169,7 @@ module.exports.makeApp = function () {
     try {
       return str.match(regExp)
     } catch (e) {
-      console.warn('Failed to split string by regular expression', e)
+      logger.warn('Failed to split string by regular expression', e)
       return str
     }
   })
@@ -177,7 +178,7 @@ module.exports.makeApp = function () {
     try {
       return resources.find(resource => resource.name === name)
     } catch (e) {
-      console.warn('Failed to find resource', e)
+      logger.warn('Failed to find resource', e)
       return str
     }
   })
@@ -190,7 +191,7 @@ module.exports.start = function () {
     const app = module.exports.makeApp()
 
     let server = app.listen(app.get('port'), () => {
-      console.log('Listening on :' + app.get('port'))
+      logger.info('Listening on :' + app.get('port'))
       resolve(server)
     })
     app.shutdown = function () {
