@@ -9,7 +9,7 @@ const { URL } = require('url')
 const https = require("https")
 const http = require("http")
 const { callbackPromise } = require('nodemailer/lib/shared')
-
+const logger = require('../utils/logger')
 module.exports = function () {
   const router = express.Router()
   const Model = new dms.DmsModel(config)
@@ -222,7 +222,7 @@ module.exports = function () {
               resolve(buff.toString())
             })
           }).on('error', (e) => {
-            console.error(e)
+            logger.error(e)
           })
         } else {
           let buff = new Buffer(0)
@@ -238,7 +238,7 @@ module.exports = function () {
           })
         }
       }).on('error', (e) => {
-        console.error(e)
+        logger.error(e)
       })
     })
   }

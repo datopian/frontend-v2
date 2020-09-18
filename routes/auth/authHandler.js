@@ -1,4 +1,6 @@
 const config = require('../../config')
+const logger = require('../../utils/logger')
+
 const {
   AdminApi,
   FormField,
@@ -22,7 +24,7 @@ module.exports.authHandler = (type) => (
   // The request is used to identify the login and registration request and
   // return data like the csrf_token and so on.
   if (!request) {
-    console.log('No request found in URL, initializing auth flow.')
+    logger.warn('No request found in URL, initializing auth flow.')
     res.redirect(`${config.get('SITE_URL')}/.ory/kratos/public/self-service/browser/flows/${type}`)
     return
   }
@@ -56,7 +58,7 @@ module.exports.authHandler = (type) => (
       next()
     })
     .catch(err => {
-      console.error(err)
+      logger.error(err)
       next(err)
     })
 }

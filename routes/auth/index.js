@@ -6,6 +6,7 @@ const config = require('../../config')
 const { authHandler } = require('./authHandler')
 const { dashboard } = require('./dashboard')
 const { errorHandler } = require('./errorHandler')
+const logger = require('../../utils/logger')
 
 const protectOathKeeper = jwt({
   // Dynamically provide a signing key based on the kid in the header and the signing keys provided by the JWKS endpoint.
@@ -77,7 +78,7 @@ module.exports = function(app) {
         res.redirect('/auth/registration')
       })
       .catch(err => {
-        console.error(err)
+        logger.error(err)
         next(err)
       })
   })
