@@ -118,13 +118,17 @@ module.exports.makeApp = function () {
     dmsRoutes()
   ])
 
-  app.use((err, req, res, next) => {
+  app.use(async (err, req, res, next) => {
     if (err.status >= 400 && err.status < 500) {
+      logger.warn(`${err.statusText} ${err.status} | ${await err.text()}`)
       res.status(err.status).render('404.html', {
         message: err.statusText,
         status: err.status
       })
       return
+    } else if (err.status >= 500) {
+      logger.error(`${err.statusText} ${err.status} | ${await err.text()}`)
+      res.status(500).send('Something failed. Please, try again later.')
     } else {
       logger.error(err)
       res.status(500).send('Something failed. Please, try again later.')
