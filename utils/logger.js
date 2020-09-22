@@ -1,10 +1,10 @@
-const winston = require('winston');
+const winston = require('winston')
 const config = require('../config/index')
 
 const customFormat = winston.format.printf((info) => {
-  const { level, message, ...meta } = info;  
+  const { level, message, ...meta } = info
   return `${meta.timestamp} [${level}] ${message}`
-});
+})
 
 const logger = winston.createLogger({
   level: config.get('LOG_LEVEL') || 'info',
@@ -23,6 +23,6 @@ const logger = winston.createLogger({
   rejectionHandlers: [
     new winston.transports.Console()
   ]
-});
+})
 
 module.exports = logger

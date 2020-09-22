@@ -9,18 +9,19 @@ const session = require('express-session')
 const flash = require('connect-flash')
 const i18n = require("i18n")
 const moment = require('moment')
-const logger = require('./utils/logger')
 
 const config = require('./config')
 const dmsRoutes = require('./routes/dms')
 const authRoutes = require('./routes/auth')
 const {loadTheme, loadPlugins, processMarkdown} = require('./utils')
+const logger = require('./utils/logger')
 
 module.exports.makeApp = function () {
   const app = express()
   app.set('config', config)
   app.set('dms', require('./lib/dms'))
   app.set('utils', require('./utils/index'))
+  app.set('logger', logger)
   app.set('port', config.get('app:port'))
   if (config.get('env') === 'development') {
     const mocks = require('./fixtures')
