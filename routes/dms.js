@@ -64,6 +64,12 @@ module.exports = function () {
   // End of redirects
   // -----------------------------------------------
 
+  // Robots txt
+  router.get('/robots.txt', (req, res) => {
+    res.type('text/plain')
+    res.send("User-agent: *\nAllow: /");
+  });
+
   router.get('/', async (req, res) => {
     // If no CMS is enabled, show home page without posts
     res.render('home.html', {
