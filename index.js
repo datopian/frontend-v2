@@ -46,7 +46,6 @@ module.exports.makeApp = function () {
   const themeName = config.get('THEME')
   if (themeName) {
     app.use('/static', express.static(path.join(__dirname, `/${themeDir}/${themeName}/public`)))
-    // app.use('/robots.txt, 
   }
   // Default assets
   app.use('/static', express.static(path.join(__dirname, '/public')))
