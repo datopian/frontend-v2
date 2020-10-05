@@ -15,7 +15,6 @@ const dmsRoutes = require('./routes/dms')
 const authRoutes = require('./routes/auth')
 const {loadTheme, loadPlugins, processMarkdown} = require('./utils')
 const logger = require('./utils/logger')
-const fs = require('fs')
 
 module.exports.makeApp = function () {
   const app = express()
@@ -85,19 +84,6 @@ module.exports.makeApp = function () {
 
   // enable flash messages
   app.use(flash())
-
-  // Robots txt
-  app.get('/robots.txt', async function (req, res, next) {
-    // robots.txt file should be placed in the theme /public folder
-    let robotsPath = path.join(__dirname, `./${themeDir}/${themeName}/public/robots.txt`)
-    if (fs.existsSync(robotsPath)) {
-      res.sendFile(`./${themeDir}/${themeName}/public/robots.txt`, { root: __dirname })
-    } else {
-      // if robots.txt does not exists
-      res.type('text/plain')
-      res.send("User-agent: *\nAllow: /");
-    }
-  });
 
   // Auth
   if (authEnabled) {
