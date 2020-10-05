@@ -15,6 +15,7 @@ const dmsRoutes = require('./routes/dms')
 const authRoutes = require('./routes/auth')
 const {loadTheme, loadPlugins, processMarkdown} = require('./utils')
 const logger = require('./utils/logger')
+const fs = require('fs')
 
 module.exports.makeApp = function () {
   const app = express()
@@ -45,6 +46,7 @@ module.exports.makeApp = function () {
   const themeName = config.get('THEME')
   if (themeName) {
     app.use('/static', express.static(path.join(__dirname, `/${themeDir}/${themeName}/public`)))
+    // app.use('/robots.txt, 
   }
   // Default assets
   app.use('/static', express.static(path.join(__dirname, '/public')))
@@ -86,9 +88,16 @@ module.exports.makeApp = function () {
   app.use(flash())
 
   // Robots txt
-  app.use('/robots.txt', function (req, res, next) {
-    res.type('text/plain')
-    res.send("User-agent: *\nAllow: /");
+  app.get('/robots.txt', async function (req, res, next) {
+    // robots.txt file should be placed in the theme /public folder
+    let robotsPath = path.join(__dirname, `./${themeDir}/${themeName}/public/robots.txt`)
+    if (fs.existsSync(robotsPath)) {
+      res.sendFile(`./${themeDir}/${themeName}/public/robots.txt`, { root: __dirname })
+    } else {
+      // if robots.txt does not exists
+      res.type('text/plain')
+      res.send("User-agent: *\nAllow: /");
+    }
   });
 
   // Auth
