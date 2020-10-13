@@ -381,11 +381,15 @@ module.exports.loadTheme = function (app) {
 
   try {
     const theme = config.get('THEME')
+    logger.info('Theme: ' + theme)
     const themePath = config.get('THEME_DIR')
+    logger.info('Theme Path: ' + themePath)
     if (!theme) return
     loadExtension(theme, themePath, 'theme')(app)
   } catch (e) {
     const theme = config.get('THEME')
+    logger.warn('Theme: ' + theme)
+    logger.error(e)
     logger.warn('WARNING: Failed to load theme', theme, e)
   }
 }
