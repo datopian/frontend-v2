@@ -388,9 +388,10 @@ module.exports.loadTheme = function (app) {
     loadExtension(theme, themePath, 'theme')(app)
   } catch (e) {
     const theme = config.get('THEME')
+    logger.warn('WARNING: Failed to load theme')
     logger.warn('Theme: ' + theme)
     logger.error(e)
-    logger.warn('WARNING: Failed to load theme', theme, e)
+    
   }
 }
 
