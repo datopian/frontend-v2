@@ -41,7 +41,7 @@ module.exports = function (app) {
         image: post.featured_image,
         categories: post.categories ? Object.keys(post.categories) : [],
         caption: attachments_caption.join(''),
-        alt: attachments_alt.join('')       
+        alt: attachments_alt.join('')
       }
     })
     res.locals.posts = posts
