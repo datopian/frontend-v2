@@ -26,11 +26,10 @@ module.exports = function (app) {
       fields: 'slug,title,content,date,modified,featured_image,categories,attachments'
     })
     posts = posts.map(post => {
-      const attachments_id = post.attachments ? Object.keys(post.attachments) : []
-      const attachments_caption = post.attachments[attachments_id[0]] ?
-        Object.values(post.attachments[attachments_id[0]].caption) : []
-      const attachments_alt = post.attachments[attachments_id[0]] ?
-        Object.values(post.attachments[attachments_id[0]].alt) : []
+      const postAttachments = post.attachments ? Object.values(post.attachments) : []
+      const featuredImageAttachments = Object
+        .values(postAttachments)
+        .find(attachment => attachment.URL === post.featured_image)
 
       return {
         slug: post.slug,
@@ -40,8 +39,8 @@ module.exports = function (app) {
         modified: moment(post.modified).format('Do MMMM YYYY'),
         image: post.featured_image,
         categories: post.categories ? Object.keys(post.categories) : [],
-        caption: attachments_caption.join(''),
-        alt: attachments_alt.join('')
+        caption: featuredImageAttachments.caption,
+        alt: featuredImageAttachments.alt
       }
     })
     res.locals.posts = posts
@@ -70,11 +69,10 @@ module.exports = function (app) {
     res.locals.originalUrl = req.originalUrl
 
     res.locals.posts = response.posts.map(post => {
-      const attachments_id = post.attachments ? Object.keys(post.attachments) : []
-      const attachments_caption = post.attachments[attachments_id[0]] ?
-        Object.values(post.attachments[attachments_id[0]].caption) : []
-      const attachments_alt = post.attachments[attachments_id[0]] ?
-        Object.values(post.attachments[attachments_id[0]].alt) : []
+      const postAttachments = post.attachments ? Object.values(post.attachments) : []
+      const featuredImageAttachments = Object
+        .values(postAttachments)
+        .find(attachment => attachment.URL === post.featured_image)
 
       return {
         slug: post.slug,
@@ -84,8 +82,8 @@ module.exports = function (app) {
         modified: moment(post.modified).format('Do MMMM YYYY'),
         image: post.featured_image,
         categories: post.categories ? Object.keys(post.categories) : [],
-        caption: attachments_caption.join(''),
-        alt: attachments_caption.join('')
+        caption: featuredImageAttachments.caption,
+        alt: featuredImageAttachments.alt
       }
     })
     next()
@@ -95,11 +93,10 @@ module.exports = function (app) {
     const slug = req.params.page
     try {
       const post = await Model.getPost({slug})
-      const attachments_id = post.attachments ? Object.keys(post.attachments) : []
-      const attachments_caption = post.attachments[attachments_id[0]] ?
-        Object.values(post.attachments[attachments_id[0]].caption) : []
-      const attachments_alt = post.attachments[attachments_id[0]] ?
-        Object.values(post.attachments[attachments_id[0]].alt) : []
+      const postAttachments = post.attachments ? Object.values(post.attachments) : []
+      const featuredImageAttachments = Object
+        .values(postAttachments)
+        .find(attachment => attachment.URL === post.featured_image) || []
 
       res.render('post.html', {
         slug: post.slug,
@@ -110,8 +107,8 @@ module.exports = function (app) {
         image: post.featured_image,
         thisPageFullUrl: req.protocol + '://' + req.get('host') + req.originalUrl,
         categories: post.categories ? Object.keys(post.categories) : [],
-        caption: attachments_caption.join(''),
-        alt: attachments_alt.join('')
+        caption: featuredImageAttachments.caption,
+        alt: featuredImageAttachments.alt
       })
     } catch (err) {
       next(err)
