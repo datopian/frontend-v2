@@ -39,8 +39,8 @@ module.exports = function (app) {
         modified: moment(post.modified).format('Do MMMM YYYY'),
         image: post.featured_image,
         categories: post.categories ? Object.keys(post.categories) : [],
-        caption: featuredImageAttachments.caption,
-        alt: featuredImageAttachments.alt
+        imageCaption: featuredImageAttachments.caption,
+        imageAlt: featuredImageAttachments.alt
       }
     })
     res.locals.posts = posts
@@ -82,8 +82,8 @@ module.exports = function (app) {
         modified: moment(post.modified).format('Do MMMM YYYY'),
         image: post.featured_image,
         categories: post.categories ? Object.keys(post.categories) : [],
-        caption: featuredImageAttachments.caption,
-        alt: featuredImageAttachments.alt
+        imageCaption: featuredImageAttachments.caption,
+        imageAlt: featuredImageAttachments.alt
       }
     })
     next()
@@ -107,8 +107,8 @@ module.exports = function (app) {
         image: post.featured_image,
         thisPageFullUrl: req.protocol + '://' + req.get('host') + req.originalUrl,
         categories: post.categories ? Object.keys(post.categories) : [],
-        caption: featuredImageAttachments.caption,
-        alt: featuredImageAttachments.alt
+        imageCaption: featuredImageAttachments.caption,
+        imageAlt: featuredImageAttachments.alt
       })
     } catch (err) {
       next(err)
