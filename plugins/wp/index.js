@@ -29,7 +29,7 @@ module.exports = function (app) {
       const postAttachments = post.attachments ? Object.values(post.attachments) : []
       const featuredImageAttachments = Object
         .values(postAttachments)
-        .find(attachment => attachment.URL === post.featured_image)
+        .find(attachment => attachment.URL === post.featured_image) || {}
 
       return {
         slug: post.slug,
@@ -72,7 +72,7 @@ module.exports = function (app) {
       const postAttachments = post.attachments ? Object.values(post.attachments) : []
       const featuredImageAttachments = Object
         .values(postAttachments)
-        .find(attachment => attachment.URL === post.featured_image)
+        .find(attachment => attachment.URL === post.featured_image) || {}
 
       return {
         slug: post.slug,
@@ -96,7 +96,7 @@ module.exports = function (app) {
       const postAttachments = post.attachments ? Object.values(post.attachments) : []
       const featuredImageAttachments = Object
         .values(postAttachments)
-        .find(attachment => attachment.URL === post.featured_image) || []
+        .find(attachment => attachment.URL === post.featured_image) || {}
 
       res.render('post.html', {
         slug: post.slug,
