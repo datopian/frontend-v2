@@ -27,7 +27,7 @@ module.exports = function (app) {
     })
     posts = posts.map(post => {
       const postAttachments = post.attachments ? Object.values(post.attachments) : []
-      const featuredImageAttachments = Object
+      const featuredImageAttachment = Object
         .values(postAttachments)
         .find(attachment => attachment.URL === post.featured_image) || {}
 
@@ -39,8 +39,8 @@ module.exports = function (app) {
         modified: moment(post.modified).format('Do MMMM YYYY'),
         image: post.featured_image,
         categories: post.categories ? Object.keys(post.categories) : [],
-        imageCaption: featuredImageAttachments.caption,
-        imageAlt: featuredImageAttachments.alt
+        imageCaption: featuredImageAttachment.caption,
+        imageAlt: featuredImageAttachment.alt
       }
     })
     res.locals.posts = posts
@@ -70,7 +70,7 @@ module.exports = function (app) {
 
     res.locals.posts = response.posts.map(post => {
       const postAttachments = post.attachments ? Object.values(post.attachments) : []
-      const featuredImageAttachments = Object
+      const featuredImageAttachment = Object
         .values(postAttachments)
         .find(attachment => attachment.URL === post.featured_image) || {}
 
@@ -82,8 +82,8 @@ module.exports = function (app) {
         modified: moment(post.modified).format('Do MMMM YYYY'),
         image: post.featured_image,
         categories: post.categories ? Object.keys(post.categories) : [],
-        imageCaption: featuredImageAttachments.caption,
-        imageAlt: featuredImageAttachments.alt
+        imageCaption: featuredImageAttachment.caption,
+        imageAlt: featuredImageAttachment.alt
       }
     })
     next()
@@ -94,7 +94,7 @@ module.exports = function (app) {
     try {
       const post = await Model.getPost({slug})
       const postAttachments = post.attachments ? Object.values(post.attachments) : []
-      const featuredImageAttachments = Object
+      const featuredImageAttachment = Object
         .values(postAttachments)
         .find(attachment => attachment.URL === post.featured_image) || {}
 
@@ -107,8 +107,8 @@ module.exports = function (app) {
         image: post.featured_image,
         thisPageFullUrl: req.protocol + '://' + req.get('host') + req.originalUrl,
         categories: post.categories ? Object.keys(post.categories) : [],
-        imageCaption: featuredImageAttachments.caption,
-        imageAlt: featuredImageAttachments.alt
+        imageCaption: featuredImageAttachment.caption,
+        imageAlt: featuredImageAttachment.alt
       })
     } catch (err) {
       next(err)
