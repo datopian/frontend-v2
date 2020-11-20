@@ -195,8 +195,12 @@ module.exports = function () {
     // we can render as is in the template.
     datapackage.displayResources = await Promise.all(datapackage.displayResources.map(async item => {
       await Promise.all(item.resource.views.map(async (view, index) => {
-        if (view && view.specType === 'text' && item.resource.path) {
-          item.resource.views[index].content = await fetchTextContent(item.resource.path)
+        try {
+          if (view && view.specType === 'text' && item.resource.path) {
+            item.resource.views[index].content = await fetchTextContent(item.resource.path)
+          }
+        } catch(error) {
+          item.resource.views[index].content = 'There is no data for this view type'
         }
       }))
       return item
@@ -229,6 +233,7 @@ module.exports = function () {
             })
           }).on('error', (e) => {
             logger.error(e)
+            reject()
           })
         } else {
           let buff = new Buffer(0)
@@ -245,6 +250,7 @@ module.exports = function () {
         }
       }).on('error', (e) => {
         logger.error(e)
+        reject()
       })
     })
   }
