@@ -113,6 +113,7 @@ module.exports.makeApp = function () {
     dmsRoutes()
   ])
 
+ // Redirect to 404 page for other invalid URL request.
   app.get("*", function (req, res, next) {
     let err = new Error()
     err.status = 404
