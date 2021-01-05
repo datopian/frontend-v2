@@ -22,8 +22,10 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - run: yarn
-    - run: yarn test:report
+    - name: yarn, yarn test
+      run: |
+        yarn
+        yarn test:report
     - name: Coveralls
       uses: coverallsapp/github-action@master
       with:
