@@ -15,7 +15,7 @@
     "dev": "nodemon -e 'js html' index.js",
     "test": "nyc ava",
     "test:watch": "nyc ava --watch",
-    "test:report": "nyc ava && nyc report --report-dir ./coverage  --reporter=lcov"
+    "test:report": "nyc ava && nyc report --reporter=text-lcov | coveralls"
   },
   "ava": {
     "files": [
