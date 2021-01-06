@@ -73,6 +73,7 @@ Description of each variable:
 * `NODE_ENV` - this is just a node environment to indicate in which environment you are. If it is unset or `development`, the app will use mocked APIs. If you're working against live endpoint, set this config to, e.g., `staging`.
 * `THEME` - name of your theme.
 * `PLUGINS` - list of space separated plugins, e.g., if you're using wordpress and dashboard: `wp dashboard`.
+* `REDIS_URL` - Provide redis url for the production envionment inorder store session related data on Redis database. 
 * TODO: other configs
 
 ### Use custom path to your `.env` file
