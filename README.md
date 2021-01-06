@@ -13,7 +13,7 @@ Data Portal frontend. Designed for CKAN but usable anywhere. Microservice archit
 
 [Portal.js]: https://github.com/datopian/portal.js
 
-[![Build Status](https://travis-ci.org/datopian/frontend-v2.svg?branch=master)](https://travis-ci.org/datopian/frontend-v2)
+![CI tests](https://github.com/datopian/frontend-v2/workflows/CI%20tests/badge.svg)
 [![Coverage Status](https://coveralls.io/repos/github/datopian/frontend-v2/badge.svg?branch=master)](https://coveralls.io/github/datopian/frontend-v2?branch=master)
 
 ## Installation
