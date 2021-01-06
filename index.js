@@ -113,6 +113,17 @@ module.exports.makeApp = function () {
     dmsRoutes()
   ])
 
+ // Redirect to 404 page for other invalid URL request.
+  app.get('*', function (req, res, next) {
+    let err = new Error()
+    err.status = 404
+    err.statusText = 'REQUEST URL NOT FOUND'
+    err.text = () => {
+      return 'REQUEST URL NOT FOUND'
+    }
+    next(err)
+  })
+
   app.use(async (err, req, res, next) => {
     if (err.status >= 400 && err.status < 500) {
       logger.warn(`${err.statusText} ${err.status} | ${await err.text()}`)
