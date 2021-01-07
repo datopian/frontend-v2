@@ -269,7 +269,7 @@ module.exports = function () {
     // if not a valid profile, send them on the way
     if (!profile.created) {
       return res.status(404).render('404.html', {
-        message: `Page found: ${owner}`,
+        message: `PAGE NOT FOUND: ${owner}`,
         status: 404
       })
     }
