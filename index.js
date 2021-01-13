@@ -117,9 +117,9 @@ module.exports.makeApp = function () {
   app.get('*', function (req, res, next) {
     let err = new Error()
     err.status = 404
-    err.statusText = 'REQUEST URL NOT FOUND'
+    err.statusText = 'PAGE NOT FOUND'
     err.text = () => {
-      return 'REQUEST URL NOT FOUND'
+      return 'PAGE NOT FOUND'
     }
     next(err)
   })
