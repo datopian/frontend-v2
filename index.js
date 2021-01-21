@@ -99,7 +99,7 @@ module.exports.makeApp = function () {
     if (!req.session) {
       var err = new Error();
       err.status = 500;
-      err.statusText = 'SESSION EXPIRED OR NOT FOUND'
+      err.statusText = 'Something has failed. Please, try again later.'
       err.text = () => {
         return 'Failed to configure session.'
       }
