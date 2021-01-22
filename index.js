@@ -9,12 +9,14 @@ const session = require('express-session')
 const flash = require('connect-flash')
 const i18n = require("i18n")
 const moment = require('moment')
+const redis = require('redis')
 
 const config = require('./config')
 const dmsRoutes = require('./routes/dms')
 const authRoutes = require('./routes/auth')
 const {loadTheme, loadPlugins, processMarkdown} = require('./utils')
 const logger = require('./utils/logger')
+const RedisStore = require('connect-redis')(session)
 
 module.exports.makeApp = function () {
   const app = express()
@@ -63,9 +65,10 @@ module.exports.makeApp = function () {
   app.use(cors())
   app.use(cookieParser())
   app.use(i18n.init)
-  app.use(session({
+
+  // Default session options
+  let sessionOptions = {
     secret: config.get('SESSION_SECRET'),
-    resave: true,
     rolling: true,
     saveUninitialized: false,
     cookie: {
@@ -73,7 +76,38 @@ module.exports.makeApp = function () {
         ? parseInt(config.get("SESSION_COOKIE_MAX_AGE"))
         : 60 * 60 * 1000
     }
-  }))
+  }
+
+  // Redis session store for production
+  if (config.get('REDIS_URL')) {
+    const redisClient = redis.createClient({
+      url: config.get('REDIS_URL')
+    })
+    
+    redisClient.on('error', err => {
+      logger.error(err);
+    });
+
+    sessionOptions.resave = false
+    sessionOptions.store = new RedisStore({ client: redisClient })
+  }
+
+  app.use(session({ ...sessionOptions }))
+
+  // Handling session error
+  app.use(function (req, res, next) {
+    if (!req.session) {
+      var err = new Error();
+      err.status = 500;
+      err.statusText = 'Something has failed. Please, try again later.'
+      err.text = () => {
+        return 'Failed to configure session.'
+      }
+      next(err)
+    }
+    next() 
+  })
+
 
   // Configure Moment locale
   app.use(function (req, res, next) {
