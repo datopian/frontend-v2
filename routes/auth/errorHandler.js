@@ -1,8 +1,11 @@
 const config = require('../../config')
-const { CommonApi, ErrorContainer } = require('@oryd/kratos-client')
-const { IncomingMessage } = require('http')
+
+const { Configuration, PublicApi } = require('@ory/kratos-client')
+
 const logger  = require('../../utils/logger')
-const commonApi = new CommonApi(config.get('kratos').admin)
+
+
+const kratos = new PublicApi(new Configuration({ basePath: config.get('kratos').public }));
 
 module.exports.errorHandler = (req, res, next) => {
   const error = req.query.error
@@ -13,7 +16,7 @@ module.exports.errorHandler = (req, res, next) => {
     return
   }
 
-  commonApi
+  kratos
     .getSelfServiceError(error)
     .then(
       ({
@@ -49,3 +52,4 @@ module.exports.errorHandler = (req, res, next) => {
     })
     .catch(err => next(err))
 }
+

@@ -1,7 +1,7 @@
 const request = require('request')
 const jwks = require('jwks-rsa')
 const jwt = require('express-jwt')
-const { FormField, PublicApi, AdminApi } = require('@oryd/kratos-client')
+const {  PublicApi, Configuration} = require('@ory/kratos-client')
 const config = require('../../config')
 const { authHandler } = require('./authHandler')
 const { dashboard } = require('./dashboard')
@@ -18,16 +18,18 @@ const protectOathKeeper = jwt({
   algorithms: ['RS256'],
 })
 
-const publicEndpoint = new PublicApi(config.get('kratos').public)
-const adminEndpoint = new AdminApi(config.get('kratos').admin)
+const kratos = new PublicApi(new Configuration({ basePath: config.get('kratos').public }))
+
 const protectProxy = (req, res, next) => {
   // When using ORY Oathkeeper, the redirection is done by ORY Oathkeeper.
   // Since we're checking for the session ourselves here, we redirect here
   // if the session is invalid.
-  publicEndpoint
-    .whoami(req)
-    .then(({ body, response }) => {
-      req.user = {session: body};
+  kratos
+    .whoami(
+      req.header("Cookie"),
+      req.header("Authorization")
+  ).then(({ data: session }) => {
+      req.user = { session };
       next()
     })
     .catch(() => {
@@ -40,13 +42,16 @@ const protect = protectProxy
 module.exports = function(app) {
   app.use((req, res, next) => {
     if (req.cookies.ory_kratos_session) {
-      publicEndpoint
-        .whoami(req)
-        .then(({ body, response }) => {
+      kratos
+        .whoami(
+          req.header("Cookie"),
+          req.header("Authorization"),
+        )
+        .then(({ status, data: flow }) => {
           res.locals.logged_in = true;
-          res.locals.userEmail = body.identity.traits.email;
-          res.locals.userId = body.identity.id;
-          res.locals.userName = body.identity.traits.name;
+          res.locals.userEmail = flow.identity.traits.email;
+          res.locals.userId = flow.identity.id;
+          res.locals.userName = flow.identity.traits.name;
           next()
         })
         .catch(() => {
@@ -56,6 +61,8 @@ module.exports = function(app) {
       next()
     }
   })
+
+
   app.use('/.ory/kratos/public/', (req, res, next) => {
     const url =
       config.get('kratos').public + req.url.replace('/.ory/kratos/public', '')
@@ -66,6 +73,7 @@ module.exports = function(app) {
       )
       .pipe(res)
   })
+
   app.get('/dashboard', protect, dashboard)
   app.get('/auth/registration', authHandler('registration'))
   app.get('/auth/login', authHandler('login'))
