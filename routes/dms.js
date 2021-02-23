@@ -21,7 +21,7 @@ module.exports = function () {
   // -----------------------------------------------
   // Redirects
  
-  const xssSenitize = (value) => {
+  const xssSanitize = (value) => {
     const window = new JSDOM('').window;
     const DOMPurify = createDOMPurify(window);
     return DOMPurify.sanitize(value, { ALLOWED_TAGS: [] });
@@ -36,7 +36,7 @@ module.exports = function () {
     res.redirect(301, destination)
   })
 
-  router.get('/dataset/:name', param(['name']).customSanitizer(xssSenitize),  async (req, res, next) => {
+  router.get('/dataset/:name', param(['name']).customSanitizer(xssSanitize),  async (req, res, next) => {
     // Identify owner org name
     let datapackage = await Model.getPackage(req.params.name)
 
@@ -44,7 +44,7 @@ module.exports = function () {
     res.redirect(301, destination)
   })
 
-  router.get('/dataset/:name/resource/:id', param(['name','id']).customSanitizer(xssSenitize), async (req, res, next) => {
+  router.get('/dataset/:name/resource/:id', param(['name','id']).customSanitizer(xssSanitize), async (req, res, next) => {
     // Identify owner org name
     let datapackage = await Model.getPackage(req.params.name)
 
@@ -57,7 +57,7 @@ module.exports = function () {
     res.redirect(301, destination)
   })
 
-  router.get('/organization/:owner', param(['owner']).customSanitizer(xssSenitize), (req, res) => {
+  router.get('/organization/:owner', param(['owner']).customSanitizer(xssSanitize), (req, res) => {
     const destination = '/' + req.params.owner
     res.redirect(301, destination)
   })
@@ -66,7 +66,7 @@ module.exports = function () {
     res.redirect(301, '/collections')
   })
 
-  router.get('/group/:collection', param(['collection']).customSanitizer(xssSenitize), (req, res) => {
+  router.get('/group/:collection', param(['collection']).customSanitizer(xssSanitize), (req, res) => {
     const destination = '/collections/' + req.params.collection
     res.redirect(301, destination)
   })
@@ -124,7 +124,7 @@ module.exports = function () {
   })
 
   router.get('/collections/:collectionName',
-    param(['collectionName']).customSanitizer(xssSenitize), async (req, res) => {
+    param(['collectionName']).customSanitizer(xssSanitize), async (req, res) => {
     // Get collection details
     const name = req.params.collectionName
     const collection = await Model.getCollection(name)
@@ -153,7 +153,7 @@ module.exports = function () {
     })
   })
 
-  router.get('/:owner/:name', param(['owner', 'name']).customSanitizer(xssSenitize),
+  router.get('/:owner/:name', param(['owner', 'name']).customSanitizer(xssSanitize),
     async (req, res, next) => {
     let datapackage = res.locals.datapackage || null
     datapackage = await prepareDataPackageForRender(req.params.name, datapackage)
@@ -174,7 +174,7 @@ module.exports = function () {
   })
 
   router.get('/:owner/:name/datapackage.json',
-      param(['owner', 'name']).customSanitizer(xssSenitize), async (req, res, next) => {
+      param(['owner', 'name']).customSanitizer(xssSanitize), async (req, res, next) => {
     let datapackage = res.locals.datapackage || null
     datapackage = await prepareDataPackageForRender(req.params.name, datapackage)
 
@@ -274,7 +274,7 @@ module.exports = function () {
   })
 
   // MUST come last in order to catch all the publisher pages
-  router.get('/:owner', param(['owner']).customSanitizer(xssSenitize), async (req, res, next) => {
+  router.get('/:owner', param(['owner']).customSanitizer(xssSanitize), async (req, res, next) => {
     // Get owner details
     const owner = req.params.owner
     const profile = await Model.getProfile(owner)
