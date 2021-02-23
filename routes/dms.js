@@ -10,12 +10,28 @@ const https = require("https")
 const http = require("http")
 const { callbackPromise } = require('nodemailer/lib/shared')
 const logger = require('../utils/logger')
+const { param, validationResult }  = require('express-validator')
+
 module.exports = function () {
   const router = express.Router()
   const Model = new dms.DmsModel(config)
 
   // -----------------------------------------------
   // Redirects
+
+  const validationCheck = (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      let err = new Error()
+      err.status = 404
+      err.statusText = 'PAGE NOT FOUND'
+      err.text = () => {
+        return JSON.stringify(errors.array())
+      }
+      next(err)
+    }
+    next()
+  }
 
   router.get('/dataset', (req, res) => {
     let destination = '/search'
@@ -262,7 +278,7 @@ module.exports = function () {
   })
 
   // MUST come last in order to catch all the publisher pages
-  router.get('/:owner', async (req, res, next) => {
+  router.get('/:owner', param(['owner']).escape(), validationCheck, async (req, res, next) => {
     // Get owner details
     const owner = req.params.owner
     const profile = await Model.getProfile(owner)
