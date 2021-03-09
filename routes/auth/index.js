@@ -62,13 +62,24 @@ module.exports = function(app) {
     }
   })
 
+
+  app.use('/.ory/kratos/public/', (req, res, next) => {
+    const url =
+      config.get('kratos').public + req.url.replace('/.ory/kratos/public', '')
+    req
+      .pipe(
+        request(url, { followRedirect: false })
+          .on('error', err => next)
+      )
+      .pipe(res)
+  })
+
   app.get('/dashboard', protect, dashboard)
   app.get('/auth/registration', authHandler('registration'))
   app.get('/auth/login', authHandler('login'))
   app.get('/auth/logout', (req, res) => {
-    res.redirect(`${config.get('KRATOS_PUBLIC_URL')}/self-service/browser/flows/logout`)
+    res.redirect('/.ory/kratos/public/self-service/browser/flows/logout')
   })
-
   app.post('/auth/delete', protect, (req, res, next) => {
     adminEndpoint.deleteIdentity(res.locals.userId)
       .then(response => {
