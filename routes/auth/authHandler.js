@@ -48,7 +48,9 @@ module.exports.authHandler = (type) => (
         res.redirect(`${config.get('KRATOS_PUBLIC_PROXY_URL')}/self-service/${type}/browser`)
         return
       }
-      console.log(flow.methods.oidc.config)
+
+      flow.methods.oidc.config.action = new URL(flow.methods.oidc.config.action).pathname
+
       res.locals.sso = flow.methods.oidc.config
       res.locals.password = flow.methods.password.config
       res.locals.accountExists = res.locals.sso.fields.find(item => item.name === 'traits.email')
