@@ -140,6 +140,7 @@ module.exports = function () {
     const profile = await Model.getProfile(req.params.owner)
     res.render('showcase.html', {
       title: req.params.owner + ' | ' + req.params.name,
+      dataApiUri: config.get('DATA_API_URL') + '/v1/',
       dataset: datapackage,
       owner: {
         name: profile.name,
