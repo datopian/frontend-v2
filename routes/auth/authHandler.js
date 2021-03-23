@@ -22,7 +22,7 @@ module.exports.authHandler = (type) => (
   // return data like the csrf_token and so on.
   if (!flow) {
     logger.warn('No flow ID found in URL, initializing login flow.')
-    res.redirect(`${config.get('KRATOS_PUBLIC_URL')}/self-service/${type}/browser`)
+    res.redirect(`${config.get('KRATOS_PUBLIC_PROXY_URL')}/self-service/${type}/browser`)
     return
   }
 
@@ -35,7 +35,7 @@ module.exports.authHandler = (type) => (
     .then(({ status, data : flow}) => {
       if (status == 404 || status == 410 || status == 403) {
         res.redirect(
-          `${config.get('KRATOS_PUBLIC_URL')}/self-service/${type}/browser}`
+          `${config.get('KRATOS_PUBLIC_PROXY_URL')}/self-service/${type}/browser}`
         )
         return
       } else if (status != 200) {
@@ -45,7 +45,7 @@ module.exports.authHandler = (type) => (
     })
     .then((flow) => {
       if (!flow) {
-        res.redirect(`${config.get('KRATOS_PUBLIC_URL')}/self-service/${type}/browser`)
+        res.redirect(`${config.get('KRATOS_PUBLIC_PROXY_URL')}/self-service/${type}/browser`)
         return
       }
       console.log(flow.methods.oidc.config)

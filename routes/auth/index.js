@@ -7,6 +7,7 @@ const { authHandler } = require('./authHandler')
 const { dashboard } = require('./dashboard')
 const { errorHandler } = require('./errorHandler')
 const logger = require('../../utils/logger')
+const proxy = require('express-http-proxy')
 
 const protectOathKeeper = jwt({
   // Dynamically provide a signing key based on the kid in the header and the signing keys provided by the JWKS endpoint.
@@ -62,6 +63,18 @@ module.exports = function(app) {
     }
   })
 
+  app.use(
+    '/self-service/',
+    proxy(config.get('KRATOS_PUBLIC_URL'), {
+      proxyReqPathResolver: (req) => {
+        const requestUrl = req.url
+        return `/self-service${requestUrl}`
+      },
+      userResDecorator: function (proxyRes, proxyResData, userReq, userRes) {
+        return proxyResData;
+      }
+    })
+  )
 
   app.use('/.ory/kratos/public/', (req, res, next) => {
     const url =
