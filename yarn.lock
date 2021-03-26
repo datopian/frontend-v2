@@ -261,10 +261,10 @@
   version "1.1.3"
   resolved "https://registry.yarnpkg.com/@nodelib/fs.stat/-/fs.stat-1.1.3.tgz#2b5a3ab3f918cca48a8c754c08168e3f03eba61b"
 
-"@ory/kratos-client@^0.5.4-alpha.1":
-  version "0.5.4-alpha.1"
-  resolved "https://registry.yarnpkg.com/@ory/kratos-client/-/kratos-client-0.5.4-alpha.1.tgz#6a87a90fd858fc4cb792253b109ea53884098107"
-  integrity sha512-koqwcEtEtGoHdX/WU3O4u6UmbMzbmbA06t5qIZv9S4YauxHZIVZM3VMws1ZK5ObgAMI6O5dCs4WYJrJq+QN48g==
+"@oryd/kratos-client@0.0.0-next.b279b1f1b2a7":
+  version "0.0.0-next.b279b1f1b2a7"
+  resolved "https://registry.yarnpkg.com/@oryd/kratos-client/-/kratos-client-0.0.0-next.b279b1f1b2a7.tgz#76d9caa38259d94e8c07bac24e8599e34b4bde70"
+  integrity sha512-S5kEUoez8IjcKWQL18dfsUwioAfTgZTIexMdmz39KaAWiebEmgNcqoEK2+TjV59NXDinimhj2ImTePLppp5ptA==
   dependencies:
     axios "^0.19.2"
 

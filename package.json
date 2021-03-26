@@ -42,7 +42,7 @@
     "supertest": "^4.0.2"
   },
   "dependencies": {
-    "@ory/kratos-client": "^0.5.4-alpha.1",
+    "@oryd/kratos-client": "0.0.0-next.b279b1f1b2a7",
     "body-parser": "^1.19.0",
     "bytes": "^3.1.0",
     "connect-flash": "^0.1.1",
