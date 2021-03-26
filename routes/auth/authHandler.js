@@ -1,9 +1,6 @@
 const config = require('../../config')
 const logger = require('../../utils/logger')
-
-
-const { Configuration, PublicApi } = require('@ory/kratos-client')
-
+const { Configuration, PublicApi } = require('@oryd/kratos-client')
 
 
 // A simple express handler that shows the login / registration screen.
