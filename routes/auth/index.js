@@ -23,7 +23,7 @@ const protect = (req, res, next) => {
     next()
   }).catch(() => {
     // If no session is found, redirect to login.
-    res.redirect(config.get('SITE_URL') + '/auth/login')
+    res.redirect('/auth/login')
   })
 }
 
@@ -69,7 +69,7 @@ module.exports = function(app) {
       // return data like the csrf_token and so on.
       if (!flow) {
           console.log('No flow ID found in URL, initializing login flow.');
-          res.redirect(`${config.get('KRATOS_PUBLIC_URL')}/self-service/login/browser`);
+          res.redirect(`/.ory/kratos/public/self-service/login/browser`);
           return;
       }
       return kratos.getSelfServiceLoginFlow(flow)
