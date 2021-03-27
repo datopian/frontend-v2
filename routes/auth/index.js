@@ -62,34 +62,8 @@ module.exports = function(app) {
   })
 
   app.get('/dashboard', protect, dashboard)
-  // app.get('/auth/registration', registrationHandler)
-  app.get('/auth/login', (req, res, next) => {
-      const flow = req.query.flow;
-      // The flow is used to identify the login and registration flow and
-      // return data like the csrf_token and so on.
-      if (!flow) {
-          console.log('No flow ID found in URL, initializing login flow.');
-          res.redirect(`/.ory/kratos/public/self-service/login/browser`);
-          return;
-      }
-      return kratos.getSelfServiceLoginFlow(flow)
-          .then(({status, data: flow}) => {
-          if (status !== 200) {
-              return Promise.reject(flow);
-          }
-          flow.methods.oidc.config.action = new URL(flow.methods.oidc.config.action).pathname
-
-          res.locals.sso = flow.methods.oidc.config
-          res.locals.password = flow.methods.password.config
-          res.locals.accountExists = res.locals.sso.fields.find(item => item.name === 'traits.email')
-          next()
-      })
-          // Handle errors using ExpressJS' next functionality:
-          .catch(err => {
-            logger.error(err)
-            next(err)
-          })
-  })
+  app.get('/auth/registration', authHandler('registration'))
+  app.get('/auth/login', authHandler('login'))
   app.get('/auth/logout', (req, res) => {
     res.redirect('/.ory/kratos/public/self-service/browser/flows/logout')
   })

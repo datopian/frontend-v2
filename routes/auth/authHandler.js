@@ -6,7 +6,7 @@ const { Configuration, PublicApi } = require('@oryd/kratos-client')
 // A simple express handler that shows the login / registration screen.
 // Argument "type" can either be "login" or "registration" and will
 // fetch the form data from ORY Kratos's Public API.
-const kratos = new PublicApi(new Configuration({ basePath: config.get('kratos').public}) )
+const kratos = new PublicApi(new Configuration({ basePath: config.get('kratos').public }))
 
 module.exports.authHandler = (type) => (
   req,
@@ -19,7 +19,7 @@ module.exports.authHandler = (type) => (
   // return data like the csrf_token and so on.
   if (!flow) {
     logger.warn('No flow ID found in URL, initializing login flow.')
-    res.redirect(`${config.get('KRATOS_PUBLIC_PROXY_URL')}/self-service/${type}/browser`)
+    res.redirect(`/.ory/kratos/public/self-service/${type}/browser`);
     return
   }
 
@@ -29,23 +29,16 @@ module.exports.authHandler = (type) => (
       : kratos.getSelfServiceRegistrationFlow(flow)
 
   authRequest
-    .then(({ status, data : flow}) => {
+    .then(({ status, data: flow}) => {
       if (status == 404 || status == 410 || status == 403) {
         res.redirect(
-          `${config.get('KRATOS_PUBLIC_PROXY_URL')}/self-service/${type}/browser}`
+          `/.ory/kratos/public/self-service/${type}/browser`
         )
         return
       } else if (status != 200) {
         return Promise.reject(flow)
       }
-      return flow
-    })
-    .then((flow) => {
-      if (!flow) {
-        res.redirect(`${config.get('KRATOS_PUBLIC_PROXY_URL')}/self-service/${type}/browser`)
-        return
-      }
-
+      
       flow.methods.oidc.config.action = new URL(flow.methods.oidc.config.action).pathname
 
       res.locals.sso = flow.methods.oidc.config
