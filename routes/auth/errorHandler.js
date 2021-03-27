@@ -1,6 +1,6 @@
 const config = require('../../config')
 
-const { Configuration, PublicApi } = require('@ory/kratos-client')
+const { Configuration, PublicApi } = require('@oryd/kratos-client')
 
 const logger  = require('../../utils/logger')
 
