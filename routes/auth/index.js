@@ -68,7 +68,7 @@ module.exports = function(app) {
     res.redirect('/.ory/kratos/public/self-service/browser/flows/logout')
   })
   app.post('/auth/delete', protect, (req, res, next) => {
-    adminEndpoint.deleteIdentity(res.locals.userId)
+    kratos.deleteIdentity(res.locals.userId)
       .then(response => {
         res.redirect('/auth/registration')
       })
