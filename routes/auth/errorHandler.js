@@ -18,23 +18,9 @@ module.exports.errorHandler = (req, res, next) => {
 
   kratos
     .getSelfServiceError(error)
-    .then(
-      ({
-        body,
-        response,
-      }) => {
-        if (response.statusCode == 404) {
-          // The error could not be found, redirect back to home.
-          res.redirect(config.get('SITE_URL'))
-          return
-        }
-
-        return body
-      }
-    )
-    .then((errorContainer = {}) => {
-      if ('errors' in errorContainer) {
-        const errorMessage = JSON.stringify(errorContainer.errors, null, 2)
+    .then(({ status, data: body }) => {
+      if ('errors' in body) {
+        const errorMessage = JSON.stringify(body.errors, null, 2)
         logger.warn(errorMessage)
         req.flash(
           'info',
@@ -45,11 +31,23 @@ module.exports.errorHandler = (req, res, next) => {
       }
 
       return Promise.reject(
-        `expected errorContainer to contain "errors" but got ${JSON.stringify(
-          errorContainer
+        `expected body to contain "errors" but got ${JSON.stringify(
+          body
         )}`
       )
     })
-    .catch(err => next(err))
-}
+    .catch((err) => {
+      if (!err.response) {
+        next(err)
+        return
+      }
 
+      if (err.response.status === 404) {
+        // The error could not be found, redirect back to home.
+        res.redirect(config.get('SITE_URL'))
+        return
+      }
+
+      next(err)
+    })
+}
