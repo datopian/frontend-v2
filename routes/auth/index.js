@@ -1,5 +1,5 @@
 const request = require('request')
-const {  Configuration, PublicApi } = require('@oryd/kratos-client')
+const {  Configuration, PublicApi, AdminApi } = require('@oryd/kratos-client')
 const config = require('../../config')
 const { authHandler } = require('./authHandler')
 const { dashboard } = require('./dashboard')
@@ -7,7 +7,8 @@ const { errorHandler } = require('./errorHandler')
 const logger = require('../../utils/logger')
 const proxy = require('express-http-proxy')
 
-const kratos = new PublicApi(new Configuration({basePath: config.get('kratos').public}))
+const kratos = new PublicApi(new Configuration({ basePath: config.get('kratos').public }))
+const adminApi = new AdminApi(new Configuration({ basePath: config.get('kratos').admin }))
 
 const protect = (req, res, next) => {
   // When using ORY Oathkeeper, the redirection is done by ORY Oathkeeper.
@@ -68,13 +69,17 @@ module.exports = function(app) {
     res.redirect('/.ory/kratos/public/self-service/browser/flows/logout')
   })
   app.post('/auth/delete', protect, (req, res, next) => {
-    kratos.deleteIdentity(res.locals.userId)
+    adminApi.deleteIdentity(res.locals.userId)
       .then(response => {
         res.redirect('/auth/registration')
       })
       .catch(err => {
         logger.error(err)
-        next(err)
+        req.flash(
+          'info',
+          'We could not delete your account this time. Please, try again later. If the issue persists, please contact the site administration.'
+        )
+        res.redirect('/settings')
       })
   })
   app.get('/error', errorHandler)
