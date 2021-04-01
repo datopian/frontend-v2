@@ -254,7 +254,7 @@ module.exports.convertToCkanSearchQuery = (query) => {
     rows: '',
     start: '',
     sort: '',
-    'facet.field': ['organization', 'groups', 'tags', 'res_format', 'license_id'],
+    'facet.field': ['organization', 'groups', 'tags', 'res_format', 'license_id', 'update_frequency'],
     'facet.limit': 5,
     'facet.mincount': 0
   }
