@@ -199,7 +199,7 @@ module.exports.makeApp = function () {
   
   env.addFilter('formatDateFromNow', (date) => {
     try {
-      return moment(date).fromNow()
+      return moment.utc(date).fromNow()
     } catch (e) {
       logger.warn('Failed to format date', e)
       return date || '--'
