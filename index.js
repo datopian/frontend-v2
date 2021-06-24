@@ -154,29 +154,6 @@ module.exports.makeApp = function () {
     next()
   })
 
-  /*
-   Route to check the status of the application by
-   calling the package_search of backend with row count as 0
-   to check whether the application is returning response or not
- */
-  app.use('/status', async (req, res) => {
-    const url = resolve(
-      config.get('API_URL'),
-      `package_search?rows=0`
-    )
-    const response = await fetch(url)
-    if (response.ok) {
-      const body = await response.json()
-      if (body.success == true) {
-        res.status(200).send('Ok')
-      } else {
-        res.status(400).send('Not Ok')
-      }
-
-    }
-  })
-
-
   loadPlugins(app)
   loadTheme(app)
 
