@@ -127,7 +127,7 @@ module.exports.makeApp = function () {
     calling the package_search of backend with row count as 0
     to check whether the application is returning response or not
   */
-  app.use('/status', async (req, res) => {
+  app.get('/status', async (req, res) => {
     const url = resolve(
       config.get('API_URL'),
       `package_search?rows=0`
