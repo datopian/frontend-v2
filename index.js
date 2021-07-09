@@ -132,7 +132,9 @@ module.exports.makeApp = function () {
       config.get('API_URL'),
       `package_search?rows=0`
     )
-    const response = await fetch(url)
+    const response = await fetch(url, {
+      headers: { 'User-Agent': 'frontend-v2/latest (internal API call from frontend app)' }
+    })
     if (response.ok) {
       const body = await response.json()
       if (body.success == true) {
