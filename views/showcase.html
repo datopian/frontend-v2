@@ -233,6 +233,14 @@
   }
 </script>
 
+<!-- JSON-LD script for google dataset search indexing  -->
+<script>
+    const script = document.createElement('script');
+    script.setAttribute('type', 'application/ld+json');
+    script.textContent = {{ jsonld | dump | safe }};
+    document.head.appendChild(script);
+</script>
+
 <script type="text/javascript" src="https://rawcdn.githack.com/datopian/datapackage-views-js/681e1ff21a0daee03e8e81ad0ddc7c8bf682aee9/dist/js/main.js"></script>
 
 {% endblock %}

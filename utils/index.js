@@ -349,6 +349,67 @@ module.exports.processMarkdown = require('markdown-it')({
   typographer: true
 })
 
+/**
+ * Map CKAN metadata to standard jsonld schema (https://schema.org/Dataset) for 
+ * google dataset discovery. 
+**/
+module.exports.packageJsonldGenerate = (pkg) => {
+  const siteUrl = config.get('SITE_URL')
+
+  const basicFields = {
+    '@context': 'https://schema.org/',
+    '@type': 'Dataset',
+    name: pkg.title,
+    description: pkg.description,
+    url: `${siteUrl}/${pkg.organization.name}/${pkg.name}`,
+    keywords: pkg.keywords,
+    dateCreated: pkg.metadata_created,
+    dateModified: pkg.metadata_modified,
+  }
+
+  const license = {
+    '@type': 'CreativeWork',
+    "name": pkg.license.title || '',
+    'url': pkg.license.url || ''
+  }
+
+  const publisher = {
+    "@type": "Organization",
+    "sameAs": `${siteUrl}/${pkg.organization.name}/ `,
+    "name": pkg.title
+  }
+  const distribution = pkg.resources.map(resource => {
+    return {
+      "@type": "DataDownload",
+      encodingFormat: resource.format,
+      contentUrl: resource.path
+    }
+  })
+
+  const hasResource = pkg.resources.map(resource => {
+    return {
+      "@type": "Dataset",
+      name: resource.title,
+      description: resource.description,
+      license: license,
+      publisher: publisher,
+      distribution: {
+        "@type": "DataDownload",
+        encodingFormat: resource.format.toUpperCase(),
+        contentUrl: resource.path
+      }
+    }
+  })
+
+  return pkgJsonld = {
+    ...basicFields,
+    license: license,
+    publisher: publisher,
+    hasPart: hasResource,
+    isAccessibleForFree: true,
+    distribution: distribution
+  }
+}
 
 /**
  * Look for user resource in configured directory
