@@ -369,8 +369,8 @@ module.exports.packageJsonldGenerate = (pkg) => {
 
   const license = {
     '@type': 'CreativeWork',
-    "name": pkg.license?.title || '',
-    'url': pkg.license?.url || ''
+    "name": pkg.license.title || '',
+    'url': pkg.license.url || ''
   }
 
   const publisher = {
