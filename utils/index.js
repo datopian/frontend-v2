@@ -486,12 +486,12 @@ module.exports.processDataPackage = function (datapackage) {
   const newDatapackage = JSON.parse(JSON.stringify(datapackage))
   if (newDatapackage.description) {
     newDatapackage.descriptionHtml = module.exports.processMarkdown
-      .render(newDatapackage.description)
+      .render(newDatapackage.description || '')
   }
 
   if (newDatapackage.readme) {
     newDatapackage.readmeHtml = module.exports.processMarkdown
-      .render(newDatapackage.readme)
+      .render(newDatapackage.readme || '')
   }
 
   newDatapackage.formats = newDatapackage.formats || []
@@ -499,7 +499,7 @@ module.exports.processDataPackage = function (datapackage) {
   newDatapackage.resources.forEach(resource => {
     if (resource.description) {
       resource.descriptionHtml = module.exports.processMarkdown
-        .render(resource.description)
+        .render(resource.description || '')
     }
     // Normalize format (lowercase)
     if (resource.format) {
