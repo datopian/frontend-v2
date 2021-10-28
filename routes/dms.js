@@ -165,7 +165,7 @@ module.exports = function () {
       owner: {
         name: profile.name,
         title: profile.title,
-        description: utils.processMarkdown.render(profile.description),
+        description: utils.processMarkdown.render(profile.description || ''),
         avatar: profile.image_display_url || profile.image_url
       },
       thisPageFullUrl: '//' + req.get('host') + req.originalUrl,
@@ -309,7 +309,7 @@ module.exports = function () {
       owner: {
         name: profile.name,
         title: profile.title,
-        description: utils.processMarkdown.render(profile.description),
+        description: utils.processMarkdown.render(profile.description || ''),
         avatar: profile.image_display_url || profile.image_url,
         joinDate: joinMonth + ' ' + joinYear,
       },

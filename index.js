@@ -235,7 +235,7 @@ module.exports.makeApp = function () {
 
   env.addFilter('processMarkdown', (str) => {
     try {
-      return processMarkdown.render(str)
+      return processMarkdown.render(String(str))
     } catch (e) {
       logger.warn('Failed to format markdown', e)
       return str
