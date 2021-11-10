@@ -73,16 +73,18 @@ module.exports.makeApp = function () {
   let sessionOptions = {
     secret: config.get('SESSION_SECRET'),
     rolling: true,
-    proxy: true,
     saveUninitialized: false,
     cookie: {
       maxAge: config.get("SESSION_COOKIE_MAX_AGE")
         ? parseInt(config.get("SESSION_COOKIE_MAX_AGE"))
-        : 60 * 60 * 1000,
-      secure: true 
+        : 60 * 60 * 1000
     }
   }
-  app.set('trust proxy', 1)
+
+  if (config.get('env') === 'production') {
+    app.set('trust proxy', 1) // trust first proxy
+    sessionOptions.cookie.secure = true // serve secure cookies
+  }
 
   // Redis session store for production
   if (config.get('REDIS_URL')) {
