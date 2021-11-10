@@ -77,7 +77,8 @@ module.exports.makeApp = function () {
     cookie: {
       maxAge: config.get("SESSION_COOKIE_MAX_AGE")
         ? parseInt(config.get("SESSION_COOKIE_MAX_AGE"))
-        : 60 * 60 * 1000
+        : 60 * 60 * 1000,
+        secure: true 
     }
   }
 
