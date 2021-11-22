@@ -6,6 +6,7 @@ const i18n = require('i18n')
 const cms = require('./cms')
 const config = require('../../config')
 const utils = require('../../utils')
+const logger = require('../../utils/logger')
 
 
 module.exports = function (app) {
@@ -21,29 +22,33 @@ module.exports = function (app) {
 
   app.get('/', async (req, res,next) => {
     // Get latest 3 blog posts and pass it to home template
-    let posts = await Model.getListOfPosts({
-      number: 3,
-      fields: 'slug,title,content,date,modified,featured_image,categories,attachments'
-    })
-    posts = posts.map(post => {
-      const postAttachments = post.attachments ? Object.values(post.attachments) : []
-      const featuredImageAttachment = Object
-        .values(postAttachments)
-        .find(attachment => attachment.URL === post.featured_image) || {}
-
-      return {
-        slug: post.slug,
-        title: post.title,
-        content: post.content,
-        published: moment(post.date).format('Do MMMM YYYY'),
-        modified: moment(post.modified).format('Do MMMM YYYY'),
-        image: post.featured_image,
-        categories: post.categories ? Object.keys(post.categories) : [],
-        imageCaption: featuredImageAttachment.caption,
-        imageAlt: featuredImageAttachment.alt
-      }
-    })
-    res.locals.posts = posts
+    try {
+      let posts = await Model.getListOfPosts({
+        number: 3,
+        fields: 'slug,title,content,date,modified,featured_image,categories,attachments'
+      })
+      posts = posts.map(post => {
+        const postAttachments = post.attachments ? Object.values(post.attachments) : []
+        const featuredImageAttachment = Object
+          .values(postAttachments)
+          .find(attachment => attachment.URL === post.featured_image) || {}
+  
+        return {
+          slug: post.slug,
+          title: post.title,
+          content: post.content,
+          published: moment(post.date).format('Do MMMM YYYY'),
+          modified: moment(post.modified).format('Do MMMM YYYY'),
+          image: post.featured_image,
+          categories: post.categories ? Object.keys(post.categories) : [],
+          imageCaption: featuredImageAttachment.caption,
+          imageAlt: featuredImageAttachment.alt
+        }
+      })
+      res.locals.posts = posts
+    } catch (err) {
+      logger.error(`Failed to get homepage content from wordpress. ${err}`)
+    }
     next()
   })
 
