@@ -6,10 +6,7 @@ const slugify = require('slugify')
 const config = require('../config')
 const logger = require('./logger')
 
-module.exports.ckanToDataPackage = function (descriptor) {
-  // Make a copy
-  const datapackage = JSON.parse(JSON.stringify(descriptor))
-
+module.exports.ckanToDataPackage = function (datapackage) {
   // Lowercase name
   datapackage.name = datapackage.name.toLowerCase()
 
@@ -483,20 +480,19 @@ module.exports.loadPlugins = function (app) {
  * etc.
  **/
 module.exports.processDataPackage = function (datapackage) {
-  const newDatapackage = JSON.parse(JSON.stringify(datapackage))
-  if (newDatapackage.description) {
-    newDatapackage.descriptionHtml = module.exports.processMarkdown
-      .render(newDatapackage.description || '')
+  if (datapackage.description) {
+    datapackage.descriptionHtml = module.exports.processMarkdown
+      .render(datapackage.description || '')
   }
 
-  if (newDatapackage.readme) {
-    newDatapackage.readmeHtml = module.exports.processMarkdown
-      .render(newDatapackage.readme || '')
+  if (datapackage.readme) {
+    datapackage.readmeHtml = module.exports.processMarkdown
+      .render(datapackage.readme || '')
   }
 
-  newDatapackage.formats = newDatapackage.formats || []
+  datapackage.formats = datapackage.formats || []
   // Per each resource:
-  newDatapackage.resources.forEach(resource => {
+  datapackage.resources.forEach(resource => {
     if (resource.description) {
       resource.descriptionHtml = module.exports.processMarkdown
         .render(resource.description || '')
@@ -504,7 +500,7 @@ module.exports.processDataPackage = function (datapackage) {
     // Normalize format (lowercase)
     if (resource.format) {
       resource.format = resource.format.toLowerCase()
-      newDatapackage.formats.push(resource.format)
+      datapackage.formats.push(resource.format)
     }
 
     // Convert bytes into human-readable format:
@@ -513,7 +509,7 @@ module.exports.processDataPackage = function (datapackage) {
     }
   })
 
-  return newDatapackage
+  return datapackage
 }
 
 
@@ -526,9 +522,8 @@ module.exports.processDataPackage = function (datapackage) {
  * slug: slugified name of a resource
  **/
 module.exports.prepareResourcesForDisplay = function (datapackage) {
-  const newDatapackage = JSON.parse(JSON.stringify(datapackage))
-  newDatapackage.displayResources = []
-  newDatapackage.resources.forEach((resource, index) => {
+  datapackage.displayResources = []
+  datapackage.resources.forEach((resource, index) => {
     const api = resource.datastore_active
       ? config.get('API_URL') + 'datastore_search?resource_id=' + resource.id + '&sort=_id asc'
       : null
@@ -558,9 +553,10 @@ module.exports.prepareResourcesForDisplay = function (datapackage) {
       cc_proxy,
       slug: slugify(resource.name) + '-' + index // Used for anchor links
     }
-    newDatapackage.displayResources.push(displayResource)
+    datapackage.displayResources.push(displayResource)
   })
-  return newDatapackage
+
+  return datapackage
 }
 
 
@@ -569,18 +565,17 @@ module.exports.prepareResourcesForDisplay = function (datapackage) {
  * render visualizations such as tables, graphs and maps.
  **/
 module.exports.prepareViews = function (datapackage) {
-  const newDatapackage = JSON.parse(JSON.stringify(datapackage))
-  newDatapackage.views = newDatapackage.views || []
-  newDatapackage.resources.forEach(resource => {
+  datapackage.views = datapackage.views || []
+  datapackage.resources.forEach(resource => {
     const resourceViews = resource.views && resource.views.map(view => {
       view.resources = [resource.name]
       return view
     })
 
-    newDatapackage.views = newDatapackage.views.concat(resourceViews)
+    datapackage.views = datapackage.views.concat(resourceViews)
   })
 
-  return newDatapackage
+  return datapackage
 }
 
 
@@ -589,9 +584,8 @@ module.exports.prepareViews = function (datapackage) {
  * render data explorer widgets.
  **/
 module.exports.prepareDataExplorers = function (datapackage) {
-  const newDatapackage = JSON.parse(JSON.stringify(datapackage))
-  newDatapackage.displayResources.forEach((displayResource, idx) => {
-    newDatapackage.displayResources[idx].dataExplorers = []
+  datapackage.displayResources.forEach((displayResource, idx) => {
+    datapackage.displayResources[idx].dataExplorers = []
     displayResource.resource.views && displayResource.resource.views.forEach(view => {
       const widgets = []
       if (view.specType === 'dataExplorer') {
@@ -633,10 +627,10 @@ module.exports.prepareDataExplorers = function (datapackage) {
           resources: [displayResource.resource]
         }
       }).replace(/'/g, "&#x27;")
-      newDatapackage.displayResources[idx].dataExplorers.push(dataExplorer)
+      datapackage.displayResources[idx].dataExplorers.push(dataExplorer)
     })
   })
 
-  return newDatapackage
+  return datapackage
 }
 
