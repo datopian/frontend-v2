@@ -165,11 +165,12 @@ module.exports = function () {
       owner: {
         name: profile.name,
         title: profile.title,
-        description: utils.processMarkdown.render(profile.description),
+        description: utils.processMarkdown.render(profile.description || ''),
         avatar: profile.image_display_url || profile.image_url
       },
       thisPageFullUrl: '//' + req.get('host') + req.originalUrl,
-      dpId: JSON.stringify(datapackage).replace(/'/g, "&#x27;") // keep for backwards compat?
+      dpId: JSON.stringify(datapackage).replace(/'/g, "&#x27;"), // keep for backwards compat?
+      jsonld: JSON.stringify(utils.packageJsonldGenerate(datapackage))
     })
   })
 
@@ -308,7 +309,7 @@ module.exports = function () {
       owner: {
         name: profile.name,
         title: profile.title,
-        description: utils.processMarkdown.render(profile.description),
+        description: utils.processMarkdown.render(profile.description || ''),
         avatar: profile.image_display_url || profile.image_url,
         joinDate: joinMonth + ' ' + joinYear,
       },

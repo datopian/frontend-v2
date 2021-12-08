@@ -10,6 +10,9 @@ const flash = require('connect-flash')
 const i18n = require("i18n")
 const moment = require('moment')
 const redis = require('redis')
+const fetch = require('node-fetch')
+const { URL, resolve } = require('url')
+
 
 const config = require('./config')
 const dmsRoutes = require('./routes/dms')
@@ -78,6 +81,11 @@ module.exports.makeApp = function () {
     }
   }
 
+  if (config.get('env') === 'production') {
+    app.set('trust proxy', 1) // trust first proxy
+    sessionOptions.cookie.secure = true // serve secure cookies
+  }
+
   // Redis session store for production
   if (config.get('REDIS_URL')) {
     const redisClient = redis.createClient({
@@ -93,7 +101,6 @@ module.exports.makeApp = function () {
   }
 
   app.use(session({ ...sessionOptions }))
-
   // Handling session error
   app.use(function (req, res, next) {
     if (!req.session) {
@@ -118,6 +125,30 @@ module.exports.makeApp = function () {
 
   // enable flash messages
   app.use(flash())
+
+  /*
+    Route to check the status of the application by
+    calling the package_search of backend with row count as 0
+    to check whether the application is returning response or not
+  */
+  app.get('/status', async (req, res) => {
+    const url = resolve(
+      config.get('API_URL'),
+      `package_search?rows=0`
+    )
+    const response = await fetch(url, {
+      headers: { 'User-Agent': 'frontend-v2/latest (internal API call from frontend app)' }
+    })
+    if (response.ok) {
+      const body = await response.json()
+      if (body.success == true) {
+        res.status(200).send('Ok')
+      } else {
+        res.status(500).send('Not Ok')
+      }
+
+    }
+  })
 
   // Auth
   if (authEnabled) {
@@ -199,7 +230,7 @@ module.exports.makeApp = function () {
   
   env.addFilter('formatDateFromNow', (date) => {
     try {
-      return moment(date).fromNow()
+      return moment.utc(date).fromNow()
     } catch (e) {
       logger.warn('Failed to format date', e)
       return date || '--'
@@ -208,7 +239,7 @@ module.exports.makeApp = function () {
 
   env.addFilter('processMarkdown', (str) => {
     try {
-      return processMarkdown.render(str)
+      return processMarkdown.render(String(str))
     } catch (e) {
       logger.warn('Failed to format markdown', e)
       return str
