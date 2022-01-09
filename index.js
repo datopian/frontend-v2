@@ -12,7 +12,7 @@ const moment = require('moment')
 const redis = require('redis')
 const fetch = require('node-fetch')
 const { URL, resolve } = require('url')
-
+const morgan = require('morgan');
 
 const config = require('./config')
 const dmsRoutes = require('./routes/dms')
@@ -155,6 +155,7 @@ module.exports.makeApp = function () {
     authRoutes(app)
   }
 
+  app.use(morgan('combined'))
   app.use((req, res, next) => {
     res.locals.message = req.flash('info')
     next()
