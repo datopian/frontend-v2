@@ -155,6 +155,16 @@ module.exports.makeApp = function () {
     authRoutes(app)
   }
 
+  // Get real IP address from server
+  morgan.token("remote-addr", function (req) {
+    return (
+      req.headers["x-real-ip"] ||
+      req.headers["x-forwarded-for"] ||
+      req.ip ||
+      req._remoteAddress ||
+      (req.connection && req.connection.remoteAddress) || undefined);
+  });
+
   app.use(morgan('combined'))
   app.use((req, res, next) => {
     res.locals.message = req.flash('info')
