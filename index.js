@@ -12,7 +12,7 @@ const moment = require('moment')
 const redis = require('redis')
 const fetch = require('node-fetch')
 const { URL, resolve } = require('url')
-
+const morgan = require('morgan');
 
 const config = require('./config')
 const dmsRoutes = require('./routes/dms')
@@ -154,6 +154,18 @@ module.exports.makeApp = function () {
   if (authEnabled) {
     authRoutes(app)
   }
+
+// Get real IP address from server
+  morgan.token("remote-addr", function (req) {
+    return (
+      req.headers["x-real-ip"] ||
+      req.headers["x-forwarded-for"] ||
+      req.ip ||
+      req._remoteAddress ||
+      (req.connection && req.connection.remoteAddress) || undefined);
+  });
+
+  app.use(morgan('combined'))
 
   app.use((req, res, next) => {
     res.locals.message = req.flash('info')
