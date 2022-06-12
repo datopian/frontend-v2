@@ -3,7 +3,7 @@
 const config = require('../../config')
 
 const wpcom = require('wpcom')(config.get('WP_TOKEN'))
-
+const timeout = config.get('WP_TIMEOUT', 60000)
 
 class CmsModel {
   constructor() {
@@ -40,14 +40,21 @@ class CmsModel {
         if (id) {
           query.id = id
         }
-        query.slug = slug
+        query.slug = slug;
+        let queryCompleted = false
         this.blog.post(query).get((err, data) => {
+          queryCompleted = true
           if (err) {
             reject(err)
           } else {
             resolve(data)
           }
         })
+        setTimeout(() => {
+          if (!queryCompleted) {
+            reject(new Error('Timeout'))
+          }
+        }, timeout)
       }
     })
   }
