@@ -3,7 +3,7 @@
 const config = require('../../config')
 
 const wpcom = require('wpcom')(config.get('WP_TOKEN'))
-const timeout = config.get('WP_TIMEOUT', 60000)
+const timeout = config.get("WP_TIMEOUT") || 30000;
 
 class CmsModel {
   constructor() {
