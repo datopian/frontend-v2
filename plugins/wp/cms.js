@@ -1,25 +1,27 @@
 'use strict'
 
+const { memoize } = require('lodash')
+
 const config = require('../../config')
 
 const wpcom = require('wpcom')(config.get('WP_TOKEN'))
-const timeout = config.get("WP_TIMEOUT") || 30000;
+const blog = wpcom.site(config.get('WP_URL'))
+const baseQuery = {
+  status: `publish${eval(config.get('WP_SHOW_DRAFT')) ? ',draft' : ''}`
+}
+const timeout = config.get('WP_TIMEOUT') || 30000
 
 class CmsModel {
-  constructor() {
-    this.blog = wpcom.site(config.get('WP_URL'))
-    this.baseQuery = {
-      status: `publish${eval(config.get('WP_SHOW_DRAFT')) ? ',draft' : ''}`
-    }
+  getPost(args) {
+    const res = memoize(this.getCachedPost, (args) => JSON.stringify(args))
+    return res(args)
   }
 
-
-  async getPost({slug, id, parentSlug, parentId}={}) {
-
+  getCachedPost({slug, id, parentSlug, parentId}={}) {
     return new Promise(async (resolve, reject) => {
 
       // type any will request both pages and posts
-      let query = Object.assign({type: 'any'}, this.baseQuery)
+      let query = Object.assign({type: 'any'}, baseQuery)
 
       if (parentSlug || parentId) {
         try {
@@ -27,9 +29,9 @@ class CmsModel {
           if (parentId) {
             parentQuery.id = parentId
           }
-          let parent = await (await this.blog.post(Object.assign(parentQuery, this.baseQuery))).get()
+          let parent = await (await blog.post(Object.assign(parentQuery, baseQuery))).get()
           query.parent_id = parent.ID
-          let posts = (await this.blog.postsList(query)).posts
+          let posts = (await blog.postsList(query)).posts
           let post = posts.find(post => post.slug == slug)
           resolve(post)
         } catch (e) {
@@ -42,7 +44,7 @@ class CmsModel {
         }
         query.slug = slug;
         let queryCompleted = false
-        this.blog.post(query).get((err, data) => {
+        blog.post(query).get((err, data) => {
           queryCompleted = true
           if (err) {
             reject(err)
@@ -61,25 +63,30 @@ class CmsModel {
 
   async getListOfPages(query={}) {
     query.type = "page"
-    const result = await this.getListOfPostsWithMeta(query)
+    const result = await this.getCachedListOfPostsWithMeta(query)
     return result.posts
   }
 
   async getListOfPosts(query) {
-    const result = await this.getListOfPostsWithMeta(query)
+    const result = await this.getCachedListOfPostsWithMeta(query)
     return result.posts
   }
 
+  getCachedListOfPostsWithMeta(args) {
+    const res = memoize(this.getListOfPostsWithMeta, (args) => JSON.stringify(args))
+    return res(args)
+  }
+
   async getListOfPostsWithMeta(query) {
-    return await this.blog.postsList(Object.assign(query, this.baseQuery))
+    return await blog.postsList(Object.assign(query, baseQuery))
   }
 
   async getCategories() {
-    return await this.blog.categoriesList()
+    return await blog.categoriesList()
   }
 
   async getSiteInfo() {
-    return await this.blog.get()
+    return await blog.get()
   }
 
   api() {
