@@ -1,7 +1,5 @@
 const test = require('ava')
 const wp = require('../../plugins/wp/cms')
-const pages = require('../../plugins/ckan_pages/cms')
-const config = require('../../config')
 const mocks = require('../../fixtures')
 const WPModel = new wp.CmsModel()
 
