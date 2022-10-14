@@ -40,6 +40,8 @@ nconf.defaults({
   CARTO_APIKEY: process.env.CARTO_APIKEY || 'default_public',
   // disqus
   DISQUS_PAGES: process.env.DISQUS_PAGES || '',
+  // twilio url
+  TWILIO_URL: process.env.TWILIO_URL || '',
   kratos: {
     admin: process.env.KRATOS_ADMIN_URL && process.env.KRATOS_ADMIN_URL.replace(/\/+$/, ''),
     public: process.env.KRATOS_PUBLIC_URL && process.env.KRATOS_PUBLIC_URL.replace(/\/+$/, '')
