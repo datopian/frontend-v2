@@ -25,9 +25,7 @@ test('ga api get works', async t => {
   }
 
   const result = await gaApi.get(params)
-
-  console.log(result)
-
+  
   t.is(result.status, 200)
   t.is(result.data.totalResults, 109)
 })
