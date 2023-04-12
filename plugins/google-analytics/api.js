@@ -1,4 +1,4 @@
-const {google} = require('googleapis')
+const { google } = require('googleapis')
 
 class GaApi {
 
@@ -12,14 +12,23 @@ class GaApi {
 
   async get(params) {
 
-    const defaultParams = {
-      'auth': this.jwt,
-      'ids': 'ga:' + process.env.GA_VIEW_ID,
+    if (process.env.GA_ID.startsWith('UA')) {
+      params['ids'] = 'ga:' + process.env.GA_VIEW_ID
+      const analyticsdata = google.analytics({
+        version: 'v3',
+        auth: this.jwt
+      })
+      return await analyticsdata.data.ga.get(params)
     }
-
-    const endParams = {...defaultParams, ...params}
-
-    return await google.analytics('v3').data.ga.get(endParams)
+    else {
+      params['property'] = `properties/${process.env.GA4_PROPERTY_ID}`
+      const analyticsdata = google.analyticsdata({
+        version: 'v1beta',
+        auth: this.jwt
+      });
+      
+      return await analyticsdata.properties.runReport(params)
+    }
   }
 }
 
