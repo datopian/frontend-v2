@@ -5,6 +5,9 @@ const mocks = require('../../fixtures')
 
 mocks.initMocks()
 
+process.env.GA_ID = 'UA-12345678-9'
+process.env.GA_VIEW_ID = '123456789'
+
 let gaApi = new GaApi()
 gaApi.jwt = "some test string"
 
