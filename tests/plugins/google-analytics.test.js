@@ -5,6 +5,9 @@ const mocks = require('../../fixtures')
 
 mocks.initMocks()
 
+process.env.GA_ID = 'UA-12345678-9'
+process.env.GA_VIEW_ID = '123456789'
+
 let gaApi = new GaApi()
 gaApi.jwt = "some test string"
 
@@ -22,9 +25,7 @@ test('ga api get works', async t => {
   }
 
   const result = await gaApi.get(params)
-
-  console.log(result)
-
+  
   t.is(result.status, 200)
   t.is(result.data.totalResults, 109)
 })
