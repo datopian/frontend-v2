@@ -42,6 +42,9 @@ nconf.defaults({
   DISQUS_PAGES: process.env.DISQUS_PAGES || '',
   // twilio url
   TWILIO_URL: process.env.TWILIO_URL || '',
+  TWILIO_VERIFY_PASSWORD: process.env.TWILIO_VERIFY_PASSWORD || '',
+  RECAPTCHA_SECRET_KEY: process.env.RECAPTCHA_SECRET_KEY || '',
+  TWILIO_VERIFY_URL: process.env.TWILIO_VERIFY_URL || '',
   kratos: {
     admin: process.env.KRATOS_ADMIN_URL && process.env.KRATOS_ADMIN_URL.replace(/\/+$/, ''),
     public: process.env.KRATOS_PUBLIC_URL && process.env.KRATOS_PUBLIC_URL.replace(/\/+$/, '')
