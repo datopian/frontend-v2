@@ -159,6 +159,7 @@ module.exports = function () {
     datapackage = await prepareDataPackageForRender(req.params.name, datapackage)
 
     const profile = await Model.getProfile(req.params.owner)
+    const backendUrl = config.get('BACKEND_URL')
     res.render('showcase.html', {
       title: req.params.owner + ' | ' + req.params.name,
       dataset: datapackage,
@@ -170,7 +171,8 @@ module.exports = function () {
       },
       thisPageFullUrl: '//' + req.get('host') + req.originalUrl,
       dpId: JSON.stringify(datapackage).replace(/'/g, "&#x27;"), // keep for backwards compat?
-      jsonld: JSON.stringify(utils.packageJsonldGenerate(datapackage))
+      jsonld: JSON.stringify(utils.packageJsonldGenerate(datapackage)),
+      backendUrl: backendUrl
     })
   })
 
