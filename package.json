@@ -63,7 +63,7 @@
     "jwks-rsa": "^1.8.0",
     "jwt-decode": "^2.2.0",
     "lodash": "^4.17.21",
-    "markdown-it": "^8.4.2",
+    "markdown-it": "^12.3.2",
     "md5": "^2.2.1",
     "moment": "^2.24.0",
     "morgan": "^1.10.0",
