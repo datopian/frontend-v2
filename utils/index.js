@@ -142,7 +142,8 @@ module.exports.ckanViewToDataPackageView = (ckanView) => {
     pdf_view: 'document',
     image_view: 'web',
     webpage_view: 'web',
-    text_view: 'text'
+    text_view: 'text',
+    datatables_view: 'table',
   }
   const dataPackageView = JSON.parse(JSON.stringify(ckanView))
   dataPackageView.specType = viewTypeToSpecType[ckanView.view_type]
