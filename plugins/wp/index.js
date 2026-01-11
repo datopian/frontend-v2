@@ -116,7 +116,11 @@ module.exports = function (app) {
         imageAlt: featuredImageAttachment.alt
       })
     } catch (err) {
-      next(err)
+      if (err.statusCode === 404 || err.statusCode === 403) {
+        next()
+      } else {
+        next(err)
+      }
     }
   }
 
@@ -145,9 +149,9 @@ module.exports = function (app) {
         thisPageFullUrl: req.protocol + '://' + req.get('host') + req.originalUrl
       })
     } catch (err) {
-      if (err.statusCode === 404) {
+      if (err.statusCode === 404 || err.statusCode === 403) {
         // Pass it to next router, eg, if `/page` doesn't exist in WP, it might
-        // be a org name etc.
+        // be a org name etc. Also handle 403 (private blog).
         next()
       } else {
         next(err)
