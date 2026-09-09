@@ -38,6 +38,9 @@ nconf.defaults({
   API_CACHE_TTL: process.env.API_CACHE_TTL || 0,
   API_CACHE_ACTIONS: process.env.API_CACHE_ACTIONS ||
     'organization_list,group_list',
+  // Seconds to cache CMS (WordPress) reads. The theme awaits one on every
+  // non-static request, so this removes a per-request round trip. 0 disables.
+  CMS_CACHE_TTL: process.env.CMS_CACHE_TTL || 0,
   // dashboard and maps PLUGIN
   GIT_BASE_URL: process.env.GIT_BASE_URL || 'https://raw.githubusercontent.com',
   // carto plugin
